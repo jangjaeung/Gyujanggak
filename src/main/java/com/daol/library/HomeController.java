@@ -23,7 +23,7 @@ public class HomeController {
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		//MainÆäÀÌÁö·Î Æ÷¿öµå
+		//Mainë©”ì¸í˜ì´ì§€ ì´ë™
 		return "home";
 	}
 	
