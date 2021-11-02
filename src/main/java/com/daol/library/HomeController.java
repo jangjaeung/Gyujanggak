@@ -23,7 +23,7 @@ public class HomeController {
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		//Main메인페이지 이동asd
+		//Main메인페이지 이동asdasd
 		return "home";
 	}
 	
