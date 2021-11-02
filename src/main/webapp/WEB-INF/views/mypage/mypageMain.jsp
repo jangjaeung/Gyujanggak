@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>푸쉬 테스트</title>
+<title>Insert title here</title>
 </head>
 <body>
-푸쉬 테스트입니다.
+	<jsp:include page="../common/header.jsp"></jsp:include>
 </body>
 </html>
