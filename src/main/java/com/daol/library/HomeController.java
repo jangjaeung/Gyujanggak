@@ -1,7 +1,5 @@
 package com.daol.library;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -23,7 +21,6 @@ public class HomeController {
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		//Main페이지로 포워드
 		return "home";
 	}
 	
