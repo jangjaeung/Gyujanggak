@@ -7,6 +7,12 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-	<typeAliases></typeAliases>
-	<mappers></mappers>
+	<typeAliases>
+		<typeAlias type="com.daol.library.member.domain.Member" alias="Member"/>
+		<typeAlias type="com.daol.library.notice.domain.Member" alias="Notice"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mappers/user-mapper.xml"/>
+		<mapper resource="mappers/notice-mapper.xml"/>
+	</mappers>
 </configuration>

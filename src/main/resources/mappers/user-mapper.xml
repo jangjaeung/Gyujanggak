@@ -1,1 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="membermapper">
+	<resultMap type="Member" id="memberResultMap">
+			<id property="userId" column="USER_ID "></id>
+		<result property="userPwd" column="USER_PWD "></result>
+		<result property="userNo" column="USER_NO "></result>
+		<result property="userName" column="USER_NAME "></result>
+		<result property="userPhone" column="USER_PHONE "></result>
+		<result property="userType" column="USER_TYPE "></result>
+		<result property="userEmail" column="USER_EMAIL "></result>
+		<result property="studentId" column="STUDENT_ID "></result>
+		<result property="major" column="MAJOR "></result>
+		<result property="profilePic" column="PROFILE_PIC "></result>
+		<result property="annualFee" column="ANNUAL_FEE "></result>
+		<result property="payDate" column="PAY_DATE "></result>
+		<result property="enrollDate" column="ENROLL_DATE "></result>
+		<result property="passCheck" column="PASS_CHECK "></result>
+		<result property="approvalDate" column="APPROVAL_DATE "></result>
+		<result property="endDate" column="END_DATE "></result>
+		<result property="socialId" column="SOCIAL_ID "></result>
+		<result property="surveyCheck" column="SURVEY_CHECK "></result>
+		<result property="lendingCopy" column="LENDING_COPY "></result>
+	</resultMap>
+</mapper>
