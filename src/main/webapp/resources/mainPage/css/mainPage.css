@@ -72,7 +72,7 @@
         list-style: none;
         float: left;
     }
-    ul img{
+    .nav-area ul img{
         width: 100px;
         height: 100px;
     }
@@ -156,3 +156,8 @@
     .many{
         
     }
+
+    
+    
+    
+  
