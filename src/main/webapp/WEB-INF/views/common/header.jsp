@@ -5,54 +5,47 @@
 <head>
 <meta charset="UTF-8">
 <title>헤더</title>
-<style>
-header{
-	z-index : 200;
-}
-.menu li ul{
-	background : white;
-	display : none; /* 드롭메뉴 숨김 */
-	height : auto;
-	padding : 0;
-	border : 0px;
-	position : absoulute;
-	width: 200px;
-}
-</style>
+<link href="resources/css/headerStyle.css" rel="stylesheet">
+
+
 </head>
 <body>
 	<header>
 		<div class="wrapper">
-			<h3>다올대학교 도서관 규장각</h3>
-			<div> <b>LOGIN</b> </div>
+			<div class="wrapper left">
+					<a href="#"><img src="resources/img/notextLogo.jpg" alt="logo" id="logo"></a>
+					<a href="#"><h3 id="logoText">&nbsp;&nbsp;다올대학교 도서관 규장각</h3></a>
+			</div>
+			<div class="wrapper right"> LOGIN </div>
 		</div>
 		<div class="nav">
 			<ul class="menu">
-				<li><a>도서관 소개</a>
+				<li><a href="#">도서관 소개</a>
 					<ul>
-						<li><a>규장각 인사말</a></li>
-						<li><a>규장각 연혁</a></li>
-						<li><a>규장각 오시는 길</a></li>
-						<li><a>규장각 시설 이용 안내</a></li>
+						<li><a href="#">규장각 인사말</a></li>
+						<li><a href="#">규장각 연혁</a></li>
+						<li><a href="#">규장각 오시는 길</a></li>
+						<li><a href="#">규장각 시설 이용 안내</a></li>
 					</ul>
 				</li>
-				<li><a>도서관이용</a>
+				<li><a href="#">도서관이용</a>
 					<ul>
-						<li><a>공지사항</a></li>
-						<li><a>자유게시판</a></li>
-						<li><a>열람실 예약</a></li>
-						<li><a>스터디룸 예약</a></li>
+						<li><a href="#">공지사항</a></li>
+						<li><a href="#">자유게시판</a></li>
+						<li><a href="#">열람실 예약</a></li>
+						<li><a href="#">스터디룸 예약</a></li>
 					</ul>
 				</li>
-				<li><a>자료검색</a>
+				<li><a href="#">자료검색</a>
 					<ul>
-						<li><a>통합검색</a></li>
-						<li><a>주제별 검색</a></li>
-						<li><a>신착 자료</a></li>
-						<li><a>대출 베스트</a></li>
+						<li><a href="#">간략 검색</a></li>
+						<li><a href="#">상세 검색</a></li>
+						<li><a href="#">주제별 검색</a></li>
+						<li><a href="#">신착 자료</a></li>
+						<li><a href="#">대출 베스트</a></li>
 					</ul>				
 				</li>
-				<li><a>마이페이지</a></li>
+				<li><a href="mypageMain.do">마이페이지</a></li>
 			</ul>
 		</div>
 	</header>
