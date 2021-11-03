@@ -9,7 +9,7 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.daol.library.member.domain.Member" alias="Member"/>
-		<typeAlias type="com.daol.library.notice.domain.Member" alias="Notice"/>
+		<typeAlias type="com.daol.library.notice.domain.Notice" alias="Notice"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>

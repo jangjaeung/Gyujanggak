@@ -5,8 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <title>푸터</title>
+<link href="resources/css/footerStyle.css" rel="stylesheet">
 </head>
 <body>
-
+	<!-- footer 옆으로 넘어감 방지 -->
+   <div style="clear:both;"></div> 
+   
+   <footer>
+   	<br><br>
+   	<div class="footer">
+   		<div class="footer logo">
+   			<a href="#"><img src="resources/img/logo_transparent.png" alt="logo" id="logo"></a>
+   		</div>
+   		<div class="footer info">
+   		<br>
+   			<pre><a href="#"><b>개인정보 처리방침</b></a>   <a href="#"><b>이메일 주소 무단 수집 거부</b></a>    <a href="#"><b>찾아오는 길</b></a></pre>
+   			<pre>서울시 중구 다올로 123 다올대학교 도서관 규장각 @DAOL UNIVERSITY LIBRARY ALL RIGHTS RESERVED</pre>
+   		</div>
+   	</div>	
+   </footer>
 </body>
 </html>
