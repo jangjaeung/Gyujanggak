@@ -9,6 +9,8 @@ public class ReadingRoom {
 	private String rReservationTime;
 	private String seatNo;
 	
+	public ReadingRoom() {}
+	
 	public int getrReservationNo() {
 		return rReservationNo;
 	}
