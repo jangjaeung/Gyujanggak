@@ -6,24 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/resources/mainPage/css/mainPage.css">
 <title>main</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="/resources/mainPage/css/mainPage.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-<!-- 챗봇용 -->
-<!-- CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<!-- 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- 스와이퍼 -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<!-- 메인페이지 챗봇 스크립트 -->
-<link rel="stylesheet" href="/resources/mainPage/css/chatbot.css">
-<script type="text/javascript" src="/resources/js/chat.js"></script>
+
 
 </head>
 <body>
@@ -50,11 +36,13 @@
 			</div>
 		</div>
 		<div class="search-wrap">
-			<select name="" id="" class="select-box">
-				<option value="" class="box-op">도서명</option>
-				<option value="" class="box-op">저자</option>
-				<option value="" class="box-op">출판사</option>
-			</select> <input type="text" name="" id="" class="search">
+			<div>
+				<select name="" id="" class="select-box">
+					<option value="" class="box-op">도서명</option>
+					<option value="" class="box-op">저자</option>
+					<option value="" class="box-op">출판사</option>
+				</select> <input type="text" name="" id="" class="search">
+			</div>
 		</div>
 	</div>
 	<div class="main-wrapper">

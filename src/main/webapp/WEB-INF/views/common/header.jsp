@@ -13,8 +13,8 @@
 	<header>
 		<div class="wrapper">
 			<div class="wrapper left">
-					<a href="#"><img src="resources/img/notextLogo.jpg" alt="logo" id="logo"></a>
-					<a href="#"><h3 id="logoText">&nbsp;&nbsp;다올대학교 도서관 규장각</h3></a>
+					<a href="home.do"><img src="resources/img/notextLogo.jpg" alt="logo" id="logo"></a>
+					<a href="home.do"><h3 id="logoText">&nbsp;&nbsp;다올대학교 도서관 규장각</h3></a>
 			</div>
 			<div class="wrapper right"> LOGIN </div>
 		</div>
@@ -31,7 +31,7 @@
 				<li><a href="#">도서관이용</a>
 					<ul>
 						<li><a href="#">공지사항</a></li>
-						<li><a href="#">자유게시판</a></li>
+						<li><a href="postList.do">자유게시판</a></li>
 						<li><a href="#">열람실 예약</a></li>
 						<li><a href="#">스터디룸 예약</a></li>
 					</ul>
