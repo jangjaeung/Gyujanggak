@@ -49,7 +49,8 @@ a{
 	color : #363541;
 	letter-spacing : 1px;
 	line-height : 50px;	
-	postion : absolute;
+	/* postion : absolute; */
+	height: 50px;
 	border-top : 0.2px solid #dfdee3;
 }
 

@@ -1,4 +1,4 @@
-package com.daol.library.studyroom.domain;
+package com.daol.library.studyRoom.domain;
 
 public class StudyRoom {
 	private int sReservationNo;
