@@ -1,4 +1,4 @@
-package com.daol.library.readingroom.domain;
+package com.daol.library.readingRoom.domain;
 
 import java.sql.Date;
 

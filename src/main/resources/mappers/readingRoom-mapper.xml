@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="readingRoomMapper">
+
+	<resultMap type="ReadingRoom" id="readingRoomResultMap">
+		<id property="rReservationNo" column="R_RESERVATION_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="rReservationDate" column="R_RESERVATION_DATE"/>
+		<result property="rReservationTime" column="R_RESERVATION_TIME"/>
+		<result property="seatNo" column="SEAT_NO"/>
+	</resultMap>
+	
+<!-- 열람실 예약 -->
+	<insert id="insertReadingRoom" parameterType="ReadingRoom">
+		INSERT INTO READINGROOM VALUES(SEQ_RNUM.NEXTVAL, #{userId}, SYSDATE, #{rReservationTime}, #{seatNo}  )
+	</insert>
+	<select id="selectAllReadingRoom" resultMap="readingRoomResultMap">
+		SELECT * FROM READINGROOM
+	</select>
+</mapper>
