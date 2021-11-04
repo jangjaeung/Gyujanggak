@@ -27,6 +27,7 @@
 
 </head>
 <body>
+	<jsp:include page="common/header.jsp"></jsp:include>
 	<div class="search-area">
 		<div id="slider">
 			<div class="slider_item showing">
@@ -131,7 +132,7 @@
 			</div>
 		</div>
   		<jsp:include page="./common/chat.jsp"></jsp:include>
- 	 
 	</div>
+ 	 <jsp:include page="common/footer.jsp"></jsp:include>
 </body>
 </html>

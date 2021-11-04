@@ -2,7 +2,7 @@
 *{margin: 0;padding: 0;}
 .main-wrapper{
     width: 1400px;
-    height: 100vh;
+    
     margin: 0 auto;
 }
 .search-area{
@@ -78,7 +78,7 @@
     }
 .taste-area{
     width: 80%; 
-    height: 100vh; 
+/*     height: 100vh;  */
     margin: 0;
     float: left;
     overflow: hidden;
@@ -127,7 +127,7 @@
 .keyword-area{
     float: right;
     width: 20%; 
-    height:100vh; 
+/*     height:100vh;  */
 }
     #kate{
         display: flex;
