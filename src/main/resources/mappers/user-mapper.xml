@@ -22,4 +22,15 @@
 		<result property="surveyCheck" column="SURVEY_CHECK "></result>
 		<result property="lendingCopy" column="LENDING_COPY "></result>
 	</resultMap>
+	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO USERS VALUES(#{userId }, #{userPwd },SEQ_USERNUM.NEXTVAL,#{userName }, #{userPhone }, #{userType }, #{userEmail },
+		#{studentId},#{major},#{profilePic},#{annualFee},#{payDate},DEFAULT, DEFAULT,#{approvalDate}, #{endDate},
+		#{socialId},DEFAULT,0)
+	</insert>
+	
+	<select id="selectLoginMember" resultMap="memberResultMap">
+		SELECT * FROM USERS WHERE USER_ID = #{userId } AND USER_PWD = #{userPwd }
+	</select>
+	
 </mapper>
