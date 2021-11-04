@@ -18,5 +18,17 @@
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="lendingCount" column="LENDING_COUNT"/>
 	</resultMap>
-
+	<select id="selectSearchSimple" resultMap="bookResultMap">
+		SELECT * FROM BOOK
+		<if test="searchCondition.toString() == 'title'">
+			WHERE BOOK_NAME LIKE '%' || #{ searchValue } || '%'
+		</if>
+		<if test="searchCondition.toString() == 'writer'">
+			WHERE BOOK_WRITER LIKE '%' || #{ searchValue } || '%'
+		</if>
+		<if test="searchCondition.toString() == 'publisher'">
+			WHERE PUBLISHER LIKE '%' || #{ searchValue } || '%'
+		</if>
+		ORDER BY UPDATE_DATE DESC
+	</select>
 </mapper>

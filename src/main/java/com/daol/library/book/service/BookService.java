@@ -1,5 +1,15 @@
 package com.daol.library.book.service;
 
-public interface BookService {
+import java.util.List;
 
+import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.Search;
+
+public interface BookService {
+	public List<Book> printAll();
+	public List<Book> printSearchSimple(Search search);
+	public List<Book> printSearchDetail(Search search);
+	public List<Book> printSearchSub(Search search);
+	public List<Book> printSearchNew();
+	
 }

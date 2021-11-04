@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>오류 페이지</title>
 </head>
 <body>
-<h1>${msg }</h1>
+	<h1>${ msg }</h1>
 </body>
 </html>
