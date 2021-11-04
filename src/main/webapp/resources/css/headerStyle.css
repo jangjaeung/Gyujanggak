@@ -1,21 +1,35 @@
 @charset "UTF-8";
+section{
+	 padding-top: 150px;
+	 padding-bottom: 100px;
+}
 header{ 
 	z-index : 200;
 	margin : 0;
 	paddding: 0;
-	postion : fixed;
+	text-decoration : none;
+	width : 100%;
+	position : fixed;
+	background-color : white;
 } 
+
+header a{
+	text-decoration : none;
+	color : #363541;
+}
+
 /* header 상단 : 로고, 로그인 */
 .wrapper{
 	height : 50px;
+	margin-top : 0.5%;
 	margin-bottom : 1%;
 }
-.left{
+#left{
 	float : left;
 	width : 90%;
 	display:block;
 }
-.left img{
+#header-logo{
 	width : 50px;
 	height : 50px;
 	overflow : hidden;
@@ -24,7 +38,7 @@ header{
 	margin-bottom : 5px;
 	padding-bottom : 3px;
 }
-.left h3{
+#logoText{
 	float : left;
 	line-height : 10px;
 	color : #656379;
@@ -38,10 +52,7 @@ header{
 	color : #363541;
 }
 
-a{
-	text-decoration : none;
-	color : #363541;
-}
+
 
 /* header 하단 : 메뉴 네비게이션 */
 .nav{
@@ -49,7 +60,6 @@ a{
 	color : #363541;
 	letter-spacing : 1px;
 	line-height : 50px;	
-	postion : absolute;
 	border-top : 0.2px solid #dfdee3;
 }
 
@@ -58,38 +68,47 @@ a{
 	padding : 0;
 	margin:0 auto; 
 	display: block;
+	text-decoration : none;
 }
 
 .menu > li{ 
+	font-weight : bold;
 	list-style-type: none;
 	align-items: center; 
 	float: left;
 	width: 25%; 
 	display:block;
 	border-bottom : 0.2px solid #dfdee3;
+	text-decoration : none;
 } 
 .menu > li > a{
 	display:block;
+	text-decoration : none;
 }
-.menu li ul{ 
+#menu li ul{ 
 	background : white;
 	display : none; /* 드롭메뉴 숨김 */ 
 	padding : 0; 
 	border : 0px;
+	text-decoration : none;
 } 
-.menu li:hover {
+#menu li:hover {
 	background-color : #cdd8ea;
 	color : #363541;
 	font-weight : bold;
+	text-decoration : none;
 }
 
-.menu li:hover ul{ 
+#menu li:hover ul{ 
 	display:block;
+	text-decoration : none;
 } 
 
-.menu li ul li{ 
+#menu li ul li{ 
 	list-style-type: none; 
+	text-decoration : none;
 }
-.menu li ul li a{
+#menu li ul li a{
 	display:block;
+	text-decoration : none;
 }

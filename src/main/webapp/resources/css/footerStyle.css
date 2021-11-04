@@ -8,12 +8,12 @@ footer{
 
 
 
-.logo{
+#logo{
 	width : 25%;
 	float : left;
 }
 
-.logo img{
+#footer-logo{
 	width : 160px;
 	height : 150px;
 	text-align : center;
@@ -21,17 +21,19 @@ footer{
 	margin-left : 30%;
 	filter : opacity(0.9) drop-shadow(0 0 0 white) brightness(0) invert(1);
 }
-.info{
+#footer-info{
 	width : 70%;
 	float : left;
 }
-.info pre a{
+#footer-info a{
 	color : #f4f7fb;
+	text-decoration : none;
 }
-.info pre{
+#footer-info{
 	color : #d4dae3;
 }
 
-.info a:hover{
+#footer-info a:hover{
 	color : #d8ebfd;
+	text-decoration : none;
 }
