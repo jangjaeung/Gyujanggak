@@ -21,7 +21,7 @@
   		SELCT COUNT(*) FROM POST
   	</select>
   	
-  	<select id="selectListAll" resultMap="boardResultMap">
+  	<select id="selectListAll" resultMap="postResultMap">
   		SELECT * FROM POST ORDER BY POST_NO DESC
   	</select>
 </mapper>
