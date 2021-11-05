@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="postMapper">
 	<resultMap type="Post" id="postResultMap">
 		<id property="postNo" column="POST_NO"/>
 		<result property="postWriter" column="POST_WRITER"/>
 		<result property="postTitle" column="POST_TITLE"/>
 		<result property="postContents" column="POST_CONTENTS"/>
-		<result property="postWriter" column="POST_DATE"/>
-		<result property="postDate" column="P_VIEW_COUNT"/>
+		<result property="postDate" column="POST_DATE"/>
+		<result property="pViewCount" column="P_VIEW_COUNT"/>
+		<result property="replyCnt" column="REPLY_COUNT"/>
 	</resultMap>
 	<resultMap type="Reply" id="replyResultMap">
   		<id property="replyNo" column="REPLY_NO"/>
@@ -18,10 +20,10 @@
   	</resultMap>
   	
   	<select id="selectCount" resultType="_int">
-  		SELCT COUNT(*) FROM POST
+  		SELECT COUNT(*) FROM POST
   	</select>
   	
-  	<select id="selectListAll" resultMap="boardResultMap">
-  		SELECT * FROM POST ORDER BY POST_NO DESC
+  	<select id="selectListAll" resultMap="postResultMap">
+  		SELECT P.*,(SELECT COUNT(*) FROM REPLY R WHERE R.POST_NO = P.POST_NO) "REPLY_COUNT" FROM POST P ORDER BY POST_NO DESC
   	</select>
 </mapper>

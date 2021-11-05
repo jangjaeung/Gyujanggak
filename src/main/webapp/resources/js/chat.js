@@ -100,49 +100,7 @@ $(function() {
 	    $(".chat-box").toggle('scale');
 	  })
 	  
- //////////////////////////////////////////////////////////////////////////////////////////////
 	  
-	  const showing_class = "showing";
-		const firstslide = document.querySelector(".slider_item:first-child");
-
-		function slide() {
-			const currentSlide = document.querySelector(".showing");
-		    if(currentSlide){
-		        currentSlide.classList.remove(showing_class);
-		        const nextSlide = currentSlide.nextElementSibling;
-		        if(nextSlide){
-		            nextSlide.classList.add(showing_class);
-		        } else {
-		            firstslide.classList.add(showing_class);
-		        }
-		        
-		    } else {
-		        firstslide.classList.add(showing_class);
-		    }
-		}
-		slide();
-		setInterval(slide, 4000)
-
-		var swiper = new Swiper(".mySwiper", {
-			slidesPerView : 3,
-			spaceBetween : 30,
-			loop : true,
-			autoplay : {
-				delay : 3000,
-				disableOnInteraction : false,
-			},
-			pagination : {
-				el : ".swiper-pagination",
-				clickable : true,
-			},
-			navigation : {
-				nextEl : '.swiper-button-next',
-				prevEl : '.swiper-button-prev',
-			},
-			scrollbar : {
-				el : '.swiper-scrollbar',
-			}
-		});
 });
 ///////////////////////////////////////////////////////
 

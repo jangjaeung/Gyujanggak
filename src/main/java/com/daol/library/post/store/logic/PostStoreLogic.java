@@ -2,6 +2,7 @@ package com.daol.library.post.store.logic;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,13 +19,15 @@ public class PostStoreLogic implements PostStore{
 
 	@Override
 	public int selectListCount() {
-		int totalCount = session.selectOne("postResultMap.selectCount");
+		int totalCount = session.selectOne("postMapper.selectCount");
 		return totalCount;
 	}
 
 	@Override
 	public List<Post> selectPrintAll(PageInfo pi) {
-		List<Post> pList = session.selectList("postResultMap.selectListAll",pi);
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		List<Post> pList = session.selectList("postMapper.selectListAll",pi, rowBounds);
 		return pList;
 	}
 
