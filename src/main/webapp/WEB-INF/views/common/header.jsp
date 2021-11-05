@@ -49,11 +49,11 @@
 					<a href="mypageInfo.do">마이페이지</a>
 					<ul>
 						<li><a href="mypageInfo.do">회원정보</a></li>
-						<li><a href="#">회원탈퇴</a></li>
-						<li><a href="#">도서 예약 내역</a></li>
-						<li><a href="#">나의 대출 내역</a></li>
-						<li><a href="#">희망 도서 신청</a></li>
-						<li><a href="#">관심도서 내역</a></li>
+						<li><a href="leaveAccount.do">회원탈퇴</a></li>
+						<li><a href="lendingStatus.do">나의 대출 내역</a></li>
+						<li><a href="bookingList.do">도서 예약 내역</a></li>
+						<li><a href="wishList.do">희망 도서 신청</a></li>
+						<li><a href="likeList.do">관심도서 내역</a></li>
 						<li><a href="#">취향 분석 설문</a></li>
 						<li><a href="#">시설 이용 내역</a></li>
 						<li><a href="#">문의하기</a></li>
