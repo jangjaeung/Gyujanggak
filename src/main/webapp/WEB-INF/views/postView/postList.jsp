@@ -47,7 +47,7 @@
 						<td>${post.postTitle }</td>
 						<td>${post.postWriter }</td>
 						<td>${post.postDate }</td>
-						<td>${ }</td>
+<%-- 						<td>${ }</td> --%>
 						<td>${post.pViewcount }</td>
 					</tr>
 				</c:forEach>
