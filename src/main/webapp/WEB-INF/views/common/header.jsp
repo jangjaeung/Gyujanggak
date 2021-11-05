@@ -14,10 +14,7 @@
 		<div class="wrapper">
 			<div class="wrapper left" id="left">
 					<a href="home.do"><img src="resources/img/notextLogo.jpg" alt="logo" id="header-logo"></a>
-					<a href="home.do"><h3 id="logoText">&nbsp;&nbsp;<b>다올대학교 도서관 규장각</b></h3></a>
-			<div class="wrapper left">
-					<a href="home.do"><img src="resources/img/notextLogo.jpg" alt="logo" id="logo"></a>
-					<a href="home.do"><h3 id="logoText">&nbsp;&nbsp;다올대학교 도서관 규장각</h3></a>
+					<a href="home.do"><span>&nbsp;&nbsp;</span><h3 id="logoText" style="font-weight:bold;">다올대학교 도서관 규장각</h3></a>
 			</div>
 			<div class="wrapper right" id="right"> LOGIN </div>
 		</div>
