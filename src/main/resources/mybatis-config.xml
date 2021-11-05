@@ -12,7 +12,7 @@
 		<typeAlias type="com.daol.library.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.daol.library.book.domain.Book" alias="Book"/>
 		<typeAlias type="com.daol.library.post.domain.Post" alias="Post"/>
-		<typeAlias type="com.daol.library.post.domain.Post" alias="Reply"/>
+		<typeAlias type="com.daol.library.post.domain.Reply" alias="Reply"/>
 		<typeAlias type="com.daol.library.readingRoom.domain.ReadingRoom" alias="ReadingRoom"/>
 	</typeAliases>
 	<mappers>

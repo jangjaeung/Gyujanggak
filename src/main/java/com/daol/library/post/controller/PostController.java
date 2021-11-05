@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.daol.library.post.common.Pagination;
+import com.daol.library.common.Pagination;
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
 import com.daol.library.post.service.PostService;
@@ -25,7 +25,7 @@ public class PostController {
 		int currentPage = (page!=null) ? page : 1;
 		int totalCount = service.getListCount();
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<Post> pList = service.printAll(pi);//댓글수 불러오는 쿼리문 작성
+		List<Post> pList = service.printAll(pi);
 		
 		if(!pList.isEmpty()) {
 			mv.addObject("pList",pList);
@@ -36,5 +36,10 @@ public class PostController {
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value="postWrite.do",method=RequestMethod.GET)
+	public String postWriteView() {
+		return "postView/postWrite";
 	}
 }
