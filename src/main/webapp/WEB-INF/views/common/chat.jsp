@@ -4,7 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<!-- 챗봇용 -->
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- 스와이퍼 -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- 메인페이지 챗봇 스크립트 -->
+<link rel="stylesheet" href="/resources/mainPage/css/chatbot.css">
+<script type="text/javascript" src="/resources/js/chat.js"></script>
 <title></title>
 </head>
 <body>
@@ -23,17 +36,19 @@
 	      </div>
 	      <div class="chat-logs">
 	       	<div class="cm-msg-text">
-              <span>안녕하세요 규장각 입니다</span>
+              <span class="main-msg">안녕하세요 규장각 입니다</span><br>
+              <span class="main-msg">버튼을 클릭 하시거나 키워드를 입력해 주세요!</span><br><br>
               <ul>
-                <li>사이트 이용안내</li>
-                <li>대출 * 반납</li>
-                <li>이용시설 안내</li>
+                <li class="site-info">사이트 이용안내</li>
+                <li class="site-info-resend">대출 * 반납</li>
+                <li class="site-ifno-room">이용시설 안내</li>
+                <li class="quest">문의하기</li>
               </ul>
            </div>
 	      </div><!--chat-log -->
 	    </div>
 	    <div class="chat-input">      
-	      <form>
+	      <form id="send">
 	        <input type="text" id="chat-input" placeholder="Send a message..."/>
 	      <button type="submit" class="chat-submit" id="chat-submit"><i class="material-icons">send</i></button>
 	      </form>      

@@ -1,5 +1,15 @@
 package com.daol.library.book.store;
 
-public interface BookStore {
+import java.util.List;
 
+import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.Search;
+
+public interface BookStore {
+	public List<Book> selectAll();
+	public List<Book> selectSearchSimple(Search search);
+	public List<Book> selectSearchDetail(Search search);
+	public List<Book> selectSearchSub(Search search);
+	public List<Book> selectSearchNew();
+	
 }

@@ -56,6 +56,7 @@
   border-radius:5px;  
 /*   box-shadow: 0px 5px 35px 9px #464a92; */
   box-shadow: 0px 5px 35px 9px #ccc;
+  z-index:9999;
 }
 .chat-box-toggle {
   float:right;
@@ -210,4 +211,20 @@
 .cm-msg-button {
     clear: both;
     margin-bottom: 70px;
+}
+.cm-msg-text ul li{
+	list-style:none;
+	border:1px solid #cacbce;
+	line-height: 50px;
+	text-align:center;
+	display:block;
+	cursor:pointer;
+	border-radius:10px 10px 10px 10px
+}
+.cm-msg-text ul li:hover{
+	background-color:#5A5EB9;
+	color:white;
+}
+.main-msg{
+	font-size:1.5rem;
 }

@@ -11,10 +11,15 @@
 		<typeAlias type="com.daol.library.member.domain.Member" alias="Member"/>
 		<typeAlias type="com.daol.library.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.daol.library.book.domain.Book" alias="Book"/>
+		<typeAlias type="com.daol.library.post.domain.Post" alias="Post"/>
+		<typeAlias type="com.daol.library.post.domain.Post" alias="Reply"/>
+		<typeAlias type="com.daol.library.readingRoom.domain.ReadingRoom" alias="ReadingRoom"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/book-mapper.xml"/>
+		<mapper resource="mappers/post-mapper.xml"/>
+		<mapper resource="mappers/readingRoom-mapper.xml"/>
 	</mappers>
 </configuration>
