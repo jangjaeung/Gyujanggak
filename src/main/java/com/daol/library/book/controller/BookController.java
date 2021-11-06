@@ -31,8 +31,9 @@ public class BookController {
 			model.addAttribute("search", search);
 			return "book/bookSearchSimple";
 		} else {
-			model.addAttribute("msg", "검색 실패");
-			return "common/errorPage";
+//			model.addAttribute("msg", "검색 실패");
+//			return "common/errorPage";
+			return "book/bookSearchSimple";
 		}
 	}
 	

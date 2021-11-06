@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>다올대학교 도서관 ｜ 규장각</title>
+<link rel="stylesheet" href="../../../resources/css/searchingBook.css">
 </head>
 <body>
 <!-- Header -->
@@ -18,7 +19,7 @@
     </nav>
 <!-- Aside -->
     <aside>
-        <div>
+        <div class="s__sidebar">
             <h3>자료검색</h3>
             <ul>
                 <li><a href="/search.do">간략검색</a></li>
@@ -32,39 +33,44 @@
 <!-- Contents -->
     <div>
         <div>
-            <h2>간략검색</h2>
+            <h1>간략검색</h1>
         </div>
         <div>
             <h5><a href="/home.do">Home</a> > 자료검색 > 간략검색</h5>
         </div>
-        <hr>
         <div>
             <form action="/searchSimple.do" method="get">
-                <select name="searchCondition" id="">
+                <select name="searchCondition" id="" class="search__select">
                     <option value="title" <c:if test="${ search.searchCondition eq 'title' }">selected</c:if>>도서명</option>
                     <option value="writer" <c:if test="${ search.searchCondition eq 'writer' }">selected</c:if>>저자</option>
                     <option value="publisher" <c:if test="${ search.searchCondition eq 'publisher' }">selected</c:if>>출판사</option>
                 </select>
-                <input type="text" name="searchValue" value="${ search.searchValue }">
-                <input type="submit" value="검색">
+                <input type="text" name="searchValue" placeholder="검색어 입력" value="${ search.searchValue }" class="search">
+                <input type="submit" value="검색" class="s__button">
             </form>
         </div>
         <section>
         	<c:if test="${ empty bList }">
                 <tr>
                     <td>
-                        검색 결과가 없습니다.
+                        <p>검색 결과가 없습니다.</p>
                     </td>
                 </tr>
         	</c:if>
         	<c:if test="${ !empty bList }">
+                <h2>"${ search.searchValue }" 검색 결과입니다.</h2>
 	        	<c:forEach items="${ bList }" var="book">
-		            <div>
-		                <div>
-		                    <img src="${pageContext.request.contextPath}/resources/bookcover/${book.bookCover}" alt="">
+                    <hr>
+		            <div class="section">
+		                <div class="section1">
+                            <a href="#">
+                                <img src="${pageContext.request.contextPath}/resources/bookcover/${book.bookCover}" alt="" class="book__cover">
+                            </a>
 		                </div>
-		                <div>
-		                    <h4>${ book.bookName }</h4>
+		                <div class="section2">
+                            <a href="#">
+                                <h4>${ book.bookName }</h4>
+                            </a>
 		                    <div>저자 : ${ book.bookWriter } ｜ 발행처 : ${ book.publisher } ｜ 발행연도 : ${ book.bookYear }</div>
 		                    <div>자료상태 : ${ book.bookState }</div>
 		                </div>
