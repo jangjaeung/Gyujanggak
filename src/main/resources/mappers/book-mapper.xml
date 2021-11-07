@@ -31,4 +31,11 @@
 		</if>
 		ORDER BY UPDATE_DATE DESC
 	</select>
+	<select id="selectSearchDetail" resultMap="bookResultMap">
+		SELECT * FROM BOOK
+
+	</select>
+	<select id="selectOne" resultMap="bookResultMap">
+		SELECT * FROM BOOK WHERE BOOK_NO = #{bookNo}
+	</select>
 </mapper>
