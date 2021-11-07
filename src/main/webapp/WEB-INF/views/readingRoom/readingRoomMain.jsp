@@ -121,13 +121,13 @@
 			</table>
 		</div>
 		<div class="rsvDiv hidden">
-			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 예약시간 <select
-				id="reservationTime">
+			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 예약시간 
+			<select id="reservationTime">
 				<option value="09:00~15:00">09:00~15:00</option>
 				<option value="15:00~21:00">15:00~21:00</option>
 			</select>
 		</div>
-		<button class="rsv_btn">좌석예약</button>
+		<button class="rsv_btn">예약</button>
 	</main>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
@@ -187,7 +187,7 @@
 					},
 					success : function(data) {
 						if (data === 'success') {
-							alert("예약 완료하셨습니다.")
+							alert("예약이 완료되었습니다.")
 							location.reload();
 						} else {
 							alert('예약실패');

@@ -24,10 +24,6 @@
   	</select>
   	
   	<select id="selectListAll" resultMap="postResultMap">
-<<<<<<< HEAD
-  		SELECT * FROM POST ORDER BY POST_NO DESC
-=======
   		SELECT P.*,(SELECT COUNT(*) FROM REPLY R WHERE R.POST_NO = P.POST_NO) "REPLY_COUNT" FROM POST P ORDER BY POST_NO DESC
->>>>>>> branch 'master' of https://github.com/TeamDAOL/Gyujanggak.git
   	</select>
 </mapper>
