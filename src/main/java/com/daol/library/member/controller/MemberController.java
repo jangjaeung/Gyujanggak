@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -34,8 +35,51 @@ public class MemberController {
 	 
 	 @RequestMapping(value="enrollView.do", method=RequestMethod.GET)
 	 	public String enrollView() {
-		 return "member/enroll";
+		 return "member/memberjoin";
 	 }
+	 
+	 @RequestMapping(value="studentView.do", method=RequestMethod.GET)
+	 	public String studentView() {
+		 return "member/studentjoin";
+	 }
+	 
+	 @RequestMapping(value="enrollType.do", method=RequestMethod.GET)
+	 	public String enrollType() {
+		 return "member/enrolltype";
+	 }
+	 
+	 @RequestMapping(value="memberView.do", method=RequestMethod.GET)
+	 	public String memberView() {
+		 return "member/memberjoin";
+	 }
+	 
+	 @RequestMapping(value="searchView.do", method=RequestMethod.GET)
+	 	public String searchView() {
+		 return "member/searchType";
+	 }
+	 
+	 @RequestMapping(value="idView.do", method=RequestMethod.GET)
+	 	public String idView() {
+		 return "member/idSearch";
+	 }
+	 
+	 @RequestMapping(value="pwdView.do", method=RequestMethod.GET)
+	 	public String pwdView() {
+		 return "member/pwdSearch";
+	 }
+	 
+	 @RequestMapping(value="idSearch.do", method=RequestMethod.POST)
+	 	public String IdSearch(@ModelAttribute Member member, Model model) {
+		 Member mOne = service.printOne(member);
+		 if(mOne != null) {
+			 model.addAttribute("mOne", mOne);
+				return "member/idCheck";
+			} else {
+				model.addAttribute("msg", "공지사항 상세조회 실패");
+				return "common/errorPage";
+			}
+	 }
+	 
 	 @RequestMapping(value="enroll.do", method=RequestMethod.POST)
 	 	public String Memberregister(@ModelAttribute Member member, @RequestParam(value="uploadFile", required=false)MultipartFile uploadFile,Model model, HttpServletRequest request) {
 		// value값은 jsp의 input태그의 name값이고
@@ -115,5 +159,17 @@ public class MemberController {
 				return"common/errorPage";
 			}
 		}
+		
+		@RequestMapping(value = "findPw.do", method = RequestMethod.POST)
+		public void findPwPOST(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
+			service.findPw(response, member);
 	
+		}
+		
+		@ResponseBody
+	  	@RequestMapping(value="checkDupId.do", method=RequestMethod.GET)
+	  	public String idDuplicateCheck(@RequestParam("userId") String userId) {
+	  		int result = service.checkIdDup(userId);
+	  		return String.valueOf(result); 
+	  	}
 }
