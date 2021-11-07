@@ -16,6 +16,7 @@
 	<insert id="insertReadingRoom" parameterType="ReadingRoom">
 		INSERT INTO READINGROOM VALUES(SEQ_RNUM.NEXTVAL, #{userId}, SYSDATE, #{rReservationTime}, #{seatNo}  )
 	</insert>
+<!-- 열람실 현황 -->
 	<select id="selectAllReadingRoom" resultMap="readingRoomResultMap">
 		SELECT * FROM READINGROOM
 	</select>

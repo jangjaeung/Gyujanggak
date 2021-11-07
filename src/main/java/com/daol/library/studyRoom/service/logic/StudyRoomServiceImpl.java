@@ -1,5 +1,23 @@
 package com.daol.library.studyRoom.service.logic;
 
-public class StudyRoomServiceImpl {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.daol.library.studyRoom.domain.StudyRoom;
+import com.daol.library.studyRoom.service.StudyRoomService;
+import com.daol.library.studyRoom.store.StudyRoomStore;
+
+@Service
+public class StudyRoomServiceImpl implements StudyRoomService {
+
+	@Autowired
+	private StudyRoomStore store;
+
+	@Override
+	public int reservationStudyRoom(StudyRoom studyRoom) {
+		int result = store.insertStudyRoom(studyRoom);
+		return result;
+	}
+	
+	
 }
