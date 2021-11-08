@@ -18,4 +18,10 @@ public class StudyRoomStoreLogic implements StudyRoomStore {
 		int result = sqlSession.insert("studyRoomMapper.insertStudyRoom", studyRoom);
 		return result;
 	}
+
+	@Override
+	public int deleteStudyRoom(StudyRoom studyRoom) {
+		int result = sqlSession.delete("studyRoomMapper.deleteStudyRoom", studyRoom);
+		return result;
+	}
 }

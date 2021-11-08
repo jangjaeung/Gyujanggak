@@ -21,11 +21,11 @@ public class ReadingRoomStoreLogic implements ReadingRoomStore {
 	}
 
 	@Override
-	public ReadingRoom printOneReadingRoom(int rReservationNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReadingRoom> selectSeatStatus(int seatNo) {
+		List<ReadingRoom> result = sqlSession.selectList("readingRoomMapper.selectSeatStatus", seatNo);
+		return result;
 	}
-
+	
 	@Override
 	public int insertReadingRoom(ReadingRoom readingRoom) {
 		int result = sqlSession.insert("readingRoomMapper.insertReadingRoom", readingRoom);
@@ -34,8 +34,10 @@ public class ReadingRoomStoreLogic implements ReadingRoomStore {
 
 	@Override
 	public int deleteReadingRoom(ReadingRoom readingRoom) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSession.delete("readingRoomMapper.deleteReadingRoom", readingRoom);
+		return result;
 	}
+
+
 
 }

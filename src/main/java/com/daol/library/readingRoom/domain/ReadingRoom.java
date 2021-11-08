@@ -8,6 +8,7 @@ public class ReadingRoom {
 	private Date rReservationDate;
 	private String rReservationTime;
 	private String seatNo;
+	private int count;
 	
 	public ReadingRoom() {}
 	
@@ -41,11 +42,20 @@ public class ReadingRoom {
 	public void setSeatNo(String seatNo) {
 		this.seatNo = seatNo;
 	}
+	
+	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
-		return "ReadingRoom [예약번호=" + rReservationNo + ", 아이디=" + userId + ", 예약일="
-				+ rReservationDate + ", 예약시간=" + rReservationTime + ", 좌석번호=" + seatNo + "]";
+		return "ReadingRoom [rReservationNo=" + rReservationNo + ", userId=" + userId + ", rReservationDate="
+				+ rReservationDate + ", rReservationTime=" + rReservationTime + ", seatNo=" + seatNo + ", count="
+				+ count + "]";
 	}
-	
-	
 }

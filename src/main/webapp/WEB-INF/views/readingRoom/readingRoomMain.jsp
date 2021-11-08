@@ -121,10 +121,11 @@
 			</table>
 		</div>
 		<div class="rsvDiv hidden">
-			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 예약시간 
-			<select id="reservationTime">
-				<option value="09:00~15:00">09:00~15:00</option>
-				<option value="15:00~21:00">15:00~21:00</option>
+			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 예약시간 <select
+				id="reservationTime">
+				<option value="default" disabled selected>시간을 선택해 주세요.</option>
+				<option value="AM">09:00~15:00</option>
+				<option value="PM">15:00~21:00</option>
 			</select>
 		</div>
 		<button class="rsv_btn">예약</button>
@@ -145,8 +146,13 @@
 		contentType : 'application/json',
 
 		success : function(data) {
+			console.log(12321312,data)
 			data.find(function(ele) {
-				$('#' + ele.seatNo + '').addClass('seatRed');
+				if(ele.count == 2){
+				    $('#' + ele.seatNo + '').addClass('seatRed');
+				}else if(ele.count == 1){
+				    $('#' + ele.seatNo + '').addClass("seatOrange");
+				}
 			});
 
 			$('.seat').not('.seatRed').addClass('seatGreen');
@@ -160,7 +166,42 @@
 
 				//console.log($('.select').text());
 				$('#selectedSeat').val($('.select').text());
+				//console.log($('#selectedSeat'));
+				
+				$.ajax({
+					url : 'selectSeatStatus.do',
+					type : 'post',
+					data : {
+						seatNo : $('#selectedSeat').val()
+					},
+					success : function(data) {
+						//console.log(123,JSON.parse(data))
+						data = JSON.parse(data);
+						//만약 데이터가 1개 이상이면 그값이 AM일때 reservationTime 이거 value가 AM인걸 disabled PM이면 PM을 disabled
+						if(data.length > 0){
+							for(let i in data){
+								console.log(data[i].rReservationTime)
+								$("#reservationTime option[value*='"+data[i].rReservationTime+"']").prop('disabled',true);
+							}
+						}else{
+							$("#reservationTime option[value*='AM']").prop('disabled',false);
+							$("#reservationTime option[value*='PM']").prop('disabled',false);
+						}
+						$("#reservationTime option[value*='default']").prop('selected',true);
+						/* if (data === 'success') {
+							alert("예약이 완료되었습니다.")
+							location.reload();
+						} else {
+							alert('예약실패');
+						} */
+					},
+					error : function() {
+						alert('AJAX 통신오류.. 관리자에게 문의하세요');
+					},
+				});
+				
 			});
+
 
 		},
 		error : function() {
@@ -174,8 +215,8 @@
 			$('.hidden').removeClass('hidden')
 		} else {
 			if ($('#selectedSeat').val() !== '') {
-				console.log($('#selectedSeat').val());
-				console.log($('#reservationTime').val());
+				//console.log($('#selectedSeat').val());
+				//console.log($('#reservationTime').val());
 
 				$.ajax({
 					url : 'reservationReadingRoom.do',

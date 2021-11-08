@@ -35,4 +35,16 @@ public class StudyRoomController {
 			return "fail";
 		}
 	}
+	
+	// 예약 취소
+	@ResponseBody
+	@RequestMapping(value="cancleStudyRoom.", method=RequestMethod.GET)
+	public String cancleStudyRoom(@ModelAttribute StudyRoom studyRoom) {
+		int result = service.cancleStudyRoom(studyRoom);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 }
