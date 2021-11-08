@@ -214,7 +214,8 @@
 		if ($('.hidden').length > 0) {
 			$('.hidden').removeClass('hidden')
 		} else {
-			if ($('#selectedSeat').val() !== '') {
+			console.log( $('#reservationTime').val() )
+			if ($('#selectedSeat').val() !== '' && $('#reservationTime').val() !== null) {
 				//console.log($('#selectedSeat').val());
 				//console.log($('#reservationTime').val());
 
@@ -239,7 +240,7 @@
 					},
 				});
 			} else {
-				alert('좌석을 선택해주세요.');
+				alert('좌석과 시간 모두를 선택해주세요.');
 			}
 		}
 
