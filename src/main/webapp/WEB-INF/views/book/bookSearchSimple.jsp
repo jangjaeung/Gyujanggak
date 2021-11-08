@@ -11,6 +11,9 @@
 <body>
 <!-- Header -->
     <jsp:include page="../common/header.jsp"></jsp:include>
+    <div>
+        <span style="font-size: 8rem;">&nbsp;</span>
+    </div>
 <!-- Navibar -->
     <nav>
 

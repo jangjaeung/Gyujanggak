@@ -10,6 +10,9 @@
 <body>
 <!-- Header -->
     <jsp:include page="../common/header.jsp"></jsp:include>
+    <div>
+        <span style="font-size: 8rem;">&nbsp;</span>
+    </div>
 <!-- Navibar -->
     <nav>
 
@@ -70,9 +73,9 @@
         </table>
     </div>
     <div>
-        <input type="submit" value="대출신청">
-        <input type="submit" value="도서예약">
-        <input type="submit" value="관심도서담기">
+        <button type="button" onclick="location.href='#';">대출신청</button>
+        <button type="button" onclick="location.href='#';">도서예약</button>
+        <button type="button" onclick="location.href='#';">관심도서담기</button>
     </div>
     <div>
         <table>

@@ -47,13 +47,13 @@ public class BookController {
 	}
 	@GetMapping("/searchDetail.do")
 	public String detailSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchSimple(search);
+		List<Book> bList = service.printSearchDetail(search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
-			return "book/bookSearchSimple";
+			return "book/bookSearchDetail";
 		} else {
-			return "book/bookSearchSimple";
+			return "book/bookSearchDetail";
 		}
 	}
 	
