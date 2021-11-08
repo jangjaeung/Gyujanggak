@@ -32,39 +32,39 @@ public class PostStoreLogic implements PostStore{
 	}
 
 	@Override
-	public int insertReadCount(int postNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateReadCount(int postNo) {
+		int result = session.update("postMapper.updateReadCount",postNo);
+		return result;
 	}
 
 	@Override
 	public Post selectPrintOne(int postNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Post post = session.selectOne("postMapper.selectOnePost",postNo);
+		return post;
 	}
 
 	@Override
 	public int insertPost(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.insert("postMapper.insertPost",post);
+		return result;
 	}
 
 	@Override
 	public int updatePost(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update("postMapper.updatePost",post);
+		return result;
 	}
 
 	@Override
 	public int deletePost(int postNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.delete("postMapper.deletePost",postNo);
+		return result;
 	}
 
 	@Override
 	public List<Post> selectAllReply(int postNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> pList = session.selectList("postMapper.selectAllReply",postNo);
+		return pList;
 	}
 
 	@Override

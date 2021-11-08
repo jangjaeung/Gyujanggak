@@ -30,38 +30,38 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public int addReadCount(int postNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.updateReadCount(postNo);
+		return result;
 	}
 
 	@Override
 	public Post printOne(int postNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Post post = store.selectPrintOne(postNo);
+		return post;
 	}
 
 	@Override
 	public int registerPost(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.insertPost(post);
+		return result;
 	}
 
 	@Override
 	public int modifyPost(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.updatePost(post);
+		return result;
 	}
 
 	@Override
 	public int removePost(int postNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deletePost(postNo);
+		return result;
 	}
 
 	@Override
 	public List<Post> printAllReply(int postNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> pList = store.selectAllReply(postNo);
+		return pList;
 	}
 
 	@Override

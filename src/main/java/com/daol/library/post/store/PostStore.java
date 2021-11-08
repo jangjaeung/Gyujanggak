@@ -9,7 +9,7 @@ public interface PostStore {
 
 	public int selectListCount();
 	public List<Post> selectPrintAll(PageInfo pi);
-	public int insertReadCount(int postNo);
+	public int updateReadCount(int postNo);
 	public Post selectPrintOne(int postNo);
 	public int insertPost(Post post);
 	public int updatePost(Post post);
