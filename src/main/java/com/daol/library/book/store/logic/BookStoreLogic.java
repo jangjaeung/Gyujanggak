@@ -22,6 +22,12 @@ public class BookStoreLogic implements BookStore {
 	}
 
 	@Override
+	public Book selectOne(int bookNo) {
+		Book book = sqlSession.selectOne("bookMapper.selectOne", bookNo);
+		return book;
+	}
+	
+	@Override
 	public List<Book> selectSearchSimple(Search search) {
 		List<Book> bList = sqlSession.selectList("bookMapper.selectSearchSimple", search);
 		return bList;
@@ -29,8 +35,8 @@ public class BookStoreLogic implements BookStore {
 
 	@Override
 	public List<Book> selectSearchDetail(Search search) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> bList = sqlSession.selectList("bookMapper.selectSearchDetail", search);
+		return bList;
 	}
 
 	@Override

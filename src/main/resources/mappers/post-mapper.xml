@@ -50,6 +50,6 @@
   	
   	
   	<select id="selectAllReply" resultMap="replyResultMap">
-  		SELECT * FROM REPLY WHERE POST_NO = #{postNo} ORDER BY REPLY_NO DESC
+  		SELECT P.*,(SELECT COUNT(*) FROM REPLY R WHERE R.POST_NO = P.POST_NO) "REPLY_COUNT" FROM POST P ORDER BY POST_NO DESC
   	</select>
 </mapper>

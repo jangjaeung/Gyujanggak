@@ -6,11 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>다올대학교 도서관 ｜ 규장각</title>
-<link rel="stylesheet" href="../../../resources/css/searchingBook.css">
 </head>
 <body>
 <!-- Header -->
-    <jsp:include page="../common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <!-- Navibar -->
     <nav>
 
@@ -31,20 +30,36 @@
 <!-- Contents -->
     <div>
         <div>
-            <h1>간략검색</h1>
+            <h1>상세검색</h1>
         </div>
         <div>
-            <h5><a href="/home.do">Home</a> > 자료검색 > 간략검색</h5>
+            <h5><a href="/home.do">Home</a> > 자료검색 > 상세검색</h5>
         </div>
         <div>
-            <form action="/searchSimple.do" method="get">
-                <select name="searchCondition" id="" class="search__select">
-                    <option value="title" <c:if test="${ search.searchCondition eq 'title' }">selected</c:if>>도서명</option>
-                    <option value="writer" <c:if test="${ search.searchCondition eq 'writer' }">selected</c:if>>저자</option>
-                    <option value="publisher" <c:if test="${ search.searchCondition eq 'publisher' }">selected</c:if>>출판사</option>
-                </select>
-                <input type="text" name="searchValue" placeholder="검색어 입력" value="${ search.searchValue }" class="search">
-                <input type="submit" value="검색" class="s__button">
+            <form action="/searchDetail.do" method="get">
+                <table>
+                    <tr>
+                        <td><label for="title"><b>도서명</b></label></td>
+                        <td><input type="text" id="title" name="searchValue" value="${ search.searchValue }"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="writer"><b>저자</b></label></td>
+                        <td><input type="text" id="writer" name="searchValue" value="${ search.searchValue }"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="publisher"><b>출판사</b></label></td>
+                        <td><input type="text" id="publisher" name="searchValue" value="${ search.searchValue }"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="isbn"><b>ISBN</b></label></td>
+                        <td><input type="text" id="isbn" name="searchValue" value="${ search.searchValue }"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="year"><b>발행연도</b></label></td>
+                        <td><input type="text" id="year" name="searchValue" value="${ search.searchValue }"></td>
+                    </tr>
+                </table>
+                <input type="submit" value="검색" class="">
             </form>
         </div>
         <section>

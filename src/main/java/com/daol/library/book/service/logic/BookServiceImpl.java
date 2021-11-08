@@ -22,6 +22,12 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public Book printOne(int bookNo) {
+		Book book = store.selectOne(bookNo);
+		return book;
+	}
+	
+	@Override
 	public List<Book> printSearchSimple(Search search) {
 		List<Book> bList = store.selectSearchSimple(search);
 		return bList;
@@ -29,8 +35,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> printSearchDetail(Search search) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> bList = store.selectSearchDetail(search);
+		return bList;
 	}
 
 	@Override

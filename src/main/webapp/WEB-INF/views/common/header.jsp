@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,12 @@
 					<a href="home.do"><img src="resources/img/notextLogo.jpg" alt="logo" id="header-logo"></a>
 					<a href="home.do"><span>&nbsp;&nbsp;</span><h3 id="logoText" style="font-weight:bold;">다올대학교 도서관 규장각</h3></a>
 			</div>
-			<div class="wrapper right" id="right"> LOGIN </div>
+			<c:if test="${sessionScope.loginUser eq null }">
+				<div class="wrapper right" id="right"><a href="loginView.do" >LOGIN</a></div>
+			</c:if>
+			<c:if test="${sessionScope.loginUser ne null and loginUser ne ''}">
+				<div class="wrapper right" id="right"><a href="logout.do" >LOGOUT</a></div>
+			</c:if>
 		</div>
 		<div class="nav" id="nav">
 			<ul class="menu" id="menu">
