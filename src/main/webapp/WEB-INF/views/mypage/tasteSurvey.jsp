@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>대출현황</title>
+<title>취향분석설문</title>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css" />
 
@@ -36,7 +36,7 @@
 	border-bottom : 1px solid;
 }
 .photo{
-	width : 25%;
+	width : 18%;
 	float: left;
 	border : 0.5px solid;
 	margin : 2%;
@@ -48,17 +48,12 @@
 	margin-top : 2%;
 }
 .btn-area{
-	text-align : right;
+	text-align : center;
 }
 
-.review{
-	margin : 1%;
-}
-#review{
-	float : right;;
-}
+
 .starRev{
-	float : right;
+	float : left;
 	margin : 1%;
 }
 .starR1{
@@ -96,48 +91,38 @@
 		<article class="mainContent">
 			<!-- 타이틀 --><br>
 			<h2 id="mainTitle">
-				<b>대출 현황</b>
+				<b>일용자님의 취향분석</b>
 			</h2>
 			<br><br><br>
 			<div id="book-count">
-				<p><span>4</span> 권의 책이 있습니다.</p>
+				<p style='color : red;'>과거에 본 도서를 찾아 평가해보세요!</p>
 			</div>
 			
 			<!-- 본문 -->
 			<br> <br>
 			<div class="card">
 				<div class="photo">
-					<img src="https://s-media-cache-ak0.pinimg.com/236x/3b/36/ca/3b36ca3afe0fa0fd4984b9eee2e154bb.jpg" width="160px" height="220px">
+					<img src="https://s-media-cache-ak0.pinimg.com/236x/3b/36/ca/3b36ca3afe0fa0fd4984b9eee2e154bb.jpg" width="120px" height="180px">
 				</div>
 				<div class="description">
 					<h3>달러구트 꿈 백화점</h3>
 					<p><span>팩토리나인</span>&nbsp;|&nbsp;<span>이미예</span>&nbsp;|&nbsp;<span>2021.07.27</span></p>
-					<br>	
-					<p>대출일 : 2021-10-20</p>
-					<p>반납예정일 : 2021-10-20</p>
 					<br>
-						<div class="btn-area">
-							<button class="btn btn-success ">연장하기</button>
-<!-- 						<button class="btn btn-info">서평보기</button>
-							<button class="btn btn-info">서평쓰기</button> -->
-					</div>
-				</div>
-				<div class="review">
-					<textarea id="review" rows="7" cols="92" placeholder="내용을 입력해주세요"></textarea>
 					<div class="starRev">
-						<span class="starR1 on">별1_왼쪽</span> <span class="starR2">별1_오른쪽</span>
-						<span class="starR1">별2_왼쪽</span> <span class="starR2">별2_오른쪽</span>
-						<span class="starR1">별3_왼쪽</span> <span class="starR2">별3_오른쪽</span>
-						<span class="starR1">별4_왼쪽</span> <span class="starR2">별4_오른쪽</span>
-						<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
-						 <br> <br>
-						<div class="btn-area">
-							<button class="btn btn-info btn-sm">등록</button>
-						</div>	
-					</div>
+					<span class="starR1 on">별1_왼쪽</span> <span class="starR2">별1_오른쪽</span>
+					<span class="starR1">별2_왼쪽</span> <span class="starR2">별2_오른쪽</span>
+					<span class="starR1">별3_왼쪽</span> <span class="starR2">별3_오른쪽</span>
+					<span class="starR1">별4_왼쪽</span> <span class="starR2">별4_오른쪽</span>
+					<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
+					<br><br>
+				</div>
 			</div>
 			</div>
-
+			
+			<br><br>
+			<div class="btn-area">
+					<button class="btn btn-info">설문 완료</button>
+			</div>	
 		</article>
 
 		<br>

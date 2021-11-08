@@ -23,5 +23,6 @@
 		<mapper resource="mappers/post-mapper.xml"/>
 		<mapper resource="mappers/readingRoom-mapper.xml"/>
 		<mapper resource="mappers/studyRoom-mapper.xml"/>
+		<mapper resource="mappers/mypage-mapper.xml"/>
 	</mappers>
 </configuration>
