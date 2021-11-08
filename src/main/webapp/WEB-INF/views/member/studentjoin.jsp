@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -207,6 +208,7 @@ $('#out').css({'color':'red','width':'110%','font-size':'12px','border':'none','
 				alert('인증이 완료되었습니다.');
 				$('#e-email').css({'display':'none'});
 				$('#studentId').focus();
+				$("#userEmail").attr("readonly",true);
 				$('#out2').html("인증 완료");
 
 				$('#out2').css({'color':'green','width':'110%','font-size':'12px','border':'none','text-align':'right'});
