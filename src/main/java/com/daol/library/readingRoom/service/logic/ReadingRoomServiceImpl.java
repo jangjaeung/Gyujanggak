@@ -22,11 +22,11 @@ public class ReadingRoomServiceImpl implements ReadingRoomService {
 	}
 
 	@Override
-	public ReadingRoom printOneReadingRoom(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReadingRoom> selectSeatStatus(int seatNo) {
+		List<ReadingRoom> result = store.selectSeatStatus(seatNo);
+		return result;
 	}
-
+	
 	@Override
 	public int reservationReadingRoom(ReadingRoom readingRoom) {
 		int result = store.insertReadingRoom(readingRoom);
@@ -35,8 +35,10 @@ public class ReadingRoomServiceImpl implements ReadingRoomService {
 
 	@Override
 	public int cancleReadingRoom(ReadingRoom readingRoom) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deleteReadingRoom(readingRoom);
+		return result;
 	}
+
+
 
 }

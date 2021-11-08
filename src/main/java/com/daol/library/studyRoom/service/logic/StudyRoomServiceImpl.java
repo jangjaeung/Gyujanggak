@@ -18,6 +18,12 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		int result = store.insertStudyRoom(studyRoom);
 		return result;
 	}
+
+	@Override
+	public int cancleStudyRoom(StudyRoom studyRoom) {
+		int result = store.deleteStudyRoom(studyRoom);
+		return result;
+	}
 	
 	
 }

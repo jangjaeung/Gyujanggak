@@ -36,9 +36,24 @@ public class ReadingRoomController {
 		String strNowDate = simpleDateFormat.format(nowDate);
 
 		System.out.println("오늘 날짜 : " + strNowDate);
-
+		// 날짜 쿼리문에 넣었기때문에 다 수정해야함**
 		List<ReadingRoom> result = service.printAllReadingRoom(strNowDate);
 		
+		Gson gson = new Gson();
+		String rsvList = gson.toJson(result);
+		System.out.println(rsvList); // 예약 목록
+		return rsvList;
+	}
+	
+	// 좌석 선택 후 시간 조회
+	@ResponseBody
+	@RequestMapping(value = "selectSeatStatus.do", method = RequestMethod.POST)
+	public String selectSeatStatus(@ModelAttribute ReadingRoom readingRoom ) {
+		
+		System.out.println("좌석 : " + readingRoom.getSeatNo());
+		int seatNo =Integer.parseInt( readingRoom.getSeatNo());
+		 
+		List<ReadingRoom> result = service.selectSeatStatus(seatNo);
 		Gson gson = new Gson();
 		String rsvList = gson.toJson(result);
 		System.out.println(rsvList); // 예약 목록
@@ -48,7 +63,7 @@ public class ReadingRoomController {
 	// 좌석 예약
 	@ResponseBody
 	@RequestMapping(value = "reservationReadingRoom.do", method = RequestMethod.POST)
-	public String reservationReadingRoom(@ModelAttribute ReadingRoom readingRoom, Model model) {
+	public String reservationReadingRoom(@ModelAttribute ReadingRoom readingRoom) {
 		int result = service.reservationReadingRoom(readingRoom);
 		if (result > 0) {
 			return "success";
@@ -56,5 +71,19 @@ public class ReadingRoomController {
 			return "fail";
 		}
 	}
+	
+	// 예약 취소
+	@ResponseBody
+	@RequestMapping(value="cancleReadingRoom.", method=RequestMethod.GET)
+	public String cancleReadingRoom(@ModelAttribute ReadingRoom readingRoom) {
+		int result = service.cancleReadingRoom(readingRoom);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 
+	
+	
 }

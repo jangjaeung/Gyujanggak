@@ -17,4 +17,9 @@
 	<insert id="insertStudyRoom" parameterType="StudyRoom">
 		INSERT INTO STUDYROOM VALUES(SEQ_SNUM.NEXTVAL, #{userId}, #{sReservationDate}, #{sReservationTime}, #{purpose}, #{personnel})
 	</insert> 
+	
+<!-- 스터디룸 예약 취소 -->
+	<delete id="deleteStudyRoom" parameterType="_int">
+		DELETE FROM STUDYROOM WHERE S_RESERVATION_NO = #{sReservationNo}
+	</delete>
 </mapper>
