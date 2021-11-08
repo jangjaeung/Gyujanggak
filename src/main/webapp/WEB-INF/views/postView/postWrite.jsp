@@ -15,8 +15,25 @@
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div id="wrap">
-		<input type="text">
-		<textarea></textarea>
+	<form action="postRegister.do" method="post">
+		<table align="center">
+			<tr>
+				<td>제목</td>
+				<td><input type="text" size="50" name="postTitle"></td>
+			</tr>
+			<tr>
+				<td>작성자</td>
+				<td><input type="text" size="50" name="postWriter" value="${sessionScope.userId }" readonly></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td><textarea rows="7" cols="50" name="postContents"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="등록"><input type="reset" value="취소"></td>
+			</tr>
+		</table>
+	</form>
 	</div>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

@@ -24,6 +24,32 @@
   	</select>
   	
   	<select id="selectListAll" resultMap="postResultMap">
+  		SELECT P.*, (SELECT COUNT(*)FROM REPLY R WHERE R.POST_NO = P.POST_NO)AS REPLY_COUNT FROM POST P ORDER BY POST_NO DESC
+  	</select>
+  	
+  	<select id="selectOnePost" resultMap="postResultMap">
+  		SELECT P.*,(SELECT COUNT(*) FROM REPLY R WHERE R.POST_NO = P.POST_NO)AS REPLY_COUNT FROM POST P WHERE POST_NO = #{postNo}
+  	</select>
+  	
+  	<insert id="insertPost" parameterType="Post">
+  		INSERT INTO POST VALUES(SEQ_POST.NEXTVAL,#{postWriter}, #{postTitle},#{postContents}, default, default)
+  	</insert>
+  	
+  	<update id="updateReadCount" parameterType="_int">
+  		UPDATE POST SET P_VIEW_COUNT = P_VIEW_COUNT+1 WHERE POST_NO = #{postNo}
+  	</update>
+  	
+  	<update id="updatePost" parameterType="Post">
+  		UPDATE POST SET POST_TITLE = #{postTitle}, POST_CONTENTS = #{postContents} WHERE POST_NO = #{postNo}
+  	</update>
+  	
+  	<delete id="deletePost" parameterType="_int">
+  		DELETE POST WHERE POST_NO = #{postNo}
+  	</delete>
+  	
+  	
+  	
+  	<select id="selectAllReply" resultMap="replyResultMap">
   		SELECT P.*,(SELECT COUNT(*) FROM REPLY R WHERE R.POST_NO = P.POST_NO) "REPLY_COUNT" FROM POST P ORDER BY POST_NO DESC
   	</select>
 </mapper>

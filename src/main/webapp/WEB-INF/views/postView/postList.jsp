@@ -86,7 +86,10 @@ table tbody td:first-child{
 				<c:forEach items="${pList }" var="post">
 					<tr>
 						<td style="padding:12px;">${post.postNo }</td>
-						<td id="title" style="padding:12px;">${post.postTitle }</td>
+						<c:url var="pDetail" value="postDetail.do">
+							<c:param name="postNo" value="${post.postNo }"></c:param>
+						</c:url>
+						<td id="title" style="padding:12px;"><a href="${pDetail }">${post.postTitle }</a></td>
 						<td style="padding:12px;">${post.postWriter }</td>
 						<td style="padding:12px;">${post.postDate }</td>
 						<td style="padding:12px;">${post.replyCnt }</td>
@@ -128,12 +131,12 @@ table tbody td:first-child{
 			</c:if>
 		</div>
 		<div align="right">
-<%-- 			<c:if test="${sessionScope.loginUser ne null }"> --%>
+			<c:if test="${userId ne null }">
 				<a href="postWrite.do"><button class="myButton">글쓰기</button></a>
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${sessionScope.loginUser eq null }"> --%>
-<!-- 				<button id="nLog" class="myButton">글쓰기</button> -->
-<%-- 			</c:if> --%>
+			</c:if>
+			<c:if test="${userId eq null }">
+				<button id="nLog" class="myButton">글쓰기</button>
+			</c:if>
 		</div>
 	</div>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
