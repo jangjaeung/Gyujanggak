@@ -23,6 +23,7 @@
 				},
 				success : function(result) {
 					alert(result);
+					location.href = "loginView.do";
 				},
 			})
 		});
@@ -34,7 +35,6 @@
         <header>비밀번호 찾기</header>
 
 
-        <form>
             <div class="field space">
                 <input type="text" class="pass-key" required placeholder="ID" id="userId" name="userId">
             </div>
@@ -42,9 +42,8 @@
                 <input type="text" class="pass-key" required placeholder="EMAIL" id="userEmail" name="userEmail">
             </div>
             <div class="field space">
-                <button id="findBtn" >비밀번호 찾기</button>
+                <button id="findBtn" style="width: 100%;background-color: #d9ca40;color: white;border: none; font-size: 18px;font-weight: 600; cursor: pointer;" >비밀번호 찾기</button>
             </div>
-          </form>
 
         
         <div>

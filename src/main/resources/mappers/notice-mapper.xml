@@ -9,4 +9,17 @@
 		<result property="noticeContents" column="NOTICE_CONTENTS"/>
 		<result property="viewCount" column="VIEW_COUNT"/>
 	</resultMap>
+	
+	<select id="selectNoticeList" resultMap="noticeResultMap">
+		SELECT * FROM NOTICE ORDER BY N_CREATE_DATE DESC
+	</select>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+	</select>
+	
+	<insert id="insertNotice" parameterType="Notice">
+		INSERT INTO NOTICE VALUES(SEQ_NOTICE.NEXTVAL, #{noticeTitle }, #{noticeWriter }, DEFAULT, #{noticeContents }, 0)
+	</insert>
+	
 </mapper>

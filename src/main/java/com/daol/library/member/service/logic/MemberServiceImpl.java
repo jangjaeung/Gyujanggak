@@ -1,10 +1,19 @@
 package com.daol.library.member.service.logic;
 
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,48 +47,43 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void sendEmail(Member vo, String div) throws Exception {
-		// Mail Server 설정
-		System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		// 이메일 객체생성하기
+		Properties props = System.getProperties();
+		props.put("mail.smtp.user", "daollibrary@gmail.com");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.starttls", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		final String username = "daollibrary@gmail.com";//
+		final String password = "daol1234";
 
-		String charSet = "utf-8";
-		String hostSMTP = "smtp.gmail.com"; //네이버 이용시 smtp.naver.com
-		String hostSMTPid = "seokin6961";
-		String hostSMTPpwd = "!!!q2659521";
+		try{
+		    Session session = Session.getDefaultInstance(props, new Authenticator() {
+			    protected PasswordAuthentication getPasswordAuthentication() {
+			    return new PasswordAuthentication(username, password);
+		    }});
 
-		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "seokin6961@gmail.com";
-		String fromName = "Daol Homepage";
-		String subject = "";
-		String msg = "";
+			//메세지 설정
+			Message msg = new MimeMessage(session);
+	
+			//보내는사람 받는사람 설정
+			msg.setFrom(new InternetAddress("seokin6961@gmail.com"));
+			msg.setRecipients(Message.RecipientType.TO, 
+								InternetAddress.parse(vo.getUserEmail(),false));
+			msg.setSubject("규장각 임시 비밀번호입니다!");
+			msg.setText("\n임시 비밀번호 : " + vo.getUserPwd() + "입니다");
+			msg.setSentDate(new Date());
+			Transport.send(msg);
+			System.out.println("발신성공!");
 
-		if(div.equals("findpw")) {
-			subject = "Daol Homepage 임시 비밀번호 입니다.";
-			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-			msg += "<h3 style='color: blue;'>";
-			msg += vo.getUserId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
-			msg += "<p>임시 비밀번호 : ";
-			msg += vo.getUserPwd() + "</p></div>";
-		}
-
-		// 받는 사람 E-Mail 주소
-		String mail = vo.getUserEmail();
-		try {
-			HtmlEmail email = new HtmlEmail();
-			email.setDebug(true);
-			email.setCharset(charSet);
-			email.setSSL(true);
-			email.setHostName(hostSMTP);
-			email.setSmtpPort(465); //네이버 이용시 587
-
-			email.setAuthentication(hostSMTPid, hostSMTPpwd);
-			email.setTLS(true);
-			email.addTo(mail, charSet);
-			email.setFrom(fromEmail, fromName, charSet);
-			email.setSubject(subject);
-			email.setHtmlMsg(msg);
-			email.send();
-		} catch (Exception e) {
-			System.out.println("메일발송 실패 : " + e);
+		}catch (MessagingException error){ 
+			System.out.println("에러가 발생했습니다: " + error);
 		}
 	}
 		

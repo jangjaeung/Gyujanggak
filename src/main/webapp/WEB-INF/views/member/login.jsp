@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>규장각 로그인</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+   <script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/loginPage/css/login.css"/>
   </head>
+  
   <body>
     <div class="bg-img">
       <div class="content">
@@ -33,8 +37,15 @@
         <div class="login">Or login with</div>
         <div class="links">
           <div class="facebook">
-            <i class="fas fa-comment"><span>kakao</span></i>
+          	<input type="hidden" name="kakaoemail" id="kakaoemail"/>
+          	<input type="hidden" name="kakaoname" id="kakaoname"/>
+            <a href="javascript:kakaoLogin();" style="color:white;"><i class="fas fa-comment"><span>kakao</span></i></a>
           </div>
+          <form name="kakaoForm" id="kakaoForm" method = "post" action="/user/setSnsInfo.do">
+			<input type="hidden" name="email" id="kakaoEmail" />
+			<input type="hidden" name="id" id="kakaoId" />
+			<input type="hidden" name="flag" id="flag" value="kakao" />
+		  </form>
           <div class="instagram">
             <span>Naver</span>
           </div>
@@ -45,19 +56,43 @@
       </div>
     </div>
     <script>
-      const pass_field = document.querySelector('.pass-key');
-      const showBtn = document.querySelector('.show');
-      showBtn.addEventListener('click', function(){
-       if(pass_field.type === "password"){
-         pass_field.type = "text";
-         showBtn.textContent = "HIDE";
-         showBtn.style.color = "#3498db";
-       }else{
-         pass_field.type = "password";
-         showBtn.textContent = "SHOW";
-         showBtn.style.color = "#222";
-       }
-      });
+     
+      window.Kakao.init("c637ca01ecee964368b81b9362e975bd");
+      function kakaoLogin() {
+    	  Kakao.Auth.login({
+    			success: function (response) {
+    			Kakao.API.request({
+    				url: '/v2/user/me',
+    				success: function (response) {
+    					kakaoLoginPro(response)
+    				},
+    				fail: function (error) {
+    					console.log(error)
+    				},
+    			})
+    		},
+    			fail: function (error) {
+    				console.log(error)
+    			},
+    		})
+    	}
+    	
+      function kakaoLoginPro(response){
+    		var data = {id:response.id,email:response.kakao_account.email}
+    		$.ajax({
+    			type : 'POST',
+    			url : '/user/kakaoLoginPro.do',
+    			data : data,
+    			dataType : 'json',
+    			success : function(data){
+    				console.log(data)
+    			},
+    			error: function(xhr, status, error){
+    				alert("로그인에 실패했습니다."+error);
+    			}
+    		})
+      }
+      
     </script>
   </body>
 </html>

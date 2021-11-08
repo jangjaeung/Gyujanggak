@@ -36,7 +36,7 @@
 				</li>
 				<li><a href="#">도서관이용</a>
 					<ul>
-						<li><a href="#">공지사항</a></li>
+						<li><a href="noticeList.do">공지사항</a></li>
 						<li><a href="postList.do">자유게시판</a></li>
 						<li><a href="readingRoom.do">열람실 예약</a></li>
 						<li><a href="studyRoom.do">스터디룸 예약</a></li>

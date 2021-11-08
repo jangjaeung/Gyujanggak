@@ -2,8 +2,21 @@ package com.daol.library.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -138,7 +151,7 @@ public class MemberController {
 				Member loginUser = service.loginMember(memberOne);
 				if(loginUser != null) {
 					HttpSession session = request.getSession();
-					session.setAttribute("loginUser", loginUser);
+					session.setAttribute("userId", loginUser.getUserId());
 				}
 				return "redirect:home.do";
 			}catch(Exception e) {
@@ -160,16 +173,19 @@ public class MemberController {
 			}
 		}
 		
-		@RequestMapping(value = "findPw.do", method = RequestMethod.POST)
+		@RequestMapping(value = "findPw.do", method = {RequestMethod.GET, RequestMethod.POST})
 		public void findPwPOST(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
 			service.findPw(response, member);
+			
 	
 		}
-		
 		@ResponseBody
 	  	@RequestMapping(value="checkDupId.do", method=RequestMethod.GET)
 	  	public String idDuplicateCheck(@RequestParam("userId") String userId) {
 	  		int result = service.checkIdDup(userId);
 	  		return String.valueOf(result); 
 	  	}
+		
+		
+		
 }
