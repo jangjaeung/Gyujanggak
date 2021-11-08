@@ -50,6 +50,20 @@
   	
   	
   	<select id="selectAllReply" resultMap="replyResultMap">
-  		SELECT P.*,(SELECT COUNT(*) FROM REPLY R WHERE R.POST_NO = P.POST_NO) "REPLY_COUNT" FROM POST P ORDER BY POST_NO DESC
+  		SELECT * FROM REPLY WHERE POST_NO = #{postNo} ORDER BY REPLY_NO DESC
   	</select>
+  	
+  	
+  	<insert id="insertReply" parameterType="Reply">
+  		INSERT INTO REPLY VALUES(SEQ_REPLY.NEXTVAL,#{postNo},#{replyWriter},#{replyContents},default)
+  	</insert>
+  	
+  	<delete id="deleteReply" parameterType="_int">
+  		DELETE REPLY WHERE REPLY_NO = #{replyNo}
+  	</delete>
+  	
+  	
+  	<update id="updateReply" parameterType="Reply">
+  		UPDATE REPLY SET REPLY_CONTENTS = #{replyContents} WHERE REPLY_NO = #{replyNo}
+  	</update>
 </mapper>

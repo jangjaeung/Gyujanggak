@@ -2,6 +2,7 @@ package com.daol.library.post.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +20,7 @@ import com.daol.library.common.Pagination;
 import com.daol.library.member.domain.Member;
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
 import com.daol.library.post.service.PostService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,15 +35,16 @@ public class PostController {
 	@RequestMapping(value="postList.do",method=RequestMethod.GET)
 	public ModelAndView postListView(ModelAndView mv, @RequestParam(value="page",required=false)Integer page,HttpSession session) {
 		Member member = (Member)session.getAttribute("loginUser");
-		String userId = member.getUserId();
+		if(member != null) {
+			String userId = member.getUserId();
+			mv.addObject("userId",userId);
+		}
 		int currentPage = (page!=null) ? page : 1;
 		int totalCount = service.getListCount();
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<Post> pList = service.printAll(pi);
-		
 		if(!pList.isEmpty()) {
 			mv.addObject("pList",pList);
-			mv.addObject("userId",userId);
 			mv.addObject("pi",pi);
 			mv.setViewName("postView/postList");
 		}else {
@@ -53,7 +56,12 @@ public class PostController {
 	
 	//자유게시판 글 작성 페이지 이동
 	@RequestMapping(value="postWrite.do",method=RequestMethod.GET)
-	public String postWriteView() {
+	public String postWriteView(HttpSession session,HttpServletRequest request) {
+		Member member = (Member)session.getAttribute("loginUser");
+		if(member != null) {
+			String userId = member.getUserId();
+			request.setAttribute("userId",userId);
+		}
 		return "postView/postWrite";
 	}
 	
@@ -71,7 +79,12 @@ public class PostController {
 	
 	//자유게시판 디테일 페이지
 	@RequestMapping(value="postDetail.do",method=RequestMethod.GET)
-	public ModelAndView postDetailView(ModelAndView mv,@RequestParam("postNo") int postNo) {
+	public ModelAndView postDetailView(ModelAndView mv,@RequestParam("postNo") int postNo, HttpSession session) {
+		Member member = (Member)session.getAttribute("loginUser");
+		if(member != null) {
+			String userId = member.getUserId();
+			mv.addObject("userId",userId);
+		}
 		int result = service.addReadCount(postNo);
 		Post post = service.printOne(postNo);
 		if(result>0) {
@@ -148,5 +161,41 @@ public class PostController {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			gson.toJson(rList, response.getWriter());
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="addReply.do",method=RequestMethod.POST)
+	public String addReply(@ModelAttribute Reply reply,HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		reply.setReplyWriter(loginUser.getUserId());
+		int result = service.registerReply(reply);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="modifyReply.do",method=RequestMethod.POST)
+	public String modifyReply(@ModelAttribute Reply reply) {
+		int result = service.modifyReply(reply);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteReply.do",method=RequestMethod.GET)
+	public String deleteReply(@ModelAttribute Reply reply) {
+		int result = service.removeReply(reply);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+		
 	}
 }

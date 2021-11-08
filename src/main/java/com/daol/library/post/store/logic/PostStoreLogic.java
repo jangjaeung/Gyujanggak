@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
 import com.daol.library.post.store.PostStore;
 
 @Repository
@@ -68,21 +69,21 @@ public class PostStoreLogic implements PostStore{
 	}
 
 	@Override
-	public int insertReply(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertReply(Reply reply) {
+		int result = session.insert("postMapper.insertReply",reply);
+		return result;
 	}
 
 	@Override
-	public int updateReply(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateReply(Reply reply) {
+		int result = session.update("postMapper.updateReply",reply);
+		return result;
 	}
 
 	@Override
-	public int deleteReply(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteReply(Reply reply) {
+		int result = session.delete("postMapper.deleteReply",reply);
+		return result;
 	}
 	
 	

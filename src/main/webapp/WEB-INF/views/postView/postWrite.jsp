@@ -23,7 +23,7 @@
 			</tr>
 			<tr>
 				<td>작성자</td>
-				<td><input type="text" size="50" name="postWriter" value="${sessionScope.userId }" readonly></td>
+				<td><input type="text" size="50" name="postWriter" value="${userId }" readonly></td>
 			</tr>
 			<tr>
 				<td>내용</td>

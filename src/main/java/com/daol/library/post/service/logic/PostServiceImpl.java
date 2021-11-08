@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
 import com.daol.library.post.service.PostService;
 import com.daol.library.post.store.PostStore;
 
@@ -65,21 +66,21 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public int registerReply(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int registerReply(Reply reply) {
+		int result = store.insertReply(reply);
+		return result;
 	}
 
 	@Override
-	public int modifyReply(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int modifyReply(Reply reply) {
+		int result = store.updateReply(reply);
+		return result;
 	}
 
 	@Override
-	public int removeReply(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int removeReply(Reply reply) {
+		int result = store.deleteReply(reply);
+		return result;
 	}
 
 	

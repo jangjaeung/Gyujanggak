@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
 
 public interface PostService {
 
@@ -16,7 +17,7 @@ public interface PostService {
 		public int removePost(int postNo);
 		
 		public List<Post> printAllReply(int postNo);
-		public int registerReply(Post post);
-		public int modifyReply(Post post);
-		public int removeReply(Post post);
+		public int registerReply(Reply reply);
+		public int modifyReply(Reply reply);
+		public int removeReply(Reply reply);
 }
