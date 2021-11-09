@@ -10,6 +10,11 @@
 <link href="resources/css/popupStyle.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style>
+*{
+	margin:0;
+	padding : 0;
+}
+
 #beforeLogin {
 	margin-top: 5%;
 	margin-bottom: 10%;
