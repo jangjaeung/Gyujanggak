@@ -40,19 +40,19 @@
 	<br><hr style="margin-top:13%">
 	<div class="container" style="margin-bottom: 15%;">
 		<h1 style="text-align:center;margin-bottom: 8%;">공지사항</h1>
-		<form action="noticeWrite.do" method="post">
+		<form action="noticeUpdate.do" method="post">
 			<div class="form-group">
-				<label for="exampleInputTitle">제목</label> <input type="text"class="form-control" id="exampleInputTitle" name="noticeTitle" placeholder="제목">
+				<label for="exampleInputTitle">제목</label> <input type="text"class="form-control" id="exampleInputTitle" name="noticeTitle" placeholder="제목" value="${notice.noticeTitle }">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputWriter">작성자</label> <input type="text"class="form-control" id="exampleInputWriter" name="noticeWriter" placeholder="작성자" value="${userId }" readonly>
+				<label for="exampleInputWriter">작성자</label> <input type="text"class="form-control" id="exampleInputWriter" name="noticeWriter" placeholder="작성자" value="${notice.noticeWriter }" readonly>
 			</div>
 			<div class="form-group">
-				<label for="exampleInputContents">내용</label> <input style="height: 189px;" type="text"class="form-control" id="exampleInputContents" name="noticeContents" placeholder="내용">
+				<label for="exampleInputContents">내용</label> <input style="height: 189px;" type="text"class="form-control" id="exampleInputContents" name="noticeContents" placeholder="내용" value="${notice.noticeContents }">
 			</div>
 			
 		<div style="text-align:right">
-			<input type="submit" value="등록" class="myButton" style="border:none">
+			<input type="submit" value="수정" class="myButton" style="border:none">
 		</div>
 		</form>
 

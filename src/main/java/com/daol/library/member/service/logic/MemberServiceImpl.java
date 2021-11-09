@@ -13,6 +13,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -127,4 +128,65 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+	@Override
+	public void mailSend(HttpSession session, String userEmail) {
+		int result = (int)(Math.random() * (99999 - 10000 + 1)) + 10000;
+		session.setAttribute(userEmail,result);
+		
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		// 이메일 객체생성하기
+		Properties props = System.getProperties();
+		props.put("mail.smtp.user", "daollibrary@gmail.com");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.starttls", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		final String username = "daollibrary@gmail.com";//
+		final String password = "daol1234";
+
+		try{
+		    Session sessions = Session.getDefaultInstance(props, new Authenticator() {
+			    protected PasswordAuthentication getPasswordAuthentication() {
+			    return new PasswordAuthentication(username, password);
+		    }});
+
+			//메세지 설정
+			Message msg = new MimeMessage(sessions);
+	
+			//보내는사람 받는사람 설정
+			msg.setFrom(new InternetAddress("seokin6961@gmail.com"));
+			msg.setRecipients(Message.RecipientType.TO, 
+								InternetAddress.parse(userEmail,false));
+			msg.setSubject("규장각 인증번호입니다!");
+			msg.setText("\n인증번호 : " + result + "입니다");
+			msg.setSentDate(new Date());
+			Transport.send(msg);
+			System.out.println("발신성공!");
+
+		}catch (MessagingException error){ 
+			System.out.println("에러가 발생했습니다: " + error);
+		}		
+	}
+
+	@Override
+	public boolean emailCertification(HttpSession session, String userEmail, int parseInt) {
+		
+		try {
+			int generationCode = (Integer) session.getAttribute(userEmail);
+			
+			if(generationCode == parseInt) {
+				return true;
+			}else {
+				return false;
+			}
+		}catch(Exception e) {
+		
+		}
+		return true;
+	}
 }

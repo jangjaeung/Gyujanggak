@@ -108,7 +108,7 @@ span.guide{
 
 
         <div class="field space" style="    margin-left: 19%;margin-top: 4%;height: 65px;">
-            <input type="submit" value="LOGIN" style="background-color: darkgoldenrod; border: none;">
+            <input type="submit" value="가입하기" style="background-color: darkgoldenrod; border: none;">
           </div>
           
 			</form>

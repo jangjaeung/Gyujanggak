@@ -186,6 +186,20 @@ public class MemberController {
 	  		return String.valueOf(result); 
 	  	}
 		
+		@ResponseBody
+		@RequestMapping(value="mail.do", method=RequestMethod.POST)
+		public int sendEmail(HttpServletRequest request, String userEmail) {
+			HttpSession session = request.getSession();
+			service.mailSend(session, userEmail);
+			return 123;
+		}
 		
-		
+		@ResponseBody
+		@RequestMapping(value="certification.do", method=RequestMethod.POST)
+		private boolean emailCertification(HttpServletRequest request, String userEmail, String inputCode) {
+			HttpSession session = request.getSession();
+			boolean result = service.emailCertification(session, userEmail, Integer.parseInt(inputCode));
+			
+			return result;
+		}
 }
