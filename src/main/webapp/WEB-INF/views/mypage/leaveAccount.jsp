@@ -26,8 +26,9 @@
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
-	width: 70%;
-	position: relative;
+	width : 75%;
+	display: grid;
+
 }
 
 #mainTitle {
@@ -36,8 +37,10 @@
 }
 
 .table {
-	width: 450px;
-	align: center;
+	margin-left : 5%;
+	margin-right : 5%;
+	width : 80%;
+	justify-content : center;
 }
 
 .table th {
@@ -107,8 +110,8 @@ span.error {
 			<!-- 본문 --><br><br>
 				<table class="table table-borderless" align="center">
 					<colgroup>
-						<col width="50px">
-						<col width="80px">
+						<col width="200px">
+						<col width="400px">
 					</colgroup>
 					<tr>
 						<th style='vertical-align:middle;'>아이디  </th>
@@ -177,6 +180,7 @@ span.error {
 		<br>
 	</section>
 	</c:if>
+	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<script>
 	$("#userPwd").on("blur", function(){

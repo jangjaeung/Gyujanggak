@@ -161,6 +161,7 @@
 		<br>
 	</section>
 	</c:if>
+<jsp:include page="../common/chat.jsp"></jsp:include>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 
 <script>

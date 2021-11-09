@@ -27,7 +27,7 @@
 	vertical-align: middle;
 	justify-content: center;
 	width : 70%;
-	
+
 }
 #mainTitle{
 	color : #656379;
@@ -51,13 +51,13 @@
 	width : 10%;
 }
 #info-table th:nth-chid(1){
-	width : 10%;
+	width : 35%;
 }
 #info-table td:nth-chid(0){
-	width : 25%;
+	width : 10%;
 }
 #info-table td:nth-chid(1){
-	width : 25%;
+	width : 35%;
 }
 .btn-area{
 	text-align : center;
@@ -90,7 +90,7 @@
 		<article class="mainContent">
 		<br>
 			<h2 id="mainTitle"><b>내 정보 관리</b></h2>
-			
+			<br>
 			<br>
 			<!-- 일반회원 -->
 			<c:if test="${loginUser.userType eq '일반' }">
@@ -246,6 +246,7 @@
 		</article>
 	</section>
 	</c:if>
+	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

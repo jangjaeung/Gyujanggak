@@ -29,8 +29,6 @@
 	text-align : center;
 }
 .table{
-	margin-left : 5%;
-	margin-right : 5%;
 	width : 800px;
 	justify-content : center;
 }
@@ -142,7 +140,7 @@
 		<br>
 
 	</section>
-
+	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	
 <script>
