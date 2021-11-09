@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,11 @@
 <link rel="stylesheet" href="css/style.css" />
 
 <style>
-.sidebar{
+#beforeLogin{
+	margin-top : 5%;
+	margin-bottom : 10%;
+}
+.sideMenu{
 	float: left;
 	width: 25%;
 }
@@ -86,9 +91,22 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
+	<c:if test="${sessionScope.userId eq null }">
+	<section>
+		<article class="mainContent" id="beforeLogin">
+			<h3 style='text-align:center;'>로그인 후 이용 가능합니다</h3><br>
+			<div class="btn-area" style="text-align:center;">
+				<br>	
+				<a href="loginView.do" ><button style="text-align:center;" type="button" class="btn btn-primary" id="login-btn">로그인 하러 가기</button></a>
+			</div>
+		</article>
+	</section>
+	</c:if>
+	
+	<c:if test="${sessionScope.userId ne null}">
 	<section>
 		<!-- 사이드메뉴 -->
-		<aside class="sidebar">
+		<aside class="sideMenu">
 			
 		</aside>
 
@@ -139,12 +157,10 @@
 			</div>
 
 		</article>
-
 		<br>
 		<br>
-
 	</section>
-
+	</c:if>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 
 <script>

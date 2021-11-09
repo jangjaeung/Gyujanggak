@@ -152,6 +152,7 @@ public class MemberController {
 				if(loginUser != null) {
 					HttpSession session = request.getSession();
 					session.setAttribute("userId", loginUser.getUserId());
+					session.setAttribute("userType", loginUser.getUserType());
 				}
 				return "redirect:home.do";
 			}catch(Exception e) {
