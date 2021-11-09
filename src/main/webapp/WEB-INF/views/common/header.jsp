@@ -17,10 +17,10 @@
 					<a href="home.do"><img src="resources/img/notextLogo.jpg" alt="logo" id="header-logo"></a>&nbsp;&nbsp;
 					<a href="home.do"><h3 id="logoText" style="font-weight:bold;">다올대학교 도서관 규장각</h3></a>
 			</div>
-			<c:if test="${sessionScope.loginUser eq null }">
+			<c:if test="${sessionScope.userId eq null }">
 				<div class="wrapper right" id="right"><a href="loginView.do" >LOGIN</a></div>
 			</c:if>
-			<c:if test="${sessionScope.loginUser ne null and loginUser ne ''}">
+			<c:if test="${sessionScope.userId ne null and userId ne ''}">
 				<div class="wrapper right" id="right"><a href="logout.do" >LOGOUT</a></div>
 			</c:if>
 		</div>
