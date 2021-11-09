@@ -42,10 +42,10 @@
 						<li><a href="studyRoom.do">스터디룸 예약</a></li>
 					</ul>
 				</li>
-				<li><a href="#">자료검색</a>
+				<li><a href="/search.do">자료검색</a>
 					<ul>
-						<li><a href="#">간략 검색</a></li>
-						<li><a href="#">상세 검색</a></li>
+						<li><a href="/search.do">간략 검색</a></li>
+						<li><a href="/sDetail.do">상세 검색</a></li>
 						<li><a href="#">주제별 검색</a></li>
 						<li><a href="#">신착 자료</a></li>
 						<li><a href="#">대출 베스트</a></li>
