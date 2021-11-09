@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.daol.library.book.domain.Book;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.store.LendingBookStore;
 
@@ -27,9 +28,11 @@ public class LendingBookStoreLogic implements LendingBookStore {
 	}
 
 	@Override
-	public int insertLending(LendingBook lendingBook) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertLending(Book book) {
+		int result = 0;
+		result += sqlSession.insert("lendingBookMapper.insertLending", book);
+		result += sqlSession.update("bookMapper.updateBook", book);
+		return result;
 	}
 
 	@Override
