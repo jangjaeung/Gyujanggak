@@ -1,5 +1,6 @@
 package com.daol.library.post.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.daol.library.common.Pagination;
-import com.daol.library.member.domain.Member;
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
 import com.daol.library.post.domain.Reply;
 import com.daol.library.post.service.PostService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 
 @Controller
 public class PostController {
@@ -34,10 +35,9 @@ public class PostController {
 	//자유게시판 리스트 출력
 	@RequestMapping(value="postList.do",method=RequestMethod.GET)
 	public ModelAndView postListView(ModelAndView mv, @RequestParam(value="page",required=false)Integer page,HttpSession session) {
-		Member member = (Member)session.getAttribute("loginUser");
+		String member = (String)session.getAttribute("userId");
 		if(member != null) {
-			String userId = member.getUserId();
-			mv.addObject("userId",userId);
+			mv.addObject("userId",member);
 		}
 		int currentPage = (page!=null) ? page : 1;
 		int totalCount = service.getListCount();
@@ -57,10 +57,9 @@ public class PostController {
 	//자유게시판 글 작성 페이지 이동
 	@RequestMapping(value="postWrite.do",method=RequestMethod.GET)
 	public String postWriteView(HttpSession session,HttpServletRequest request) {
-		Member member = (Member)session.getAttribute("loginUser");
+		String member = (String)session.getAttribute("userId");
 		if(member != null) {
-			String userId = member.getUserId();
-			request.setAttribute("userId",userId);
+			request.setAttribute("userId",member);
 		}
 		return "postView/postWrite";
 	}
@@ -80,10 +79,9 @@ public class PostController {
 	//자유게시판 디테일 페이지
 	@RequestMapping(value="postDetail.do",method=RequestMethod.GET)
 	public ModelAndView postDetailView(ModelAndView mv,@RequestParam("postNo") int postNo, HttpSession session) {
-		Member member = (Member)session.getAttribute("loginUser");
+		String member = (String)session.getAttribute("userId");
 		if(member != null) {
-			String userId = member.getUserId();
-			mv.addObject("userId",userId);
+			mv.addObject("userId",member);
 		}
 		int result = service.addReadCount(postNo);
 		Post post = service.printOne(postNo);
@@ -152,7 +150,7 @@ public class PostController {
 	@ResponseBody
 	@RequestMapping(value="replyList.do",method=RequestMethod.GET)
 	public void getReplyList(@RequestParam("postNo") int postNo,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) throws JsonIOException, IOException {
 		List<Post> rList = service.printAllReply(postNo);
 		if(!rList.isEmpty()) {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -166,8 +164,8 @@ public class PostController {
 	@ResponseBody
 	@RequestMapping(value="addReply.do",method=RequestMethod.POST)
 	public String addReply(@ModelAttribute Reply reply,HttpSession session) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		reply.setReplyWriter(loginUser.getUserId());
+		String member = (String)session.getAttribute("userId");
+		reply.setReplyWriter(member);
 		int result = service.registerReply(reply);
 		if(result > 0) {
 			return "success";

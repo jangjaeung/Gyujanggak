@@ -36,42 +36,44 @@
 				<img src="/resources/mainPage/img/main_img6.jpg" alt="">
 			</div>
 		</div>
-		<div class="search-wrap">
-			<div>
-				<select name="" id="" class="select-box">
-					<option value="" class="box-op">도서명</option>
-					<option value="" class="box-op">저자</option>
-					<option value="" class="box-op">출판사</option>
-				</select> <input type="text" name="" id="" class="search">
+		<form action="/searchSimple.do" method="get">
+			<div class="search-wrap">
+				<select name="searchCondition" id="" class="search__select" style ="width:20%;height:100%;">
+					<option value="title">도서명</option>
+	                <option value="writer">저자</option>
+	                <option value="publisher">출판사</option>
+				</select> <input type="text" name="searchValue" id="" class="search" style="width:79%;height:100%;" placeholder="검색어 입력">
+				<i class="material-icons" style="position:absolute; z-index:199; margin-left:-30px; margin-top:13px; cursor:pointer;">search</i>
+				<input type="submit" value="검색" id="sbt" style="display:none;">
 			</div>
-		</div>
+		</form>
 	</div>
 	<div class="main-wrapper">
 		<div class="nav-area">
 			<ul>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo1.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo1.png" alt=""> <span>도서검색</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo2.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo2.png" alt=""> <span>시설이용</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo3.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo3.png" alt=""> <span>공지사항</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo4.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo4.png" alt=""> <span>이용증</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo5.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo5.png" alt=""> <span>이용시간</span>
 					</div>
 				</li>
 			</ul>
@@ -164,6 +166,9 @@
 		scrollbar : {
 			el : '.swiper-scrollbar',
 		}
+	});
+	$(".material-icons").on("click",function(){
+		$("#sbt").click();
 	});
  	 </script>
 </body>

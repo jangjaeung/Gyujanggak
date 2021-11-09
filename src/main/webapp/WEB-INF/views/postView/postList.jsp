@@ -9,13 +9,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
-header{top:0}
+header{top:0} 
 footer{bottom:0}
 *{margin:0;padding:0;}
-.post{
-	width:1400px;
-	height:800px;
-	margin:0 auto;
+.post{ 
+width:1400px; 
+height:800px; 
+margin:0 auto;
 }
 .post-title{
 	margin-top:200px;

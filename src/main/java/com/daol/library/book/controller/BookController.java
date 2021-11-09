@@ -70,7 +70,4 @@ public class BookController {
 		}
 		return mv;
 	}
-	
-	
-	
 }
