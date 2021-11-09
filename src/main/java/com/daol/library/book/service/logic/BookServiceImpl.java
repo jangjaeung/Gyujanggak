@@ -57,4 +57,10 @@ public class BookServiceImpl implements BookService {
 		return 0;
 	}
 
+	@Override
+	public List<Book> printNewBook() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
