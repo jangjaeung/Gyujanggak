@@ -57,4 +57,11 @@ public class BookStoreLogic implements BookStore {
 		return 0;
 	}
 	
+	//메인페이지 신간도서 출력
+	@Override
+	public List<Book> selectNewList() {
+		List<Book> bList = sqlSession.selectList("bookMapper.selectPrintNew");
+		return bList;
+	}
+	
 }

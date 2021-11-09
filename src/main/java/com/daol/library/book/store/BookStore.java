@@ -14,4 +14,5 @@ public interface BookStore {
 	public List<Book> selectSearchSub(Search search);
 	public List<Book> selectSearchNew();
 	
+	public List<Book> selectNewList();
 }

@@ -79,23 +79,26 @@
 			</ul>
 		</div>
 		<div class="taste-area">
-			<div>
+			<div class="taste-kate">
 				<ul>
-					<li>사서 추천도서</li>
-					<li>신간 도서</li>
+					<li class="kate">사서 추천도서</li>
+					<li class="kate active">신간 도서</li>
 				</ul>
 			</div>
 			<div class="swiper mySwiper">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">Slide 1</div>
-					<div class="swiper-slide">Slide 2</div>
-					<div class="swiper-slide">Slide 3</div>
-					<div class="swiper-slide">Slide 4</div>
-					<div class="swiper-slide">Slide 5</div>
-					<div class="swiper-slide">Slide 6</div>
-					<div class="swiper-slide">Slide 7</div>
-					<div class="swiper-slide">Slide 8</div>
-					<div class="swiper-slide">Slide 9</div>
+					<c:forEach items="${bList }" var="bList">
+						<div class="swiper-slide">
+							<div class="cont">
+								<c:url var="bDetail" value="/bookDetail.do">
+	                    			<c:param name="bookNo" value="${bList.bookNo }"></c:param>
+	                    		</c:url>
+								<a href="${bDetail }" style="text-decoration: none;">
+									<img class="" src="/resources/bookcover/${bList.bookCover }" alt="">
+								</a>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 				<div class="swiper-pagination"></div>
 				<div class="swiper-button-prev"></div>

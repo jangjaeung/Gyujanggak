@@ -56,11 +56,12 @@ public class BookServiceImpl implements BookService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	//메인페이지 신간도서 출력
 	@Override
 	public List<Book> printNewBook() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> bList = store.selectNewList();
+		return bList;
 	}
 
 }
