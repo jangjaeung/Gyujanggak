@@ -17,4 +17,9 @@ public class IntroduceController {
   	public String comeView() {
 	  return "introduce/waytoCome"; 
   	}
+	
+	@RequestMapping(value="greetingView.do", method=RequestMethod.GET)
+  	public String greetingView() {
+	  return "introduce/greetings"; 
+  	}
 }
