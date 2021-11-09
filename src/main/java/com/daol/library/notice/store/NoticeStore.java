@@ -13,4 +13,14 @@ public interface NoticeStore {
 
 	public int selectListCount();
 
+	public Notice printOne(int noticeNo);
+
+	public void viewCount(int noticeNo);
+
+	public int removeNotice(int noticeNo);
+
+	public Notice updateView(int noticeNo);
+
+	public int updateOne(Notice notice);
+
 }

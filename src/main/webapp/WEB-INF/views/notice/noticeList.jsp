@@ -44,7 +44,7 @@
 			<thead>
 				<tr>
 					<th>No.</th>
-					<th>글 제목</th>
+					<th style="width: 40%;text-align: center;}">글 제목</th>
 					<th>작성자</th>
                     <th>작성일</th>
                     <th>조회수</th>
@@ -60,7 +60,12 @@
 			<c:forEach items="${bList }" var="notice">
 				<tr>
 					<td>${notice.noticeNo }</td>
-					<td>${notice.noticeTitle }</td>
+					<td style="text-align:center">
+						<c:url var="bDetail" value="noticeDetail.do">
+							<c:param name="noticeNo" value="${notice.noticeNo }"></c:param>
+						</c:url>
+						<a href="${bDetail }">${notice.noticeTitle }</a>
+					</td>
 					<td>${notice.noticeWriter }</td>
                     <td>${notice.nCreateDate }</td>
                     <td>${notice.viewCount }</td>

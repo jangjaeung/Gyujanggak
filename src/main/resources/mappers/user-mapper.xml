@@ -24,7 +24,7 @@
 	</resultMap>
 	
 	<insert id="insertMember" parameterType="Member">
-		INSERT INTO USERS VALUES(#{userId }, #{userPwd },SEQ_USERNUM.NEXTVAL,#{userName }, #{userPhone }, #{userType }, #{userEmail },#{studentId},#{major},#{profilePic},#{annualFee},#{payDate},DEFAULT,DEFAULT,#{approvalDate},#{endDate},#{socialId},DEFAULT,0)
+		INSERT INTO USERS VALUES(#{userId }, #{userPwd },SEQ_USERNUM.NEXTVAL,#{userName }, #{userPhone }, #{userType }, #{userEmail },#{studentId},#{major},#{profilePic},#{annualFee},#{payDate},DEFAULT,DEFAULT,#{approvalDate},#{endDate},#{socialId},DEFAULT,DEFAULT)
 	</insert>
 	
 	<select id="selectLoginMember" resultMap="memberResultMap">

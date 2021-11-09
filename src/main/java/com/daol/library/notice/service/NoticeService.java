@@ -13,4 +13,14 @@ public interface NoticeService {
 
 	public int getListCount();
 
+	public Notice printOne(int boardNo);
+
+	public void countUp(int noticeNo);
+
+	public int deleteNotice(int noticeNo);
+
+	public Notice updateOne(int noticeNo);
+
+	public int updateNotice(Notice notice);
+
 }

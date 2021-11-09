@@ -37,4 +37,34 @@ public class NoticeStoreLogic implements NoticeStore{
 		return count;
 	
 	}
+
+	@Override
+	public Notice printOne(int noticeNo) {
+		Notice notice = sqlSession.selectOne("noticeMapper.selectOnenotice", noticeNo);
+		return notice;
+	}
+
+	@Override
+	public void viewCount(int noticeNo) {
+		sqlSession.update("noticeMapper.updateCount", noticeNo);
+		
+	}
+
+	@Override
+	public int removeNotice(int noticeNo) {
+		int result = sqlSession.delete("noticeMapper.deleteOneNotice", noticeNo);
+		return result;
+	}
+
+	@Override
+	public Notice updateView(int noticeNo) {
+		Notice notice = sqlSession.selectOne("noticeMapper.selectOnenotice", noticeNo);
+		return notice;
+	}
+
+	@Override
+	public int updateOne(Notice notice) {
+		int result = sqlSession.update("noticeMapper.updateOneNotice", notice);
+		return result;
+	}
 }
