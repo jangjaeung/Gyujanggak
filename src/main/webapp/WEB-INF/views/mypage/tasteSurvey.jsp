@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="css/style.css" />
 
 <style>
+*{
+	margin:0;
+	padding : 0;
+}
 #beforeLogin{
 	margin-top : 5%;
 	margin-bottom : 10%;

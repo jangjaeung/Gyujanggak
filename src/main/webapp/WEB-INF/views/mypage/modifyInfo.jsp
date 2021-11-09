@@ -10,6 +10,10 @@
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style>
+*{
+	margin:0;
+	padding : 0;
+}
 .sideMenu{
 	float: left;
 	width: 25%;
