@@ -12,7 +12,15 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
 <style>
-.sidebar{
+*{
+	margin:0;
+	padding : 0;
+}
+#beforeLogin{
+	margin-top : 5%;
+	margin-bottom : 10%;
+}
+.sideMenu{
 	float: left;
 	width: 25%;
 }
@@ -23,7 +31,7 @@
 	vertical-align: middle;
 	justify-content: center;
 	width : 70%;
-	
+
 }
 #mainTitle{
 	color : #656379;
@@ -47,13 +55,13 @@
 	width : 10%;
 }
 #info-table th:nth-chid(1){
-	width : 10%;
+	width : 35%;
 }
 #info-table td:nth-chid(0){
-	width : 25%;
+	width : 10%;
 }
 #info-table td:nth-chid(1){
-	width : 25%;
+	width : 35%;
 }
 .btn-area{
 	text-align : center;
@@ -65,21 +73,21 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<c:if test="${sessionScope.loginUser eq null }">
+	<c:if test="${sessionScope.userId eq null }">
 	<section>
-		<article class="mainContent">
+		<article class="mainContent" id="beforeLogin">
 			<h3 style='text-align:center;'>로그인 후 이용 가능합니다</h3><br>
 			<div class="btn-area">
+				<br>	
 				<a href="loginView.do" ><button type="button" class="btn btn-primary" id="login-btn">로그인 하러 가기</button></a>
 			</div>
-			
 		</article>
-		</section>
+	</section>
 	</c:if>
 	
-	<c:if test="${sessionScope.loginUser ne null}">
+	<c:if test="${sessionScope.userId ne null}">
 	<section>
-		<aside class="sidebar">
+		<aside class="sideMenu">
 			<!-- 사이드메뉴 -->
 		</aside>
 
@@ -87,12 +95,20 @@
 		<br>
 			<h2 id="mainTitle"><b>내 정보 관리</b></h2>
 			<br>
+			<br>
 			<!-- 일반회원 -->
-			<c:if test="${sessionScope.loginUser ne null and loginUser.userType eq '일반' }">
+			<c:if test="${loginUser.userType eq '일반' }">
 				<table class="table" align="center" id="info-table">
 					<tbody>
 						<tr>
-							<td rowspan="4" width="230" style='vertical-align:middle;'></td>
+							<td rowspan="4" width="230" style='vertical-align:middle;'>
+								<c:if test="${loginUser.profilePic ne null}">	
+									<img src="${pageContext.request.contextPath}/resources/muploadFiles/${loginUser.profilePic }" width="230" height="180">
+								</c:if>
+								<c:if test="${loginUser.profilePic eq null or loginUser.profilePic eq '' }">	
+									<p style="text-align : center;">사진 없음</p>
+								</c:if> 
+							</td>
 							<th class="bg-info" style='vertical-align:middle;'>이름</th>
 							<td style='vertical-align:middle;'>${loginUser.userName }</td>
 							<th class="bg-info" style='vertical-align:middle;'>아이디</th>
@@ -171,11 +187,18 @@
 			</c:if>	
 				
 			<!-- 학생회원 -->
-		<c:if test="${sessionScope.loginUser ne null and loginUser.userType eq '학생'}">
+		<c:if test="${loginUser.userType eq '학생'}">
 			<table class="table" align="center" id="info-table">
 					<tbody>
 						<tr>
-							<td rowspan="4" width="230" style='vertical-align:middle;'></td>
+							<td rowspan="4" width="230" style='vertical-align:middle;'>
+								<c:if test="${loginUser.profilePic ne null }">	
+									<img src="${pageContext.request.contextPath}/resources/muploadFiles/${loginUser.profilePic }" width="230" height="180">
+								</c:if>
+								<c:if test="${loginUser.profilePic eq null or loginUser.profilePic eq '' }">	
+									<p style="text-align : center;">사진 없음</p>
+								</c:if> 
+							</td>
 							<th class="bg-info" style='vertical-align:middle;'>이름</th>
 							<td style='vertical-align:middle;'>${loginUser.userName }</td>
 							<th class="bg-info" style='vertical-align:middle;'>아이디</th>
@@ -227,6 +250,7 @@
 		</article>
 	</section>
 	</c:if>
+	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

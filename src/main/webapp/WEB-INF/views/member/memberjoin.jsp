@@ -87,17 +87,17 @@ span.guide{
 
 
           <div class="field space" style="width: 80%;">
-            <input type="text" class="pass-key" required placeholder="이메일 " name="userEmail">
+            <input type="text" class="pass-key" required placeholder="이메일 " name="userEmail" id="userEmail">
           </div>
-          <button style="position: absolute;width: 15%;right: 6%;height: 6%;top: 61%;">이메일 인증</button>
+          <button style="position: absolute;width: 15%;right: 6%;height: 6%;top: 61%;" onclick="emailSend()">인증번호 받기</button>
 
           <div class="field space" style="width: 80%;">
-<!--             <input type="text" class="pass-key" required placeholder="인증키" required> -->
+            <input type="text" class="pass-key" required placeholder="인증키" required id="certificationNumber">
           </div>
-
+          <button type="button" style="position: absolute;width: 15%;right: 6%;height: 6%;top: 69%;"onclick="emailCertification()">인증하기</button>
 
         <div class="field space" style="    margin-left: 19%;margin-top: 10%;height: 65px;">
-            <input type="submit" value="LOGIN" style="background-color: darkgoldenrod; border: none;">
+            <input type="submit" value="가입하기" style="background-color: darkgoldenrod; border: none;">
           </div>
           
 			</form>
@@ -105,88 +105,154 @@ span.guide{
 	</div>
 	<script>
 	
-		$("#userId").on("blur", function(){
+		
+		$("#userId").on("blur", function() {
 			var userId = $("#userId").val();
 			$.ajax({
 				url : "checkDupId.do",
-				data : {"userId" : userId},
-				success : function(result){
+				data : {
+					"userId" : userId
+				},
+				success : function(result) {
 					/* console.log(result); */
-					if(result != 0){
+					if (result != 0) {
 						$(".guide.ok").hide();
 						$(".guide.error").show();
-					}else{
+					} else {
 						$(".guide.ok").show();
 						$(".guide.error").hide();
 					}
 				},
-				error : function(){
+				error : function() {
 					alert("ajax 전송 실패! 관리자에게 문의하세요~");
 				},
-				/* complete : function(){
-					
-				} */
+			/* complete : function(){
+				
+			} */
 			});
 		})
-		
-		$('#pwd-check').keyup(function(){
 
-var pw1=$('#userPwd').val().trim();
+		$('#pwd-check').keyup(function() {
 
-if(pw1==""){
+			var pw1 = $('#userPwd').val().trim();
 
-alert("패스워드를 입력하세요");
+			if (pw1 == "") {
 
-$('#pwd-check').val('');
+				alert("패스워드를 입력하세요");
 
-$('#userPwd').focus();
+				$('#pwd-check').val('');
 
-}
+				$('#userPwd').focus();
 
-var pw2=$('#pwd-check').val().trim();
-
-if(pw1.length!=0 && pw2.length!=0){
-
-if(pw1==pw2)
-
-{
-
-$('#out').html("패스워드가 일치합니다.");
-
-$('#out').css({'color':'green','width':'110%','font-size':'12px','border':'none','text-align':'right'});
-
-}
-
-else{
-
-$('#out').html("패스워드가 일치하지 않습니다.");
-
-$('#out').css({'color':'red','width':'110%','font-size':'12px','border':'none','text-align':'right'});
-
-}
-
-}
-
-});
-		
-		function readURL(input) {
-			 if (input.files && input.files[0]) {
-			  var reader = new FileReader();
-			  
-			  reader.onload = function (e) {
-			   $('#image_section').attr('src', e.target.result);  
-			  }
-			  
-			  reader.readAsDataURL(input.files[0]);
-			  }
 			}
-			 
-			// 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
-			$("#imgInput").change(function(){
-			   readURL(this);
-			});
+
+			var pw2 = $('#pwd-check').val().trim();
+
+			if (pw1.length != 0 && pw2.length != 0) {
+
+				if (pw1 == pw2)
+
+				{
+
+					$('#out').html("패스워드가 일치합니다.");
+
+					$('#out').css({
+						'color' : 'green',
+						'width' : '110%',
+						'font-size' : '12px',
+						'border' : 'none',
+						'text-align' : 'right'
+					});
+
+				}
+
+				else {
+
+					$('#out').html("패스워드가 일치하지 않습니다.");
+
+					$('#out').css({
+						'color' : 'red',
+						'width' : '110%',
+						'font-size' : '12px',
+						'border' : 'none',
+						'text-align' : 'right'
+					});
+
+				}
+
+			}
+
+		});
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#image_section').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		// 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
+		$("#imgInput").change(function() {
+			readURL(this);
+		});
 		
-    
-    </script>
+		
+		function emailSend(){
+			var clientEmail = $('#userEmail').val().trim();
+			var emailYN = isEmail(clientEmail);
+			
+			console.log('입력 이메일' + clientEmail);
+			
+			if(emailYN == true){
+				alert('이메일 형식입니다');
+				
+				$.ajax({
+					type:"POST",
+					url : "mail.do",
+					data : {"userEmail" : clientEmail},
+					success : function(data){
+						alert('메일로 전송되었습니다!')
+					},error : function(e){
+						alert('오류입니다. 잠시 후 다시 시도해주세요.');
+					}
+				});
+			}else{
+				alert('이메일 형식에 알맞게 입력해주세요 xxx@xxx.com');
+			}
+		}
+	
+		
+		
+		function isEmail(asValue){
+			var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+		}
+		
+		function emailCertification(){
+			var clientEmail = $('#userEmail').val().trim();
+			var inputCode = $('#certificationNumber').val().trim();
+			
+			$.ajax({
+				type : "POST",
+				url : 'certification.do',
+				data : {"userEmail" : clientEmail, "inputCode" : inputCode},
+				success : function(result){
+					console.log(result);
+					if(result == true){
+						alert('인증완료');
+					}else{
+						alert('재시도');
+					}
+				}
+			});
+		}
+		
+		
+	</script>
 </body>
 </html>

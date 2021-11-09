@@ -11,6 +11,7 @@
 		<typeAlias type="com.daol.library.member.domain.Member" alias="Member"/>
 		<typeAlias type="com.daol.library.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.daol.library.book.domain.Book" alias="Book"/>
+		<typeAlias type="com.daol.library.lendingBook.domain.LendingBook" alias="LendingBook"/>
 		<typeAlias type="com.daol.library.post.domain.Post" alias="Post"/>
 		<typeAlias type="com.daol.library.post.domain.Reply" alias="Reply"/>
 		<typeAlias type="com.daol.library.readingRoom.domain.ReadingRoom" alias="ReadingRoom"/>
@@ -20,6 +21,7 @@
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/book-mapper.xml"/>
+		<mapper resource="mappers/lendingBook-mapper.xml"/>
 		<mapper resource="mappers/post-mapper.xml"/>
 		<mapper resource="mappers/readingRoom-mapper.xml"/>
 		<mapper resource="mappers/studyRoom-mapper.xml"/>

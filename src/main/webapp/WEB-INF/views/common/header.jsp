@@ -21,7 +21,7 @@
 				<div class="wrapper right" id="right"><a href="loginView.do" >LOGIN</a></div>
 			</c:if>
 			<c:if test="${sessionScope.userId ne null and userId ne ''}">
-				<div class="wrapper right" id="right"><a href="logout.do" >LOGOUT</a></div>
+				<div class="wrapper right" id="right">${sessionScope.userId}님 환영합니다!&nbsp;&nbsp;&nbsp;&nbsp;<a href="logout.do" style="color : gray;">LOGOUT</a></div>
 			</c:if>
 		</div>
 		<div class="nav" id="nav">
@@ -29,8 +29,8 @@
 				<li><a href="#">도서관 소개</a>
 					<ul>
 						<li><a href="#">규장각 인사말</a></li>
-						<li><a href="#">규장각 연혁</a></li>
-						<li><a href="#">규장각 오시는 길</a></li>
+						<li><a href="historyView.do">규장각 연혁</a></li>
+						<li><a href="ComeView.do">규장각 오시는 길</a></li>
 						<li><a href="#">규장각 시설 이용 안내</a></li>
 					</ul>
 				</li>
@@ -42,36 +42,40 @@
 						<li><a href="studyRoom.do">스터디룸 예약</a></li>
 					</ul>
 				</li>
-				<li><a href="#">자료검색</a>
+				<li><a href="/search.do">자료검색</a>
 					<ul>
-						<li><a href="#">간략 검색</a></li>
-						<li><a href="#">상세 검색</a></li>
+						<li><a href="/search.do">간략 검색</a></li>
+						<li><a href="/sDetail.do">상세 검색</a></li>
 						<li><a href="#">주제별 검색</a></li>
 						<li><a href="#">신착 자료</a></li>
 						<li><a href="#">대출 베스트</a></li>
 					</ul>				
 				</li>
 				<li>
-					<a href="mypageInfo.do?userId=${loginUser.userId }">마이페이지</a>
+					<c:if test="${sessionScope.userType ne '관리자' }">
+					<a href="mypageInfo.do?userId=${userId }">마이페이지</a>
 					<ul>
-						<li><a href="mypageInfo.do?userId=${loginUser.userId }">회원정보</a></li>
-						<li><a href="leaveAccount.do?userId=${loginUser.userId }">회원탈퇴</a></li>
-						<li><a href="lendingStatus.do?userId=${loginUser.userId }">나의 대출 내역</a></li>
-						<li><a href="bookingList.do?userId=${loginUser.userId }">도서 예약 내역</a></li>
-						<li><a href="wishList.do?userId=${loginUser.userId }">희망 도서 신청</a></li>
-						<li><a href="likeList.do?userId=${loginUser.userId }">관심도서 내역</a></li>
-						<li><a href="tasteSurvey.do?userId=${loginUser.userId }">취향 분석 설문</a></li>
-						<li><a href="readingroomHistory.do?userId=${loginUser.userId }">시설 이용 내역</a></li>
+						<li><a href="mypageInfo.do?userId=${userId }">회원정보</a></li>
+						<li><a href="leaveAccount.do?userId=${userId }">회원탈퇴</a></li>
+						<li><a href="lendingStatus.do?userId=${userId }">나의 대출 내역</a></li>
+						<li><a href="bookingList.do?userId=${userId }">도서 예약 내역</a></li>
+						<li><a href="wishList.do?userId=${userId }">희망 도서 신청</a></li>
+						<li><a href="likeList.do?userId=${userId }">관심도서 내역</a></li>
+						<li><a href="tasteSurvey.do?userId=${userId }">취향 분석 설문</a></li>
+						<li><a href="readingroomHistory.do?userId=${userId }">시설 이용 내역</a></li>
 						<li><a href="#">문의하기</a></li>
 					</ul>
-<!-- 					<a href="#">관리자페이지</a>
+					</c:if>
+					<c:if test="${sessionScope.userType eq '관리자' }">
+ 					<a href="#">관리자페이지</a>
 					<ul>
 						<li><a href="#">회원관리</a></li>
 						<li><a href="#">도서관리</a></li>
 						<li><a href="#">문의관리</a></li>
 						<li><a href="#">신고관리</a></li>
 						<li><a href="#">대출통계</a></li>
-					</ul> -->
+					</ul>
+					</c:if>
 				</li>
 				
 			</ul>

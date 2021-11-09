@@ -33,4 +33,34 @@ public class NoticeServiceImpl implements NoticeService {
 		int totalCount = store.selectListCount();
 		return totalCount;
 	}
+
+	@Override
+	public Notice printOne(int noticeNo) {
+		Notice notice = store.printOne(noticeNo);
+		return notice;
+	}
+
+	@Override
+	public void countUp(int noticeNo) {
+		store.viewCount(noticeNo);
+		
+	}
+
+	@Override
+	public int deleteNotice(int noticeNo) {
+		int result = store.removeNotice(noticeNo);
+		return result;
+	}
+
+	@Override
+	public Notice updateOne(int noticeNo) {
+		Notice notice = store.updateView(noticeNo);
+		return notice;
+	}
+
+	@Override
+	public int updateNotice(Notice notice) {
+		int result = store.updateOne(notice);
+		return result;
+	}
 }

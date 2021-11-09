@@ -50,5 +50,11 @@ public class BookStoreLogic implements BookStore {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int updateOne(Book book) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

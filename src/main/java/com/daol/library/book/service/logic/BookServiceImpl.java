@@ -51,4 +51,10 @@ public class BookServiceImpl implements BookService {
 		return null;
 	}
 
+	@Override
+	public int modifyOne(Book book) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

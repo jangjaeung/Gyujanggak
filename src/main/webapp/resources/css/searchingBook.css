@@ -1,6 +1,12 @@
+/* * {
+	margin: 0;
+	padding: 0;
+}
+ */
 .search {
     font-size: 16px;
     width: 325px;
+    height: 40px;
     padding: 10px;
     border: 1px;
     outline: #2e4f85;
@@ -35,6 +41,7 @@
 .section2 {
     display: inline-block;
     position: absolute;
+    margin-left: 50px;
 }
 
 .search__select {

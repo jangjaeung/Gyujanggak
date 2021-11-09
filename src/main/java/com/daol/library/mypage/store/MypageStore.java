@@ -18,8 +18,9 @@ public interface MypageStore {
 		
 		public int updateMember(Member member);
 		
-		public int deleteMember(String userId);
+		public int deleteMember(Member member);
 		
+		public int checkPwdDup(Member member);
 		
 		//도서
 		/** 대출 도서 전체 권수 */
@@ -60,4 +61,6 @@ public interface MypageStore {
 		public int deleteReadingRoom(int rReservationNo);
 		/** 예약 취소 */
 		public int deleteStudyRoom(int sReservationNo);
+
+		
 }

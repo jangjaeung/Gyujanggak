@@ -1,6 +1,7 @@
 package com.daol.library.member.service;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.daol.library.member.domain.Member;
 
@@ -19,5 +20,9 @@ public interface MemberService {
 	public void findPw(HttpServletResponse resp, Member vo) throws Exception;
 
 	public int checkIdDup(String userId);
+
+	public void mailSend(HttpSession session, String userEmail);
+
+	public boolean emailCertification(HttpSession session, String userEmail, int parseInt);
 
 }

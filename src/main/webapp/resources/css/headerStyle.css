@@ -26,7 +26,7 @@ header a{
 #left{
 	padding-top : 1%;
 	float : left;
-	width : 90%;
+	width : 80%;
 	display:block;
 }
 #header-logo{
@@ -45,11 +45,13 @@ header a{
 	display : inline;
 }
 .right{
+	padding-top : 1%;
 	float : left;
-	width : 10%;
+	width : 20%;
 	text-align : center;
 	line-height : 50px;
 	color : #363541;
+	font-weight : bold;
 }
 
 
