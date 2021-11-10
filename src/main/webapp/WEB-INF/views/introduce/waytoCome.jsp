@@ -38,7 +38,7 @@
 
 <jsp:include page="../common/header.jsp"></jsp:include>
 	<br>
-	<div class="container" style="margin-bottom: 4%; margin-top:10%">
+	<div class="container" style="margin-bottom: 0%; margin-top:10%">
 		
     </div>  
 <h1 style="text-align: center;margin-bottom: 5%;">규장각 오시는 길</h1>

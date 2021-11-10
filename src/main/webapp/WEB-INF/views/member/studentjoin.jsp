@@ -91,11 +91,11 @@ span.guide{
           </div>
           <button style="position: absolute;width: 15%;right: 6%;height: 6%;top: 61%;" id="e-email">이메일 인증</button>
 
-          <div class="field space" style="width: 80%;">
+          <div class="field space" style="width: 59%;">
             <input type="text" class="pass-key" required placeholder="학번 (다올대학교 학생만 입력해 주세요.)" name="studentId" id="studentId">
           </div>
           
-          <div class="field space" style="width: 40%;">
+          <div class="field space" style="width: 40%;float: right;bottom: ;position: relative;bottom: 61px;">
             <span style="border: none;">전공 : </span>
             <select name="major">
               <option value="인문사회">인문사회</option>
@@ -105,10 +105,11 @@ span.guide{
               <option value="의학">의학</option>
             </select>
           </div>
-
+          
+<div class="login" id="chK10" style="margin-left: 29%;">※ 인증 후 가입 가능합니다.</div>
 
         <div class="field space" style="    margin-left: 19%;margin-top: 4%;height: 65px;">
-            <input type="submit" value="가입하기" style="background-color: darkgoldenrod; border: none;">
+            <input type="submit" value="가입하기" style="background-color: darkgoldenrod; border: none;" disabled>
           </div>
           
 			</form>
@@ -210,8 +211,9 @@ $('#out').css({'color':'red','width':'110%','font-size':'12px','border':'none','
 				$('#studentId').focus();
 				$("#userEmail").attr("readonly",true);
 				$('#out2').html("인증 완료");
-
 				$('#out2').css({'color':'green','width':'110%','font-size':'12px','border':'none','text-align':'right'});
+				$('#chkNo1').removeAttr("disabled")
+				$("#chK10").hide();
 			}
 		})
 	

@@ -96,8 +96,9 @@ span.guide{
           </div>
           <button type="button" style="position: absolute;width: 15%;right: 6%;height: 6%;top: 69%;"onclick="emailCertification()">인증하기</button>
 
+ <div class="login" id="chK10">※ 인증 후 가입 가능합니다.</div>
         <div class="field space" style="    margin-left: 19%;margin-top: 10%;height: 65px;">
-            <input type="submit" value="가입하기" style="background-color: darkgoldenrod; border: none;">
+            <input type="submit" id="chkNo1" value="가입하기" style="background-color: darkgoldenrod; border: none;" disabled>
           </div>
           
 			</form>
@@ -245,6 +246,8 @@ span.guide{
 					console.log(result);
 					if(result == true){
 						alert('인증완료');
+						$('#chkNo1').removeAttr("disabled")
+						$("#chK10").hide();
 					}else{
 						alert('재시도');
 					}

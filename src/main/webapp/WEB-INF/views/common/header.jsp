@@ -31,7 +31,7 @@
 						<li><a href="greetingView.do">규장각 인사말</a></li>
 						<li><a href="historyView.do">규장각 연혁</a></li>
 						<li><a href="ComeView.do">규장각 오시는 길</a></li>
-						<li><a href="#">규장각 시설 이용 안내</a></li>
+						<li><a href="informationView.do">규장각 시설 이용 안내</a></li>
 					</ul>
 				</li>
 				<li><a href="#">도서관이용</a>

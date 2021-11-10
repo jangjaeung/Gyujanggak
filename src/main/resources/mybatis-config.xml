@@ -26,5 +26,6 @@
 		<mapper resource="mappers/readingRoom-mapper.xml"/>
 		<mapper resource="mappers/studyRoom-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
+		<mapper resource="mappers/admin-mapper.xml"/>
 	</mappers>
 </configuration>
