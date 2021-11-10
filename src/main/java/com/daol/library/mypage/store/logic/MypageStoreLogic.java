@@ -11,6 +11,7 @@ import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.store.MypageStore;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
@@ -154,7 +155,30 @@ public class MypageStoreLogic implements MypageStore{
 		return 0;
 	}
 
+	@Override
+	public List<Qna> selectAllQna(String userId) {
+		return sqlSession.selectList("mypageMapper.selectAllQna",userId);
+	}
+	
+	@Override
+	public Qna selectOneQna(int qnaNo) {
+		return sqlSession.selectOne("mypageMapper.selectOneQna",qnaNo);
+	}
 
+	@Override
+	public int insertQna(Qna qna) {
+		return sqlSession.insert("mypageMapper.insertQna",qna);
+	}
+
+	@Override
+	public int updateQna(Qna qna) {
+		return sqlSession.update("mypageMapper.updateQna",qna);
+	}
+
+	@Override
+	public int deleteQna(int qnaNo) {
+		return sqlSession.delete("mypageMapper.deleteQna",qnaNo);
+	}
 
 
 }

@@ -9,6 +9,7 @@ import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
 
@@ -67,5 +68,10 @@ public interface MypageService {
 
 	
 	
-	
+	//문의
+	public List<Qna> printAllQna(String userId);
+	public Qna printOneQna(int qnaNo);
+	public int registQna(Qna qna);
+	public int modifyQna(Qna qna);
+	public int removeQna(int qnaNo);
 }

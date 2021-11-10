@@ -7,6 +7,7 @@ import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
 
@@ -65,4 +66,11 @@ public interface MypageStore {
 		public int deleteStudyRoom(int sReservationNo);
 
 		
+		
+		//문의
+		public List<Qna> selectAllQna(String userId);
+		public Qna selectOneQna(int qnaNo);
+		public int insertQna(Qna qna);
+		public int updateQna(Qna qna);
+		public int deleteQna(int qnaNo);
 }

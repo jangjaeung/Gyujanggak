@@ -14,14 +14,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.controller.MemberController;
 import com.daol.library.member.domain.Member;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.service.MypageService;
 
 @Controller
@@ -263,5 +260,95 @@ public class MypageController {
 	public String studyroomHistory() {
 		return "mypage/studyroomHistory";
 	}
-
+	
+	//문의페이지
+	@RequestMapping(value="qnaList.do",method = RequestMethod.GET)
+	public ModelAndView qnaList(ModelAndView mv,HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		if(userId != null) {
+			mv.addObject("userId",userId);
+		}
+		List<Qna> qList = service.printAllQna(userId);
+		if(!qList.isEmpty()) {
+			mv.addObject("qList",qList);
+		}
+		mv.setViewName("mypage/qna");
+		return mv;
+	}
+	
+	//문의작성페이지이동
+	@RequestMapping(value="registQnaView.do",method=RequestMethod.GET)
+	public ModelAndView registViewQna(ModelAndView mv,HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		if(userId != null) {
+			mv.addObject("userId",userId);
+			mv.setViewName("mypage/qnaRegistView");
+		}
+		return mv;
+	}
+	//문의 작성
+	@RequestMapping(value="qnaRegist.do",method=RequestMethod.POST)
+	public String registQna(Model model,@ModelAttribute Qna qna){
+		int result = service.registQna(qna);
+		if(result>0) {
+			return "redirect:qnaList.do";
+		}else {
+			model.addAttribute("msg","등록실패");
+			return "common/errorPage";
+		}
+	}
+	//문의 디테일 페이지 이동
+	@RequestMapping(value="qnaDetail.do",method=RequestMethod.GET)
+	public ModelAndView qnaDetail(ModelAndView mv,@RequestParam("qnaNo") int qnaNo, HttpSession session) {
+		String member = (String)session.getAttribute("userId");
+		if(member != null) {
+			mv.addObject("userId",member);
+		}
+		Qna qna = service.printOneQna(qnaNo);
+			if(qna!=null) {
+				mv.addObject("qna", qna);
+				mv.setViewName("mypage/qnaDetail");
+			}else {
+				mv.addObject("msg","조회실패");
+				mv.setViewName("common/errorPage");
+			}
+		return mv;
+	}
+	//문의 수정페이지 이동
+	@RequestMapping(value="qnaModifyView.do",method=RequestMethod.GET)
+	public ModelAndView qnaModifyView(ModelAndView mv,@RequestParam("qnaNo") int qnaNo, HttpSession session) {
+		String member = (String)session.getAttribute("userId");
+		if(member != null) {
+			mv.addObject("userId",member);
+		}
+		Qna qna = service.printOneQna(qnaNo);
+			if(qna!=null) {
+				mv.addObject("qna", qna);
+				mv.setViewName("mypage/qnaModifyView");
+			}else {
+				mv.addObject("msg","조회실패");
+				mv.setViewName("common/errorPage");
+			}
+		return mv;
+	}
+	//문의 수정
+	@RequestMapping(value="qnaModify.do",method=RequestMethod.POST)
+	public String qnaModify(@ModelAttribute Qna qna) {
+		int result = service.modifyQna(qna);
+		if(result > 0) {
+			return "redirect:qnaList.do";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	//문의 삭제
+	@RequestMapping(value="qnaRemove.do",method=RequestMethod.GET)
+	public String qnaRemove(@RequestParam("qnaNo")int qnaNo) {
+		int result = service.removeQna(qnaNo);
+		if(result > 0) {
+			return "redirect:qnaList.do";
+		}else {
+			return "common/errorpage";
+		}
+	}
 }

@@ -22,6 +22,7 @@ import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.service.MypageService;
 import com.daol.library.mypage.store.MypageStore;
 import com.daol.library.readingRoom.domain.ReadingRoom;
@@ -168,10 +169,30 @@ public class MypageServiceImpl implements MypageService{
 		return 0;
 	}
 
+	@Override
+	public List<Qna> printAllQna(String userId) {
+		return store.selectAllQna(userId);
+	}
 	
-	
+	@Override
+	public Qna printOneQna(int qnaNo) {
+		return store.selectOneQna(qnaNo);
+	}
 
+	@Override
+	public int registQna(Qna qna) {
+		return store.insertQna(qna);
+	}
 
+	@Override
+	public int modifyQna(Qna qna) {
+		return store.updateQna(qna);
+	}
+
+	@Override
+	public int removeQna(int qnaNo) {
+		return store.deleteQna(qnaNo);
+	}
 
 
 }

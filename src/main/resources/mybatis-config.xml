@@ -17,6 +17,7 @@
 		<typeAlias type="com.daol.library.readingRoom.domain.ReadingRoom" alias="ReadingRoom"/>
 		<typeAlias type="com.daol.library.studyRoom.domain.StudyRoom" alias="StudyRoom"/>
 		<typeAlias type="com.daol.library.book.domain.WishBook" alias="WishBook"/>
+		<typeAlias type="com.daol.library.mypage.domain.Qna" alias="Qna"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
