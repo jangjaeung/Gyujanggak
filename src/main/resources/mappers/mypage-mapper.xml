@@ -24,6 +24,34 @@
 		<result property="surveyCheck" column="SURVEY_CHECK"></result>
 		<result property="lendingCopy" column="LENDING_COPY"></result>
 	</resultMap>
+	<resultMap type="Qna" id="qnaResultMap">
+		<id property="qnaNo" column="QNA_NO"></id>
+		<result property="userId" column="USER_ID"></result>
+		<result property="replyState" column="REPLY_STATE"></result>
+		<result property="qnaTitle" column="QNA_TITLE"></result>
+		<result property="qnaContent" column="QNA_CONTENT"></result>
+		<result property="qnaWriteDate" column="QNA_WRITEDATE"></result>
+		<result property="replyContent" column="REPLY_CONTENT"></result>
+		<result property="replyWriteDate" column="REPLY_WRITEDATE"></result>
+		<result property="replyUserId" column="REPLY_USERID"></result>
+	</resultMap>
+	<!-- 문의사항 -->
+	<select id="selectAllQna" resultMap="qnaResultMap">
+		SELECT * FROM QNA WHERE USER_ID = #{userId} ORDER BY QNA_NO DESC
+	</select>
+	<select id="selectOneQna" resultMap="qnaResultMap">
+		SELECT * FROM QNA WHERE QNA_NO = #{qnaNo}
+	</select>
+	<insert id="insertQna" parameterType="Qna">
+		INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL,#{userId},DEFAULT,#{qnaTitle},#{qnaContent},DEFAULT,NULL,NULL,NULL)
+	</insert>
+	<delete id="deleteQna" parameterType="_int">
+		DELETE QNA WHERE QNA_NO = #{qnaNo}
+	</delete>
+	<update id="updateQna" parameterType="Qna">
+		UPDATE QNA SET QNA_TITLE = #{qnaTitle}, QNA_CONTENT = #{qnaContent} WHERE QNA_NO = #{qnaNo}
+	</update>
+	<!-- 문의사항끝 -->
 	<select id="selectMember" parameterType="Member" resultMap="memberResultMap">
 		SELECT * FROM USERS WHERE USER_ID = #{userId}
 	</select>

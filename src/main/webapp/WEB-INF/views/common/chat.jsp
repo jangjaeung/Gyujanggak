@@ -13,7 +13,7 @@
 <!-- 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 <!-- 스와이퍼 -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <!-- 메인페이지 챗봇 스크립트 -->
