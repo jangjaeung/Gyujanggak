@@ -17,6 +17,8 @@ public interface MemberStore {
 	public int updatePw(Member vo) throws Exception;
 
 	public int checkIdDup(String userId);
-
+	
+//	특정 회원 정보 변경
+	public int updateOne(String userId);
 
 }

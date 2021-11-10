@@ -46,8 +46,9 @@
     <hr>
     <div>
         <div>
-            <form action="/lendingBook.do">
+            <form action="/lendingBook.do" method="post">
 		        <input type="hidden" name="bookNo" value="${ book.bookNo }">
+		        <input type="hidden" name="userId" value="${ sessionScope.userId }">
 <%-- 		        <input type="hidden" name="bookWriter" value="${ book.bookWriter }"> --%>
 <%-- 		        <input type="hidden" name="publisher" value="${ book.publisher }"> --%>
 <%-- 		        <input type="hidden" name="bookYear" value="${ book.bookYear }"> --%>
@@ -108,12 +109,14 @@
                         </tr>
                         <tr>
                             <td colspan="2">
+                                <input type="radio" name="bookPay" id="" value="inPesrson">직접결제 
                                 <input type="radio" name="bookPay" id="" value="card" checked>카드결제 
                                 <button type="button" onclick="location.href='#';">결제하기</button>
                             </td>
                         </tr>
                     </table>
                 </div>
+<!--                 <button type="button" onclick="location.href='/lendingBook.do';">대출신청</button> -->
                 <input type="submit" value="대출신청">
             </form>
         </div>

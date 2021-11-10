@@ -1,5 +1,6 @@
 package com.daol.library.lendingBook.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,22 +29,19 @@ public class LendingBookStoreLogic implements LendingBookStore {
 	}
 
 	@Override
-	public int insertLending(Book book) {
-		int result = 0;
-		result += sqlSession.insert("lendingBookMapper.insertLending", book);
-		result += sqlSession.update("bookMapper.updateBook", book);
+	public int insertLending(LendingBook lendingBook) {
+		int result = sqlSession.insert("lendingBookMapper.insertLending", lendingBook);
 		return result;
 	}
 
 	@Override
-	public int deleteLending(int lendingNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteLending(HashMap<String, String> deleteLending) {
+		int result = sqlSession.delete("lendingBookMapper.deleteLending", deleteLending);
+		return result;
 	}
 
 	@Override
 	public int updateLending(LendingBook lendingBook) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
