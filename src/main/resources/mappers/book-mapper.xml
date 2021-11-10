@@ -57,4 +57,9 @@
 	<select id="selectPrintNew" resultMap="bookResultMap">
 		SELECT ROWNUM,B.* FROM (SELECT N.* FROM BOOK N ORDER BY N.BOOK_NO DESC)B WHERE ROWNUM BETWEEN 1 AND 10
 	</select>
+	<!-- 대출 시 -->
+	<update id="updateLendingBook" parameterType="Book">
+		UPDATE BOOK SET BOOK_STATE = '대출불가', LENDING_COUNT = LENDING_COUNT + 1 WHERE BOOK_NO = #{bookNo} AND BOOK_STATE = '대출가능'
+	</update>
+	
 </mapper>

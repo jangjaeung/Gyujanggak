@@ -52,8 +52,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public int modifyOne(Book book) {
-		// TODO Auto-generated method stub
+	public int modifyLendingBook(int bookNo) {
+//		int result = store.updateLendingBook(bookNo);
 		return 0;
 	}
 	

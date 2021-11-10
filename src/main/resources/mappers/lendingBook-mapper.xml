@@ -12,5 +12,11 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="bookNo" column="BOOK_NO"/>
 	</resultMap>
-
+	<insert id="insertLending" parameterType="LendingBook">
+		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{receive}, #{userId}, #{bookNo})
+	</insert>
+	
+	<delete id="deleteLending" parameterType="map">
+		DELETE FROM BOOK_LENDING WHERE LENDING_NO = #{lendingNo} AND USER_ID = #{userId}
+	</delete>
 </mapper>

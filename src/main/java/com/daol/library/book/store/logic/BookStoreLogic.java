@@ -52,9 +52,9 @@ public class BookStoreLogic implements BookStore {
 	}
 
 	@Override
-	public int updateOne(Book book) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateLendingBook(int bookNo) {
+		int result = sqlSession.update("bookMapper.updateLendingBook", bookNo);
+		return result;
 	}
 	
 	//메인페이지 신간도서 출력

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<jsp:include page="../common/header.jsp"></jsp:include>
+    <jsp:include page="../common/header.jsp"></jsp:include>
 	<main>
 		<div class="readingRoomTitle">
 			<p class="readingRoomTitleOne">열람실</p>
@@ -17,10 +18,10 @@
 		</div>
 		<div class="readingRoomDiv">
 			<p>열람실 예약</p>
-			<table class="mainTable">
+			<table class="readingRoomMainTable">
 				<tr>
 					<td>
-						<table class="subTable">
+						<table class="readingRoomSubTable">
 							<tr>
 								<td class="seat" id="1">1</td>
 								<td class="seat" id="2">2</td>
@@ -36,7 +37,7 @@
 						</table>
 					</td>
 					<td>
-						<table class="subTable">
+						<table class="readingRoomSubTable">
 							<tr>
 								<td class="seat" id="5">5</td>
 								<td class="seat" id="6">6</td>
@@ -52,7 +53,7 @@
 						</table>
 					</td>
 					<td>
-						<table class="subTable">
+						<table class="readingRoomSubTable">
 							<tr>
 								<td class="seat" id="9">9</td>
 								<td class="seat" id="10">10</td>
@@ -70,7 +71,7 @@
 				</tr>
 				<tr>
 					<td>
-						<table class="subTable">
+						<table class="readingRoomSubTable">
 							<tr>
 								<td class="seat" id="25">25</td>
 								<td class="seat" id="26">26</td>
@@ -86,7 +87,7 @@
 						</table>
 					</td>
 					<td>
-						<table class="subTable">
+						<table class="readingRoomSubTable">
 							<tr>
 								<td class="seat" id="29">29</td>
 								<td class="seat" id="30">30</td>
@@ -102,7 +103,7 @@
 						</table>
 					</td>
 					<td>
-						<table class="subTable">
+						<table class="readingRoomSubTable">
 							<tr>
 								<td class="seat" id="33">33</td>
 								<td class="seat" id="34">34</td>
@@ -121,20 +122,27 @@
 			</table>
 		</div>
 		<div class="rsvDiv hidden">
-			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 예약시간 <select
-				id="reservationTime">
+			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 
+			예약시간 <select id="reservationTime">
 				<option value="default" disabled selected>시간을 선택해 주세요.</option>
 				<option value="AM">09:00~15:00</option>
 				<option value="PM">15:00~21:00</option>
 			</select>
 		</div>
-		<button class="rsv_btn">예약</button>
+		<div>
+			<c:if test="${userId eq null }">
+				<button onclick="showLoginPage();" class="rsv_btn">예약</button>
+			</c:if>
+			<c:if test="${userId ne null }">
+				<button class="rsv_btn">예약</button>
+			</c:if>
+		</div>
 	</main>
+	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 
 <script>
-
 	// 좌석 현황
 	$.ajax({
 		url : 'printAllReadingRoom.do',
@@ -177,7 +185,7 @@
 					success : function(data) {
 						//console.log(123,JSON.parse(data))
 						data = JSON.parse(data);
-						//만약 데이터가 1개 이상이면 그값이 AM일때 reservationTime 이거 value가 AM인걸 disabled PM이면 PM을 disabled
+						//만약 데이터가 1개 이상이면 그값이 AM일때 reservationTime value가 AM인걸 disabled PM이면 PM을 disabled
 						if(data.length > 0){
 							for(let i in data){
 								console.log(data[i].rReservationTime)
@@ -225,7 +233,7 @@
 					data : {
 						seatNo : $('#selectedSeat').val(),
 						rReservationTime : $('#reservationTime').val(),
-						userId : 'khuser01',
+						userId : $('#userId').val(),
 					},
 					success : function(data) {
 						if (data === 'success') {
@@ -239,11 +247,19 @@
 						alert('AJAX 통신오류.. 관리자에게 문의하세요');
 					},
 				});
+			} else if($('#selectedSeat').val() == '') {
+				alert('좌석을 선택해주세요.');
+			} else if($('#reservationTime').val() == null) {
+				alert('예약시간을 선택해주세요.');
 			} else {
-				alert('좌석과 시간 모두를 선택해주세요.');
+				alert('좌석과 예약시간을 선택해주세요.');
 			}
 		}
-
 	});
+	
+	function showLoginPage() {
+		alert('로그인 후 이용 가능합니다.');
+		location.href="loginView.do";
+	} 
 </script>
 </html>

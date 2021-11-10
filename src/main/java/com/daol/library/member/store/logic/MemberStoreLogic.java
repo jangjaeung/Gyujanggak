@@ -53,4 +53,10 @@ public class MemberStoreLogic implements MemberStore{
 		int result = sqlSession.selectOne("membermapper.checkIdDup", userId);
 		return result;
 	}
+
+	@Override
+	public int updateOne(String userId) {
+		int result = sqlSession.update("membermapper.updateLendingMember", userId);
+		return result;
+	}
 }
