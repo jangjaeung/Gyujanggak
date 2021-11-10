@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminMapper">
+	<resultMap type="Book" id="bookResultMap">
+		<id property="bookNo" column="BOOK_NO"/>
+		<result property="bookName" column="BOOK_NAME"/>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="bookSubject" column="BOOK_SUBJECT"/>
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="bookYear" column="BOOK_YEAR"/>
+		<result property="callNo" column="CALL_NO"/>
+		<result property="isbn" column="ISBN"/>
+		<result property="bookCover" column="BOOK_COVER"/>
+		<result property="theme" column="THEME"/>
+		<result property="bookState" column="BOOK_STATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		<result property="lendingCount" column="LENDING_COUNT"/>
+	</resultMap>
+	
+</mapper>
