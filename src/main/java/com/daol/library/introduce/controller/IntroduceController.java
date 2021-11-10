@@ -22,4 +22,9 @@ public class IntroduceController {
   	public String greetingView() {
 	  return "introduce/greetings"; 
   	}
+	
+	@RequestMapping(value="informationView.do", method=RequestMethod.GET)
+  	public String introduceView() {
+	  return "introduce/information"; 
+  	}
 }

@@ -56,8 +56,9 @@ public class LendingBookController {
 				out.flush();
 //				return "common/errorPage";
 			}
-	    }
-		
-	}
+		} else if(bookReceive.equals("parcel")) {
+			
+		}
+    }
 	
 }
