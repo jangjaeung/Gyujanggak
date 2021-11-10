@@ -8,13 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
-import com.daol.library.member.domain.Member;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.readingRoom.service.ReadingRoomService;
 
@@ -67,8 +65,8 @@ public class ReadingRoomController {
 	@ResponseBody
 	@RequestMapping(value = "reservationReadingRoom.do", method = RequestMethod.POST)
 	public String reservationReadingRoom(@ModelAttribute ReadingRoom readingRoom, HttpSession session) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		readingRoom.setUserId(loginUser.getUserId());
+		String loginUser = (String)session.getAttribute("userId");
+		readingRoom.setUserId(loginUser);
 		int result = service.reservationReadingRoom(readingRoom);
 		if (result > 0) {
 			return "success";
