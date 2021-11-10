@@ -1,7 +1,9 @@
 @charset "UTF-8";
 
+*{margin:0; padding:0;}
+
 main{
-    padding-top: 120px;
+    padding-top: 110px;
 }
 .readingRoomTitle {
     height: 160px;
@@ -43,20 +45,20 @@ main{
     font-weight: bold;
 }
 
-.readingRoomDiv .mainTable {
+.readingRoomDiv .readingRoomMainTable {
     margin: 30px auto;
     width: calc(100% - 600px);
     min-width: 700px;
     text-align: center;
 }
-.readingRoomDiv .mainTable > tbody > tr > td {
+.readingRoomDiv .readingRoomMainTable > tbody > tr > d {
     width: 33.33333333333333333%;
 }
-.readingRoomDiv .subTable {
+.readingRoomDiv .readingRoomSubTable {
     width: 100%;
 }
 
-.readingRoomDiv .subTable > tbody > tr > td {
+.readingRoomDiv .readingRoomSubTable > tbody > tr > td {
     border: 1px solid #999;
     border-radius : 10px;
     height: 50px;
