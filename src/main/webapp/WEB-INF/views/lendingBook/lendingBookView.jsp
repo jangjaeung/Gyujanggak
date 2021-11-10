@@ -80,7 +80,7 @@
                         <td colspan="2">도서 수령 방법</td>
                     </tr>
                     <tr>
-                        <td><input type="radio" id="" name="bookReceive" value="visit" onchange="setDisplay()">방문수령</td>
+                        <td><input type="radio" id="" name="bookReceive" value="visit" onchange="setDisplay()" checked>방문수령</td>
                         <td><input type="radio" name="bookReceive" id="bookReceive" value="parcel" onchange="setDisplay()">택배수령</td>
                     </tr>
                 </table>
