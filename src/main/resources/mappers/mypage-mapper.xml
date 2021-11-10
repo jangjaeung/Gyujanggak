@@ -24,6 +24,8 @@
 		<result property="surveyCheck" column="SURVEY_CHECK"></result>
 		<result property="lendingCopy" column="LENDING_COPY"></result>
 	</resultMap>
+
+	
 	<select id="selectMember" parameterType="Member" resultMap="memberResultMap">
 		SELECT * FROM USERS WHERE USER_ID = #{userId}
 	</select>
@@ -31,6 +33,7 @@
 		<!-- 결과값이 int로 나와야함 -->
 		SELECT COUNT(*) FROM USERS WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd }
 	</select>
+
 	
 	<update id="updateMember" parameterType="Member">
 		UPDATE USERS SET USER_PWD = #{userPwd}, USER_EMAIL = #{userEmail}, USER_PHONE= #{userPhone}, PROFILE_PIC=#{profilePic} WHERE USER_ID = #{userId}
@@ -39,4 +42,22 @@
 	<delete id="deleteMember" parameterType="Member">
 		DELETE FROM USERS WHERE USER_ID = #{userId}
 	</delete>
+	
+	<resultMap type="WishBook" id="wishbookResultMap">
+		<id property="applyNo" column="APPLY_NO"></id>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookName" column="BOOK_NAME"/>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="applyStatus" column="APPLY_STATUS"/>
+		<result property="applyDate" column="APPLY_DATE"/>
+	</resultMap>
+	
+	<select id="selectWishList"  resultMap="wishbookResultMap">
+		SELECT * FROM WISH_BOOK WHERE USER_ID = #{userId} ORDER BY APPLY_DATE DESC
+	</select>
+	
+	<insert id="insertWishbook" parameterType="WishBook">
+		INSERT INTO WISH_BOOK VALUES (SEQ_APPLYNUM, #{userId}, #{bookName}, #{bookWriter}, #{publisher}, DEFAULT, DEFAULT)
+	</insert>
 </mapper>

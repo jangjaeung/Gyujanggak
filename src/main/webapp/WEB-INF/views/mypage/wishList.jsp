@@ -104,7 +104,6 @@
 			<h2 id="mainTitle">
 				<b>희망 도서 신청</b>
 			</h2>
-
 			<!-- 본문 -->
 			<br> <br><br>
 			<table class="table">
@@ -127,33 +126,25 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th scope="row">1</th>
-						<td>페이지</td>
-						<td>오건영2북스</td>
-						<td>부의 시나리오</td>
-						<td>2021-10-21</td>
-						<td>처리중</td>
-					</tr>
-					<tr>
-						<th scope="row">1</th>
-						<td>페이지</td>
-						<td>오건영2북스</td>
-						<td>부의 시나리오</td>
-						<td>2021-10-21</td>
-						<td>처리중</td>
-					</tr>
-					<tr>
-						<th scope="row">1</th>
-						<td>페이지</td>
-						<td>오건영2북스</td>
-						<td>부의 시나리오</td>
-						<td>2021-10-21</td>
-						<td>처리중</td>
-					</tr>
+						<c:if test="${empty wList }">
+							<tr>
+								<td colspan="6" align="center"> 희망도서 신청 내역이 없습니다. </td>
+							</tr>
+						</c:if>
+						<c:if test="${not empty wList }">
+							<c:forEach items="${wList }" var="wish">
+								<tr>
+									<th scope="row">${wish.applyNo }</th>
+									<td>${wish.publisher }</td>
+									<td>${wish.bookWriter }</td>
+									<td>${wish.bookName }</td>
+									<td>${wish.applyDate }</td>
+									<td>${wish.applyStatus }</td>
+								</tr>
+							</c:forEach>
+						</c:if>
 				</tbody>
 			</table>
-			
 			<!-- 버튼 -->
 			<br><br><br>
 				<div class="btn-area">
@@ -161,18 +152,20 @@
 				</div>
 				
 				<!-- 도서 신청 팝업 -->
-				<form action="#">
+				<form action="applyBook.do" method="post">
+				<input type="hidden" value=${loginUser.userEmail } name="userEmail">
+				<input type="hidden" value=${loginUser.userId } name="userId">
 					<div id="layer" class="pop-layer">
 						<div class="pop-container">
 							<div class="pop-conts">
 								<!-- 내용 -->
 								<h3><b>도서 신청</b></h3><br>
-								<h4><b>도서명</b></h4><input class="form-control"  type="text" name="" value="">
-								<h4><b>출판사</b></h4><input class="form-control"  type="text" name="" value="">
-								<h4><b>저자</b></h4><input class="form-control"  type="text" name="" value="">
+								<h4><b>도서명</b></h4><input class="form-control"  type="text" name="bookName" value="">
+								<h4><b>출판사</b></h4><input class="form-control"  type="text" name="publisher" value="">
+								<h4><b>저자</b></h4><input class="form-control"  type="text" name="bookWriter" value="">
 								<br><br>
 								<div class="btn-r">
-									<a href="#" class="btn-layerClose"><button class="btn btn-primary">완료</button></a>&nbsp;&nbsp; 
+									<a href="#" class="btn-submit"><button class="btn btn-primary" type="submit">완료</button></a>&nbsp;&nbsp; 
 									<a href="#" class="btn-layerClose"><button class="btn btn-secondary" >취소</button></a>
 								</div>
 							<!--  // 내용 끝 -->
@@ -218,6 +211,10 @@
         $el.find("a.btn-layerClose").click(function(){
             isDim ? $(".dim-layer").fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
+        });
+        
+        $el.find("btn-submit").click(function(){
+            return true;
         });
 
         $(".layer .dimBg").click(function(){

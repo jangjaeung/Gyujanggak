@@ -1,12 +1,25 @@
 package com.daol.library.mypage.service.logic;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.service.MypageService;
@@ -98,10 +111,19 @@ public class MypageServiceImpl implements MypageService{
 		return 0;
 	}
 
+
+	//희망도서 신청 메일, 디비저장
 	@Override
-	public Book printWishBook(Book book) {
-		// TODO Auto-generated method stub
-		return null;
+	public int registerWishBook(WishBook wishbook) {
+		int result = store.insertWishBook(wishbook);
+		return result;
+	}
+
+	//희망도서 내역조회
+	@Override
+	public List<WishBook> printWishBook(String userId) {
+		List<WishBook> wList = store.selectWishBook(userId);
+		return wList;
 	}
 
 	@Override
@@ -145,6 +167,10 @@ public class MypageServiceImpl implements MypageService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+	
+
 
 
 

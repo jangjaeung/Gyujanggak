@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.readingRoom.domain.ReadingRoom;
@@ -40,9 +41,10 @@ public interface MypageStore {
 		/** 예약 취소 */
 		public int deleteBooking(int bookNo);
 		/** 희망 도서 내역 */
-		public Book selectWishBook(Book book);
+		public List<WishBook> selectWishBook(String userId);
 		
-		//희망도서 신청 이메일?
+		//희망도서 
+		public int insertWishBook(WishBook wishBook);
 		
 		public Book selectLikeList(Book book);
 		

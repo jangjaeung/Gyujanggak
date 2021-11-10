@@ -2,11 +2,26 @@ package com.daol.library.mypage.controller;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.controller.MemberController;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.service.MypageService;
@@ -44,8 +60,6 @@ public class MypageController {
 		}
 
 	}
-	
-	
 
 	// 마이페이지 정보 수정 화면
 	@RequestMapping(value = "modifyInfoView.do", method = RequestMethod.GET)
@@ -56,17 +70,18 @@ public class MypageController {
 	// 회원 정보 수정
 	@RequestMapping(value = "modifyInfo.do", method = RequestMethod.POST)
 	public String modifyInfo(@ModelAttribute Member member, @RequestParam("enrollDate2") String enrollDate2,
-			HttpServletRequest request, Model model,  @RequestParam(value="reloadFile", required=false) MultipartFile reloadFile) {
+			HttpServletRequest request, Model model,
+			@RequestParam(value = "reloadFile", required = false) MultipartFile reloadFile) {
 		HttpSession session = request.getSession();
 		member.setEnrollDate(Date.valueOf(enrollDate2));
-		if(reloadFile != null) {
-			//기존 파일 삭제
-			if(member.getProfilePic() != "") {
+		if (reloadFile != null) {
+			// 기존 파일 삭제
+			if (member.getProfilePic() != "") {
 				deleteFile(member.getProfilePic(), request);
 			}
-			//새파일업로드
+			// 새파일업로드
 			String fileRename = mController.saveFile(reloadFile, request);
-			if(fileRename != null) {
+			if (fileRename != null) {
 				member.setProfilePic(reloadFile.getOriginalFilename());
 			}
 		}
@@ -85,14 +100,13 @@ public class MypageController {
 			return "common/errorPage";
 		}
 	}
-	
-	
-	public void deleteFile(String fileName, HttpServletRequest request) {//경로를 만들어주기 위한 작업(경로를 알아야 해당 파일을 삭제할 수 있음)
+
+	public void deleteFile(String fileName, HttpServletRequest request) {// 경로를 만들어주기 위한 작업(경로를 알아야 해당 파일을 삭제할 수 있음)
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String fullPath = root + "\\muploadFiles";
-		File file = new File(fullPath + "\\" + fileName); //파일객체를 이용해서 
-		if(file.exists()) {
-			file.delete(); //파일 삭제
+		File file = new File(fullPath + "\\" + fileName); // 파일객체를 이용해서
+		if (file.exists()) {
+			file.delete(); // 파일 삭제
 		}
 	}
 
@@ -106,20 +120,18 @@ public class MypageController {
 
 	}
 
-	
-	  @RequestMapping(value="removeMember.do", method=RequestMethod.GET) public
-	  String removeMember(@ModelAttribute Member member, Model model, HttpServletRequest request) {
-		  int result = service.removeMember(member);
-		  HttpSession session = request.getSession();
-		  if(result>0) {
-			  session.invalidate();
-			  return "home";
-		  }else {
-			  model.addAttribute("msg", "회원 탈퇴 실패");
-			  return "common/errorPage";
-		  }
-	  }
-	 
+	@RequestMapping(value = "removeMember.do", method = RequestMethod.GET)
+	public String removeMember(@ModelAttribute Member member, Model model, HttpServletRequest request) {
+		int result = service.removeMember(member);
+		HttpSession session = request.getSession();
+		if (result > 0) {
+			session.invalidate();
+			return "home";
+		} else {
+			model.addAttribute("msg", "회원 탈퇴 실패");
+			return "common/errorPage";
+		}
+	}
 
 	// 비밀번호 일치 여부 검사
 	@ResponseBody
@@ -143,8 +155,89 @@ public class MypageController {
 
 	// 희망도서 내역
 	@RequestMapping(value = "wishList.do", method = RequestMethod.GET)
-	public String wishList() {
-		return "mypage/wishList";
+	public String wishList(HttpServletRequest request, Model model, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		try {
+			List<WishBook> wList = service.printWishBook(userId);
+			if (!wList.isEmpty()) {
+				model.addAttribute("wList", wList);
+				session.setAttribute("loginUser", member);
+			} else {
+				model.addAttribute("wList", null);
+			}
+			return "mypage/wishList";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "희망 도서 정보 조회 실패!");
+			return "common/errorPage";
+		}
+	}
+
+	// 희망도서 신청
+	@RequestMapping(value = "applyBook.do", method = RequestMethod.POST)
+	public String applyBook(HttpServletRequest request, @ModelAttribute Member member,
+			@ModelAttribute WishBook wishbook, String div, Model model) throws Exception {
+		/*
+		 * int result = service.registerWishBook(wishbook);
+		 * 
+		 * if(result>0) { return "mypage/wishList"; }else { model.addAttribute("msg",
+		 * "희망 도서 등록 실패"); return "common/errorPage"; }
+		 */
+
+		
+		  
+		 final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory"; // 이메일 객체생성하기
+		  Properties props = System.getProperties(); 
+		  props.put("mail.smtp.user","daollibrary@gmail.com"); 
+		  props.put("mail.smtp.host", "smtp.gmail.com");
+		  props.put("mail.smtp.port", "465"); 
+		  props.put("mail.smtp.starttls", "true");
+		  props.put("mail.smtp.ssl.enable", "true"); 
+		  props.put("mail.smtp.auth","true"); 
+		  props.put("mail.debug", "true");
+		  props.put("mail.smtp.socketFactory.port", "465");
+		  props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+		  props.put("mail.smtp.socketFactory.fallback", "false"); 
+		  
+			final String username = "daollibrary@gmail.com";//발신자의 이메일 아이디 입력
+			final String password = "daol1234"; //발신자의 패스워드
+			
+		  try{ 
+			  Session session = Session.getDefaultInstance(props, new Authenticator() { protected
+		  PasswordAuthentication getPasswordAuthentication() { return new
+		  PasswordAuthentication(username, password); }}); //메세지 설정 
+			  Message msg = new MimeMessage(session);
+		
+		  //보내는사람 받는사람 설정 
+		  msg.setFrom(new InternetAddress("daollibrary@gmail.com"));
+		  msg.setRecipients(Message.RecipientType.TO,
+		  InternetAddress.parse("daollibrary@gmail.com",false));
+		  msg.setSubject(member.getUserId() + "님의 희망 도서 신청");
+		  msg.setText("'<b>'" + member.getUserId() + "님의 희망 도서 신청 내역  '</b>'" + "\n도서명 : " +
+		  wishbook.getBookName() + "\n출판사 : " + wishbook.getPublisher() + "\n저자명 : " +
+		  wishbook.getBookWriter() +"입니다"); Transport.send(msg);
+		  System.out.println("발신성공!");
+		  
+		
+		  
+		  return "mypage/wishList";
+		  
+		  //db 삽입 
+//		  int result = service.registerWishBook(wishbook);
+//		  
+//		  if(result>0) { 
+//			  return "mypage/wishList"; 
+//		  }else { 
+//			  model.addAttribute("msg", "희망 도서 등록 실패"); 
+//			  return "common/errorPage"; } 
+		  
+		  
+		  }catch (MessagingException error){ 
+			  model.addAttribute("msg", "희망 도서 신청 메일 전송 실패"); 
+			  return "common/errorPage"; 
+		}
+
 	}
 
 	// 관심 도서 내역

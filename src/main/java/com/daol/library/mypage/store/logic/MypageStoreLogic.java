@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.store.MypageStore;
@@ -98,10 +99,17 @@ public class MypageStoreLogic implements MypageStore{
 		return 0;
 	}
 
+
 	@Override
-	public Book selectWishBook(Book book) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertWishBook(WishBook wishBook) {
+		int result = sqlSession.insert("mypageMapper.insertWishbook", wishBook);
+		return result;
+	}
+	
+	@Override
+	public List<WishBook> selectWishBook(String userId) {
+		List<WishBook> wList = sqlSession.selectList("mypageMapper.selectWishList",userId);
+		return wList;
 	}
 
 	@Override
@@ -145,6 +153,7 @@ public class MypageStoreLogic implements MypageStore{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 

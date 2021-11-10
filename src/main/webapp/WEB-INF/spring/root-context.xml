@@ -34,4 +34,21 @@
 	2. maxInMemorySize : 디스크에 저장하지 않고 메모리에 유지하도록 허용하는 바이트 단위 최대 용량
 	기본값 10240바이트 
 -->
+
+	<!-- 메일 전송 관련 -->
+	<!-- gmail설정 -->
+<!-- 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+	     <property name="host" value="smtp.gmail.com" />
+	     <property name="port" value="587" />
+	 <property name="username" value="daollibrary@gmail.com"/> 자신의 이메일 아이디
+	 <property name="password" value="daol1234"/> 자신의 비밀번호
+	 보안연결 TLS과 관련된 설정
+	     <property name="javaMailProperties">
+	    <props>
+	       <prop key="mail.smtp.auth">true</prop>
+	       <prop key="mail.smtp.starttls.enable">true</prop>
+	    </props>
+	     </property>
+	</bean> -->
+	
 </beans>

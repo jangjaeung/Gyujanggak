@@ -16,6 +16,7 @@
 		<typeAlias type="com.daol.library.post.domain.Reply" alias="Reply"/>
 		<typeAlias type="com.daol.library.readingRoom.domain.ReadingRoom" alias="ReadingRoom"/>
 		<typeAlias type="com.daol.library.studyRoom.domain.StudyRoom" alias="StudyRoom"/>
+		<typeAlias type="com.daol.library.book.domain.WishBook" alias="WishBook"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
