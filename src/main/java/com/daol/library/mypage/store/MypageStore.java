@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
 
@@ -40,9 +42,10 @@ public interface MypageStore {
 		/** 예약 취소 */
 		public int deleteBooking(int bookNo);
 		/** 희망 도서 내역 */
-		public Book selectWishBook(Book book);
+		public List<WishBook> selectWishBook(String userId);
 		
-		//희망도서 신청 이메일?
+		//희망도서 
+		public int insertWishBook(WishBook wishBook);
 		
 		public Book selectLikeList(Book book);
 		
@@ -50,17 +53,19 @@ public interface MypageStore {
 		
 		
 		//시설 이용
-		public ReadingRoom selectAll(ReadingRoom readingRoom);
-		
-		public StudyRoom selectAll(StudyRoom studryRoom);
-		/** 내역 삭제 */
-		public int deleteReadingRoomHistory(int rReservationNo);
-		/** 내역 삭제 */
-		public int deleteStudyRoomHistory(int sReservationNo);
+		public List<ReadingRoom> selectAllrList(String userId);
+		public List<StudyRoom> selectAllsList(String userId);
 		/** 예약 취소 */
 		public int deleteReadingRoom(int rReservationNo);
 		/** 예약 취소 */
 		public int deleteStudyRoom(int sReservationNo);
 
 		
+		
+		//문의
+		public List<Qna> selectAllQna(String userId);
+		public Qna selectOneQna(int qnaNo);
+		public int insertQna(Qna qna);
+		public int updateQna(Qna qna);
+		public int deleteQna(int qnaNo);
 }

@@ -92,21 +92,30 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th scope="row"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" ></th>
-						<td>
-							예약날짜 : 2021-10-21 <br>
-							예약시간 : 9:00 ~ 15:00
-						</td>
-						<td>
-							<a href="#layer" class="check-btn"><button class="btn btn-danger btn-sm" id="withdraw-btn">예약취소</button></a></a>
-						</td>
-					</tr>
+					<c:if test="${empty rList }">
+						<tr>
+							<td colspan="6" align="center"> 열람실 이용 내역이 없습니다. </td>
+						</tr>
+					</c:if>
+					<c:if test="${not empty rList }">
+						<c:forEach items="${rList }" var="rList">
+							<tr>
+								<th scope="row"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" ></th>
+								<td>
+									예약날짜 : ${rList.rReservationDate } <br> 
+									예약시간 : <c:if test="${rList.rReservationTime ne 'PM'}">9:00 ~ 15:00</c:if>
+											<c:if test="${rList.rReservationTime eq 'PM'}">15:00 ~ 21:00</c:if>
+									<input type="hidden" value="${rList.rReservationNo}" name="rReservationNo">
+									<input type="hidden" value="${rList.userId}" name="userId">
+								</td>
+								<td>
+									<a href="#layer" class="check-btn"><button class="btn btn-danger btn-sm" id="withdraw-btn">예약취소</button></a></a>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:if>
 				</tbody>
 			</table>
-				<div class="btn-area">
-					<a href="#layer"><button class="btn btn-danger btn-sm" id="withdraw-btn">삭제</button></a>
-				</div>
 				
 				
 				<div id="layer" class="pop-layer">
@@ -116,7 +125,7 @@
 						<!-- 내용 -->
 						<h4 class="ctxt mb20"><b>정말로 취소하시겠습니까?</b></h4>
 						<div class="btn-r">
-							<a href="#" class="btn-layerClose"><button class="btn btn-danger">확인</button></a> <a
+							<a href="<%-- cancelReadingRoom.do?rReservationNo=${rList.rReservationNo} --%>" class="btn-submit"><button class="btn btn-danger" >확인</button></a> <a
 								href="#" class="btn-layerClose"><button class="btn btn-secondary" >취소</button></a>
 						</div>
 						<!--  // 내용 끝 -->
@@ -162,6 +171,11 @@
             isDim ? $(".dim-layer").fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
+        
+/*        $el.find("btn-submit").click(function(){
+			return true;
+        }); */
+ 
 
         $(".layer .dimBg").click(function(){
             $(".dim-layer").fadeOut();

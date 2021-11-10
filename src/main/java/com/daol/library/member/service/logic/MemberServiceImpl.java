@@ -189,4 +189,11 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return true;
 	}
+
+//	대출 회원 수정
+	@Override
+	public int modifyOne(String userId) {
+//		int result = store.updateOne(userId);
+		return 0;
+	}
 }

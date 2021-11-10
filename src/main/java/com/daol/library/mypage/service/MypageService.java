@@ -2,10 +2,14 @@ package com.daol.library.mypage.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
 
@@ -41,23 +45,17 @@ public interface MypageService {
 	/** 예약 취소 */
 	public int cancelBooking(int bookNo);
 	/** 희망 도서 내역 */
-	public Book printWishBook(Book book);
+	public List<WishBook> printWishBook(String userId);
 	
-	//희망도서 신청 이메일?
-	
+	//희망도서  신청 db 저장
+	public int registerWishBook(WishBook wishbook);
+	//관심도서 목록 출력
 	public Book printLikeList(Book book);
-	
-	//취향 분석
 	
 	
 	//시설 이용
-	public ReadingRoom printAll(ReadingRoom readingRoom);
-	
-	public StudyRoom printAll(StudyRoom studryRoom);
-	/** 내역 삭제 */
-	public int removeReadingRoomHistory(int rReservationNo);
-	/** 내역 삭제 */
-	public int removeStudyRoomHistory(int sReservationNo);
+	public List<ReadingRoom> printAllrList(String userId);
+	public List<StudyRoom> printAllsList(String userId);
 	/** 예약 취소 */
 	public int cancelReadingRoom(int rReservationNo);
 	/** 예약 취소 */
@@ -65,5 +63,12 @@ public interface MypageService {
 
 	
 	
+	//문의
+	public List<Qna> printAllQna(String userId);
+	public Qna printOneQna(int qnaNo);
+	public int registQna(Qna qna);
+	public int modifyQna(Qna qna);
+	public int removeQna(int qnaNo);
+
 	
 }

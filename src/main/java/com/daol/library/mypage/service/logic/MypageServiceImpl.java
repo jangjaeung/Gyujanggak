@@ -1,14 +1,28 @@
 package com.daol.library.mypage.service.logic;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
+import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.service.MypageService;
 import com.daol.library.mypage.store.MypageStore;
 import com.daol.library.readingRoom.domain.ReadingRoom;
@@ -98,10 +112,19 @@ public class MypageServiceImpl implements MypageService{
 		return 0;
 	}
 
+
+	//희망도서 신청 메일, 디비저장
 	@Override
-	public Book printWishBook(Book book) {
-		// TODO Auto-generated method stub
-		return null;
+	public int registerWishBook(WishBook wishbook) {
+		int result = store.insertWishBook(wishbook);
+		return result;
+	}
+
+	//희망도서 내역조회
+	@Override
+	public List<WishBook> printWishBook(String userId) {
+		List<WishBook> wList = store.selectWishBook(userId);
+		return wList;
 	}
 
 	@Override
@@ -111,33 +134,22 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public ReadingRoom printAll(ReadingRoom readingRoom) {
+	public List<ReadingRoom> printAllrList(String userId) {
+		List<ReadingRoom> rList = store.selectAllrList(userId);
+		return rList;
+	}
+
+	@Override
+	public List<StudyRoom> printAllsList(String userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public StudyRoom printAll(StudyRoom studryRoom) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int removeReadingRoomHistory(int rReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int removeStudyRoomHistory(int sReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int cancelReadingRoom(int rReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deleteReadingRoom(rReservationNo);
+		return result;
 	}
 
 	@Override
@@ -146,6 +158,30 @@ public class MypageServiceImpl implements MypageService{
 		return 0;
 	}
 
+	@Override
+	public List<Qna> printAllQna(String userId) {
+		return store.selectAllQna(userId);
+	}
+	
+	@Override
+	public Qna printOneQna(int qnaNo) {
+		return store.selectOneQna(qnaNo);
+	}
+
+	@Override
+	public int registQna(Qna qna) {
+		return store.insertQna(qna);
+	}
+
+	@Override
+	public int modifyQna(Qna qna) {
+		return store.updateQna(qna);
+	}
+
+	@Override
+	public int removeQna(int qnaNo) {
+		return store.deleteQna(qnaNo);
+	}
 
 
 }

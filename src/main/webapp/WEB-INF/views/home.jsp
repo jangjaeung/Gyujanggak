@@ -9,6 +9,7 @@
 <title>main</title>
 <link rel="stylesheet" href="/resources/mainPage/css/mainPage.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
 </head>
 <body>
 	<jsp:include page="common/header.jsp"></jsp:include>
@@ -43,7 +44,7 @@
 	                <option value="writer">저자</option>
 	                <option value="publisher">출판사</option>
 				</select> <input type="text" name="searchValue" id="" class="search" style="width:79%;height:100%;" placeholder="검색어 입력">
-				<i class="material-icons" style="position:absolute; z-index:199; margin-left:-30px; margin-top:13px; cursor:pointer;">search</i>
+				<i class="material-icons zxc" style="position:absolute; z-index:199; margin-left:-30px; margin-top:13px; cursor:pointer;">search</i>
 				<input type="submit" value="검색" id="sbt" style="display:none;">
 			</div>
 		</form>
@@ -53,27 +54,27 @@
 			<ul>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo1.png" alt=""> <span>도서검색</span>
+						<a href="/search.do"><img src="/resources/mainPage/img/logo1.png" alt=""> <span>도서검색</span></a>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo2.png" alt=""> <span>시설이용</span>
+						<a href=""><img src="/resources/mainPage/img/logo2.png" alt=""> <span>시설이용</span></a>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo3.png" alt=""> <span>공지사항</span>
+						<a href="noticeList.do"><img src="/resources/mainPage/img/logo3.png" alt=""> <span>공지사항</span></a>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo4.png" alt=""> <span>이용증</span>
+						<a href="mypageInfo.do"><img src="/resources/mainPage/img/logo4.png" alt=""> <span>이용증</span></a>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo5.png" alt=""> <span>이용시간</span>
+						<a href=""><img src="/resources/mainPage/img/logo5.png" alt=""> <span>이용시간</span></a>
 					</div>
 				</li>
 			</ul>
@@ -81,11 +82,30 @@
 		<div class="taste-area">
 			<div class="taste-kate">
 				<ul>
-					<li class="kate">사서 추천도서</li>
-					<li class="kate active">신간 도서</li>
+					<li class="kate active" data-tab="tab-0">인기 도서</li>
+					<li class="kate" data-tab="tab-1">신간 도서</li>
 				</ul>
 			</div>
-			<div class="swiper mySwiper">
+			<div class="swiper mySwiper tab-0 act">
+				<div class="swiper-wrapper">
+					<c:forEach items="${bList }" var="bList">
+						<div class="swiper-slide">
+							<div class="cont">
+								<c:url var="bDetail" value="/bookDetail.do">
+	                    			<c:param name="bookNo" value="${bList.bookNo }"></c:param>
+	                    		</c:url>
+								<a href="${bDetail }" style="text-decoration: none;">
+									<img class="" src="/resources/bookcover/${bList.bookCover }" alt="">
+								</a>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="swiper-pagination"></div>
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
+			</div>
+			<div class="swiper mySwiper tab-1">
 				<div class="swiper-wrapper">
 					<c:forEach items="${bList }" var="bList">
 						<div class="swiper-slide">
@@ -108,20 +128,18 @@
 		<div class="keyword-area">
 			<div class="keyword">
 				<ul id="kate">
-					<li id="pop">인기 검색어</li>
-					<li id="many">다독자</li>
+					<li class="gori sel" data-tab="tab-3">인기 검색어</li>
+					<li class="gori" data-tab="tab-4">다독자</li>
 				</ul>
 			</div>
-			<div class="pop rank">
+			<div class="pop tab-3 sh">
 				<ol>
 					<li>asd</li>
-					<li>dsssss</li>
 				</ol>
 			</div>
-			<div class="pop many">
+			<div class="pop tab-4">
 				<ol>
-					<li>asd</li>
-					<li>dsssss</li>
+					<li>asdd</li>
 				</ol>
 			</div>
 		</div>
@@ -170,9 +188,24 @@
 			el : '.swiper-scrollbar',
 		}
 	});
-	$(".material-icons").on("click",function(){
+	$(".zxc").on("click",function(){
 		$("#sbt").click();
 	});
+	
+	$(".kate").on("click",function(){
+		var tab_id = $(this).attr('data-tab');
+		$(".kate").removeClass("active");
+		$(".swiper").removeClass("act")
+		$(this).addClass("active");
+		$("."+tab_id).addClass("act");
+	})
+	$(".gori").on("click",function(){
+		var pop_id = $(this).attr('data-tab');
+		$(".sel").removeClass("sel");
+		$(".pop").removeClass("sh");
+		$(this).addClass("sel");
+		$("."+pop_id).addClass("sh");
+	})
  	 </script>
 </body>
 </html>
