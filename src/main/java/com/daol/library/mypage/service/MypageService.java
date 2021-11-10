@@ -18,7 +18,9 @@ public interface MypageService {
 	
 	public int modifyMember(Member member);
 	
-	public int removeMember(String userId);
+	public int removeMember(Member member);
+	
+	public int checkPwdDup(Member member);
 	
 	
 	//도서
@@ -60,6 +62,8 @@ public interface MypageService {
 	public int cancelReadingRoom(int rReservationNo);
 	/** 예약 취소 */
 	public int cancelStudyRoom(int sReservationNo);
+
+	
 	
 	
 }

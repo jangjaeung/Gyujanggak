@@ -50,5 +50,18 @@ public class BookStoreLogic implements BookStore {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int updateOne(Book book) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	//메인페이지 신간도서 출력
+	@Override
+	public List<Book> selectNewList() {
+		List<Book> bList = sqlSession.selectList("bookMapper.selectPrintNew");
+		return bList;
+	}
 	
 }

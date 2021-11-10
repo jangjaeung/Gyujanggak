@@ -32,10 +32,29 @@
 		ORDER BY UPDATE_DATE DESC
 	</select>
 	<select id="selectSearchDetail" resultMap="bookResultMap">
-		SELECT * FROM BOOK
-
+		SELECT * FROM BOOK WHERE
+		<if test="searchValue1 != ''">
+			BOOK_NAME LIKE '%' || #{ searchValue1 } || '%'
+		</if>
+		<if test="searchValue2 != ''">
+			AND BOOK_WRITER LIKE '%' || #{ searchValue2 } || '%'
+		</if>
+		<if test="searchValue3 != ''">
+			AND PUBLISHER LIKE '%' || #{ searchValue3 } || '%'
+		</if>
+		<if test="searchValue4 != ''">
+			AND ISBN LIKE '%' || #{ searchValue4 } || '%'
+		</if>
+		<if test="searchValue5 != ''">
+			AND BOOK_YEAR LIKE '%' || #{ searchValue5 } || '%'
+		</if>
+		ORDER BY UPDATE_DATE DESC
 	</select>
 	<select id="selectOne" resultMap="bookResultMap">
 		SELECT * FROM BOOK WHERE BOOK_NO = #{bookNo}
+	</select>
+	<!-- 메인페이지 신간도서 -->
+	<select id="selectPrintNew" resultMap="bookResultMap">
+		SELECT ROWNUM,B.* FROM (SELECT N.* FROM BOOK N ORDER BY N.BOOK_NO DESC)B WHERE ROWNUM BETWEEN 1 AND 10
 	</select>
 </mapper>

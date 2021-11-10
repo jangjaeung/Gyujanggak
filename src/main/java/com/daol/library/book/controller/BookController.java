@@ -47,13 +47,13 @@ public class BookController {
 	}
 	@GetMapping("/searchDetail.do")
 	public String detailSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchSimple(search);
+		List<Book> bList = service.printSearchDetail(search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
-			return "book/bookSearchSimple";
+			return "book/bookSearchDetail";
 		} else {
-			return "book/bookSearchSimple";
+			return "book/bookSearchDetail";
 		}
 	}
 	
@@ -71,6 +71,18 @@ public class BookController {
 		return mv;
 	}
 	
-	
+//	도서 대출 페이지 이동
+	@GetMapping("/lendingBookView.do")
+	public ModelAndView lendingBookView(ModelAndView mv, @RequestParam("bookNo") int bookNo) {
+		Book book = service.printOne(bookNo);
+		if(book != null) {
+			mv.addObject("book", book);
+			mv.setViewName("lendingBook/lendingBookView");
+		} else {
+			mv.addObject("msg", "대출 신청 실패");
+			mv.setViewName("book/bookDetail");
+		}
+		return mv;
+	}
 	
 }

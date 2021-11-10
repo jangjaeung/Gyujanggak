@@ -39,9 +39,15 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public int removeMember(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int removeMember(Member member) {
+		int result = store.deleteMember(member);
+		return result;
+	}
+	
+	@Override
+	public int checkPwdDup(Member member) {
+		int result = store.checkPwdDup(member);
+		return result;
 	}
 
 	@Override
@@ -139,5 +145,7 @@ public class MypageServiceImpl implements MypageService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }

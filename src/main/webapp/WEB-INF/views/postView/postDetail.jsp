@@ -6,33 +6,53 @@
 <head>
 <meta charset="UTF-8">
 <title>자유게시판</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style>
 *{margin:0;padding:0}
 header{top:0}
 footer{bottom:0}
-#wrap{width:1400px;height:800px;margin:0 auto;margin-top:200px}
+#wrap{width:1400px;margin:0 auto;margin-top:200px}
 input{outline:none;}
-textarea{outline:none;resize:none;}
+textarea{outline:none;resize:none;padding:5px;}
 .active{display:none;}
+#rtb{margin:0 auto; width:100%; border:none;}
+#rtb tbody td{padding:5px;}
+#jtb{margin:0 auto;width:100%; border:none;}
+#con{margin:0 auto; width:100%;}
+#con td:first-child{border-right:1px solid rgba(221,221,221);}
+input{border:none; padding:5px;}
+textarea{width:100%;border:none}
+#title{font-size:2rem;}
+#writer{font-size:1.2rem;}
+#tr2 td{font-weight:bold;}
+#rtb tbody tr td:first-child{text-align:center;}
+#rtb tbodt tr td{font-size:1.7rem;}
+.de{height:100px;width:100%;border:none;}
+#ft{margin-bottom:200px;}
+.qwe{border:none;padding:6px;}
+a{text-style:none; color:black;}
+a:visited { color: black; }
+.modifyR{width:100%;}
 </style>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div id="wrap">
+	<h1>자유게시판</h1><br><br>
 		<form method="get" name="form">
 			<input type="hidden" name="postNo" value="${post.postNo }">
-			<table align="center">
+			<table id="con">
 				<tr>
-					<td>제목</td>
-					<td><input type="text" size="50" name="postTitle" value="${post.postTitle }" readonly></td>
+					<td width="80" height="80" style="font-weight:bold; border-bottom:1px solid rgba(221,221,221);">제목</td>
+					<td style="border-bottom:1px solid rgba(221,221,221);"><input type="text" size="50" id="title" name="postTitle" value="${post.postTitle }" readonly></td>
+				</tr>
+				<tr style="border-bottom:1px solid rgba(221,221,221);">
+					<td height="30" style="font-weight:bold;">작성자</td>
+					<td><input type="text" size="50" id="writer"name="postWriter" value="${post.postWriter }" readonly></td>
 				</tr>
 				<tr>
-					<td>작성자</td>
-					<td><input type="text" size="50" name="postWriter" value="${post.postWriter }" readonly></td>
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td><textarea rows="7" cols="50" name="postContents" readonly>${post.postContents }</textarea></td>
+					<td style="font-weight:bold;">내용</td>
+					<td><textarea rows="10" name="postContents" readonly>${post.postContents }</textarea></td>
 				</tr>
 				<c:if test="${userId eq post.postWriter}">
 					<tr>
@@ -43,38 +63,45 @@ textarea{outline:none;resize:none;}
 					</tr>
 				</c:if>
 			</table>
-			<table align="center" width="800" border="1">
+			<table border="1" id="jtb">
+				<tr>
+					<td colspan="3" style="font-weight:bold;">댓글등록</td>
+				</tr>
 				<tr>
 					<td>
-						<textarea rows="3" cols="55" id="rContents"></textarea>
+						<textarea rows="3" cols="55" id="rContents" placeholder="내용을 입력해 주세요."></textarea>
 					</td>
 					<c:if test="${userId ne null}">
-						<td><button id="rSubmit">등록하기</button>
+						<td><button class="de" id="rSubmit">등록하기</button></td>
 					</c:if>
 					<c:if test="${userId eq null}">
-						<td><button id="fail">등록하기</button>
+						<td><button class="de" id="fail">등록하기</button></td>
 					</c:if>
 				</tr>
 			</table>
 	
-	<!--  댓글 목록 -->
-	<table align="center" width="800" border="1" id="rtb">
-		<thead>
-			<tr>
-				<!-- 댓글 갯수 -->
-				<td colspan="5"><b id="rCount"></b></td>
-			</tr>
-			<tr>
-				<td width="80">작성자</td>
-				<td>내용</td>
-				<td width="80">등록일</td>
-			</tr>
-		</thead>
-		<tbody>
-		
-		</tbody>
-	</table>
+			<!--  댓글 목록 -->
+			<table align="center" width="800" border="1" id="rtb">
+				<thead>
+					<tr>
+						<!-- 댓글 갯수 -->
+						<td colspan="5"><b id="rCount"></b></td>
+					</tr>
+					<tr id="tr2">
+						<td width="80" style="text-align:center">작성자</td>
+						<td style="padding:5px;">내용</td>
+						<td width="80" style="text-align:center">등록일</td>
+					</tr>
+				</thead>
+				<tbody>
+				
+				</tbody>
+			</table>
 		</form>
+		<div id="ft">
+			<a href="postList.do"><button type="button" class="qwe">목록으로</button></a>
+			<button type="button" class="qwe">게시물 신고</button>
+		</div>
 	</div>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
@@ -117,7 +144,7 @@ textarea{outline:none;resize:none;}
 	               }
 	            },
 	            error : function(){
-	               alert("통신실패")
+	               alert("내용이 너무 길어요")
 	            },
 	         });
 	      });
@@ -137,6 +164,7 @@ textarea{outline:none;resize:none;}
 		             var $rContents;
 		             var $rCreateDate;
 		             var $btnArea;
+		             var $btnAreaT;
 		             $("#rCount").text("댓글 ("+data.length+")");
 		             if(data.length > 0){
 		            	 for(var i in data){
@@ -147,11 +175,14 @@ textarea{outline:none;resize:none;}
 		                     $btnArea = $("<td width='80' class='modi'>")
 		                     .append("<a href ='#' onclick='modifyReply(this,"+postNo+","+data[i].replyNo+",\""+data[i].replyContents+"\");'>수정/<a> ")
 		                     .append("<a href ='#' onclick='removeReply("+postNo+","+data[i].replyNo+")'>삭제<a>");
+		                     $btnAreaT = $("<td width='80' class='modi'>").append("<a href='#'>신고<a>");
 		                     $tr.append($rWriter);
 		                     $tr.append($rContent);
 		                     $tr.append($rCreateDate);
 		                     if(data[i].replyWriter == userId){
 		                     	$tr.append($btnArea);
+		                     }else{
+		                    	 $tr.append($btnAreaT);
 		                     };
 		                     $tableBody.append($tr);
 		            		}
@@ -170,7 +201,7 @@ textarea{outline:none;resize:none;}
 			 	$(".modi").addClass("active");
 		        $trModify = $("<tr>");
 		        $trModify.append("<td style='text-align:center;'>ㄴ</td>")
-		        $trModify.append("<td colspan='3'><input type='text' id='modifyReply' size='50' value='"+replyContents+"'></td>");
+		        $trModify.append("<td colspan='3'><input type='text' id='modifyReply' class='modifyR' value='"+replyContents+"'></td>");
 		        $trModify.append("<td><button onclick='modifyReplyCommit("+postNo+","+replyNo+")'>수정완료</button></td>");
 		        $(obj).parent().parent().after($trModify);
 	      }
@@ -193,7 +224,7 @@ textarea{outline:none;resize:none;}
 		           }
 		        },
 		        error : function(){
-		           alert("Ajax 통신 실패");
+		           alert("내용이 너무 길어요");
 		        }
 		     });
 		  };

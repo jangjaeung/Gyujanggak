@@ -39,9 +39,15 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public int deleteMember(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteMember(Member member) {
+		int result = sqlSession.delete("mypageMapper.deleteMember", member);
+		return result;
+	}
+	
+	@Override
+	public int checkPwdDup(Member member) {
+		int result = sqlSession.selectOne("mypageMapper.checkPwdDup", member);
+		return result;
 	}
 
 	@Override
@@ -139,5 +145,7 @@ public class MypageStoreLogic implements MypageStore{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }

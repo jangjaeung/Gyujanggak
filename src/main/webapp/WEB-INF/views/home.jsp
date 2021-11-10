@@ -36,64 +36,69 @@
 				<img src="/resources/mainPage/img/main_img6.jpg" alt="">
 			</div>
 		</div>
-		<div class="search-wrap">
-			<div>
-				<select name="" id="" class="select-box">
-					<option value="" class="box-op">도서명</option>
-					<option value="" class="box-op">저자</option>
-					<option value="" class="box-op">출판사</option>
-				</select> <input type="text" name="" id="" class="search">
+		<form action="/searchSimple.do" method="get">
+			<div class="search-wrap">
+				<select name="searchCondition" id="" class="search__select" style ="width:20%;height:100%;">
+					<option value="title">도서명</option>
+	                <option value="writer">저자</option>
+	                <option value="publisher">출판사</option>
+				</select> <input type="text" name="searchValue" id="" class="search" style="width:79%;height:100%;" placeholder="검색어 입력">
+				<i class="material-icons" style="position:absolute; z-index:199; margin-left:-30px; margin-top:13px; cursor:pointer;">search</i>
+				<input type="submit" value="검색" id="sbt" style="display:none;">
 			</div>
-		</div>
+		</form>
 	</div>
 	<div class="main-wrapper">
 		<div class="nav-area">
 			<ul>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo1.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo1.png" alt=""> <span>도서검색</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo2.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo2.png" alt=""> <span>시설이용</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo3.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo3.png" alt=""> <span>공지사항</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo4.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo4.png" alt=""> <span>이용증</span>
 					</div>
 				</li>
 				<li>
 					<div class="nav-logo">
-						<img src="/resources/mainPage/img/logo5.png" alt=""> <span>asd</span>
+						<img src="/resources/mainPage/img/logo5.png" alt=""> <span>이용시간</span>
 					</div>
 				</li>
 			</ul>
 		</div>
 		<div class="taste-area">
-			<div>
+			<div class="taste-kate">
 				<ul>
-					<li>사서 추천도서</li>
-					<li>신간 도서</li>
+					<li class="kate">사서 추천도서</li>
+					<li class="kate active">신간 도서</li>
 				</ul>
 			</div>
 			<div class="swiper mySwiper">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">Slide 1</div>
-					<div class="swiper-slide">Slide 2</div>
-					<div class="swiper-slide">Slide 3</div>
-					<div class="swiper-slide">Slide 4</div>
-					<div class="swiper-slide">Slide 5</div>
-					<div class="swiper-slide">Slide 6</div>
-					<div class="swiper-slide">Slide 7</div>
-					<div class="swiper-slide">Slide 8</div>
-					<div class="swiper-slide">Slide 9</div>
+					<c:forEach items="${bList }" var="bList">
+						<div class="swiper-slide">
+							<div class="cont">
+								<c:url var="bDetail" value="/bookDetail.do">
+	                    			<c:param name="bookNo" value="${bList.bookNo }"></c:param>
+	                    		</c:url>
+								<a href="${bDetail }" style="text-decoration: none;">
+									<img class="" src="/resources/bookcover/${bList.bookCover }" alt="">
+								</a>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 				<div class="swiper-pagination"></div>
 				<div class="swiper-button-prev"></div>
@@ -164,6 +169,9 @@
 		scrollbar : {
 			el : '.swiper-scrollbar',
 		}
+	});
+	$(".material-icons").on("click",function(){
+		$("#sbt").click();
 	});
  	 </script>
 </body>
