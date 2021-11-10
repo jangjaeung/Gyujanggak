@@ -32,6 +32,7 @@ import com.daol.library.member.controller.MemberController;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.service.MypageService;
+import com.daol.library.readingRoom.domain.ReadingRoom;
 
 @Controller
 public class MypageController {
@@ -40,6 +41,7 @@ public class MypageController {
 	private MypageService service;
 	@Autowired
 	private MemberController mController;
+	
 
 	// 마이페이지 회원정보 조회 화면
 	@RequestMapping(value = "mypageInfo.do", method = RequestMethod.GET)
@@ -154,12 +156,13 @@ public class MypageController {
 	@RequestMapping(value = "wishList.do", method = RequestMethod.GET)
 	public String wishList(HttpServletRequest request, Model model, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		session.setAttribute("loginUser", member);
+		/* String userId = (String)session.getAttribute("userId"); */
 		try {
-			List<WishBook> wList = service.printWishBook(userId);
+			List<WishBook> wList = service.printWishBook(member.getUserId());
 			if (!wList.isEmpty()) {
 				model.addAttribute("wList", wList);
-				session.setAttribute("loginUser", member);
+				/* session.setAttribute("newList", wList); */
 			} else {
 				model.addAttribute("wList", null);
 			}
@@ -171,72 +174,73 @@ public class MypageController {
 		}
 	}
 
+
+
+	
 	// 희망도서 신청
 	@RequestMapping(value = "applyBook.do", method = RequestMethod.POST)
 	public String applyBook(HttpServletRequest request, @ModelAttribute Member member,
 			@ModelAttribute WishBook wishbook, String div, Model model) throws Exception {
-		/*
-		 * int result = service.registerWishBook(wishbook);
-		 * 
-		 * if(result>0) { return "mypage/wishList"; }else { model.addAttribute("msg",
-		 * "희망 도서 등록 실패"); return "common/errorPage"; }
-		 */
 
-		
-		  
-		 final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory"; // 이메일 객체생성하기
-		  Properties props = System.getProperties(); 
-		  props.put("mail.smtp.user","daollibrary@gmail.com"); 
-		  props.put("mail.smtp.host", "smtp.gmail.com");
-		  props.put("mail.smtp.port", "465"); 
-		  props.put("mail.smtp.starttls", "true");
-		  props.put("mail.smtp.ssl.enable", "true"); 
-		  props.put("mail.smtp.auth","true"); 
-		  props.put("mail.debug", "true");
-		  props.put("mail.smtp.socketFactory.port", "465");
-		  props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
-		  props.put("mail.smtp.socketFactory.fallback", "false"); 
-		  
-			final String username = "daollibrary@gmail.com";//발신자의 이메일 아이디 입력
-			final String password = "daol1234"; //발신자의 패스워드
-			
-		  try{ 
-			  Session session = Session.getDefaultInstance(props, new Authenticator() { protected
-		  PasswordAuthentication getPasswordAuthentication() { return new
-		  PasswordAuthentication(username, password); }}); //메세지 설정 
-			  Message msg = new MimeMessage(session);
-		
-		  //보내는사람 받는사람 설정 
-		  msg.setFrom(new InternetAddress("daollibrary@gmail.com"));
-		  msg.setRecipients(Message.RecipientType.TO,
-		  InternetAddress.parse("daollibrary@gmail.com",false));
-		  msg.setSubject(member.getUserId() + "님의 희망 도서 신청");
-		  msg.setText("'<b>'" + member.getUserId() + "님의 희망 도서 신청 내역  '</b>'" + "\n도서명 : " +
-		  wishbook.getBookName() + "\n출판사 : " + wishbook.getPublisher() + "\n저자명 : " +
-		  wishbook.getBookWriter() +"입니다"); Transport.send(msg);
-		  System.out.println("발신성공!");
-		  
-		
-		  
-		  return "mypage/wishList";
-		  
-		  //db 삽입 
-//		  int result = service.registerWishBook(wishbook);
-//		  
-//		  if(result>0) { 
-//			  return "mypage/wishList"; 
-//		  }else { 
-//			  model.addAttribute("msg", "희망 도서 등록 실패"); 
-//			  return "common/errorPage"; } 
-		  
-		  
-		  }catch (MessagingException error){ 
-			  model.addAttribute("msg", "희망 도서 신청 메일 전송 실패"); 
-			  return "common/errorPage"; 
+		//db 삽입 
+		int result = service.registerWishBook(wishbook);
+
+		try {
+
+			if(result>0) { 
+				HttpSession httpsession = request.getSession();
+				httpsession.setAttribute("loginUser", member);
+
+				final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory"; // 이메일 객체생성하기
+				Properties props = System.getProperties(); 
+				props.put("mail.smtp.user","daollibrary@gmail.com"); 
+				props.put("mail.smtp.host", "smtp.gmail.com");
+				props.put("mail.smtp.port", "465"); 
+				props.put("mail.smtp.starttls", "true");
+				props.put("mail.smtp.ssl.enable", "true"); 
+				props.put("mail.smtp.auth","true"); 
+				props.put("mail.debug", "true");
+				props.put("mail.smtp.socketFactory.port", "465");
+				props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+				props.put("mail.smtp.socketFactory.fallback", "false"); 
+
+				final String username = "daollibrary@gmail.com";//발신자의 이메일 아이디 입력
+				final String password = "daol1234"; //발신자의 패스워드
+
+				try {
+					Session session = Session.getDefaultInstance(props, new Authenticator() { protected
+						PasswordAuthentication getPasswordAuthentication() { return new
+								PasswordAuthentication(username, password); }}); //메세지 설정 
+					Message msg = new MimeMessage(session);
+
+					//보내는사람 받는사람 설정 
+					msg.setFrom(new InternetAddress("daollibrary@gmail.com"));
+					msg.setRecipients(Message.RecipientType.TO,
+							InternetAddress.parse("daollibrary@gmail.com",false));
+					msg.setSubject(member.getUserId() + "님의 희망 도서 신청");
+					msg.setText("======  " + member.getUserId() + "님의 희망 도서 신청 내역   ====="  + "\n 도서명 : " +
+							wishbook.getBookName() + "\n 출판사 : " + wishbook.getPublisher() + "\n 저자명 : " +
+							wishbook.getBookWriter() +"입니다"); Transport.send(msg);
+							System.out.println("발신성공!");  
+
+							return "redirect: wishList.do?userId="+wishbook.getUserId();
+
+				}catch (Exception e){ 
+					model.addAttribute("msg", "희망 도서 신청 메일 전송 실패"); 
+					return "common/errorPage"; 
+				}
+			}else { 
+				model.addAttribute("msg", "희망 도서 등록 실패"); 
+				return "common/errorPage"; } 
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "common/errorPage"; 
 		}
 
 	}
-
+	
+	
+	
 	// 관심 도서 내역
 	@RequestMapping(value = "likeList.do", method = RequestMethod.GET)
 	public String likeList() {
@@ -249,10 +253,48 @@ public class MypageController {
 		return "mypage/tasteSurvey";
 	}
 
+	
+	
+	
+	
 	// 열람실 이용내역
 	@RequestMapping(value = "readingroomHistory.do", method = RequestMethod.GET)
-	public String readingroomHistory() {
-		return "mypage/readingroomHistory";
+	public String readingroomHistory(@ModelAttribute ReadingRoom readingRoom, @RequestParam("userId") String userId, Model model) {
+		
+		try {
+			List<ReadingRoom> rList = service.printAllrList(userId);
+			if(!rList.isEmpty()) {
+				model.addAttribute("rList", rList);
+			}else {
+				model.addAttribute("rList", null);
+			}
+			
+			return "mypage/readingroomHistory";
+		}catch(Exception e) {
+			model.addAttribute("msg", "열람실 내역 조회 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	//열람실 이용 취소
+	@RequestMapping(value="cancelReadingRoom.do", method=RequestMethod.GET)
+	public String cancleReadingRoom(@ModelAttribute ReadingRoom readingRoom, Model model) {
+		int rReservationNo = readingRoom.getrReservationNo();
+		int result = service.cancelReadingRoom(rReservationNo);
+		try {
+			if(result > 0) {
+				return "mypage/readingroomHistory";
+			}else {
+				model.addAttribute("msg", "예약 취소 실패");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+
 	}
 
 	// 스터디룸 이용내역

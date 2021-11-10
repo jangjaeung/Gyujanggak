@@ -104,13 +104,14 @@
 			<h2 id="mainTitle">
 				<b>희망 도서 신청</b>
 			</h2>
+			<input type="hidden" value="${userId}">
 			<!-- 본문 -->
 			<br> <br><br>
 			<table class="table">
 				<colgroup>
 						<col width="50px">
 						<col width="150px">
-						<col width="150px">
+						<col width="250px">
 						<col width="400px">
 						<col width="100px">
 						<col width="100px">
@@ -132,9 +133,9 @@
 							</tr>
 						</c:if>
 						<c:if test="${not empty wList }">
-							<c:forEach items="${wList }" var="wish">
+							<c:forEach items="${wList }" var="wish" varStatus="index">
 								<tr>
-									<th scope="row">${wish.applyNo }</th>
+									<th scope="row">${index.count }</th> <!-- 신청번호 아님, 인덱스 -->
 									<td>${wish.publisher }</td>
 									<td>${wish.bookWriter }</td>
 									<td>${wish.bookName }</td>
@@ -153,7 +154,6 @@
 				
 				<!-- 도서 신청 팝업 -->
 				<form action="applyBook.do" method="post">
-				<input type="hidden" value=${loginUser.userEmail } name="userEmail">
 				<input type="hidden" value=${loginUser.userId } name="userId">
 					<div id="layer" class="pop-layer">
 						<div class="pop-container">

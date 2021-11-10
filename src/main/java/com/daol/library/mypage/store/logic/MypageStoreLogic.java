@@ -120,33 +120,22 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public ReadingRoom selectAll(ReadingRoom readingRoom) {
+	public List<ReadingRoom> selectAllrList(String userId) {
+		List<ReadingRoom> rList = sqlSession.selectList("mypageMapper.selectReadingroomHistory",userId);
+		return rList;
+	}
+
+	@Override
+	public List<StudyRoom> selectAllsList(String userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public StudyRoom selectAll(StudyRoom studryRoom) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int deleteReadingRoomHistory(int rReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteStudyRoomHistory(int sReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int deleteReadingRoom(int rReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSession.delete("mypageMapper.deleteReadingRoom", rReservationNo);
+		return result;
 	}
 
 	@Override

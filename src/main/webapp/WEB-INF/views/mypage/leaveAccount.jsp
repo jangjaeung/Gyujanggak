@@ -234,11 +234,6 @@ span.error {
 	});
 		
 	
-		
-		$("#btn").on("click", function(){
-
-			
-		}); 
 	
 	$(".check-btn").click(function(){
 	    var pwd1 = $("#userPwd").val();

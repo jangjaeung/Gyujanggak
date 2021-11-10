@@ -53,13 +53,8 @@ public interface MypageStore {
 		
 		
 		//시설 이용
-		public ReadingRoom selectAll(ReadingRoom readingRoom);
-		
-		public StudyRoom selectAll(StudyRoom studryRoom);
-		/** 내역 삭제 */
-		public int deleteReadingRoomHistory(int rReservationNo);
-		/** 내역 삭제 */
-		public int deleteStudyRoomHistory(int sReservationNo);
+		public List<ReadingRoom> selectAllrList(String userId);
+		public List<StudyRoom> selectAllsList(String userId);
 		/** 예약 취소 */
 		public int deleteReadingRoom(int rReservationNo);
 		/** 예약 취소 */

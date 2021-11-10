@@ -54,13 +54,8 @@ public interface MypageService {
 	
 	
 	//시설 이용
-	public ReadingRoom printAll(ReadingRoom readingRoom);
-	
-	public StudyRoom printAll(StudyRoom studryRoom);
-	/** 내역 삭제 */
-	public int removeReadingRoomHistory(int rReservationNo);
-	/** 내역 삭제 */
-	public int removeStudyRoomHistory(int sReservationNo);
+	public List<ReadingRoom> printAllrList(String userId);
+	public List<StudyRoom> printAllsList(String userId);
 	/** 예약 취소 */
 	public int cancelReadingRoom(int rReservationNo);
 	/** 예약 취소 */
@@ -74,4 +69,6 @@ public interface MypageService {
 	public int registQna(Qna qna);
 	public int modifyQna(Qna qna);
 	public int removeQna(int qnaNo);
+
+	
 }

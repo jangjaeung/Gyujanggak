@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mypageMapper">
+	<!-- 회원정보 -->
 	<resultMap type="Member" id="memberResultMap">
 		<id property="userId" column="USER_ID"></id>
 		<result property="userPwd" column="USER_PWD"></result>
@@ -24,6 +25,61 @@
 		<result property="surveyCheck" column="SURVEY_CHECK"></result>
 		<result property="lendingCopy" column="LENDING_COPY"></result>
 	</resultMap>
+	
+	<select id="selectMember" parameterType="Member" resultMap="memberResultMap">
+		SELECT * FROM USERS WHERE USER_ID = #{userId}
+	</select>
+	<select id="checkPwdDup" parameterType="Member" resultType="_int">
+		<!-- 결과값이 int로 나와야함 -->
+		SELECT COUNT(*) FROM USERS WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd }
+	</select>
+	<update id="updateMember" parameterType="Member">
+		UPDATE USERS SET USER_PWD = #{userPwd}, USER_EMAIL = #{userEmail}, USER_PHONE= #{userPhone}, PROFILE_PIC=#{profilePic} WHERE USER_ID = #{userId}
+	</update>
+	<delete id="deleteMember" parameterType="Member">
+		DELETE FROM USERS WHERE USER_ID = #{userId}
+	</delete>
+	
+	
+	<!-- 희망도서 -->
+	<resultMap type="WishBook" id="wishbookResultMap">
+		<id property="applyNo" column="APPLY_NO"></id>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookName" column="BOOK_NAME"/>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="applyStatus" column="APPLY_STATUS"/>
+		<result property="applyDate" column="APPLY_DATE"/>
+	</resultMap>
+	
+	<select id="selectWishList"  resultMap="wishbookResultMap">
+		SELECT * FROM WISH_BOOK WHERE USER_ID = #{userId} ORDER BY APPLY_DATE DESC
+	</select>
+	<insert id="insertWishbook" parameterType="WishBook">
+		INSERT INTO WISH_BOOK VALUES (SEQ_APPLYNUM.NEXTVAL, #{userId}, #{bookName}, #{bookWriter}, #{publisher}, DEFAULT, DEFAULT)
+	</insert>
+	
+	
+	<!-- 열람실  -->
+	<resultMap type="ReadingRoom" id="readingRoomResultMap">
+		<id property="rReservationNo" column="R_RESERVATION_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="rReservationDate" column="R_RESERVATION_DATE"/>
+		<result property="rReservationTime" column="R_RESERVATION_TIME"/>
+		<result property="seatNo" column="SEAT_NO"/>
+		<result property="count" column="COUNT"/>
+	</resultMap>
+	
+	<select id="selectReadingroomHistory" resultMap="readingRoomResultMap">
+		SELECT * FROM READINGROOM WHERE USER_ID = #{userId} ORDER BY R_RESERVATION_DATE DESC
+ 	</select>
+ 	<!-- 열람실 예약 취소 -->
+	<delete id="deleteReadingRoom" parameterType="_int">
+		DELETE FROM READINGROOM WHERE R_RESERVATION_NO = #{rReservationNo}
+	</delete>
+	
+	
+	<!-- 문의사항 -->
 	<resultMap type="Qna" id="qnaResultMap">
 		<id property="qnaNo" column="QNA_NO"></id>
 		<result property="userId" column="USER_ID"></result>
@@ -35,7 +91,7 @@
 		<result property="replyWriteDate" column="REPLY_WRITEDATE"></result>
 		<result property="replyUserId" column="REPLY_USERID"></result>
 	</resultMap>
-	<!-- 문의사항 -->
+	
 	<select id="selectAllQna" resultMap="qnaResultMap">
 		SELECT * FROM QNA WHERE USER_ID = #{userId} ORDER BY QNA_NO DESC
 	</select>
@@ -52,38 +108,6 @@
 		UPDATE QNA SET QNA_TITLE = #{qnaTitle}, QNA_CONTENT = #{qnaContent} WHERE QNA_NO = #{qnaNo}
 	</update>
 	<!-- 문의사항끝 -->
-	<select id="selectMember" parameterType="Member" resultMap="memberResultMap">
-		SELECT * FROM USERS WHERE USER_ID = #{userId}
-	</select>
-	<select id="checkPwdDup" parameterType="Member" resultType="_int">
-		<!-- 결과값이 int로 나와야함 -->
-		SELECT COUNT(*) FROM USERS WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd }
-	</select>
-
 	
-	<update id="updateMember" parameterType="Member">
-		UPDATE USERS SET USER_PWD = #{userPwd}, USER_EMAIL = #{userEmail}, USER_PHONE= #{userPhone}, PROFILE_PIC=#{profilePic} WHERE USER_ID = #{userId}
-	</update>
 	
-	<delete id="deleteMember" parameterType="Member">
-		DELETE FROM USERS WHERE USER_ID = #{userId}
-	</delete>
-	
-	<resultMap type="WishBook" id="wishbookResultMap">
-		<id property="applyNo" column="APPLY_NO"></id>
-		<result property="userId" column="USER_ID"/>
-		<result property="bookName" column="BOOK_NAME"/>
-		<result property="bookWriter" column="BOOK_WRITER"/>
-		<result property="publisher" column="PUBLISHER"/>
-		<result property="applyStatus" column="APPLY_STATUS"/>
-		<result property="applyDate" column="APPLY_DATE"/>
-	</resultMap>
-	
-	<select id="selectWishList"  resultMap="wishbookResultMap">
-		SELECT * FROM WISH_BOOK WHERE USER_ID = #{userId} ORDER BY APPLY_DATE DESC
-	</select>
-	
-	<insert id="insertWishbook" parameterType="WishBook">
-		INSERT INTO WISH_BOOK VALUES (SEQ_APPLYNUM, #{userId}, #{bookName}, #{bookWriter}, #{publisher}, DEFAULT, DEFAULT)
-	</insert>
 </mapper>

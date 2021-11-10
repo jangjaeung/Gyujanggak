@@ -134,33 +134,22 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public ReadingRoom printAll(ReadingRoom readingRoom) {
+	public List<ReadingRoom> printAllrList(String userId) {
+		List<ReadingRoom> rList = store.selectAllrList(userId);
+		return rList;
+	}
+
+	@Override
+	public List<StudyRoom> printAllsList(String userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public StudyRoom printAll(StudyRoom studryRoom) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int removeReadingRoomHistory(int rReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int removeStudyRoomHistory(int sReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int cancelReadingRoom(int rReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deleteReadingRoom(rReservationNo);
+		return result;
 	}
 
 	@Override
