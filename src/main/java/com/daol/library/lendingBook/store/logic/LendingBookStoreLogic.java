@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.daol.library.book.domain.Book;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.store.LendingBookStore;
 

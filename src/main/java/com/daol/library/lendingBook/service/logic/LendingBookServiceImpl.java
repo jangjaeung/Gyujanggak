@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daol.library.book.domain.Book;
 import com.daol.library.book.store.BookStore;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.service.LendingBookService;

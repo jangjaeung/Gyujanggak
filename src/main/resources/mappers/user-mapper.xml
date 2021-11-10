@@ -52,7 +52,7 @@
 	</select>
 	<!-- 대출 시 정보 변경 -->
 	<update id="updateLendingMember">
-		UPDATE USERS SET LENDING_COPY = LENDING_COPY - 1 WHERE USER_ID = #{userId} AND (END_DATE > SYSDATE)
+		UPDATE USERS SET LENDING_COPY = LENDING_COPY - 1 WHERE USER_ID = #{userId} AND (END_DATE > SYSDATE) AND LENDING_COPY > 0
 	</update>
 	
 </mapper>
