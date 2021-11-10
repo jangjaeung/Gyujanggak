@@ -1,16 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <title>스터디룸 예약</title>
-<link href="resources/studyRoom/studyRoomMain.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="resources/studyRoom/studyRoomMain.css" rel="stylesheet" />
+
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<!-- <script type="text/javascript" src="/resources/js/studyRoom.js"></script> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
+<!-- 챗봇용 -->
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- 스와이퍼 -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- 메인페이지 챗봇 스크립트 -->
+<link rel="stylesheet" href="/resources/mainPage/css/chatbot.css">
+<script type="text/javascript" src="/resources/js/chat.js"></script>
+
 </head>
 <body>
+	<%-- <jsp:include page="../common/chat.jsp"></jsp:include> --%>
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<main>
 	    <div class="studyRoomTitle">
@@ -20,21 +37,27 @@
 	    <div class="studyRoomDiv">
 	        <div class="reservation">
 	            <div class="rsv_form">
-	                <p class="rsv_title">스터디룸 예약</p>
+					<p class="rsv_title">스터디룸 예약</p>
 	                <div class="rsv_form_con">
 	                    <p>예약일</p>
-	                    <input type="text" class="dateSelector" placeholder="날짜를 선택하세요." readonly />
+	                    <c:if test="${loginUser.userId eq null }">
+	                	    <input type="text" onclick="showLoginPage();" placeholder="로그인 후 이용 가능합니다." readonly/>
+	                   	</c:if>
+	                    <c:if test="${loginUser.userId ne null }">
+	                	    <input type="text" class="dateSelector" placeholder="날짜를 선택하세요." readonly />
+	                   	</c:if>	                   	
 	                    <p>예약시간</p>
-	                    <select id="reservationTime">
-	                        <option value="09:00~12:00">09:00~12:00</option>
-	                        <option value="12:00~15:00">12:00~15:00</option>
-	                        <option value="15:00~18:00">15:00~18:00</option>
-	                        <option value="18:00~21:00">18:00~21:00</option>
-	                    </select>
+		                    <select id="reservationTime">
+		                    	<option value="default" disabled selected>시간을 선택해 주세요.</option>
+		                        <option value="09:00~12:00">09:00~12:00</option>
+		                        <option value="12:00~15:00">12:00~15:00</option>
+		                        <option value="15:00~18:00">15:00~18:00</option>
+		                        <option value="18:00~21:00">18:00~21:00</option>
+		                    </select>
 	                    <p>사용 목적</p>
-	                    <input type="text" id="purpose" placeholder="ex) 토익스터디" />
+	       	            	<input type="text" id="purpose" placeholder="ex) 토익스터디" />
 	                    <p>사용 인원</p>
-	                    <input type="text" id="personnel" placeholder="ex) 최대 8인까지 예약 가능합니다." onkeypress="inNumber();" />
+	                    	<input type="text" id="personnel" placeholder="ex) 최대 8인까지 예약 가능합니다." onkeypress="inNumber();" />
 	                 </div>
 	                 <button class="rsv_btn">예약</button>
 	             </div>
@@ -49,12 +72,47 @@
 	        </div>
 	    </div>
 	</main>
-<%-- 	<jsp:include page="../common/chat.jsp"></jsp:include>--%>	
+ 		
 		<jsp:include page="../common/footer.jsp"></jsp:include>
+		
+<!-- 챗봇 -->
+	<div id="chat-circle" class="btn btn-raised">
+    	<div id="chat-overlay"></div>
+		    <i class="material-icons">chat</i>
+		</div>
+		<div class="chat-box">
+		    <div class="chat-box-header">
+		    	ChatBot
+		    	<span class="chat-box-toggle"><i class="material-icons">close</i></span>
+		    </div>
+		    <div class="chat-box-body">
+		    	<div class="chat-box-overlay">   
+		    </div>
+		    	<div class="chat-logs">
+		       	<div class="cm-msg-text">
+	            	<span class="main-msg">안녕하세요 규장각 입니다</span><br>
+	            	<span class="main-msg">버튼을 클릭 하시거나 키워드를 입력해 주세요!</span><br><br>
+	            	<ul>
+		                <li class="site-info">사이트 이용안내</li>
+		                <li class="site-info-resend">대출 * 반납</li>
+		                <li class="site-ifno-room">이용시설 안내</li>
+		                <li class="quest">문의하기</li>
+					</ul>
+				</div>
+				</div><!--chat-log -->
+			</div>
+		    <div class="chat-input">      
+				<form id="send">
+			        <input type="text" id="chat-input" placeholder="Send a message..."/>
+					<button type="submit" class="chat-submit" id="chat-submit"><i class="material-icons">send</i></button>
+				</form>      
+			</div>
+		</div>
+
 </body>
 	
 <script>
-	$(document).ready({
+	/* $(document).ready({ */
 		// 예약일 달력
 		$('.dateSelector').flatpickr({
 		    dateFormat: 'Y/m/d',
@@ -76,7 +134,7 @@
 		            url: 'reservationStudyRoom.do',
 		            type: 'post',
 		            data: {
-		                userId: 'khuser01',
+		                userId: $('#userId').val(),
 		                sReservationDate: $('.dateSelector').val(),
 		                sReservationTime: $('#reservationTime').val(),
 		                purpose: $('#purpose').val(),
@@ -98,6 +156,7 @@
 		    }
 		});
 		
+		// 인원수 제한 1~8인
 		function inNumber() {
 		    if ($('#personnel').val().length < 1) {
 		        if (event.keyCode < 49 || event.keyCode > 56) {
@@ -107,6 +166,12 @@
 		        event.returnValue = false;
 		    }
 		}
-	});
+		
+		// 로그인 페이지로 이동
+		function showLoginPage() {
+			alert('로그인페이지로 이동합니다.');
+			location.href="loginView.do";
+		} 
+	/* }); */
 </script>
 </html>

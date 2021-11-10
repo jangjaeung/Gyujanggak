@@ -130,10 +130,10 @@
 			</select>
 		</div>
 		<div>
-			<c:if test="${userId eq null }">
-				<button onclick="showLoginPage();" class="rsv_btn">예약</button>
+			<c:if test="${loginUser.userId eq null }">
+				<button onclick="showLoginPage();" class="rsv_btn">로그인</button>
 			</c:if>
-			<c:if test="${userId ne null }">
+			<c:if test="${loginUser.userId ne null }">
 				<button class="rsv_btn">예약</button>
 			</c:if>
 		</div>
@@ -222,11 +222,9 @@
 		if ($('.hidden').length > 0) {
 			$('.hidden').removeClass('hidden')
 		} else {
-			console.log( $('#reservationTime').val() )
 			if ($('#selectedSeat').val() !== '' && $('#reservationTime').val() !== null) {
 				//console.log($('#selectedSeat').val());
 				//console.log($('#reservationTime').val());
-
 				$.ajax({
 					url : 'reservationReadingRoom.do',
 					type : 'post',
@@ -258,7 +256,7 @@
 	});
 	
 	function showLoginPage() {
-		alert('로그인 후 이용 가능합니다.');
+		alert('로그인페이지로 이동합니다.');
 		location.href="loginView.do";
 	} 
 </script>

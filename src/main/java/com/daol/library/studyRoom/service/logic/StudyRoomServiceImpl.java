@@ -1,5 +1,7 @@
 package com.daol.library.studyRoom.service.logic;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,12 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 	@Override
 	public int cancleStudyRoom(StudyRoom studyRoom) {
 		int result = store.deleteStudyRoom(studyRoom);
+		return result;
+	}
+
+	@Override
+	public List<StudyRoom> selectTimeStatus(int rsvDate) {
+		List<StudyRoom> result = store.selectTimeStatus(rsvDate);
 		return result;
 	}
 	
