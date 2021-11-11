@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daol.library.admin.domain.PageInfo;
+import com.daol.library.admin.domain.Search;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
@@ -40,9 +41,29 @@ public class AdminServiceImpl implements AdminService {
 	public List<Qna> printAllQna(PageInfo pi) {
 		return store.selectAllQna(pi);
 	}
-
+	//페이지네이션용
 	@Override
 	public int getQnaListCount() {
 		return store.selectListCount();
+	}
+	//관리자게시판 문의검색
+	@Override
+	public List<Qna> printSearchAll(Search search,PageInfo pi) {
+		return store.selectSearchAll(search,pi);
+	}
+	//검색페이지네이션용
+	@Override
+	public int getSearchQnaListCount(Search search) {
+		return store.selectSearchQnaListCount(search);
+	}
+	//문의상세
+	@Override
+	public Qna printOneQna(int qnaNo) {
+		return store.selectOneQna(qnaNo);
+	}
+	//답변등록
+	@Override
+	public int modifyAnswer(Qna qna) {
+		return store.updateAnswer(qna);
 	}
 }

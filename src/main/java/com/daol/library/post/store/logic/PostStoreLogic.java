@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.PostReport;
 import com.daol.library.post.domain.Reply;
+import com.daol.library.post.domain.ReplyReport;
 import com.daol.library.post.store.PostStore;
 
 @Repository
@@ -84,6 +86,26 @@ public class PostStoreLogic implements PostStore{
 	public int deleteReply(Reply reply) {
 		int result = session.delete("postMapper.deleteReply",reply);
 		return result;
+	}
+
+	@Override
+	public PostReport selectPostReport(int postNo) {
+		return session.selectOne("postMapper.selectPostReport",postNo);
+	}
+
+	@Override
+	public int insertReportPost(int postNo) {
+		return session.insert("postMapper.insertPostReport",postNo);
+	}
+
+	@Override
+	public ReplyReport selectReplyReport(int replyNo) {
+		return session.selectOne("postMapper.selectReplyReport",replyNo);
+	}
+
+	@Override
+	public int insertReportReply(int replyNo) {
+		return session.insert("postMapper.insertReplyReport",replyNo);
 	}
 	
 	

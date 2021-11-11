@@ -98,50 +98,93 @@ footer{bottom:0}
 						</c:forEach>
 						<tr>
 							<td colspan="5">
-								<form>
-									<select>
-										<option value="">제목</option>
-										<option value="">작성자</option>
-										<option value="">처리상태</option>
+								<form action="qnaSearch.do" method="get">
+									<select name="searchCondition">
+										<option value="title" <c:if test="${search.searchCondition eq 'title' }">selected</c:if>>제목</option>
+										<option value="writer" <c:if test="${search.searchCondition eq 'writer' }">selected</c:if>>작성자</option>
+										<option value="state" <c:if test="${search.searchCondition eq 'state' }">selected</c:if>>처리상태</option>
 									</select>
-									<input type="text" name="searchValue">
+									<input type="text" name="searchValue" value="${search.searchValue }">
+									<input type="submit" value="검색">
 								</form>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				<div align="center">
-					<c:url var="before" value="adQnaList.do">
-						<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
-					</c:url>
-					<c:if test="${pi.currentPage <= 1 }">
-						[이전]
-					</c:if>
-					<c:if test="${pi.currentPage > 1 }">
-						<a href="${before }">[이전]</a>
-					</c:if>
-					
-					<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
-						<c:url var="pagination" value="adQnaList.do">
-							<c:param name="page" value="${p }"></c:param>
+				<c:if test="${pn eq '0'}">
+					<div align="center">
+						<c:url var="before" value="qnaSearch.do">
+							<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+							<c:param name="searchCondition" value="${search.searchCondition }"></c:param>
+							<c:param name="searchValue" value="${search.searchValue }"></c:param>
 						</c:url>
-						<c:if test="${p eq pi.currentPage }">
-							<font color="rgba(90,94,185)" size="4">[${p }]</font>
+						<c:if test="${pi.currentPage <= 1 }">
+							[이전]
 						</c:if>
-						<c:if test="${p ne pi.currentPage }">
-							<a href="${pagination }">[${p }]</a>&nbsp;
+						<c:if test="${pi.currentPage > 1 }">
+							<a href="${before }">[이전]</a>
 						</c:if>
-					</c:forEach>
-					<c:url var="after" value="adQnaList.do">
-						<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
-					</c:url>
-					<c:if test="${pi.currentPage >= pi.maxPage }">
-						[다음]
-					</c:if>
-					<c:if test="${pi.currentPage < pi.maxPage }">
-						<a href="${after }">[다음]</a>
-					</c:if>
-				</div>
+						
+						<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+							<c:url var="pagination" value="qnaSearch.do">
+								<c:param name="page" value="${p }"></c:param>
+								<c:param name="searchCondition" value="${search.searchCondition }"></c:param>
+								<c:param name="searchValue" value="${search.searchValue }"></c:param>
+							</c:url>
+							<c:if test="${p eq pi.currentPage }">
+								<font color="rgba(90,94,185)" size="4">[${p }]</font>
+							</c:if>
+							<c:if test="${p ne pi.currentPage }">
+								<a href="${pagination }">[${p }]</a>&nbsp;
+							</c:if>
+						</c:forEach>
+						<c:url var="after" value="qnaSearch.do">
+							<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+							<c:param name="searchCondition" value="${search.searchCondition }"></c:param>
+							<c:param name="searchValue" value="${search.searchValue }"></c:param>
+						</c:url>
+						<c:if test="${pi.currentPage >= pi.maxPage }">
+							[다음]
+						</c:if>
+						<c:if test="${pi.currentPage < pi.maxPage }">
+							<a href="${after }">[다음]</a>
+						</c:if>
+					</div>
+				</c:if>
+				<c:if test="${pn eq '1'}">
+					<div align="center">
+						<c:url var="before" value="adQnaList.do">
+							<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+						</c:url>
+						<c:if test="${pi.currentPage <= 1 }">
+							[이전]
+						</c:if>
+						<c:if test="${pi.currentPage > 1 }">
+							<a href="${before }">[이전]</a>
+						</c:if>
+						
+						<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+							<c:url var="pagination" value="adQnaList.do">
+								<c:param name="page" value="${p }"></c:param>
+							</c:url>
+							<c:if test="${p eq pi.currentPage }">
+								<font color="rgba(90,94,185)" size="4">[${p }]</font>
+							</c:if>
+							<c:if test="${p ne pi.currentPage }">
+								<a href="${pagination }">[${p }]</a>&nbsp;
+							</c:if>
+						</c:forEach>
+						<c:url var="after" value="adQnaList.do">
+							<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+						</c:url>
+						<c:if test="${pi.currentPage >= pi.maxPage }">
+							[다음]
+						</c:if>
+						<c:if test="${pi.currentPage < pi.maxPage }">
+							<a href="${after }">[다음]</a>
+						</c:if>
+					</div>
+				</c:if>
 			</div>
 		</article>
 		<br>

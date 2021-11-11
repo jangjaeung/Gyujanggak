@@ -20,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.daol.library.common.Pagination;
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.PostReport;
 import com.daol.library.post.domain.Reply;
+import com.daol.library.post.domain.ReplyReport;
 import com.daol.library.post.service.PostService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -194,6 +196,38 @@ public class PostController {
 		}else {
 			return "fail";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="postReport.do",method=RequestMethod.GET)
+	public String postReport(@RequestParam("postNo")int postNo) {
+		PostReport pr = service.ckPostReport(postNo);
 		
+		if(pr == null) {
+			int result = service.reportPost(postNo);
+			if(result > 0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="postReply.do",method=RequestMethod.GET)
+	public String postReply(@RequestParam("postNo")int postNo,@RequestParam("replyNo")int replyNo) {
+		ReplyReport rr = service.ckReplyReport(replyNo);
+		if(rr == null) {
+			int result = service.reportReply(replyNo);
+			if(result>0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else {
+			return "fail";
+		}
 	}
 }

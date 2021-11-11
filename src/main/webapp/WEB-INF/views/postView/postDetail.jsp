@@ -100,7 +100,9 @@ a:visited { color: black; }
 		</form>
 		<div id="ft">
 			<a href="postList.do"><button type="button" class="qwe">목록으로</button></a>
-			<button type="button" class="qwe">게시물 신고</button>
+			<c:if test="${userId ne null }">
+				<button type="button" class="qwe">게시물 신고</button>
+			</c:if>
 		</div>
 	</div>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
@@ -175,13 +177,15 @@ a:visited { color: black; }
 		                     $btnArea = $("<td width='80' class='modi'>")
 		                     .append("<a href ='#' onclick='modifyReply(this,"+postNo+","+data[i].replyNo+",\""+data[i].replyContents+"\");'>수정/<a> ")
 		                     .append("<a href ='#' onclick='removeReply("+postNo+","+data[i].replyNo+")'>삭제<a>");
-		                     $btnAreaT = $("<td width='80' class='modi'>").append("<a href='#'>신고<a>");
+		                     $btnAreaT = $("<td width='80' class='modi'>").append("<a href='#' onclick= 'replyReport("+postNo+","+data[i].replyNo+")'>신고<a>");
 		                     $tr.append($rWriter);
 		                     $tr.append($rContent);
 		                     $tr.append($rCreateDate);
 		                     if(data[i].replyWriter == userId){
 		                     	$tr.append($btnArea);
-		                     }else{
+		                     }else if(userId != null){
+	                    		$tr.append($btnAreaT);
+		                     }else if(data[i].replyWriter != userId){
 		                    	 $tr.append($btnAreaT);
 		                     };
 		                     $tableBody.append($tr);
@@ -239,6 +243,39 @@ a:visited { color: black; }
 	           }
 	        })
 	     }
+		  
+		 $('.qwe').on("click",function(){
+			 var postNo = ${post.postNo};
+			 $.ajax({
+				 url : "postReport.do",
+				 type : "get",
+				 data : {"postNo" : postNo},
+				 success : function(data){
+					 if(data == 'success'){
+						alert("신고 되었습니다. 관리자 확인 후 처리 됩니다.");
+					 }else if(data == "fail"){
+					 	alert("이미 신고된 게시물 입니다.");
+					 }
+				 }
+			 })
+		 });
+		 function replyReport(postNo, replyNo){
+		        $.ajax({
+		           url : "postReply.do",
+		           type : "get",
+		           data : {"postNo" : postNo, "replyNo" : replyNo},
+		           success : function(data) {
+		        	   if(data == 'success'){
+		        	  	 alert("신고 되었습니다. 관리자 확인 후 처리 됩니다.");
+		        	   }else if(data == 'fail'){
+		        		   alert('이미 신고된 댓글 입니다.');
+		        	   }
+		           }
+		        })
+		     }
+		 
+		 
+		 
 		
 	</script>
 </body>

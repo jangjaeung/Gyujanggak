@@ -71,7 +71,7 @@
 					<ul>
 						<li><a href="#">회원관리</a></li>
 						<li><a href="#">도서관리</a></li>
-						<li><a href="#">문의관리</a></li>
+						<li><a href="adQnaList.do?userId=${userId }">문의관리</a></li>
 						<li><a href="#">신고관리</a></li>
 						<li><a href="#">대출통계</a></li>
 					</ul>

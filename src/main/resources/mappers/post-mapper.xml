@@ -18,6 +18,31 @@
   		<result property="replyContents" column="REPLY_CONTENTS"/>
   		<result property="replyDate" column="REPLY_DATE"/>
   	</resultMap>
+  	<resultMap type="PostReport" id="postReportResultMap">
+  		<id property="reportNo" column="P_REPORT_NO"/>
+  		<result property="reportNo" column="POST_NO"/>
+  		<result property="postState" column="P_STATUS"/>
+  	</resultMap>
+  	<resultMap type="ReplyReport" id="replyReportResultMap">
+  		<id property="reportNo" column="R_REPORT_NO"/>
+  		<result property="replyNo" column="REPLY_NO"/>
+  		<result property="rStatus" column="R_STATUS"/>
+  		<result property="postNo" column="POST_NO"/>
+  	</resultMap>
+  	
+  	<select id="selectPostReport" resultMap="postReportResultMap">
+  		SELECT * FROM POST_REPORT WHERE POST_NO = #{postNo}
+  	</select>
+  	<select id="selectReplyReport" resultMap="replyReportResultMap">
+  		SELECT * FROM REPLY_REPORT WHERE REPLY_NO = #{replyNo}
+  	</select>
+  	<insert id="insertPostReport" parameterType="PostReport">
+  		INSERT INTO POST_REPORT VALUES(SEQ_POST_REPORT.NEXTVAL, DEFAULT,#{postNo})
+  	</insert>
+  	<insert id="insertReplyReport" parameterType="ReplyReport">
+  		INSERT INTO REPLY_REPORT VALUES(SEQ_REPLY_REPORT.NEXTVAL, #{replyNo}, default, #{postNo})
+  	</insert>
+  	
   	
   	<select id="selectCount" resultType="_int">
   		SELECT COUNT(*) FROM POST
