@@ -50,7 +50,7 @@ $(function() {
 		  htr += "          <div class=\"cm-msg-text\">";
 		//주소추가
 		  htr += "<span class=\"main-msg\">문의 페이지가 오픈 됩니다.</span><br><br>"
-		  htr += "<ul><li>문의하기</li></ul>"
+		  htr += "<ul><li onclick=\"location.href='qnaList.do'\">문의하기</li></ul>"
 		  htr += "          <\/div>";
 	    }else if(msg == '예약' || msg == '이용시설 안내'){
 		  htr += "          <div class=\"cm-msg-text\">";

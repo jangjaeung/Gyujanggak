@@ -69,7 +69,7 @@
 				</li>
 				<li>
 					<div class="nav-logo">
-						<a href="mypageInfo.do"><img src="/resources/mainPage/img/logo4.png" alt=""> <span>이용증</span></a>
+						<a href="mypageInfo.do?userId=${userId }"><img src="/resources/mainPage/img/logo4.png" alt=""> <span>이용증 신청</span></a>
 					</div>
 				</li>
 				<li>
