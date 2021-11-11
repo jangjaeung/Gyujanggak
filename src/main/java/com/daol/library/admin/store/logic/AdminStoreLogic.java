@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.daol.library.admin.domain.PageInfo;
+import com.daol.library.admin.domain.Search;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
 import com.daol.library.member.domain.Member;
@@ -52,6 +53,31 @@ public class AdminStoreLogic implements AdminStore{
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		List<Book> bList = sqlSession.selectList("adminMapper.selectBookList",pi,rowBounds);
 		return bList;
+	}
+	@Override
+	public List<Book> selectSearchAll(Search search) {
+		List<Book> searchList = sqlSession.selectList("adminMapper.selectSearchList", search);
+		return searchList;
+	}
+
+	@Override
+	public int insertAll(Book book) {
+		int result = sqlSession.insert("adminMapper.insertBook", book);
+		return result;
+	}
+
+	@Override
+	public int deleteAll(int[] nums) {
+		String params = "";
+		
+		for(int i =0; i<nums.length; i++) {
+			params += nums[i];
+			
+			if(i < nums.length-1)
+				params += ",";
+		}
+		int result = sqlSession.delete("adminMapper.deleteBook", params);
+		return result;
 	}
 
 }

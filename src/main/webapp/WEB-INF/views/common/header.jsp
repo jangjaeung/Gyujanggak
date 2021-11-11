@@ -70,7 +70,7 @@
  					<a href="#">관리자페이지</a>
 					<ul>
 						<li><a href="#">회원관리</a></li>
-						<li><a href="#">도서관리</a></li>
+						<li><a href="bookListView.do">도서관리</a></li>
 						<li><a href="#">문의관리</a></li>
 						<li><a href="#">신고관리</a></li>
 						<li><a href="#">대출통계</a></li>

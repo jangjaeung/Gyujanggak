@@ -36,12 +36,13 @@
 </head>
 <body>
 
+
 <jsp:include page="../common/header.jsp"></jsp:include>
 	<br><hr style="margin-top:13%">
 	<div class="container" style="margin-bottom: 15%;">
 		<h1 style="text-align:center;margin-bottom: 8%;">도서관리</h1>
 
-        <button class="btn btn-default">장서 목록</button>
+        <button class="btn btn-default" onclick="location.href='bookListView.do'">장서 목록</button>
         <button class="btn btn-default">대출 현황</button>
         <button class="btn btn-default">희망 도서 접수 목록</button>
         <button class="btn btn-default">대출도서 택배 신청 목록</button>
@@ -63,10 +64,10 @@
 			<c:if test="${not empty bList }">
 			<c:forEach items="${bList }" var="book">
 				<tr>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" name="bookNo" id="bookNum" value="${book.bookNo }"></td>
 					<td>${book.bookNo }</td>
 					<td>
-						<a href="">${book.bookName }</a>
+						<a href="bookDetail.do?bookNo=${book.bookNo }">${book.bookName }</a>
 					</td>
 					<td>${book.bookWriter }</td>
                     <td>${book.publisher }</td>
@@ -75,7 +76,24 @@
 				</tr>
 			</c:forEach>
 			</c:if>
-			<tr align="center" height="20">
+				<div align="left">
+					<form action="bookSearch.do" method="get">
+						<select name="searchCondition">
+							<option value="all"
+								<c:if test="${search.searchCondition == 'all' }">selected</c:if>>전체</option>
+							<option value="name"
+								<c:if test="${search.searchCondition == 'name' }">selected</c:if>>도서 명</option>
+							<option value="writer"
+								<c:if test="${search.searchCondition == 'writer' }">selected</c:if>>저자</option>
+							<option value="publisher"
+								<c:if test="${search.searchCondition == 'publisher' }">selected</c:if>>출판사</option>
+						</select> <input type="text" name="searchValue"
+							value="${search.searchValue }"> <input type="submit"
+							value="검색">
+					</form>
+				</div>
+				<tr align="center" height="20">
+			
 			<td colspan="6">
 				<c:url var="before" value="bookListView.do">
 					<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
@@ -112,11 +130,22 @@
 		</table>
 
 		<div style="text-align:right">
-			<a href="writeView.do" class="myButton">작성</a>
+			<a href="bookEnrollView.do" class="myButton">등록</a>
+			<button class="myButton" id="numArray" >삭제</button>
 		</div>
+		
 
 	</div>
   		<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
+	<script>
+		$('#numArray').on("click", function(){
+			var checkArr = [];
+			$("input[name='bookNo']:checkd").each(function(i)){
+				checkArr.push($(this).val());
+			}
+			console.log(checkArr);
+		});
+	</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.daol.library.admin.store;
 import java.util.List;
 
 import com.daol.library.admin.domain.PageInfo;
+import com.daol.library.admin.domain.Search;
 import com.daol.library.book.domain.Book;
 
 import com.daol.library.member.domain.Member;
@@ -18,4 +19,10 @@ public interface AdminStore {
 	public List<Qna> selectAllQna(PageInfo pi);
 	//페이징처리용
 	public int selectQnaListCount();
+
+	public List<Book> selectSearchAll(Search search);
+
+	public int insertAll(Book book);
+
+	public int deleteAll(int[] nums);
 }
