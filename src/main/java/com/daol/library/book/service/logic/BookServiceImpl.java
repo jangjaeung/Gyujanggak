@@ -52,9 +52,10 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public int modifyLendingBook(int bookNo) {
-//		int result = store.updateLendingBook(bookNo);
-		return 0;
+	public int modifyLendingBook(int bookNo) throws Exception {
+		int result = store.updateLendingBook(bookNo);
+		if(result == 0) throw new Exception();
+		return result;
 	}
 	
 	//메인페이지 신간도서 출력

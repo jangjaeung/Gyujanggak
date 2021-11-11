@@ -37,11 +37,9 @@ public class LendingBookServiceImpl implements LendingBookService {
 	}
 
 	@Override
-	public int registerLending(LendingBook lendingBook) {
-		int result = 0;
-		result += store.insertLending(lendingBook);
-		result += bookStore.updateLendingBook(lendingBook.getBookNo());
-		result += memberStore.updateOne(lendingBook.getUserId());
+	public int registerLending(LendingBook lendingBook) throws Exception {
+		int result = store.insertLending(lendingBook);
+		if(result == 0) throw new Exception();
 		return result;
 	}
 
@@ -58,18 +56,17 @@ public class LendingBookServiceImpl implements LendingBookService {
 	}
 
 	@Override
-	public int registerParcel(Parcel parcel) {
+	public int registerParcel(Parcel parcel) throws Exception {
 		int result = 0;
 		result += store.insertParcel(parcel);
+		if(result == 0) throw new Exception();
 		return result;
 	}
 
 	@Override
-	public int registerLendingParcel(LendingBook lendingBook) {
-		int result = 0;
-		result += store.insertLending(lendingBook);
-		result += bookStore.updateLendingBook(lendingBook.getBookNo());
-		result += memberStore.updateOne(lendingBook.getUserId());
+	public int registerLendingParcel(LendingBook lendingBook) throws Exception {
+		int result = store.insertLending(lendingBook);
+		if(result == 0) throw new Exception();
 		return result;
 	}
 

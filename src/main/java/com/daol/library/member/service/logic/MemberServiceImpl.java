@@ -192,8 +192,9 @@ public class MemberServiceImpl implements MemberService{
 
 //	대출 회원 수정
 	@Override
-	public int modifyOne(String userId) {
-//		int result = store.updateOne(userId);
-		return 0;
+	public int modifyOne(String userId) throws Exception {
+		int result = store.updateOne(userId);
+		if(result == 0) throw new Exception();
+		return result;
 	}
 }
