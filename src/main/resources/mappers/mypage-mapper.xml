@@ -36,6 +36,9 @@
 	<update id="updateMember" parameterType="Member">
 		UPDATE USERS SET USER_PWD = #{userPwd}, USER_EMAIL = #{userEmail}, USER_PHONE= #{userPhone}, PROFILE_PIC=#{profilePic} WHERE USER_ID = #{userId}
 	</update>
+	<update id="updatePayment" parameterType="Member">
+		UPDATE USERS SET ANNUAL_FEE = '납부', PAY_DATE = SYSDATE WHERE USER_ID = #{userId}
+	</update>
 	<delete id="deleteMember" parameterType="Member">
 		DELETE FROM USERS WHERE USER_ID = #{userId}
 	</delete>

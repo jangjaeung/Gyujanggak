@@ -10,7 +10,7 @@
 <title>마이페이지</title>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" type="text/javascript"></script>
 <style>
 *{
 	margin:0;
@@ -126,10 +126,10 @@
 							<th class="bg-info" style='vertical-align:middle;'>연회비</th>
 							<td style='vertical-align:middle;'> 
 								<c:if test="${loginUser.annualFee eq null }">
-									미납 &nbsp;&nbsp; &nbsp; <button type="button" class="btn btn-warning">결제</button>
+									미납 &nbsp;&nbsp; &nbsp; <button type="button" class="btn btn-warning" id="pay-btn">결제</button>
 								</c:if>
 								<c:if test="${loginUser.annualFee ne null and loginUser.payDate ne null}">
-									납부 &nbsp; &nbsp; (${loginUser.payDate })
+									납부 &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value="${loginUser.payDate }"/>)
 								</c:if>
 							</td> 
 						</tr>
@@ -151,7 +151,7 @@
 								<c:if test="${loginUser.annualFee eq null or loginUser.payDate eq null }">
 									없음
 								</c:if>
-								<c:if test="${loginUser.annualFee ne null and mloginUserember.passCheck eq 'N'}">
+								<c:if test="${loginUser.annualFee ne null or mloginUserember.passCheck eq 'N'}">
 									대기
 								</c:if>
 								<c:if test="${loginUser.passCheck ne 'N' and loginUser.approvalDate ne null}">
@@ -252,5 +252,41 @@
 	</c:if>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
+
+
+
+<script>
+	var IMP = window.IMP; // 생략 가능
+	IMP.init("imp25073131"); // 예: imp00000000
+	
+	$("#pay-btn").click(function(e){
+		IMP.request_pay({
+		    pg : 'inicis', // version 1.1.0부터 지원.
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '연회비 결제',
+		    amount : 100, //판매 가격
+		    buyer_name : '${loginUser.userId}',
+		    buyer_email : '${loginUser.userEmail}',
+		}, function(rsp) {
+		    if ( rsp.success ) {
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		        alert(msg);
+		        location.href="updatePaymentStatus.do"
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		        alert(msg);
+		    }
+		    
+		});
+	});
+	
+</script>
+
 </body>
 </html>

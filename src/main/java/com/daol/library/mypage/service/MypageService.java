@@ -17,15 +17,14 @@ public interface MypageService {
 
 	//회원정보 관리
 	public Member printOneInfo(Member member);
-	
-	public int payment(String userId);
-	
+		
 	public int modifyMember(Member member);
 	
 	public int removeMember(Member member);
 	
 	public int checkPwdDup(Member member);
 	
+	public int updatePayment(Member member); //연회비 결제 후 상태 업데이트
 	
 	//도서
 	/** 대출 도서 전체 권수 */
@@ -69,6 +68,8 @@ public interface MypageService {
 	public int registQna(Qna qna);
 	public int modifyQna(Qna qna);
 	public int removeQna(int qnaNo);
+
+	
 
 	
 }

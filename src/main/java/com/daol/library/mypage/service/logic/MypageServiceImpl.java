@@ -41,9 +41,9 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public int payment(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updatePayment(Member member) {
+		int result = store.updatePayment(member);
+		return result;
 	}
 
 	@Override
@@ -182,6 +182,8 @@ public class MypageServiceImpl implements MypageService{
 	public int removeQna(int qnaNo) {
 		return store.deleteQna(qnaNo);
 	}
+
+
 
 
 }

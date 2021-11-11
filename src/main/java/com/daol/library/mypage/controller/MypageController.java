@@ -60,6 +60,29 @@ public class MypageController {
 		}
 
 	}
+	
+	//연회비 결제 후 대기 상태로 변경
+	@RequestMapping(value="updatePaymentStatus.do", method=RequestMethod.GET)
+	public String updatePaymentStatus(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		Member member = new Member();
+		member.setUserId(userId);
+		try {
+			int result = service.updatePayment(member);
+			if (result > 0) {
+				session.setAttribute("loginUser", member);
+				return "redirect:mypageInfo.do?userId="+userId;
+			} else {
+				model.addAttribute("msg", "연회비 결제 정보 업데이트 실패!");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
 
 	// 마이페이지 정보 수정 화면
 	@RequestMapping(value = "modifyInfoView.do", method = RequestMethod.GET)

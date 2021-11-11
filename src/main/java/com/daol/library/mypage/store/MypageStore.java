@@ -16,7 +16,7 @@ public interface MypageStore {
 		public Member selectOneInfo(Member member);
 		
 		/** 연회비 결제 */
-		public int updatePayment(String userId);
+		public int updatePayment(Member member);
 		
 		public int updateMember(Member member);
 		

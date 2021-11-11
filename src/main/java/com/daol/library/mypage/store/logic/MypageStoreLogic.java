@@ -29,9 +29,9 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public int updatePayment(String userId) {
-		
-		return 0;
+	public int updatePayment(Member member) {
+		int result = sqlSession.update("mypageMapper.updatePayment", member);
+		return result;
 	}
 
 	@Override
