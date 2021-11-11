@@ -141,8 +141,8 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public List<StudyRoom> printAllsList(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<StudyRoom> sList = store.selectAllsList(userId);
+		return sList;
 	}
 
 
@@ -154,8 +154,8 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public int cancelStudyRoom(int sReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deleteStudyRoom(sReservationNo);
+		return result;
 	}
 
 	@Override
