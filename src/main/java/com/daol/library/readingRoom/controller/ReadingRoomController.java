@@ -50,9 +50,8 @@ public class ReadingRoomController {
 	@ResponseBody
 	@RequestMapping(value = "selectSeatStatus.do", method = RequestMethod.POST)
 	public String selectSeatStatus(@ModelAttribute ReadingRoom readingRoom ) {
-		
-		System.out.println("좌석 : " + readingRoom.getSeatNo());
-		int seatNo =Integer.parseInt( readingRoom.getSeatNo());
+		System.out.println("좌석번호 : " + readingRoom.getSeatNo());
+		int seatNo =Integer.parseInt(readingRoom.getSeatNo());
 		 
 		List<ReadingRoom> result = service.selectSeatStatus(seatNo);
 		Gson gson = new Gson();

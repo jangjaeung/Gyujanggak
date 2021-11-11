@@ -28,7 +28,7 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 	}
 
 	@Override
-	public List<StudyRoom> selectTimeStatus(int rsvDate) {
+	public List<StudyRoom> selectTimeStatus(String rsvDate) {
 		List<StudyRoom> result = store.selectTimeStatus(rsvDate);
 		return result;
 	}

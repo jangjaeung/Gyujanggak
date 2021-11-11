@@ -27,7 +27,6 @@
 
 </head>
 <body>
-	<%-- <jsp:include page="../common/chat.jsp"></jsp:include> --%>
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<main>
 	    <div class="studyRoomTitle">
@@ -40,19 +39,19 @@
 					<p class="rsv_title">스터디룸 예약</p>
 	                <div class="rsv_form_con">
 	                    <p>예약일</p>
-	                    <c:if test="${loginUser.userId eq null }">
+	                    <c:if test="${userId eq null }">
 	                	    <input type="text" onclick="showLoginPage();" placeholder="로그인 후 이용 가능합니다." readonly/>
 	                   	</c:if>
-	                    <c:if test="${loginUser.userId ne null }">
-	                	    <input type="text" class="dateSelector" placeholder="날짜를 선택하세요." readonly />
+	                    <c:if test="${userId ne null }">
+	                	    <input type="text" class="dateSelector" id="selectedDate" placeholder="날짜를 선택하세요." readonly />
 	                   	</c:if>	                   	
 	                    <p>예약시간</p>
 		                    <select id="reservationTime">
 		                    	<option value="default" disabled selected>시간을 선택해 주세요.</option>
-		                        <option value="09:00~12:00">09:00~12:00</option>
-		                        <option value="12:00~15:00">12:00~15:00</option>
-		                        <option value="15:00~18:00">15:00~18:00</option>
-		                        <option value="18:00~21:00">18:00~21:00</option>
+		                        <option value="A">09:00~12:00</option>
+		                        <option value="B">12:00~15:00</option>
+		                        <option value="C">15:00~18:00</option>
+		                        <option value="D">18:00~21:00</option>
 		                    </select>
 	                    <p>사용 목적</p>
 	       	            	<input type="text" id="purpose" placeholder="ex) 토익스터디" />
@@ -121,6 +120,38 @@
 		    // 31일 이내만 가능
 		});
 		
+		// 날짜 별 시간 조회
+			$("#selectedDate").on("change",function(){
+				$("#reservationTime option:eq(0)").prop("selected", true);
+	  			let selectedDate = $("#selectedDate").val();
+	  			console.log(selectedDate);
+				$.ajax({
+					url : 'selectTimeStatus.do',
+					type : 'post',
+					data : {
+						sReservationDate : selectedDate
+					},
+					dataType : 'json',
+					success : function(data) {
+// 						data = JSON.parse(data);
+						if(data.length > 0){
+							for(let i in data){
+								console.log(data[i].rReservationTime)
+								$("#reservationTime option[value*='"+data[i].sReservationTime+"']").prop('disabled',true);
+							}
+						}else {
+							$("#reservationTime option[value*='A']").prop('disabled',false);
+							$("#reservationTime option[value*='B']").prop('disabled',false);
+							$("#reservationTime option[value*='C']").prop('disabled',false);
+							$("#reservationTime option[value*='D']").prop('disabled',false);
+						}
+					},
+					error : function() {
+						alert('AJAX 통신오류.. 관리자에게 문의하세요');
+					},
+				});
+			})
+		 
 		// 좌석예약
 		$('.rsv_btn').click(function () {
 		    if ($('.dateSelector').val() == '') {
