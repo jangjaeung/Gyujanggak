@@ -36,14 +36,14 @@ public class AdminStoreLogic implements AdminStore{
 	//qna 페이지네이션용
 	@Override
 	public int selectQnaListCount() {
-		return sqlSession.selectOne("adminMapper.selectCount");
+		return sqlSession.selectOne("adminMapper.selectQnaListCount");
 	}
 	
 	
 
 	@Override
 	public int selectListCount() {
-		int count = sqlSession.selectOne("adminMapper.selectQnaListCount");
+		int count = sqlSession.selectOne("adminMapper.selectListCount");
 		return count;
 	}
 	
@@ -51,7 +51,7 @@ public class AdminStoreLogic implements AdminStore{
 	public List<Book> selectAll(PageInfo pi) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Book> bList = sqlSession.selectList("adminMapper.selectBookList",rowBounds);
+		List<Book> bList = sqlSession.selectList("adminMapper.selectBookList",pi,rowBounds);
 		return bList;
 	}
 	@Override

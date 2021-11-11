@@ -49,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
 	//페이지네이션용
 	@Override
 	public int getQnaListCount() {
-		return store.selectListCount();
+		return store.selectQnaListCount();
 	}
 
 	@Override
