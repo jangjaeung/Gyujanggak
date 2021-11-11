@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daol.library.admin.domain.PageInfo;
+import com.daol.library.admin.domain.Search;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
@@ -29,6 +30,11 @@ public class AdminServiceImpl implements AdminService {
 		List<Book> bList = store.selectAll(pi);
 		return bList;
 	}
+	@Override
+	public List<Book> printSearchAll(Search search) {
+		List<Book> searchList = store.selectSearchAll(search);
+		return searchList;
+	}
 	//유저타입 끌어오기용
 	@Override
 	public Member memberCk(String login) {
@@ -44,5 +50,17 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int getQnaListCount() {
 		return store.selectListCount();
+	}
+
+	@Override
+	public int enrollBook(Book book) {
+		int result = store.insertAll(book);
+		return result;
+	}
+
+	@Override
+	public int bookDelete(int[] nums) {
+		int result = store.deleteAll(nums);
+		return result;
 	}
 }

@@ -57,7 +57,32 @@
 		SELECT COUNT(*) FROM BOOK
 	</select>
 	
+	<select id="selectSearchList" resultMap="bookResultMap">
+		SELECT * FROM BOOK
+		<if test="searchCondition.toString() == 'name'">
+		WHERE BOOK_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition.toString() == 'writer'">
+		WHERE BOOK_WRITER LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition.toString() == 'publisher'">
+		WHERE PUBLISHER LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition.toString() == 'all'">
+		WHERE BOOK_NAME LIKE '%' || #{searchValue} || '%'
+		OR BOOK_WRITER LIKE '%' || #{searchValue} || '%'
+		OR PUBLISHER LIKE '%' || #{searchValue} || '%'
+		</if>
+		ORDER BY BOOK_NO ASC
+	</select>
 	
+	<insert id="insertBook" parameterType="book">
+		INSERT INTO BOOK VALUES(SEQ_BOOKNUM.NEXTVAL,#{bookName},#{bookWriter},#{bookSubject},#{publisher},#{bookYear},#{callNo},#{isbn},#{bookCover},#{theme},DEFAULT,DEFAULT,DEFAULT)
+	</insert>
+	
+	<delete id="deleteBook">
+		DELETE BOOK WHERE BOOK_NO IN ("+#{params}+");
+	</delete>
 	
 	<select id="selectQnaListCount"  resultType="_int">
 		SELECT COUNT(*) FROM QNA
@@ -68,4 +93,5 @@
 	<select id="selectAllQna" resultMap="qnaResultMap">
 		SELECT * FROM QNA ORDER BY QNA_NO DESC
 	</select>
+	
 </mapper>
