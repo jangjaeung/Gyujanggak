@@ -33,6 +33,7 @@ import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.service.MypageService;
 import com.daol.library.readingRoom.domain.ReadingRoom;
+import com.daol.library.studyRoom.domain.StudyRoom;
 
 @Controller
 public class MypageController {
@@ -157,7 +158,7 @@ public class MypageController {
 	public String wishList(HttpServletRequest request, Model model, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", member);
-		/* String userId = (String)session.getAttribute("userId"); */
+//		String userId = (String)session.getAttribute("userId");
 		try {
 			List<WishBook> wList = service.printWishBook(member.getUserId());
 			if (!wList.isEmpty()) {
@@ -220,7 +221,7 @@ public class MypageController {
 					msg.setSubject(member.getUserId() + "님의 희망 도서 신청");
 					msg.setText("======  " + member.getUserId() + "님의 희망 도서 신청 내역   ====="  + "\n 도서명 : " +
 							wishbook.getBookName() + "\n 출판사 : " + wishbook.getPublisher() + "\n 저자명 : " +
-							wishbook.getBookWriter() +"입니다"); Transport.send(msg);
+							wishbook.getBookWriter() +"\\n ============================"); Transport.send(msg);
 							System.out.println("발신성공!");  
 
 							return "redirect: wishList.do?userId="+wishbook.getUserId();
@@ -279,12 +280,13 @@ public class MypageController {
 	
 	//열람실 이용 취소
 	@RequestMapping(value="cancelReadingRoom.do", method=RequestMethod.GET)
-	public String cancleReadingRoom(@ModelAttribute ReadingRoom readingRoom, Model model) {
-		int rReservationNo = readingRoom.getrReservationNo();
+	public String cancleReadingRoom(HttpServletRequest request, @RequestParam("rReservationNo") int rReservationNo, Model model) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
 		int result = service.cancelReadingRoom(rReservationNo);
 		try {
 			if(result > 0) {
-				return "mypage/readingroomHistory";
+				return "redirect:readingroomHistory.do?userId="+userId;
 			}else {
 				model.addAttribute("msg", "예약 취소 실패");
 				return "common/errorPage";
@@ -299,8 +301,42 @@ public class MypageController {
 
 	// 스터디룸 이용내역
 	@RequestMapping(value = "studyroomHistory.do", method = RequestMethod.GET)
-	public String studyroomHistory() {
-		return "mypage/studyroomHistory";
+	public String studyroomHistory(@ModelAttribute StudyRoom studyRoom, @RequestParam("userId") String userId, Model model) {
+		
+		try {
+			List<StudyRoom> sList = service.printAllsList(userId);
+			if(!sList.isEmpty()) {
+				model.addAttribute("sList", sList);
+			}else {
+				model.addAttribute("sList", null);
+			}
+			return "mypage/studyroomHistory";
+		}catch(Exception e) {
+			model.addAttribute("msg", "스터디룸 내역 조회 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	//스터디룸 이용 취소
+	@RequestMapping(value="cancelStudyRoom.do", method=RequestMethod.GET)
+	public String cancleStudyRoom(HttpServletRequest request, @RequestParam("sReservationNo") int sReservationNo, Model model) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		int result = service.cancelStudyRoom(sReservationNo);
+		try {
+			if(result > 0) {
+				return "redirect:studyroomHistory.do?userId="+userId;
+			}else {
+				model.addAttribute("msg", "예약 취소 실패");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+
 	}
 	
 	//문의페이지

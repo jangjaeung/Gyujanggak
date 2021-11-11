@@ -15,6 +15,9 @@
 	<insert id="insertLending" parameterType="LendingBook">
 		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{receive}, #{userId}, #{bookNo})
 	</insert>
+	<insert id="insertParcel">
+		INSERT INTO PARCEL VALUES(SEQ_DELIVERY_NO.NEXTVAL, SEQ_LENDING_NO.CURRVAL, #{addr}, DEFAULT)
+	</insert>
 	
 	<delete id="deleteLending" parameterType="map">
 		DELETE FROM BOOK_LENDING WHERE LENDING_NO = #{lendingNo} AND USER_ID = #{userId}

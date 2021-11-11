@@ -127,8 +127,8 @@ public class MypageStoreLogic implements MypageStore{
 
 	@Override
 	public List<StudyRoom> selectAllsList(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<StudyRoom> sList = sqlSession.selectList("mypageMapper.selectStudyroomHistory", userId);
+		return sList;
 	}
 
 
@@ -140,8 +140,8 @@ public class MypageStoreLogic implements MypageStore{
 
 	@Override
 	public int deleteStudyRoom(int sReservationNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSession.delete("mypageMapper.deleteStudyRoom", sReservationNo);
+		return result;
 	}
 
 	@Override

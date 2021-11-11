@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.daol.library.book.store.BookStore;
 import com.daol.library.lendingBook.domain.LendingBook;
+import com.daol.library.lendingBook.domain.Parcel;
 import com.daol.library.lendingBook.service.LendingBookService;
 import com.daol.library.lendingBook.store.LendingBookStore;
 import com.daol.library.member.store.MemberStore;
@@ -54,6 +55,22 @@ public class LendingBookServiceImpl implements LendingBookService {
 	public int modifyLending(LendingBook lendingBook) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int registerParcel(Parcel parcel) {
+		int result = 0;
+		result += store.insertParcel(parcel);
+		return result;
+	}
+
+	@Override
+	public int registerLendingParcel(LendingBook lendingBook) {
+		int result = 0;
+		result += store.insertLending(lendingBook);
+		result += bookStore.updateLendingBook(lendingBook.getBookNo());
+		result += memberStore.updateOne(lendingBook.getUserId());
+		return result;
 	}
 
 }

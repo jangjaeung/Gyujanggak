@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,57 +82,73 @@
 			<br> <br><br>
 			<table class="table">
 				<colgroup>
-						<col width="50px">
-						<col width="550px">
+						<col width="80px">
+						<col width="500px">
 						<col width="100px">
 				</colgroup>
 				<thead>
 					<tr>
-						<th scope="col"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value=""></th>
+						<th scope="col"  style="vertical-align : middle; text-align : center;">예약번호</th>
 						<th scope="col" colspan="2">예약내역</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:if test="${empty rList }">
 						<tr>
-							<td colspan="6" align="center"> 열람실 이용 내역이 없습니다. </td>
+							<td colspan="6" align="center" style="vertical-align : middle; text-align : center;"> 열람실 이용 내역이 없습니다. </td>
 						</tr>
 					</c:if>
 					<c:if test="${not empty rList }">
 						<c:forEach items="${rList }" var="rList">
 							<tr>
-								<th scope="row"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" ></th>
+								<th scope="row"  style="vertical-align : middle; text-align : center;" >${rList.rReservationNo}</th>
 								<td>
 									예약날짜 : ${rList.rReservationDate } <br> 
 									예약시간 : <c:if test="${rList.rReservationTime ne 'PM'}">9:00 ~ 15:00</c:if>
 											<c:if test="${rList.rReservationTime eq 'PM'}">15:00 ~ 21:00</c:if>
-									<input type="hidden" value="${rList.rReservationNo}" name="rReservationNo">
 									<input type="hidden" value="${rList.userId}" name="userId">
 								</td>
-								<td>
-									<a href="#layer" class="check-btn"><button class="btn btn-danger btn-sm" id="withdraw-btn">예약취소</button></a></a>
+								<td style="vertical-align : middle; text-align : center; font-size:0.9em;">
+									<jsp:useBean id="now" class="java.util.Date" />
+									<fmt:formatDate value="${now}" pattern="yyyyMMddHHmm" var="today" />
+									<fmt:parseNumber value="${today}" integerOnly="true" var="nowTime" scope="request"/>
+									<c:if test="${rList.rReservationTime ne 'PM'}">
+										<fmt:formatDate pattern = "yyyyMMdd0900" value="${rList.rReservationDate}" var="booking"/>
+										<fmt:parseNumber value="${booking}" integerOnly="true" var="bookingTime" scope="page"/> 
+										<c:set value="${bookingTime - nowTime }" var="dateDiff"/>
+										<%-- <c:out value="${dateDiff }"/> --%> 
+									</c:if>
+									<c:if test="${rList.rReservationTime eq 'PM'}">
+										<fmt:formatDate pattern = "yyyyMMdd1500" value="${rList.rReservationDate}" var="booking"/>
+										<fmt:parseNumber value="${booking}" integerOnly="true" var="bookingTime" scope="page"/> 
+										<c:set value="${bookingTime - nowTime }" var="dateDiff"/>
+										<%-- <c:out value="${dateDiff }"/> --%>
+									</c:if>
+									<c:if test="${dateDiff >= 200}">
+										<a href="#layer${rList.rReservationNo}" class="check-btn"><button class="btn btn-danger btn-sm" id="withdraw-btn">예약취소</button></a>
+									</c:if>
+									<c:if test="${dateDiff < 200}">취소 불가 </c:if>
 								</td>
 							</tr>
+							<div id="layer${rList.rReservationNo}" class="pop-layer">
+								<!-- 예약취소 경고창 -->
+								<div class="pop-container">
+									<div class="pop-conts">
+										<!-- 내용 -->
+										<h4 class="ctxt mb20"><b>정말로 취소하시겠습니까?</b></h4><c:out value="${rList.rReservationNo}"/>
+										<div class="btn-r">
+											<a href="#" class="btn-submit"><button class="btn btn-danger" onclick="location.href='cancelReadingRoom.do?rReservationNo=${rList.rReservationNo }';">확인</button></a> <a
+												href="#" class="btn-layerClose"><button class="btn btn-secondary" >취소</button></a>
+										</div>
+										<!--  // 내용 끝 -->
+									</div>
+								</div>
+							</div>
 						</c:forEach>
+
 					</c:if>
 				</tbody>
 			</table>
-				
-				
-				<div id="layer" class="pop-layer">
-				<!-- 예약취소 경고창 -->
-				<div class="pop-container">
-					<div class="pop-conts">
-						<!-- 내용 -->
-						<h4 class="ctxt mb20"><b>정말로 취소하시겠습니까?</b></h4>
-						<div class="btn-r">
-							<a href="<%-- cancelReadingRoom.do?rReservationNo=${rList.rReservationNo} --%>" class="btn-submit"><button class="btn btn-danger" >확인</button></a> <a
-								href="#" class="btn-layerClose"><button class="btn btn-secondary" >취소</button></a>
-						</div>
-						<!--  // 내용 끝 -->
-					</div>
-				</div>
-			</div>
 		</article>
 		<br>
 		<br>
@@ -172,11 +189,10 @@
             return false;
         });
         
-/*        $el.find("btn-submit").click(function(){
-			return true;
-        }); */
+        $el.find("btn-submit").click(function(){
+			
+        }); 
  
-
         $(".layer .dimBg").click(function(){
             $(".dim-layer").fadeOut();
             return false;

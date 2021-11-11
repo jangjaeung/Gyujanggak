@@ -61,7 +61,7 @@
 	
 	
 	<!-- 열람실  -->
-	<resultMap type="ReadingRoom" id="readingRoomResultMap">
+	<resultMap type="ReadingRoom" id="rRoomResultMap">
 		<id property="rReservationNo" column="R_RESERVATION_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="rReservationDate" column="R_RESERVATION_DATE"/>
@@ -70,7 +70,7 @@
 		<result property="count" column="COUNT"/>
 	</resultMap>
 	
-	<select id="selectReadingroomHistory" resultMap="readingRoomResultMap">
+	<select id="selectReadingroomHistory" resultMap="rRoomResultMap">
 		SELECT * FROM READINGROOM WHERE USER_ID = #{userId} ORDER BY R_RESERVATION_DATE DESC
  	</select>
  	<!-- 열람실 예약 취소 -->
@@ -78,6 +78,23 @@
 		DELETE FROM READINGROOM WHERE R_RESERVATION_NO = #{rReservationNo}
 	</delete>
 	
+	
+	<!-- 스터디룸  -->
+	<resultMap type="StudyRoom" id="sRoomResultMap">
+		<id property="sReservationNo" column="S_RESERVATION_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="sReservationDate" column="S_RESERVATION_DATE"/>
+		<result property="sReservationTime" column="S_RESERVATION_TIME"/>
+		<result property="purpose" column="PURPOSE"/>
+		<result property="personnel" column="PERSONNEL"/>
+	</resultMap>
+	
+	<select id="selectStudyroomHistory" resultMap="sRoomResultMap">
+		SELECT * FROM STUDYROOM WHERE USER_ID = #{userId} ORDER BY S_RESERVATION_DATE DESC
+ 	</select>
+	<delete id="deleteStudyRoom" parameterType="_int">
+		DELETE FROM STUDYROOM WHERE S_RESERVATION_NO = #{sReservationNo}
+	</delete>
 	
 	<!-- 문의사항 -->
 	<resultMap type="Qna" id="qnaResultMap">
