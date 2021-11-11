@@ -17,6 +17,8 @@ import com.daol.library.admin.common.Pagination;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.book.domain.Book;
+import com.daol.library.member.domain.Member;
+import com.daol.library.mypage.domain.Qna;
 
 @Controller
 public class AdminController {
@@ -42,6 +44,26 @@ public class AdminController {
 			mv.setViewName("common/errorPage");
 //			return "common/errorPage";
 		}
+	
+	
+	//관리자페이지 문의관리 이동
+	@RequestMapping(value="adQnaList.do",method=RequestMethod.GET)
+	public ModelAndView qnaListView(ModelAndView mv,@RequestParam(value="page",required=false)Integer page,HttpSession session) {
+		String login = (String)session.getAttribute("userId");
+		Member member = service.memberCk(login);
+		if(member != null) {
+			String userType = member.getUserType();
+			mv.addObject("userType",userType);
+		}
+		int currentPage = (page!=null) ? page : 1;
+		int totalCount = service.getQnaListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<Qna> qList = service.printAllQna(pi);
+		if(!qList.isEmpty()) {
+			mv.addObject("qList",qList);
+			mv.addObject("pi",pi);
+		}
+		mv.setViewName("admin/qnaListView");
 		return mv;
 	}
 }
