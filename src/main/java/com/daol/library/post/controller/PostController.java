@@ -46,11 +46,11 @@ public class PostController {
 		if(!pList.isEmpty()) {
 			mv.addObject("pList",pList);
 			mv.addObject("pi",pi);
-			mv.setViewName("postView/postList");
 		}else {
 			mv.addObject("msg","게시글 전체조회 실패");
 			mv.setViewName("common/errorPage");
 		}
+		mv.setViewName("postView/postList");
 		return mv;
 	}
 	

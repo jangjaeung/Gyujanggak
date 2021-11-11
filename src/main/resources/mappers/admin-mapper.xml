@@ -16,5 +16,45 @@
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="lendingCount" column="LENDING_COUNT"/>
 	</resultMap>
-	
+	<resultMap type="Member" id="memberResultMap">
+		<id property="userId" column="USER_ID"></id>
+		<result property="userPwd" column="USER_PWD"></result>
+		<result property="userNo" column="USER_NO"></result>
+		<result property="userName" column="USER_NAME"></result>
+		<result property="userPhone" column="USER_PHONE"></result>
+		<result property="userType" column="USER_TYPE"></result>
+		<result property="userEmail" column="USER_EMAIL"></result>
+		<result property="studentId" column="STUDENT_ID"></result>
+		<result property="major" column="MAJOR"></result>
+		<result property="profilePic" column="PROFILE_PIC"></result>
+		<result property="annualFee" column="ANNUAL_FEE"></result>
+		<result property="payDate" column="PAY_DATE"></result>
+		<result property="enrollDate" column="ENROLL_DATE"></result>
+		<result property="passCheck" column="PASS_CHECK"></result>
+		<result property="approvalDate" column="APPROVAL_DATE"></result>
+		<result property="endDate" column="END_DATE"></result>
+		<result property="socialId" column="SOCIAL_ID"></result>
+		<result property="surveyCheck" column="SURVEY_CHECK"></result>
+		<result property="lendingCopy" column="LENDING_COPY"></result>
+	</resultMap>
+	<resultMap type="Qna" id="qnaResultMap">
+		<id property="qnaNo" column="QNA_NO"></id>
+		<result property="userId" column="USER_ID"></result>
+		<result property="replyState" column="REPLY_STATE"></result>
+		<result property="qnaTitle" column="QNA_TITLE"></result>
+		<result property="qnaContent" column="QNA_CONTENT"></result>
+		<result property="qnaWriteDate" column="QNA_WRITEDATE"></result>
+		<result property="replyContent" column="REPLY_CONTENT"></result>
+		<result property="replyWriteDate" column="REPLY_WRITEDATE"></result>
+		<result property="replyUserId" column="REPLY_USERID"></result>
+	</resultMap>
+	<select id="selectCount"  resultType="_int">
+		SELECT COUNT(*) FROM QNA
+	</select>
+	<select id="selectUser" resultMap="memberResultMap">
+		SELECT * FROM USERS WHERE USER_ID = #{userId}
+	</select>
+	<select id="selectAllQna" resultMap="qnaResultMap">
+		SELECT * FROM QNA ORDER BY QNA_NO DESC
+	</select>
 </mapper>
