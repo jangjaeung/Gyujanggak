@@ -46,12 +46,12 @@ public class AdminStoreLogic implements AdminStore{
 		int count = sqlSession.selectOne("adminMapper.selectQnaListCount");
 		return count;
 	}
-
+	
 	@Override
 	public List<Book> selectAll(PageInfo pi) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Book> bList = sqlSession.selectList("adminMapper.selectBookList",pi,rowBounds);
+		List<Book> bList = sqlSession.selectList("adminMapper.selectBookList",rowBounds);
 		return bList;
 	}
 	@Override
@@ -78,6 +78,28 @@ public class AdminStoreLogic implements AdminStore{
 		}
 		int result = sqlSession.delete("adminMapper.deleteBook", params);
 		return result;
+	}
+	//관리자게시판 문의 검색
+	@Override
+	public List<Qna> selectSearchAll(Search search,PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("adminMapper.selectSearchQna",search,rowBounds);
+	}
+	//문의관리 검색페이징용
+	@Override
+	public int selectSearchQnaListCount(Search search) {
+		return sqlSession.selectOne("adminMapper.getSearchCount",search);
+	}
+	//문의관리 답변하러갑시다
+	@Override
+	public Qna selectOneQna(int qnaNo) {
+		return sqlSession.selectOne("adminMapper.selectOneQna",qnaNo);
+	}
+	//문의등록
+	@Override
+	public int updateAnswer(Qna qna) {
+		return sqlSession.update("adminMapper.updateQna",qna);
 	}
 
 }

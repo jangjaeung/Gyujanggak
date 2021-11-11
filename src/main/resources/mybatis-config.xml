@@ -15,6 +15,8 @@
 		<typeAlias type="com.daol.library.lendingBook.domain.Parcel" alias="Parcel"/>
 		<typeAlias type="com.daol.library.post.domain.Post" alias="Post"/>
 		<typeAlias type="com.daol.library.post.domain.Reply" alias="Reply"/>
+		<typeAlias type="com.daol.library.post.domain.PostReport" alias="PostReport"/>
+		<typeAlias type="com.daol.library.post.domain.ReplyReport" alias="ReplyReport"/>
 		<typeAlias type="com.daol.library.readingRoom.domain.ReadingRoom" alias="ReadingRoom"/>
 		<typeAlias type="com.daol.library.studyRoom.domain.StudyRoom" alias="StudyRoom"/>
 		<typeAlias type="com.daol.library.book.domain.WishBook" alias="WishBook"/>

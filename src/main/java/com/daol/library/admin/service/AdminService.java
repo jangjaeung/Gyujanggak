@@ -27,4 +27,12 @@ public interface AdminService {
 	public int enrollBook(Book book);
 
 	public int bookDelete(int[] nums);
+	//관리자게시판 문의검색
+	public List<Qna> printSearchAll(Search search,PageInfo pi);
+	//검색페이징용
+	public int getSearchQnaListCount(Search search);
+	//qna상세
+	public Qna printOneQna(int qnaNo);
+	//답변등록
+	public int modifyAnswer(Qna qna);
 }

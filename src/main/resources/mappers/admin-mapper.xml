@@ -84,7 +84,8 @@
 		DELETE BOOK WHERE BOOK_NO IN ("+#{params}+");
 	</delete>
 	
-	<select id="selectQnaListCount"  resultType="_int">
+	<!-- 관리자페이지 문의관리 -->
+	<select id="selectQnaListCount" resultType="_int">
 		SELECT COUNT(*) FROM QNA
 	</select>
 	<select id="selectUser" resultMap="memberResultMap">
@@ -93,5 +94,37 @@
 	<select id="selectAllQna" resultMap="qnaResultMap">
 		SELECT * FROM QNA ORDER BY QNA_NO DESC
 	</select>
+	<select id="selectSearchQna" resultMap="qnaResultMap">
+		SELECT * FROM QNA
+    	<if test="searchCondition.toString() == 'writer'">
+    		WHERE USER_ID LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'title'">
+    		WHERE QNA_TITLE LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'state'">
+    		WHERE REPLY_STATE LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	ORDER BY QNA_NO DESC
+	</select>
+	<select id="getSearchCount" resultType="_int">
+		SELECT COUNT(*) FROM QNA
+    	<if test="searchCondition.toString() == 'writer'">
+    		WHERE USER_ID LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'title'">
+    		WHERE QNA_TITLE LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'state'">
+    		WHERE REPLY_STATE LIKE '%' || #{searchValue} || '%'
+    	</if>
+	</select>
+	<select id="selectOneQna" resultMap="qnaResultMap">
+		SELECT * FROM QNA WHERE QNA_NO = #{qnaNo}
+	</select>
 	
+	<update id="updateQna" parameterType="Qna">
+		UPDATE QNA SET REPLY_STATE = 'Y', REPLY_CONTENT = #{replyContent}, REPLY_WRITEDATE = DEFAULT, REPLY_USERID = #{replyUserId} WHERE QNA_NO = #{qnaNo}
+	</update>
+	<!--                                                      -->
 </mapper>

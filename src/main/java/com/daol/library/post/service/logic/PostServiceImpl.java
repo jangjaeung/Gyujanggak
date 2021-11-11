@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.PostReport;
 import com.daol.library.post.domain.Reply;
+import com.daol.library.post.domain.ReplyReport;
 import com.daol.library.post.service.PostService;
 import com.daol.library.post.store.PostStore;
 
@@ -81,6 +83,26 @@ public class PostServiceImpl implements PostService{
 	public int removeReply(Reply reply) {
 		int result = store.deleteReply(reply);
 		return result;
+	}
+
+	@Override
+	public PostReport ckPostReport(int postNo) {
+		return store.selectPostReport(postNo);
+	}
+
+	@Override
+	public int reportPost(int postNo) {
+		return store.insertReportPost(postNo);
+	}
+
+	@Override
+	public ReplyReport ckReplyReport(int replyNo) {
+		return store.selectReplyReport(replyNo);
+	}
+
+	@Override
+	public int reportReply(int replyNo) {
+		return store.insertReportReply(replyNo);
 	}
 
 	
