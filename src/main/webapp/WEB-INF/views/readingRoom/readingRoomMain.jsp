@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("kk:mm");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +17,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+	<jsp:useBean id="now" class="java.util.Date" />
+	<fmt:formatDate value="${now}" pattern="kkmm" var="today" />
+	<fmt:parseNumber value="${today}" integerOnly="true" var="nowTime" scope="request"/>
+	<c:set value="${1500 - nowTime }" var="dateDiff"/>
     <jsp:include page="../common/header.jsp"></jsp:include>
 	<main>
 		<div class="readingRoomTitle">
@@ -17,7 +28,7 @@
 			<p class="readingRoomTitleTwo">도서관이용>열람실</p>
 		</div>
 		<div class="readingRoomDiv">
-			<p>열람실 예약</p>
+			<p>열람실 예약<p>
 			<table class="readingRoomMainTable">
 				<tr>
 					<td>
@@ -120,6 +131,7 @@
 					</td>
 				</tr>
 			</table>
+			<p>현재 시간은 ${today } 입니다. ${dateDiff }</p>
 		</div>
 		<div class="rsvDiv hidden">
 			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 
@@ -144,6 +156,9 @@
 </body>
 
 <script>
+
+	var date = new Date();
+	console.log(date.toLocaleTimeString());
 	// 좌석 현황
 	$.ajax({
 		url : 'printAllReadingRoom.do',

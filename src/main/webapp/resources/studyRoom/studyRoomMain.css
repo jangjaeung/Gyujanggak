@@ -8,8 +8,8 @@ main{
 
 .studyRoomTitle {
     height: 160px;
-    background: #267360;
-    color: #fff;
+    background: #eef4fb;
+    color: #233d92;
 }
 
 .studyRoomTitleOne {
@@ -88,12 +88,12 @@ main{
 
 .rsv_btn {
 	position: relative;
-    background-color: #f6f7ff;
+    background-color: #7cace2;
     border: 1px solid silver;
     border-radius : 8px;
     box-shadow: 3px 3px 8px 1px #eeeeee;
     font-size: 18px;
-    color: black;
+    color: #fff;
     left: 32%;
     padding: 15px;
     width: 150px;
@@ -101,7 +101,7 @@ main{
     cursor: pointer;
 }
 .rsv_btn:hover {
-	 background-color: rgb(90,94,185);
+	 background-color: #4972bc;
  	 color: white;
 	-webkit-transition: all 0.4s;
   	-moz-transition: all 0.4s;
