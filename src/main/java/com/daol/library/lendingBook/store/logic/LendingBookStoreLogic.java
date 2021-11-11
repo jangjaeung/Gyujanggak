@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.daol.library.lendingBook.domain.LendingBook;
+import com.daol.library.lendingBook.domain.Parcel;
 import com.daol.library.lendingBook.store.LendingBookStore;
 
 @Repository
@@ -42,6 +43,18 @@ public class LendingBookStoreLogic implements LendingBookStore {
 	@Override
 	public int updateLending(LendingBook lendingBook) {
 		return 0;
+	}
+
+	@Override
+	public int insertParcel(Parcel parcel) {
+		int result = sqlSession.insert("lendingBookMapper.insertParcel", parcel);
+		return result;
+	}
+
+	@Override
+	public int insertLendingParcel(LendingBook lendingBook) {
+		int result = sqlSession.insert("lendingBookMapper.insertLending", lendingBook);
+		return result;
 	}
 
 }
