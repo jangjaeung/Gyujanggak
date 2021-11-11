@@ -3,7 +3,7 @@ package com.daol.library.lendingBook.domain;
 public class Parcel {
 	private int deliveryNo;
 	private int lendingNo;
-	private String arddr;
+	private String addr;
 	private String dStatus;
 	
 	public Parcel() {}
@@ -24,12 +24,12 @@ public class Parcel {
 		this.lendingNo = lendingNo;
 	}
 
-	public String getArddr() {
-		return arddr;
+	public String getAddr() {
+		return addr;
 	}
 
-	public void setArddr(String arddr) {
-		this.arddr = arddr;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 
 	public String getdStatus() {
@@ -42,8 +42,8 @@ public class Parcel {
 
 	@Override
 	public String toString() {
-		return "Parcel [deliveryNo=" + deliveryNo + ", lendingNo=" + lendingNo + ", arddr=" + arddr + ", dStatus="
+		return "Parcel [deliveryNo=" + deliveryNo + ", lendingNo=" + lendingNo + ", addr=" + addr + ", dStatus="
 				+ dStatus + "]";
 	}
-	
+
 }

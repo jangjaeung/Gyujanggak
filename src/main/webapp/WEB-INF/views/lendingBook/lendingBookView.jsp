@@ -109,8 +109,8 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input type="radio" name="bookPay" id="" value="inPesrson">직접결제 
-                                <input type="radio" name="bookPay" id="" value="card" checked>카드결제 
+                                <input type="radio" name="bookPay" id="" value="inPesrson" checked>직접결제 
+                                <input type="radio" name="bookPay" id="" value="card">카드결제 
                                 <button type="button" onclick="location.href='#';">결제하기</button>
                             </td>
                         </tr>
