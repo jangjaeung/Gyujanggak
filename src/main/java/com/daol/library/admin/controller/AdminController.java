@@ -4,6 +4,7 @@ package com.daol.library.admin.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,8 @@ public class AdminController {
 			mv.setViewName("common/errorPage");
 //			return "common/errorPage";
 		}
+		return mv;
+	}
 	
 	
 	//관리자페이지 문의관리 이동

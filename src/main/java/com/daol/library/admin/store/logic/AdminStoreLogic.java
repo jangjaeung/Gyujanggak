@@ -42,7 +42,7 @@ public class AdminStoreLogic implements AdminStore{
 
 	@Override
 	public int selectListCount() {
-		int count = sqlSession.selectOne("adminMapper.selectListCount");
+		int count = sqlSession.selectOne("adminMapper.selectQnaListCount");
 		return count;
 	}
 
