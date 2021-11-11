@@ -16,5 +16,11 @@
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="lendingCount" column="LENDING_COUNT"/>
 	</resultMap>
+	<select id="selectBookList" resultMap="bookResultMap">
+		SELECT * FROM BOOK ORDER BY BOOK_NO DESC
+	</select>
 	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM BOOK
+	</select>
 </mapper>
