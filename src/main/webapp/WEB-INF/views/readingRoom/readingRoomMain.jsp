@@ -130,10 +130,11 @@
 			</select>
 		</div>
 		<div>
-			<c:if test="${loginUser.userId eq null }">
+			<%-- <c:if test="${loginUser.userId eq null }"> --%>
+			<c:if test="${userId eq null }">
 				<button onclick="showLoginPage();" class="rsv_btn">로그인</button>
 			</c:if>
-			<c:if test="${loginUser.userId ne null }">
+			<c:if test="${userId ne null }">
 				<button class="rsv_btn">예약</button>
 			</c:if>
 		</div>
@@ -154,7 +155,7 @@
 		contentType : 'application/json',
 
 		success : function(data) {
-			console.log(12321312,data)
+			console.log("예약상황",data)
 			data.find(function(ele) {
 				if(ele.count == 2){
 				    $('#' + ele.seatNo + '').addClass('seatRed');
@@ -176,6 +177,7 @@
 				$('#selectedSeat').val($('.select').text());
 				//console.log($('#selectedSeat'));
 				
+				// 좌석  별 예약 상태
 				$.ajax({
 					url : 'selectSeatStatus.do',
 					type : 'post',
@@ -196,12 +198,6 @@
 							$("#reservationTime option[value*='PM']").prop('disabled',false);
 						}
 						$("#reservationTime option[value*='default']").prop('selected',true);
-						/* if (data === 'success') {
-							alert("예약이 완료되었습니다.")
-							location.reload();
-						} else {
-							alert('예약실패');
-						} */
 					},
 					error : function() {
 						alert('AJAX 통신오류.. 관리자에게 문의하세요');
@@ -209,8 +205,6 @@
 				});
 				
 			});
-
-
 		},
 		error : function() {
 			alert('AJAX 통신오류.. 관리자에게 문의하세요');

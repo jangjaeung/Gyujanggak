@@ -1,5 +1,7 @@
 package com.daol.library.studyRoom.store.logic;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,8 +22,16 @@ public class StudyRoomStoreLogic implements StudyRoomStore {
 	}
 
 	@Override
+	public List<StudyRoom> selectTimeStatus(String rsvDate) {
+		List<StudyRoom> result = sqlSession.selectList("studyRoomMapper.selectStudyRoom", rsvDate);
+		return result;
+	}
+	
+	@Override
 	public int deleteStudyRoom(StudyRoom studyRoom) {
 		int result = sqlSession.delete("studyRoomMapper.deleteStudyRoom", studyRoom);
 		return result;
 	}
+
+
 }

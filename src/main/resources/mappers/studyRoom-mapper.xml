@@ -22,4 +22,10 @@
 	<delete id="deleteStudyRoom" parameterType="_int">
 		DELETE FROM STUDYROOM WHERE S_RESERVATION_NO = #{sReservationNo}
 	</delete>
+	
+<!-- 날짜 선택 후 예약 시간 조회 -->
+	<select id="selectStudyRoom" resultMap="studyRoomResultMap">
+		SELECT * FROM STUDYROOM WHERE S_RESERVATION_DATE = #{sReservationDate}
+	</select>
+
 </mapper>
