@@ -9,6 +9,8 @@ import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
+import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
 
 public interface AdminService {
 	public int getListCount();
@@ -46,4 +48,12 @@ public interface AdminService {
 	public List<Status> statusAll(PageInfo pi);
 
 
+	//신고된 게시물 리스트 페이징용
+	public int getPostReportCount();
+	//신고된 게시물 리스트
+	public List<Post> printAllReportPost(PageInfo pi);
+	//신고된 댓글 리스트 페이징
+	public int getReplyReportCount();
+	//신고된 댓글 리스트
+	public List<Reply> printAllReportReply(PageInfo rpi);
 }
