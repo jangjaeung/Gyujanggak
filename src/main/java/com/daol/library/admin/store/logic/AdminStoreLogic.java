@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 
@@ -68,15 +70,15 @@ public class AdminStoreLogic implements AdminStore{
 
 	@Override
 	public int deleteAll(int[] nums) {
-		String params = "";
-		
-		for(int i =0; i<nums.length; i++) {
-			params += nums[i];
-			
-			if(i < nums.length-1)
-				params += ",";
-		}
-		int result = sqlSession.delete("adminMapper.deleteBook", params);
+//		String params = "";
+//		
+//		for(int i =0; i<nums.length; i++) {
+//			params += nums[i];
+//			
+//			if(i < nums.length-1)
+//				params += ",";
+//		}
+		int result = sqlSession.delete("adminMapper.deleteBook", nums);
 		return result;
 	}
 	//관리자게시판 문의 검색
@@ -101,5 +103,34 @@ public class AdminStoreLogic implements AdminStore{
 	public int updateAnswer(Qna qna) {
 		return sqlSession.update("adminMapper.updateQna",qna);
 	}
+	//희망 도서 목록
+	@Override
+	public List<WishBook> selectAllWish(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<WishBook> bList = sqlSession.selectList("adminMapper.wishBookList",pi,rowBounds);
+		return bList;
+	}
+
+	@Override
+	public int selectWishListCount() {
+		int count = sqlSession.selectOne("adminMapper.selectWishListCount");
+		return count;
+	}
+
+	@Override
+	public int selectStatusListCount() {
+		int count = sqlSession.selectOne("adminMapper.selectStatusListCount");
+		return count;
+	}
+
+	@Override
+	public List<Status> selectAllStatus(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Status> bList = sqlSession.selectList("adminMapper.StatusBookList",pi,rowBounds);
+		return bList;
+	}
+
 
 }

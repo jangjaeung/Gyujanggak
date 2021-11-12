@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 
@@ -83,4 +85,29 @@ public class AdminServiceImpl implements AdminService {
 	public int modifyAnswer(Qna qna) {
 		return store.updateAnswer(qna);
 	}
+
+	@Override
+	public List<WishBook> wishAll(PageInfo pi) {
+		List<WishBook> bList = store.selectAllWish(pi);
+		return bList;
+	}
+	//희망도서 페이징
+	@Override
+	public int getWishListCount() {
+		int totalCount = store.selectWishListCount();
+		return totalCount;
+	}
+
+	@Override
+	public int getStatusListCount() {
+		int totalCount = store.selectStatusListCount();
+		return totalCount;
+	}
+
+	@Override
+	public List<Status> statusAll(PageInfo pi) {
+		List<Status> bList = store.selectAllStatus(pi);
+		return bList;
+	}
+
 }

@@ -48,15 +48,55 @@
 		<result property="replyWriteDate" column="REPLY_WRITEDATE"></result>
 		<result property="replyUserId" column="REPLY_USERID"></result>
 	</resultMap>
+	<resultMap type="WishBook" id="wishbookResultMap">
+		<id property="applyNo" column="APPLY_NO"></id>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookName" column="BOOK_NAME"/>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="applyStatus" column="APPLY_STATUS"/>
+		<result property="applyDate" column="APPLY_DATE"/>
+	</resultMap>
+	<resultMap type="Status" id="StatusResultMap">
+		<id property="bookName" column="BOOK_NAME"></id>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookNo" column="BOOK_NO"/>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="lendingDate" column="LENDING_DATE"/>
+		<result property="returnDate" column="RETURN_DATE"/>
+		<result property="extendCount" column="EXTEND_COUNT"/>
+	</resultMap>
 	
+<!-- 	희망도서 리스트 -->
+	<select id="wishBookList" resultMap="wishbookResultMap">
+		SELECT * FROM WISH_BOOK WHERE APPLY_STATUS = '처리중' ORDER BY APPLY_NO DESC
+	</select>
+<!-- 	장서 리스트 -->
 	<select id="selectBookList" resultMap="bookResultMap">
 		SELECT * FROM BOOK ORDER BY BOOK_NO DESC
 	</select>
-	
+<!-- 	대출현황 리스트 -->
+	<select id="StatusBookList" resultMap="StatusResultMap">
+		SELECT a.BOOK_NO,a.BOOK_NAME, a.BOOK_WRITER,d.USER_ID, d.USER_NO,c.LENDING_DATE, c.RETURN_DATE, c.EXTEND_COUNT
+		FROM users d,BOOK a, BOOK_LENDING c
+		WHERE c.USER_ID = d.USER_ID AND c.BOOK_NO = a.BOOK_NO
+	</select>
+<!-- 		장서 count -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM BOOK
 	</select>
-	
+<!-- 	희망도서 count -->
+	<select id="selectWishListCount" resultType="_int">
+		SELECT COUNT(*) FROM WISH_BOOK
+	</select>
+<!-- 	대출 현황 count -->
+	<select id="selectStatusListCount" resultType="_int">
+		SELECT COUNT(*) FROM(SELECT a.BOOK_NAME, a.BOOK_WRITER, d.USER_NO,c.LENDING_DATE, c.RETURN_DATE, c.EXTEND_COUNT
+		FROM users d,BOOK a, BOOK_LENDING c
+		WHERE c.USER_ID = d.USER_ID AND c.BOOK_NO = a.BOOK_NO)
+	</select>
+<!-- 	장서 검색 -->
 	<select id="selectSearchList" resultMap="bookResultMap">
 		SELECT * FROM BOOK
 		<if test="searchCondition.toString() == 'name'">
@@ -75,13 +115,17 @@
 		</if>
 		ORDER BY BOOK_NO ASC
 	</select>
-	
+<!-- 	장서 등록 -->
 	<insert id="insertBook" parameterType="book">
 		INSERT INTO BOOK VALUES(SEQ_BOOKNUM.NEXTVAL,#{bookName},#{bookWriter},#{bookSubject},#{publisher},#{bookYear},#{callNo},#{isbn},#{bookCover},#{theme},DEFAULT,DEFAULT,DEFAULT)
 	</insert>
-	
-	<delete id="deleteBook">
-		DELETE BOOK WHERE BOOK_NO IN ("+#{params}+");
+<!-- 	장서 삭제 -->
+	<delete id="deleteBook" parameterType="java.util.ArrayList">
+		DELETE BOOK WHERE BOOK_NO IN (
+			<foreach collection="array" item="nums" index="index" separator=",">
+				${nums}
+			</foreach>
+		)
 	</delete>
 	
 	<!-- 관리자페이지 문의관리 -->

@@ -4,10 +4,9 @@ import java.util.List;
 
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Status;
 import com.daol.library.book.domain.Book;
-
-
-	
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 
@@ -35,4 +34,16 @@ public interface AdminService {
 	public Qna printOneQna(int qnaNo);
 	//답변등록
 	public int modifyAnswer(Qna qna);
+
+	// wishbook 전체목록
+	public List<WishBook> wishAll(PageInfo pi);
+
+	// wishbook total수
+	public int getWishListCount();
+
+	public int getStatusListCount();
+
+	public List<Status> statusAll(PageInfo pi);
+
+
 }

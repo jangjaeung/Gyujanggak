@@ -153,8 +153,10 @@ public class MemberController {
 					HttpSession session = request.getSession();
 					session.setAttribute("userId", loginUser.getUserId());
 					session.setAttribute("userType", loginUser.getUserType());
+					return "redirect:home.do";
+				}else {
+					return "redirect:loginView.do";
 				}
-				return "redirect:home.do";
 			}catch(Exception e) {
 				request.setAttribute("msg", e.toString());
 				return "common/errorPage";
