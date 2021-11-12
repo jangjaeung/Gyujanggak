@@ -12,6 +12,9 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="bookNo" column="BOOK_NO"/>
 	</resultMap>
+	<select id="selectOne" resultMap="lendingBookResultMap">
+		SELECT * FROM BOOK_LENDING WHERE BOOK_NO = #{bookNo}
+	</select>
 	<insert id="insertLending" parameterType="LendingBook">
 		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{receive}, #{userId}, #{bookNo})
 	</insert>

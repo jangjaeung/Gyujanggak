@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,17 +31,16 @@ public class LendingBookController {
 	
 //	도서 대출
 	@PostMapping("/lendingBook.do")
-	public void lendingBook(HttpServletResponse response, @ModelAttribute Parcel parcel, Model model, @RequestParam("bookNo") int bookNo, @RequestParam("userId") String userId, @RequestParam("bookReceive") String bookReceive, @RequestParam("post") String post ,@RequestParam("address1") String address1, @RequestParam("address2") String address2) {
+	public void lendingBook(HttpServletResponse response, @ModelAttribute Parcel parcel, @RequestParam("bookNo") int bookNo, @RequestParam("userId") String userId, @RequestParam("bookReceive") String bookReceive, @RequestParam("post") String post ,@RequestParam("address1") String address1, @RequestParam("address2") String address2) throws IOException {
 		parcel.setAddr(post + "/" + address1 + "/" + address2);
 		Book book = bookService.printOne(bookNo);
 		LendingBook lendBook = new LendingBook();
-//		int bookNo = Integer.parseInt(request.getParameter(book.getBookNo()));
 		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		lendBook.setBookNo(bookNo);
 		lendBook.setReceive(bookReceive);
 		lendBook.setUserId(userId);
 		try {
-			PrintWriter out = response.getWriter();
 			if(bookReceive.equals("visit")) {
 				int result = 0;
 				result += memberService.modifyOne(userId);
@@ -53,10 +51,6 @@ public class LendingBookController {
 					out.println("<script>alert('대출 신청 완료'); location.href='/bookDetail.do?bookNo="+lendBook.getBookNo()+"';</script>");
 //					return "redirect:/bookDetail.do?bookNo="+lendBook.getBookNo();
 					out.flush();
-				} else {
-					out.println("<script>alert('대출 신청 실패'); location.href='/bookDetail.do?bookNo="+lendBook.getBookNo()+"';</script>");
-					out.flush();
-//					return "common/errorPage";
 				}
 			} else if(bookReceive.equals("parcel")) {
 				int result = 0;
@@ -67,15 +61,12 @@ public class LendingBookController {
 				if(result >= 4) {
 					out.println("<script>alert('대출 신청 완료'); location.href='/bookDetail.do?bookNo="+lendBook.getBookNo()+"';</script>");
 					out.flush();
-				} else {
-					out.println("<script>alert('대출 신청 실패'); location.href='/bookDetail.do?bookNo="+lendBook.getBookNo()+"';</script>");
-					out.flush();
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			out.println("<script>alert('대출 신청 실패'); location.href='/bookDetail.do?bookNo="+lendBook.getBookNo()+"';</script>");
+			out.flush();
 		}
-		
     }
 	
 }

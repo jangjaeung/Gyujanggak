@@ -13,11 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.service.BookService;
+import com.daol.library.lendingBook.domain.LendingBook;
+import com.daol.library.lendingBook.service.LendingBookService;
 
 @Controller
 public class BookController {
 	@Autowired
 	private BookService service;
+	@Autowired
+	private LendingBookService LendingBookService;
 	
 //	간략 검색
 //	@RequestMapping(value="/search.do", method=RequestMethod.GET)
@@ -61,8 +65,10 @@ public class BookController {
 	@GetMapping("/bookDetail.do")
 	public ModelAndView bookDetail(ModelAndView mv, @RequestParam("bookNo") int bookNo) {
 		Book book = service.printOne(bookNo);
+		LendingBook lendingBook = LendingBookService.printOne(bookNo);
 		if(book != null) {
 			mv.addObject("book", book);
+			mv.addObject("lendingBook", lendingBook);
 			mv.setViewName("book/bookDetail");
 		} else {
 			mv.addObject("msg", "상세 조회 실패");

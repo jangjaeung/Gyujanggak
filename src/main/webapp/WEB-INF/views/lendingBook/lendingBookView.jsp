@@ -8,6 +8,7 @@
 <title>다올대학교 도서관 ｜ 규장각</title>
 <link rel="stylesheet" href="../../../resources/css/searchingBook.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../../../resources/js/lendingBook.js"></script>
 <style>
     #book-parcel {
         display: none;
@@ -121,20 +122,8 @@
             </form>
         </div>
     </div>
-    <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-    <script>
-        $(function() { $("#postcodify_search_button").postcodifyPopUp(); });
-
-        function setDisplay(){
-            if($('input:radio[id=bookReceive]').is(':checked')){
-            	$('#book-parcel').show();
-            }else{
-                $('#book-parcel').hide();
-            }
-
-        }
-    </script>
 <!-- Footer -->
+	<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

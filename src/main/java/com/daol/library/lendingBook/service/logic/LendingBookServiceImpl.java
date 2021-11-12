@@ -17,12 +17,6 @@ import com.daol.library.member.store.MemberStore;
 public class LendingBookServiceImpl implements LendingBookService {
 	@Autowired
 	private LendingBookStore store;
-	
-	@Autowired
-	private BookStore bookStore;
-	
-	@Autowired
-	private MemberStore memberStore;
 
 	@Override
 	public List<LendingBook> printAll() {
@@ -32,8 +26,8 @@ public class LendingBookServiceImpl implements LendingBookService {
 
 	@Override
 	public LendingBook printOne(int lendingNo) {
-		// TODO Auto-generated method stub
-		return null;
+		LendingBook lendingBook = store.selectOne(lendingNo);
+		return lendingBook;
 	}
 
 	@Override

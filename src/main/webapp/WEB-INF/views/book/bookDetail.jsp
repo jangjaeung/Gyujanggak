@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>다올대학교 도서관 ｜ 규장각</title>
 <link rel="stylesheet" href="../../../resources/css/searchingBook.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <!-- Header -->
@@ -68,8 +69,8 @@
             </tr>
             <tr>
                 <td>${ book.callNo }</td>
-                <td>${ book.bookState }</td>
-                <td></td>
+                <td id="book-state">${ book.bookState }</td>
+                <td>${ lendingBook.returnDate }</td>
                 <td></td>
             </tr>
         </table>
@@ -78,7 +79,9 @@
 		<c:url var="lendingB" value="/lendingBookView.do">
 			<c:param name="bookNo" value="${ book.bookNo }"></c:param>
 		</c:url>
-        <button type="button" onclick="location.href='${ lendingB }';">대출신청</button>
+        <c:if test="${ book.bookState eq '대출가능' }">
+	        <button type="button" onclick="location.href='${ lendingB }';" id="lending-btn">대출신청</button>
+        </c:if>
         <button type="button" onclick="location.href='#';">도서예약</button>
         <button type="button" onclick="location.href='#';">관심도서담기</button>
     </div>
