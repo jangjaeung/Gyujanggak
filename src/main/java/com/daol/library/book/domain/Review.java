@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Review {
 	private int reviewNo;
 	private int bookNo;
-	private int reviewStar;
+	private double reviewStar;
 	private String reviewContents;
 	private Date reviewDate;
 	private String reviewStatus;
@@ -29,11 +29,11 @@ public class Review {
 		this.bookNo = bookNo;
 	}
 
-	public int getReviewStar() {
+	public double getReviewStar() {
 		return reviewStar;
 	}
 
-	public void setReviewStar(int reviewStar) {
+	public void setReviewStar(double reviewStar) {
 		this.reviewStar = reviewStar;
 	}
 

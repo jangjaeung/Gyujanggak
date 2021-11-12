@@ -14,6 +14,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
 import com.daol.library.book.service.BookService;
 import com.daol.library.lendingBook.domain.LendingBook;
@@ -39,6 +41,8 @@ import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.service.MypageService;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 public class MypageController {
@@ -181,27 +185,61 @@ public class MypageController {
 	//--- 도서 ---//
 	/** 대출현황  */
 	@RequestMapping(value = "lendingStatus.do", method = RequestMethod.GET)
-	public String lendingStatus(Model model, @RequestParam(value="page", required=false) Integer page, @RequestParam("userId") String userId, HttpServletRequest request) {
-		HttpSession session = request.getSession(); 
-
+	public ModelAndView lendingStatus(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount(userId);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		
 		try {
-			int currentPage = (page != null) ? page : 1;
-			int totalCount = service.getListCount();
-			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 			List<Book> lendingList = service.printAllLendingHistory(pi, userId);
 			if(!lendingList.isEmpty()) {
-				model.addAttribute("lendingList", lendingList);
-				model.addAttribute("pi",pi);
+				mv.addObject("lendingList", lendingList);
+				mv.addObject("pi", pi);
 			}else {
-				model.addAttribute("lendingList", null);
+				mv.addObject("lendingList", null);
 			}
-			return "mypage/lendingStatus";
+			mv.setViewName("mypage/lendingStatus");
 		}catch(Exception e){
-			model.addAttribute("msg", "대출 내역 조회 실패");
-			return"common/errorPage";
+			mv.addObject("msg", "대출 내역 조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
+	/** 서평 등록 */
+	@ResponseBody
+	@RequestMapping(value="registerReview.do", method=RequestMethod.POST)
+	public String registerReview(@RequestParam("bookNo") int bookNo,@RequestParam("reviewContents") String reviewContents, @RequestParam("reviewStar") String reviewStar, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		Review review = new Review();
+		review.setUserId(userId);
+		review.setBookNo(bookNo);
+		review.setReviewContents(reviewContents);
+		review.setReviewStar(Double.valueOf(reviewStar));
+		int result = service.registerReview(review);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
 		}
 	}
 	
+	/** 서평 조회 */
+//	@RequestMapping(value="reviewDetail.do", method=RequestMethod.GET)
+//	public void getReviewDetail(@ModelAttribute Review review, HttpServletResponse response, HttpSession session, Model model) throws Exception{
+//		/* String userId = (String)session.getAttribute("userId"); */
+//		Review reviewOne = service.printOneReview(review);
+//		if(reviewOne != null) {
+//			Gson gson = new GsonBuilder().create();
+//			gson.toJson(reviewOne, response.getWriter());
+//			model.addAttribute("reivew", reviewOne);
+//		}
+//		
+//		
+//	}
 	
 
 	/** 예약현황 조회  */
@@ -212,14 +250,17 @@ public class MypageController {
 
 	/** 희망도서 내역  */
 	@RequestMapping(value = "wishList.do", method = RequestMethod.GET)
-	public String wishList(HttpServletRequest request, Model model, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
+	public String wishList(HttpServletRequest request, Model model, @RequestParam(value="page", required=false) Integer page, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", member);
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getWishListCount(member.getUserId());
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		try {
-			List<WishBook> wList = service.printWishBook(member.getUserId());
+			List<WishBook> wList = service.printWishBook(pi, member.getUserId());
 			if (!wList.isEmpty()) {
 				model.addAttribute("wList", wList);
-				/* session.setAttribute("newList", wList); */
+				model.addAttribute("pi", pi);
 			} else {
 				model.addAttribute("wList", null);
 			}
@@ -318,12 +359,16 @@ public class MypageController {
 	//--- 시설 이용 ---//
 	/** 열람실 이용내역  */
 	@RequestMapping(value = "readingroomHistory.do", method = RequestMethod.GET)
-	public String readingroomHistory(@ModelAttribute ReadingRoom readingRoom, @RequestParam("userId") String userId, Model model) {
-		
+	public String readingroomHistory(@ModelAttribute ReadingRoom readingRoom, @RequestParam(value="page", required=false) Integer page, HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getrListCount(userId);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		try {
 			List<ReadingRoom> rList = service.printAllrList(userId);
 			if(!rList.isEmpty()) {
 				model.addAttribute("rList", rList);
+				model.addAttribute("pi", pi);
 			}else {
 				model.addAttribute("rList", null);
 			}

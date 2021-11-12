@@ -79,6 +79,24 @@
 	</select>
 	
 	
+	<!-- 별점 및 서평 -->
+	<resultMap type="Review" id="reviewResultMap">
+		<id property="reviewNo" column="REVIEW_NO"></id>
+		<result property="bookNo" column="BOOK_NO"/>
+		<result property="reviewStar" column="REVIEW_STAR"/>
+		<result property="reviewContents" column="REVIEW_CONTENTS"/>
+		<result property="reviewDate" column="REVIEW_DATE"/>
+		<result property="reviewStatus" column="REVIEW_STATUS"/>
+		<result property="userId" column="USER_ID"/>
+	</resultMap>
+	
+	<select id="selectOneReview" parameterType="_int" resultMap="reviewResultMap">
+		SELECT * FROM REVIEW WHERE USER_ID = #{userId} AND BOOK_NO = #{bookNo}
+	</select>
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO REVIEW VALUES(SEQ_REVIEWNUM.NEXTVAL,#{bookNo}, #{reviewStar}, #{reviewContents}, SYSDATE, 'Y', #{userId})
+	</insert>
+	
 	<!-- 희망도서 -->
 	<resultMap type="WishBook" id="wishbookResultMap">
 		<id property="applyNo" column="APPLY_NO"></id>
@@ -89,7 +107,9 @@
 		<result property="applyStatus" column="APPLY_STATUS"/>
 		<result property="applyDate" column="APPLY_DATE"/>
 	</resultMap>
-	
+	<select id="selectWishListCount" resultType="_int">
+		SELECT COUNT(*) FROM WISH_BOOK WHERE USER_ID = #{userId}
+	</select>
 	<select id="selectWishList"  resultMap="wishbookResultMap">
 		SELECT * FROM WISH_BOOK WHERE USER_ID = #{userId} ORDER BY APPLY_DATE DESC
 	</select>
@@ -110,7 +130,9 @@
 		<result property="seatNo" column="SEAT_NO"/>
 		<result property="count" column="COUNT"/>
 	</resultMap>
-	
+	<select id="selectrListCount" resultType="_int">
+		SELECT COUNT(*) FROM WISH_BOOK WHERE USER_ID = #{userId}
+	</select>
 	<select id="selectReadingroomHistory" resultMap="rRoomResultMap">
 		SELECT * FROM READINGROOM WHERE USER_ID = #{userId} ORDER BY R_RESERVATION_DATE DESC
  	</select>
@@ -129,7 +151,9 @@
 		<result property="purpose" column="PURPOSE"/>
 		<result property="personnel" column="PERSONNEL"/>
 	</resultMap>
-	
+	<select id="selectsListCount" resultType="_int">
+		SELECT COUNT(*) FROM WISH_BOOK WHERE USER_ID = #{userId}
+	</select>	
 	<select id="selectStudyroomHistory" resultMap="sRoomResultMap">
 		SELECT * FROM STUDYROOM WHERE USER_ID = #{userId} ORDER BY S_RESERVATION_DATE DESC
  	</select>
