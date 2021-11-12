@@ -13,16 +13,19 @@
 		<result property="bookNo" column="BOOK_NO"/>
 	</resultMap>
 	<select id="selectOne" resultMap="lendingBookResultMap">
-		SELECT * FROM BOOK_LENDING WHERE BOOK_NO = #{bookNo}
+		SELECT * FROM BOOK_LENDING WHERE BOOK_NO = #{ bookNo }
+	</select>
+	<select id="selectOneForDetail" resultMap="lendingBookResultMap">
+		SELECT * FROM (SELECT * FROM BOOK_LENDING WHERE BOOK_NO = #{ bookNo } ORDER BY RETURN_DATE DESC) WHERE ROWNUM = 1
 	</select>
 	<insert id="insertLending" parameterType="LendingBook">
-		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{receive}, #{userId}, #{bookNo})
+		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{ receive }, #{ userId }, #{ bookNo })
 	</insert>
 	<insert id="insertParcel">
-		INSERT INTO PARCEL VALUES(SEQ_DELIVERY_NO.NEXTVAL, SEQ_LENDING_NO.CURRVAL, #{addr}, DEFAULT)
+		INSERT INTO PARCEL VALUES(SEQ_DELIVERY_NO.NEXTVAL, SEQ_LENDING_NO.CURRVAL, #{ addr }, DEFAULT)
 	</insert>
 	
 	<delete id="deleteLending" parameterType="map">
-		DELETE FROM BOOK_LENDING WHERE LENDING_NO = #{lendingNo} AND USER_ID = #{userId}
+		DELETE FROM BOOK_LENDING WHERE LENDING_NO = #{ lendingNo } AND USER_ID = #{ userId }
 	</delete>
 </mapper>

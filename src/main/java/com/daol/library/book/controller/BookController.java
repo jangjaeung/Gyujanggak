@@ -103,7 +103,7 @@ public class BookController {
 	@GetMapping("/bookDetail.do")
 	public ModelAndView bookDetail(ModelAndView mv, @RequestParam("bookNo") int bookNo) {
 		Book book = service.printOne(bookNo);
-		LendingBook lendingBook = LendingBookService.printOne(bookNo);
+		LendingBook lendingBook = LendingBookService.printOneForDetail(bookNo);
 		if(book != null) {
 			mv.addObject("book", book);
 			mv.addObject("lendingBook", lendingBook);

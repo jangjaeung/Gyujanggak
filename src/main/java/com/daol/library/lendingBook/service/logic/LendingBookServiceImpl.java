@@ -29,6 +29,12 @@ public class LendingBookServiceImpl implements LendingBookService {
 	}
 
 	@Override
+	public LendingBook printOneForDetail(int lendingNo) {
+		LendingBook lendingBook = store.selectOneForDetail(lendingNo);
+		return lendingBook;
+	}
+	
+	@Override
 	public int registerLending(LendingBook lendingBook) throws Exception {
 		int result = store.insertLending(lendingBook);
 		if(result == 0) throw new Exception();
