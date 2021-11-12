@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> <!-- 리스트 갯수 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,45 +124,58 @@
 				<b>대출 현황</b>
 			</h2>
 			<br><br><br>
-			<div id="book-count">
-				<p><span>4</span> 권의 책이 있습니다.</p>
-			</div>
+			<c:if test="${empty lendingList }">
+				<tr>
+					<td colspan="6" align="center"> 대출 내역이 없습니다. </td>
+				</tr>
+			</c:if>
 			
-			<!-- 본문 -->
+			<c:if test="${not empty lendingList }">
+			<div id="book-count">
+				<p><span>${fn:length(lendingList) }</span> 권의 책이 있습니다.</p>
+			</div>
 			<br> <br>
-			<div class="card">
-				<div class="photo">
-					<img src="https://s-media-cache-ak0.pinimg.com/236x/3b/36/ca/3b36ca3afe0fa0fd4984b9eee2e154bb.jpg" width="160px" height="220px">
-				</div>
-				<div class="description">
-					<h3>달러구트 꿈 백화점</h3>
-					<p><span>팩토리나인</span>&nbsp;|&nbsp;<span>이미예</span>&nbsp;|&nbsp;<span>2021.07.27</span></p>
-					<br>	
-					<p>대출일 : 2021-10-20</p>
-					<p>반납예정일 : 2021-10-20</p>
-					<br>
-						<div class="btn-area">
-							<button class="btn btn-success ">연장하기</button>
-<!-- 						<button class="btn btn-info">서평보기</button>
-							<button class="btn btn-info">서평쓰기</button> -->
+				<c:forEach items="${lendingList }" var="lending" varStatus="index">
+				<!-- 본문 -->
+				<br>
+					<div class="card">
+						<div class="photo">
+							<img src="${pageContext.request.contextPath}/resources/bookcover/${lending.bookCover}" width="173.3px" height="220px">
+						</div>
+						<div class="description">
+							<h3>${lending.bookName}</h3><input type="hidden" name="bookNo" value="${lending.bookNo }">
+							<p><span>${lending.publisher}</span>&nbsp;|&nbsp;<span>${lending.bookWriter}</span>&nbsp;|&nbsp;<span>${lending.bookYear}</span></p>
+							<br>	
+							<p>대출일 : ${lending.lendingBook.lendingDate }</p>
+							<p>반납예정일 : ${lending.lendingBook.returnDate}</p>
+							<br>
+								<div class="btn-area">
+									<c:if test="${lending.bookState eq '대출불가'}">
+										<button class="btn btn-success ">연장하기</button>
+									</c:if>
+									<c:if test="${lending.bookState eq '대출가능'}">
+										<button class="btn btn-info">서평보기</button>
+										<button class="btn btn-info">서평쓰기</button>
+									</c:if>
+							</div>
+						</div>
+						<div class="review">
+							<textarea id="review" rows="7" cols="92" placeholder="내용을 입력해주세요"></textarea>
+							<div class="starRev">
+								<span class="starR1 on">별1_왼쪽</span> <span class="starR2">별1_오른쪽</span>
+								<span class="starR1">별2_왼쪽</span> <span class="starR2">별2_오른쪽</span>
+								<span class="starR1">별3_왼쪽</span> <span class="starR2">별3_오른쪽</span>
+								<span class="starR1">별4_왼쪽</span> <span class="starR2">별4_오른쪽</span>
+								<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
+								 <br> <br>
+								<div class="btn-area">
+									<button class="btn btn-info btn-sm">등록</button>
+								</div>	
+							</div>
 					</div>
-				</div>
-				<div class="review">
-					<textarea id="review" rows="7" cols="92" placeholder="내용을 입력해주세요"></textarea>
-					<div class="starRev">
-						<span class="starR1 on">별1_왼쪽</span> <span class="starR2">별1_오른쪽</span>
-						<span class="starR1">별2_왼쪽</span> <span class="starR2">별2_오른쪽</span>
-						<span class="starR1">별3_왼쪽</span> <span class="starR2">별3_오른쪽</span>
-						<span class="starR1">별4_왼쪽</span> <span class="starR2">별4_오른쪽</span>
-						<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
-						 <br> <br>
-						<div class="btn-area">
-							<button class="btn btn-info btn-sm">등록</button>
-						</div>	
 					</div>
-			</div>
-			</div>
-
+			</c:forEach>
+			</c:if>
 		</article>
 		<br>
 		<br>

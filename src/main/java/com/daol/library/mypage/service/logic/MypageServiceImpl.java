@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.domain.Qna;
@@ -64,16 +65,17 @@ public class MypageServiceImpl implements MypageService{
 		return result;
 	}
 
+	/** 전체 게시물 갯수 */
 	@Override
 	public int getListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalCount = store.selectListCount();
+		return totalCount;
 	}
 
 	@Override
-	public List<Book> printAllHistory(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> printAllLendingHistory(PageInfo pi, String userId) {
+		List<Book> lendingList = store.selectAllLendingHistory(pi, userId);
+		return lendingList;
 	}
 
 	@Override
