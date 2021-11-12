@@ -4,8 +4,9 @@ import java.util.List;
 
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Status;
 import com.daol.library.book.domain.Book;
-
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 
@@ -33,4 +34,14 @@ public interface AdminStore {
 	public Qna selectOneQna(int qnaNo);
 	//문의등록
 	public int updateAnswer(Qna qna);
+
+	public List<WishBook> selectAllWish(PageInfo pi);
+
+	// 희망도서 페이징
+	public int selectWishListCount();
+
+	public int selectStatusListCount();
+
+	public List<Status> selectAllStatus(PageInfo pi);
+
 }

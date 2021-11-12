@@ -15,14 +15,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.daol.library.admin.common.Pagination;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.WishBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 
@@ -32,6 +35,7 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
+	//장서 목록 리스트
 	@RequestMapping(value="bookListView.do", method=RequestMethod.GET)
   	public ModelAndView bookListView(ModelAndView mv,@ModelAttribute Book book, @RequestParam(value="page", required=false)Integer page, HttpServletRequest request) {
 		
@@ -52,7 +56,7 @@ public class AdminController {
 		}
 		return mv;
 	}
-	
+	//장서 검색
 	@RequestMapping(value="bookSearch.do", method=RequestMethod.GET)
 	public String bookSearchList(@ModelAttribute Search search, Model model){
 		List<Book> searchList = service.printSearchAll(search);
@@ -65,11 +69,12 @@ public class AdminController {
 			return "common/errorPage";
 		}
 	}
+	// 장서 등록 페이지
 	 @RequestMapping(value="bookEnrollView.do", method=RequestMethod.GET)
 	  	public String bookEnrollView() {
 		  return "adminbook/bookEnroll"; 
 	  	}
-	 
+	 // 장서 등록
 	 @RequestMapping(value="booksEnroll.do", method=RequestMethod.POST)
 	 	public String bookEnroll(@ModelAttribute Book book,@RequestParam(value="bookCoverFile", required=false)MultipartFile bookCover,Model model, HttpServletRequest request ) {
 		 
@@ -87,9 +92,19 @@ public class AdminController {
 			 model.addAttribute("msg","책 등록 실패");
 			 return "common/errorPage";
 		 }
-		 
-		 
 	 }
+	 
+	 @RequestMapping(value="wishbookEnroll.do", method=RequestMethod.POST)
+	 public String wishbookEnroll(@RequestParam(value="wishbookName")String bookName,@RequestParam(value="wishbookWrtier")String bookWriter,Model model, @RequestParam(value="wishPublisher")String publisher, HttpServletRequest request) {
+		 
+//		 model.addAttribute("bookName", bookName);
+//		 model.addAttribute("bookWriter", bookWriter);
+//		 model.addAttribute("publisher", publisher);
+//		 return "adminbook/bookEnroll";
+		 return "";
+	 }
+	 
+	 
 	 public String saveFile(MultipartFile file, HttpServletRequest request) {
 			// 파일저장경로 설정
 			String root = request.getSession().getServletContext().getRealPath("resources");
@@ -112,10 +127,10 @@ public class AdminController {
 			// 파일경로 리턴
 			return filePath;
 		}
-	
+	 @ResponseBody
 	 @RequestMapping(value="bookDelete.do", method=RequestMethod.POST)
-	 public String deleteBook(HttpServletRequest request,Model model) {
-		 String[] bookNo = request.getParameterValues("valueArrTest");
+	 public String deleteBook(@RequestParam(value="bookNo[]") String[] bookNo,HttpServletRequest request,Model model) {
+//		 String[] bookNo = request.getParameterValues("bookNo");
 		 int[]nums = new int[bookNo.length];
 		 for(int i =0; i<bookNo.length; i++) {
 			 nums[i] = Integer.parseInt(bookNo[i]);
@@ -123,15 +138,66 @@ public class AdminController {
 		 
 		 int result = service.bookDelete(nums);
 		 if(result > 0) {
-			 return "redirect:bookListView.do";
+			 return "success";
 		 }else {
-			 model.addAttribute("msg","책 삭제 실패");
-			 return "common/errorPage";
+			 return "fail";
 		 }
 		 
 	 }
 	 
+	 // 희망도서 리스트 
+	 @RequestMapping(value="wishbookList.do", method=RequestMethod.GET)
+	 public ModelAndView wishBook(ModelAndView mv, @ModelAttribute WishBook wishbook,@RequestParam(value="page", required=false)Integer page ,HttpServletRequest request) {
+		 
+		 int currentPage = (page != null) ? page : 1;
+			int totalCount = service.getWishListCount();
+			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+			List<WishBook> bList = service.wishAll(pi);
+		
+			if(!bList.isEmpty()) {
+				mv.addObject("bList", bList);
+				mv.addObject("pi",pi);
+				mv.setViewName("adminbook/wishbookList");
+//				return "board/boardListView";
+			}else {
+				mv.addObject("msg", "게시글 전체조회 실패");
+				mv.setViewName("common/errorPage");
+//				return "common/errorPage";
+			}
+			return mv;
+	 }
+	 // 대출 현황 리스트 
+	 @RequestMapping(value="statusList.do", method=RequestMethod.GET)
+	 public ModelAndView StatusBook(ModelAndView mv, @ModelAttribute Status status,@RequestParam(value="page", required=false)Integer page ,HttpServletRequest request) {
+		 
+		 int currentPage = (page != null) ? page : 1;
+			int totalCount = service.getStatusListCount();
+			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+			List<Status> bList = service.statusAll(pi);
+		
+			if(!bList.isEmpty()) {
+				mv.addObject("bList", bList);
+				mv.addObject("pi",pi);
+				mv.setViewName("adminbook/bookStatus");
+//				return "board/boardListView";
+			}else {
+				mv.addObject("msg", "게시글 전체조회 실패");
+				mv.setViewName("common/errorPage");
+//				return "common/errorPage";
+			}
+			return mv;
+	 }
 	 
+	 // 도서 반납
+	 @RequestMapping(value="bookReturn.do", method=RequestMethod.GET)
+	 public String returnBook(@ModelAttribute Book book, @ModelAttribute Member member, @RequestParam(value="userId") String usersId,@RequestParam(value="bookNo") String bookNum,HttpServletRequest request,Model model) {
+//		service.bookState(bookNum);
+//		service.lendingCopy(usersId);
+		
+		
+		 return "";
+	 }
+
 	 
 	 
 	 

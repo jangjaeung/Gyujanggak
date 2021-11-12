@@ -44,9 +44,9 @@
 	<div class="container" style="margin-bottom: 15%;">
 		<h1 style="text-align:center;margin-bottom: 8%;">도서관리</h1>
 
-        <button class="btn btn-default" onclick="location.href='bookListView.do'">장서 목록</button>
-        <button class="btn btn-default">대출 현황</button>
-        <button class="btn btn-default">희망 도서 접수 목록</button>
+    <button class="btn btn-default" onclick="location.href='bookListView.do'">장서 목록</button>
+        <button class="btn btn-default" onclick="location.href='statusList.do'">대출 현황</button>
+        <button class="btn btn-default" onclick="location.href='wishbookList.do'">희망 도서 접수 목록</button>
         <button class="btn btn-default">대출도서 택배 신청 목록</button>
 
         <hr>
@@ -55,7 +55,12 @@
 			<thead>
 				<tr>
                     <th>도서 명 </th>
+                    <c:if test="${not empty bookName }"> 
+                    <td><input class="bEnroll" type="text" name="bookName" value="하이"></td>
+                    </c:if>
+                     <c:if test="${ empty bookName }"> 
                     <td><input class="bEnroll" type="text" name="bookName"></td>
+                    </c:if>
 				</tr>
                 <tr>
                     <th>저자</th>
