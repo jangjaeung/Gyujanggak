@@ -28,8 +28,8 @@
                 <li><a href="/search.do">간략검색</a></li>
                 <li><a href="/sDetail.do">상세검색</a></li>
                 <li><a href="/sSub.do">주제별검색</a></li>
-                <li><a href="/sNew.do">신착자료</a></li>
-                <li><a href="#">대출베스트</a></li>
+                <li><a href="/searchNew.do">신착자료</a></li>
+                <li><a href="/bestBook.do">대출베스트</a></li>
             </ul>
         </div>
     </aside>

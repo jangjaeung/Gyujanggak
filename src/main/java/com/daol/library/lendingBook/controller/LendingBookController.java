@@ -29,7 +29,7 @@ public class LendingBookController {
 	@Autowired
 	private MemberService memberService;
 	
-//	도서 대출
+//	도서 대출 신청
 	@PostMapping("/lendingBook.do")
 	public void lendingBook(HttpServletResponse response, @ModelAttribute Parcel parcel, @RequestParam("bookNo") int bookNo, @RequestParam("userId") String userId, @RequestParam("bookReceive") String bookReceive, @RequestParam("post") String post ,@RequestParam("address1") String address1, @RequestParam("address2") String address2) throws IOException {
 		parcel.setAddr(post + "/" + address1 + "/" + address2);

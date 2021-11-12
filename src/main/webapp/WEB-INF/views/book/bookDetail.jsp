@@ -8,6 +8,7 @@
 <title>다올대학교 도서관 ｜ 규장각</title>
 <link rel="stylesheet" href="../../../resources/css/searchingBook.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../../../resources/js/bookDetail.js"></script>
 </head>
 <body>
 <!-- Header -->
@@ -28,8 +29,8 @@
                 <li><a href="/search.do">간략검색</a></li>
                 <li><a href="/sDetail.do">상세검색</a></li>
                 <li><a href="/sSub.do">주제별검색</a></li>
-                <li><a href="/sNew.do">신착자료</a></li>
-                <li><a href="#">대출베스트</a></li>
+                <li><a href="/searchNew.do">신착자료</a></li>
+                <li><a href="/bestBook.do">대출베스트</a></li>
             </ul>
         </div>
     </aside>
@@ -69,8 +70,12 @@
             </tr>
             <tr>
                 <td>${ book.callNo }</td>
-                <td id="book-state">${ book.bookState }</td>
-                <td>${ lendingBook.returnDate }</td>
+                <td>${ book.bookState }</td>
+                <td>
+                    <c:if test="${ book.bookState eq '대출불가' }">
+                		${ lendingBook.returnDate }
+                    </c:if>
+                </td>
                 <td></td>
             </tr>
         </table>

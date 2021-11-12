@@ -46,9 +46,9 @@
 					<ul>
 						<li><a href="/search.do">간략 검색</a></li>
 						<li><a href="/sDetail.do">상세 검색</a></li>
-						<li><a href="#">주제별 검색</a></li>
-						<li><a href="#">신착 자료</a></li>
-						<li><a href="#">대출 베스트</a></li>
+						<li><a href="/sSub.do">주제별 검색</a></li>
+						<li><a href="/searchNew.do">신착 자료</a></li>
+						<li><a href="/bestBook.do">대출 베스트</a></li>
 					</ul>				
 				</li>
 				<li>

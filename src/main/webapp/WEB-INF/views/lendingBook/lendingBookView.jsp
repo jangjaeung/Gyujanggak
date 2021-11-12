@@ -34,8 +34,8 @@
                 <li><a href="/search.do">간략검색</a></li>
                 <li><a href="/sDetail.do">상세검색</a></li>
                 <li><a href="/sSub.do">주제별검색</a></li>
-                <li><a href="/sNew.do">신착자료</a></li>
-                <li><a href="#">대출베스트</a></li>
+                <li><a href="/searchNew.do">신착자료</a></li>
+                <li><a href="/bestBook.do">대출베스트</a></li>
             </ul>
         </div>
     </aside>
@@ -76,49 +76,51 @@
                         <td>${ book.isbn }</td>
                     </tr>
                 </table>
-                <table>
-                    <tr>
-                        <td colspan="2">도서 수령 방법</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" id="" name="bookReceive" value="visit" onchange="setDisplay()" checked>방문수령</td>
-                        <td><input type="radio" name="bookReceive" id="bookReceive" value="parcel" onchange="setDisplay()">택배수령</td>
-                    </tr>
-                </table>
-                <div id="book-parcel">
-                    <table>
-                        <tr>
-                            <td colspan="2">배송지</td>
-                        </tr>
-                        <tr>
-                            <td>* 우편번호</td>
-                            <td>
-                                <input type="text" name="post" class="postcodify_postcode5" size="6">
-                                <button type="button" id="postcodify_search_button">검색</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>* 도로명 주소</td>
-                            <td><input type="text" name="address1" class="postcodify_address"></td>
-                        </tr>
-                        <tr>
-                            <td>* 상세 주소</td>
-                            <td><input type="text" name="address2" class="postcodify_extra_info"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">결제방법</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="radio" name="bookPay" id="" value="inPesrson" checked>직접결제 
-                                <input type="radio" name="bookPay" id="" value="card">카드결제 
-                                <button type="button" onclick="location.href='#';">결제하기</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <c:if test="${ book.bookState eq '대출가능' }">
+	                <table>
+	                    <tr>
+	                        <td colspan="2">도서 수령 방법</td>
+	                    </tr>
+	                    <tr>
+	                        <td><input type="radio" id="" name="bookReceive" value="visit" onchange="setDisplay()" checked>방문수령</td>
+	                        <td><input type="radio" name="bookReceive" id="bookReceive" value="parcel" onchange="setDisplay()">택배수령</td>
+	                    </tr>
+	                </table>
+	                <div id="book-parcel">
+	                    <table>
+	                        <tr>
+	                            <td colspan="2">배송지</td>
+	                        </tr>
+	                        <tr>
+	                            <td>* 우편번호</td>
+	                            <td>
+	                                <input type="text" name="post" class="postcodify_postcode5" size="6">
+	                                <button type="button" id="postcodify_search_button">검색</button>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td>* 도로명 주소</td>
+	                            <td><input type="text" name="address1" class="postcodify_address"></td>
+	                        </tr>
+	                        <tr>
+	                            <td>* 상세 주소</td>
+	                            <td><input type="text" name="address2" class="postcodify_extra_info"></td>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="2">결제방법</td>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="2">
+	                                <input type="radio" name="bookPay" id="" value="inPesrson" checked>직접결제 
+	                                <input type="radio" name="bookPay" id="" value="card">카드결제 
+	                                <button type="button" onclick="location.href='#';">결제하기</button>
+	                            </td>
+	                        </tr>
+	                    </table>
+	                </div>
 <!--                 <button type="button" onclick="location.href='/lendingBook.do';">대출신청</button> -->
-                <input type="submit" value="대출신청">
+                	<input type="submit" value="대출신청">
+               	</c:if>
             </form>
         </div>
     </div>
