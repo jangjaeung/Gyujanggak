@@ -41,8 +41,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> printSearchSub(Search search) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Book> bList = store.selectSearchSub(search);
+		return bList;
 	}
 
 	@Override
@@ -62,6 +62,12 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> printNewBook() {
 		List<Book> bList = store.selectNewList();
+		return bList;
+	}
+
+	@Override
+	public List<Book> printBestBook() {
+		List<Book> bList = store.selectBestBook();
 		return bList;
 	}
 

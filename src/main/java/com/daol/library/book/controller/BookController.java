@@ -61,6 +61,47 @@ public class BookController {
 		}
 	}
 	
+//	주제별 검색
+	@GetMapping("/sSub.do")
+	public String sSub() {
+		return "book/bookSearchSubject";
+	}
+	@GetMapping("/searchSubject.do")
+	public String subjectSearchList(@ModelAttribute Search search, Model model) {
+		List<Book> bList = service.printSearchSub(search);
+		if(!bList.isEmpty()) {
+			model.addAttribute("bList", bList);
+			model.addAttribute("search", search);
+			return "book/bookSearchSubject";
+		} else {
+			return"book/bookSearchSubject";
+		}
+	}
+	
+//	신착 자료 조회
+	@GetMapping("/searchNew.do")
+	public String searchNewList(Model model) {
+		List<Book> bList = service.printNewBook();
+		if(!bList.isEmpty()) {
+			model.addAttribute("bList", bList);
+			return "book/bookSearchNew";
+		} else {
+			return"book/bookSearchNew";
+		}
+	}
+	
+//	대출 베스트 조회
+	@GetMapping("/bestBook.do")
+	public String bestBookList(Model model) {
+		List<Book> bList = service.printBestBook();
+		if(!bList.isEmpty()) {
+			model.addAttribute("bList", bList);
+			return "book/bookPopular";
+		} else {
+			return"book/bookPopular";
+		}
+	}
+	
 //	도서 상세 조회
 	@GetMapping("/bookDetail.do")
 	public ModelAndView bookDetail(ModelAndView mv, @RequestParam("bookNo") int bookNo) {

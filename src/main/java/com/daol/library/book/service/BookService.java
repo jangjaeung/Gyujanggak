@@ -13,6 +13,7 @@ public interface BookService {
 	public List<Book> printSearchDetail(Search search);
 	public List<Book> printSearchSub(Search search);
 	public List<Book> printSearchNew();
+	public List<Book> printBestBook();
 	
 	public List<Book> printNewBook();
 	

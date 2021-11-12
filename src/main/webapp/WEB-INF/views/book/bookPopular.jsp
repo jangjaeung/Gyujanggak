@@ -35,10 +35,10 @@
 <!-- Contents -->
     <div>
         <div>
-            <h1>신착자료</h1>
+            <h1>대출베스트</h1>
         </div>
         <div>
-            <h5><a href="/home.do">Home</a> > 자료검색 > 신착자료</h5>
+            <h5><a href="/home.do">Home</a> > 자료검색 > 대출베스트</h5>
         </div>
         <section>
             <c:if test="${ empty bList }">
@@ -49,7 +49,7 @@
                 </tr>
             </c:if>
             <c:if test="${ !empty bList }">
-                <h3>규장각 신착 도서입니다.</h3>
+                <h3>규장각 인기 대출 도서</h3>
                 <c:forEach items="${ bList }" var="book">
                     <hr>
                     <div class="section">

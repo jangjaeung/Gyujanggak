@@ -13,6 +13,7 @@ public interface BookStore {
 	public List<Book> selectSearchDetail(Search search);
 	public List<Book> selectSearchSub(Search search);
 	public List<Book> selectSearchNew();
+	public List<Book> selectBestBook();
 	
 	public List<Book> selectNewList();
 }
