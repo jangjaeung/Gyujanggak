@@ -57,8 +57,8 @@ public class MypageStoreLogic implements MypageStore{
 
 	/** 전체 게시물 갯수 */
 	@Override
-	public int selectListCount() {
-		int count = sqlSession.selectOne("mypageMapper.selectListCount");
+	public int selectListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectListCount", userId);
 		return count;
 	}
 
@@ -71,15 +71,15 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public int selectOneReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Review selectOneReview(int bookNo) {
+		Review review = sqlSession.selectOne("mypageMapper.selectOneReview", bookNo);
+		return review;
 	}
 
 	@Override
 	public int insertReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSession.insert("mypageMapper.insertReview", review);
+		return result;
 	}
 
 	@Override
@@ -114,10 +114,20 @@ public class MypageStoreLogic implements MypageStore{
 	}
 	
 	@Override
-	public List<WishBook> selectWishBook(String userId) {
-		List<WishBook> wList = sqlSession.selectList("mypageMapper.selectWishList",userId);
+	public int selectWishListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectWishListCount", userId);
+		return count;
+	}
+	
+	@Override
+	public List<WishBook> selectWishBook(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); //한 페이지당 보여줄 게시물 갯수
+		List<WishBook> wList = sqlSession.selectList("mypageMapper.selectWishList",userId, rowBounds);
 		return wList;
 	}
+	
+
 
 	@Override
 	public Book selectLikeList(Book book) {
@@ -125,6 +135,20 @@ public class MypageStoreLogic implements MypageStore{
 		return null;
 	}
 
+	
+	@Override
+	public int selectrListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectrListCount", userId);
+		return count;
+	}
+
+	@Override
+	public int selectsListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectsListCount", userId);
+		return count;
+	}
+	
+	
 	@Override
 	public List<ReadingRoom> selectAllrList(String userId) {
 		List<ReadingRoom> rList = sqlSession.selectList("mypageMapper.selectReadingroomHistory",userId);
@@ -174,6 +198,8 @@ public class MypageStoreLogic implements MypageStore{
 	public int deleteQna(int qnaNo) {
 		return sqlSession.delete("mypageMapper.deleteQna",qnaNo);
 	}
+
+
 
 
 }

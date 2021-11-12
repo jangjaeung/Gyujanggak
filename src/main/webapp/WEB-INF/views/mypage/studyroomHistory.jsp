@@ -148,6 +148,37 @@
 					</c:if>
 				</tbody>
 			</table>
+			<div class="page-area">
+					<c:url var="before" value="studyroomHistory.do">
+						<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+					</c:url>
+					<c:if test="${pi.currentPage <= 1 }">
+						[이전]
+					</c:if>
+					<c:if test="${pi.currentPage > 1 }">
+						<a href="${before }">[이전]</a>
+					</c:if>
+					<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+						<c:url var="pagination" value="studyroomHistory.do">
+							<c:param name="page" value="${p }"></c:param>
+						</c:url>
+						<c:if test="${p eq pi.currentPage }">
+						 	<font color = "#408c99" size="4">[${p }]</font>
+						</c:if>
+						<c:if test="${p ne pi.currentPage }">
+						 	<a href="${pagination }">[${p }]</a>&nbsp;
+						</c:if>
+					</c:forEach>
+					<c:url var="after" value="studyroomHistory.do">
+						<c:param name="page" value="${pi.currentPage + 1 }">></c:param>
+					</c:url>
+					<c:if test="${pi.currentPage >= pi.maxPage }">
+						[다음]
+					</c:if>
+					<c:if test="${pi.currentPage < pi.maxPage }">
+						<a href="${after } ">[다음]</a>
+					</c:if>
+				</div>	
 		</article>
 		<br>
 		<br>
