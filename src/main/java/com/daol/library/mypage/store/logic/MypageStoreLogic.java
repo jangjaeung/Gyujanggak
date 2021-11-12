@@ -1,7 +1,9 @@
 package com.daol.library.mypage.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.domain.Qna;
@@ -52,16 +55,19 @@ public class MypageStoreLogic implements MypageStore{
 		return result;
 	}
 
+	/** 전체 게시물 갯수 */
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = sqlSession.selectOne("mypageMapper.selectListCount");
+		return count;
 	}
 
 	@Override
-	public List<Book> selectAllHistory(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> selectAllLendingHistory(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); //한 페이지당 보여줄 게시물 갯수
+		List<Book> lendingList = sqlSession.selectList("mypageMapper.selectAllLendingHistory", userId, rowBounds);
+		return lendingList;
 	}
 
 	@Override

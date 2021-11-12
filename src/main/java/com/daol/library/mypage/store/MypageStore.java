@@ -5,6 +5,7 @@ import java.util.List;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.domain.Qna;
@@ -28,7 +29,7 @@ public interface MypageStore {
 		/** 대출 도서 전체 권수 */
 		public int selectListCount();
 		/** 대출 내역 */
-		public List<Book> selectAllHistory(PageInfo pi);
+		public List<Book> selectAllLendingHistory(PageInfo pi, String userId);
 		/** 서평 조회 */
 		public int selectOneReview(Review review);
 		/** 서평 등록 */
