@@ -12,6 +12,8 @@ import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
+import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -82,5 +84,25 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int modifyAnswer(Qna qna) {
 		return store.updateAnswer(qna);
+	}
+	//신고게시물
+	@Override
+	public List<Post> printAllReportPost(PageInfo pi) {
+		return store.selectAllReportPost(pi);
+	}
+	//신고게시물 카운트
+	@Override
+	public int getPostReportCount() {
+		return store.selectPostReportCount();
+	}
+	//신고된 댓글 카운트
+	@Override
+	public int getReplyReportCount() {
+		return store.selectReplyReportCount();
+	}
+	//신고된 댓글 리스트
+	@Override
+	public List<Reply> printAllReportReply(PageInfo rpi) {
+		return store.selectAllReportReply(rpi);
 	}
 }

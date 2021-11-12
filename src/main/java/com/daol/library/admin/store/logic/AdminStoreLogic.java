@@ -13,6 +13,8 @@ import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
+import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
 
 @Repository
 public class AdminStoreLogic implements AdminStore{
@@ -100,6 +102,30 @@ public class AdminStoreLogic implements AdminStore{
 	@Override
 	public int updateAnswer(Qna qna) {
 		return sqlSession.update("adminMapper.updateQna",qna);
+	}
+	//신고게시물리스트
+	@Override
+	public List<Post> selectAllReportPost(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("postMapper.selectAllReportPost",rowBounds);
+	}
+	//신고게시물카운트
+	@Override
+	public int selectPostReportCount() {
+		return sqlSession.selectOne("postMapper.selectPostReportCount");
+	}
+	//신고된 댓글 카운트
+	@Override
+	public int selectReplyReportCount() {
+		return sqlSession.selectOne("postMapper.selectReplyReportCount");
+	}
+	//신고된 댓글 리스트
+	@Override
+	public List<Reply> selectAllReportReply(PageInfo rpi) {
+		int offset = (rpi.getCurrentPage() -1) * rpi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, rpi.getBoardLimit());
+		return sqlSession.selectList("postMapper.selectAllReportReply",rowBounds);
 	}
 
 }

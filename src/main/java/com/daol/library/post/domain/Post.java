@@ -11,6 +11,7 @@ public class Post {
 	private Date postDate;
 	private int pViewCount;
 	private int replyCnt;
+	private PostReport postReport;
 	
 	public Post() {}
 
@@ -68,6 +69,15 @@ public class Post {
 
 	public void setReplyCnt(int replyCnt) {
 		this.replyCnt = replyCnt;
+	}
+	
+	
+	public PostReport getPostReport() {
+		return postReport;
+	}
+
+	public void setPostReport(PostReport postReport) {
+		this.postReport = postReport;
 	}
 
 	@Override

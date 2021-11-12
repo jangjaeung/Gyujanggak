@@ -25,12 +25,17 @@ import com.daol.library.admin.service.AdminService;
 import com.daol.library.book.domain.Book;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
+import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.Reply;
+import com.daol.library.post.service.PostService;
 
 @Controller
 public class AdminController {
 
 	@Autowired
 	private AdminService service;
+	@Autowired
+	private PostService pService;
 	
 	@RequestMapping(value="bookListView.do", method=RequestMethod.GET)
   	public ModelAndView bookListView(ModelAndView mv,@ModelAttribute Book book, @RequestParam(value="page", required=false)Integer page, HttpServletRequest request) {
@@ -201,4 +206,48 @@ public class AdminController {
 		}
 	}
 	
+	//신고관리 리스트
+	@RequestMapping(value="reportView.do",method=RequestMethod.GET)
+	public ModelAndView reportView(ModelAndView mv,HttpSession session,@RequestParam(value="page",required=false)Integer page) {
+		String login = (String)session.getAttribute("userId");
+		Member member = service.memberCk(login);
+		if(member != null) {
+			String userType = member.getUserType();
+			mv.addObject("userType",userType);
+		}
+		int currentPage = (page!=null) ? page : 1;
+		int totalCount = service.getPostReportCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<Post> rpList = service.printAllReportPost(pi);
+		mv.addObject("rpList",rpList);
+		mv.addObject("pi",pi);
+		int reCurrentPage = (page!=null) ? page : 1;
+		int reTotalCount = service.getReplyReportCount();
+		PageInfo rpi = Pagination.getPageInfo(reCurrentPage, reTotalCount);
+		List<Reply> rrList = service.printAllReportReply(rpi);
+		mv.addObject("rrList",rrList);
+		mv.addObject("rpi",rpi);
+		mv.setViewName("admin/reportView");
+		return mv;
+	}
+	//신고 게시글 삭제
+	@RequestMapping(value="delPost.do",method=RequestMethod.GET)
+	public String removePost(@RequestParam("postNo") int postNo) {
+		int result = pService.removePost(postNo);
+		if(result > 0) {
+			return "redirect:reportView.do";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	//신고 댓글 삭제
+	@RequestMapping(value="delReply.do",method=RequestMethod.GET)
+	public String deleteReply(@ModelAttribute Reply reply) {
+		int result = pService.removeReply(reply);
+		if(result>0) {
+			return "redirect:reportView.do";
+		}else {
+			return "common/errorPage";
+		}
+	}
 }

@@ -10,6 +10,7 @@
 		<result property="postDate" column="POST_DATE"/>
 		<result property="pViewCount" column="P_VIEW_COUNT"/>
 		<result property="replyCnt" column="REPLY_COUNT"/>
+		<collection property="postReport" resultMap="postReportResultMap" />
 	</resultMap>
 	<resultMap type="Reply" id="replyResultMap">
   		<id property="replyNo" column="REPLY_NO"/>
@@ -17,6 +18,7 @@
   		<result property="replyWriter" column="REPLY_WRITER"/>
   		<result property="replyContents" column="REPLY_CONTENTS"/>
   		<result property="replyDate" column="REPLY_DATE"/>
+  		<collection property="replyReport" resultMap="replyReportResultMap" />
   	</resultMap>
   	<resultMap type="PostReport" id="postReportResultMap">
   		<id property="reportNo" column="P_REPORT_NO"/>
@@ -42,6 +44,21 @@
   	<insert id="insertReplyReport" parameterType="ReplyReport">
   		INSERT INTO REPLY_REPORT VALUES(SEQ_REPLY_REPORT.NEXTVAL, #{replyNo}, default, #{postNo})
   	</insert>
+  	
+  	
+  	<select id="selectAllReportPost" resultMap="postResultMap">
+  		SELECT PR.P_REPORT_NO, P.POST_NO, P.POST_WRITER, P.POST_TITLE, P.POST_DATE, PR.P_STATUS FROM POST P JOIN POST_REPORT PR ON P.POST_NO = PR.POST_NO
+  	</select>
+  	<select id="selectPostReportCount" resultType="_int">
+  		SELECT COUNT(*) FROM POST P JOIN POST_REPORT PR ON P.POST_NO = PR.POST_NO
+  	</select>
+  	<select id="selectReplyReportCount" resultType="_int">
+  		SELECT COUNT(*) FROM REPLY R JOIN REPLY_REPORT RR ON R.REPLY_NO = RR.REPLY_NO
+  	</select>
+  	<select id="selectAllReportReply" resultMap="replyResultMap">
+  		SELECT RR.R_REPORT_NO, R.REPLY_NO, R.POST_NO, R.REPLY_CONTENTS, R.REPLY_WRITER, R.REPLY_DATE, RR.R_STATUS FROM REPLY R JOIN REPLY_REPORT RR ON R.REPLY_NO = RR.REPLY_NO
+  	</select>
+  	
   	
   	
   	<select id="selectCount" resultType="_int">
