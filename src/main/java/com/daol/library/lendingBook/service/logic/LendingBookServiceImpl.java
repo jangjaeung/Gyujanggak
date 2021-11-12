@@ -6,12 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daol.library.book.store.BookStore;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.domain.Parcel;
 import com.daol.library.lendingBook.service.LendingBookService;
 import com.daol.library.lendingBook.store.LendingBookStore;
-import com.daol.library.member.store.MemberStore;
 
 @Service
 public class LendingBookServiceImpl implements LendingBookService {
@@ -51,8 +49,7 @@ public class LendingBookServiceImpl implements LendingBookService {
 
 	@Override
 	public int registerParcel(Parcel parcel) throws Exception {
-		int result = 0;
-		result += store.insertParcel(parcel);
+		int result = store.insertParcel(parcel);
 		if(result == 0) throw new Exception();
 		return result;
 	}

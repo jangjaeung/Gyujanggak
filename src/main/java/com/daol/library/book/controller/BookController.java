@@ -20,16 +20,15 @@ import com.daol.library.lendingBook.service.LendingBookService;
 public class BookController {
 	@Autowired
 	private BookService service;
+	
 	@Autowired
 	private LendingBookService LendingBookService;
 	
 //	간략 검색
-//	@RequestMapping(value="/search.do", method=RequestMethod.GET)
 	@GetMapping("/search.do")
 	public String searchView() {
 		return "book/bookSearchSimple";
 	}
-//	@RequestMapping(value="/searchSimple.do", method=RequestMethod.GET)
 	@GetMapping("/searchSimple.do")
 	public String simpleSearchList(@ModelAttribute Search search, Model model) {
 		List<Book> bList = service.printSearchSimple(search);
@@ -38,8 +37,6 @@ public class BookController {
 			model.addAttribute("search", search);
 			return "book/bookSearchSimple";
 		} else {
-//			model.addAttribute("msg", "검색 실패");
-//			return "common/errorPage";
 			return "book/bookSearchSimple";
 		}
 	}
