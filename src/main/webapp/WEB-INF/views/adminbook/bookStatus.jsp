@@ -46,7 +46,7 @@
         <button class="btn btn-default" onclick="location.href='bookListView.do'">장서 목록</button>
         <button class="btn btn-default" onclick="location.href='statusList.do'">대출 현황</button>
         <button class="btn btn-default" onclick="location.href='wishbookList.do'">희망 도서 접수 목록</button>
-        <button class="btn btn-default">대출도서 택배 신청 목록</button>
+        <button class="btn btn-default" onclick="location.href='bookParcelList.do'">대출도서 택배 신청 목록</button>
 
         <hr>
 		
@@ -60,7 +60,7 @@
                     <th>대출일</th>
                     <th>반납예정일</th>
                     <th>대출연장</th>
-                    <th>반납처리</th>
+                    <th>처리</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -87,7 +87,7 @@
                     N
                     </c:if>
                     </td>
-                    <td><a href="bookReturn.do?userId=${book.userId}&bookNo=${book.bookNo}">반납</a></td>
+                    <td><a href="bookReturn.do?userId=${book.userId}&bookNo=${book.bookNo}&lendingNo=${book.lendingNo}"onclick="return confirm('반납 처리하시겠습니까?');">반납</a></td>
 				</tr>
 			</c:forEach>
 			</c:if>

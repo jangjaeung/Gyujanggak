@@ -50,37 +50,39 @@
         <button class="btn btn-default" onclick="location.href='bookParcelList.do'">대출도서 택배 신청 목록</button>
 
         <hr>
-    
 	<form action="booksEnroll.do" method="post" enctype="multipart/form-data">
-		<table class="table table-striped" style="width: 50%;position: relative;left: 61px;margin-top: 10%">
+		<table class="table table-striped" style="width: 50%;position: relative;left: 61px;margin-top: 10%" >
 			<thead>
 				<tr>
                     <th>도서 명 </th>
-                    <td><input class="bEnroll" type="text" name="bookName"></td>
+                    <td><input class="bEnroll" type="text" name="bookName" value="${book.bookName }"></td>
 				</tr>
                 <tr>
                     <th>저자</th>
-                    <td><input class="bEnroll" type="text" name="bookWriter"></td>
+                    <td><input class="bEnroll" type="text" name="bookWriter" value="${book.bookWriter }"></td>
 				</tr>
                 <tr>
                     <th>출판사</th>
-                    <td><input class="bEnroll" type="text" name="publisher"></td>
+                    <td><input class="bEnroll" type="text" name="publisher" value="${book.publisher }"></td>
 				</tr>
                 <tr>
                     <th>발행연도</th>
-                    <td><input class="bEnroll" type="text" name="bookYear"></td>
+                    <td><input class="bEnroll" type="text" name="bookYear" value="${book.bookYear}"></td>
 				</tr>
                 <tr>
                     <th>표준부호 (ISBN)</th>
-                    <td><input class="bEnroll" type="text" name="isbn"></td>
+                    <td><input class="bEnroll" type="text" name="isbn" value="${book.isbn }"></td>
 				</tr>
                 <tr>
                     <th>청구기호</th>
-                    <td><input class="bEnroll" type="text" name="callNo"></td>
+                    <td><input class="bEnroll" type="text" name="callNo" value="${book.callNo }"></td>
 				</tr>
                 <tr>
                     <th>주제</th>
-                    <td><select name="bookSubject">
+                    <td>
+                    <c:if test="${book.bookSubject ne null}">
+                    	<select name="bookSubject">
+                        <option value="${book.bookSubject }" selected>${book.bookSubject }</option>
                         <option value="총류">총류</option>
                         <option value="철학">철학</option>
                         <option value="종교">종교</option>
@@ -91,11 +93,16 @@
                         <option value="역사">역사</option>
                         <option value="문학">문학</option>
                         <option value="예술">예술</option>
-                      </select></td>
+                      </select>
+                   </c:if>
+                   </td>
 				</tr>
                 <tr>
                     <th>테마</th>
-                    <td><select name="theme">
+                    <td>
+                    	<c:if test="${book.theme ne null }">
+                    	<select name="theme">
+                        <option value="${book.theme }" selected>${book.theme }</option>
                         <option value="기술">기술</option>
                         <option value="힐링">힐링</option>
                         <option value="인사이트">인사이트</option>
@@ -105,7 +112,9 @@
                         <option value="관계">관계</option>
                         <option value="습관">습관</option>
                         <option value="건강">건강</option>
-                      </select></td>
+                        </select>
+                        </c:if>
+                   </td>
 				</tr>
 			</thead>
 			<tbody>
@@ -116,8 +125,8 @@
             <input style="display: block; left: 54%;bottom: 46%;" type="file" id="input-image" name="bookCoverFile">
             </div>
   
-		<div style="    text-align: center; margin-top: 9%; position: relative;left: 23%;" >
-			<input class="myButton" type="submit" value="등록" style="border:none" onclick="return confirm('등록하시겠습니까?');">
+		<div style=" text-align: center; margin-top: 9%; position: relative;left: 23%;">
+			<input type="submit" value="등록" class="myButton" style="border:none"onclick="return confirm('수정하시겠습니까?');">
 			<a href="bookListView.do" class="myButton">취소</a>
 		</div>
 	</form>

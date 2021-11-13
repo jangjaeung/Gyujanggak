@@ -12,6 +12,7 @@ public class Status {
 	private Date lendingDate;
 	private Date returnDate;
 	private int extendCount;
+	private int lendingNo;
 	
 	public Status() {}
 
@@ -79,13 +80,23 @@ public class Status {
 		this.extendCount = extendCount;
 	}
 
+	public int getLendingNo() {
+		return lendingNo;
+	}
+
+	public void setLendingNo(int lendingNo) {
+		this.lendingNo = lendingNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Status [userId=" + userId + ", bookNo=" + bookNo + ", bookName=" + bookName + ", bookWriter="
 				+ bookWriter + ", userNo=" + userNo + ", lendingDate=" + lendingDate + ", returnDate=" + returnDate
-				+ ", extendCount=" + extendCount + "]";
+				+ ", extendCount=" + extendCount + ", lendingNo=" + lendingNo + "]";
 	}
 	
+	
+	
 }
-
+	
 	

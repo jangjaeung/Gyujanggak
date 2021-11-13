@@ -22,7 +22,10 @@
 		<typeAlias type="com.daol.library.book.domain.WishBook" alias="WishBook"/>
 		<typeAlias type="com.daol.library.mypage.domain.Qna" alias="Qna"/>
 		<typeAlias type="com.daol.library.admin.domain.Status" alias="Status"/>
+
 		<typeAlias type="com.daol.library.book.domain.Review" alias="Review"/>
+		<typeAlias type="com.daol.library.admin.domain.BookParcel" alias="BookParcel"/>
+
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>

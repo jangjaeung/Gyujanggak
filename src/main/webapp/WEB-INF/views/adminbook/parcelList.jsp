@@ -49,59 +49,42 @@
         <button class="btn btn-default" onclick="location.href='bookParcelList.do'">대출도서 택배 신청 목록</button>
 
         <hr>
-	
+		
 		<table class="table table-striped" >
 			<thead>
 				<tr>
-					<th colspan="2">No.</th>
+					<th>No.</th>
 					<th>도서 명</th>
 					<th>저자</th>
                     <th>출판사</th>
-                    <th>분류기호</th>
-                    <th>대출 상태</th>
-                    <th>수정</th>
+                    <th>회원번호</th>
+                    <th>주소</th>
+                    <th>처리</th>
 				</tr>
 			</thead>
 			<tbody>
 			<c:if test="${not empty bList }">
-			<c:forEach items="${bList }" var="book">
+			<c:forEach items="${bList }" var="bookparcel" varStatus="status">
 				<tr>
-                    <td><input type="checkbox" name="bookNo" class="list-checkBox" value="${book.bookNo }"></td>
-					<td>${book.bookNo }</td>
-					<td>
-						<a href="bookDetail.do?bookNo=${book.bookNo }">${book.bookName }</a>
+					<td>${status.count }</td>
+					<td style="width: 36%;">${bookparcel.bookName }</td>
+					<td>${bookparcel.bookWriter }</td>
+                    <td>${bookparcel.publisher }</td>
+					<td style="width: 7%;">
+					<a href="mypageInfo.do?userId=${bookparcel.userId }">${bookparcel.userNo }</a>
 					</td>
-					<td>${book.bookWriter }</td>
-                    <td>${book.publisher }</td>
-                    <td>${book.callNo }</td>
-                    <td>${book.bookState }</td>
-                    <td>
-                    <a href="bookUpdate.do?bookNo=${book.bookNo }">수정</a>
+					<td>${bookparcel.addr }</td>
+                    <td style="width: 7%;">
+                    <a href="parcelSuccess.do?deliveryNo=${bookparcel.deliveryNo}"onclick="return confirm('완료처리 하시겠습니까?');">완료</a>
                     </td>
 				</tr>
-				
 			</c:forEach>
 			</c:if>
-				<div align="left">
-					<form action="bookSearch.do" method="get">
-						<select name="searchCondition">
-							<option value="all"
-								<c:if test="${search.searchCondition == 'all' }">selected</c:if>>전체</option>
-							<option value="name"
-								<c:if test="${search.searchCondition == 'name' }">selected</c:if>>도서 명</option>
-							<option value="writer"
-								<c:if test="${search.searchCondition == 'writer' }">selected</c:if>>저자</option>
-							<option value="publisher"
-								<c:if test="${search.searchCondition == 'publisher' }">selected</c:if>>출판사</option>
-						</select> <input type="text" name="searchValue"
-							value="${search.searchValue }"> <input type="submit"
-							value="검색">
-					</form>
-				</div>
+				
 				<tr align="center" height="20">
 			
 			<td colspan="8">
-				<c:url var="before" value="bookListView.do">
+				<c:url var="before" value="bookParcelList.do">
 					<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 				</c:url>
 				<c:if test="${pi.currentPage <= 1}">
@@ -111,7 +94,7 @@
 					<a href="${before }">[이전]</a>
 				</c:if>
 				<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
-					<c:url var="pagination" value="bookListView.do">
+					<c:url var="pagination" value="bookParcelList.do">
 						<c:param name="page" value="${p }"></c:param>
 					</c:url>
 					<c:if test="${p eq pi. currentPage }">
@@ -121,7 +104,7 @@
 						<a href="${pagination }">${p }</a>&nbsp;
 					</c:if>
 				</c:forEach>
-				<c:url var="before" value="bookListView.do">
+				<c:url var="before" value="bookParcelList.do">
 					<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 				</c:url>
 				<c:if test="${pi.currentPage >= pi.maxPage }">
@@ -135,38 +118,11 @@
 			</tbody>
 		</table>
 
-		<div style="text-align:right">
-			<a href="bookEnrollView.do" class="myButton">등록</a>
-			<button type="button" class="myButton" id="numArray" style="border:none;"onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
-		</div>
 		
 
 	</div>
   		<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
-	<script>
-		$('#numArray').on('click',function(){
-			var checkArr =[];
-			$('.list-checkBox:checked').each(function(i){
-				checkArr.push($(this).val());
-			})
-			$.ajax({
-				url : 'bookDelete.do',
-				type : 'post',
-				data : { 
-					"bookNo" : checkArr,
-				},
-				success : function(data){
-// 						console.log(data);
-					if(data == "success"){
-						alert("삭제 되었습니다");
-						location.href = "bookListView.do";
-					}else{
-						alert("삭제 실패");
-					}
-				}
-			});
-		});
-	</script>
+	
 </body>
 </html>

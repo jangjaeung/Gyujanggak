@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.daol.library.admin.domain.BookParcel;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
 import com.daol.library.admin.domain.Status;
@@ -44,13 +45,14 @@ public class AdminStoreLogic implements AdminStore{
 	}
 	
 	
-
+	// 장서리스트 카운트
 	@Override
 	public int selectListCount() {
 		int count = sqlSession.selectOne("adminMapper.selectListCount");
 		return count;
 	}
 	
+	//장서 리스트
 	@Override
 	public List<Book> selectAll(PageInfo pi) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
@@ -58,18 +60,21 @@ public class AdminStoreLogic implements AdminStore{
 		List<Book> bList = sqlSession.selectList("adminMapper.selectBookList",pi,rowBounds);
 		return bList;
 	}
+	// 장서 리스트 서치
 	@Override
 	public List<Book> selectSearchAll(Search search) {
 		List<Book> searchList = sqlSession.selectList("adminMapper.selectSearchList", search);
 		return searchList;
 	}
 
+	// 장서등록
 	@Override
 	public int insertAll(Book book) {
 		int result = sqlSession.insert("adminMapper.insertBook", book);
 		return result;
 	}
 
+	// 장서삭제
 	@Override
 	public int deleteAll(int[] nums) {
 //		String params = "";
@@ -114,18 +119,21 @@ public class AdminStoreLogic implements AdminStore{
 		return bList;
 	}
 
+	//희망도서 카운트
 	@Override
 	public int selectWishListCount() {
 		int count = sqlSession.selectOne("adminMapper.selectWishListCount");
 		return count;
 	}
 
+	// 희망도서 리스트
 	@Override
 	public int selectStatusListCount() {
 		int count = sqlSession.selectOne("adminMapper.selectStatusListCount");
 		return count;
 	}
 
+	// 대출리스트
 	@Override
 	public List<Status> selectAllStatus(PageInfo pi) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
@@ -157,6 +165,62 @@ public class AdminStoreLogic implements AdminStore{
 		int offset = (rpi.getCurrentPage() -1) * rpi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, rpi.getBoardLimit());
 		return sqlSession.selectList("postMapper.selectAllReportReply",rowBounds);
+	}
+
+	//대출 상태 업데이트
+	@Override
+	public void updateBookState(int bookNo) {
+		sqlSession.update("adminMapper.bookStateUpdate", bookNo);
+		
+	}
+
+	//대출 권수 업데이트
+	@Override
+	public void updateLending(String userId) {
+		sqlSession.update("adminMapper.lendingUpdate", userId);
+	}
+
+	//반납일 업데이트
+	@Override
+	public int updateDate(int lendingNo) {
+		int result = sqlSession.update("adminMapper.returndateUpdate", lendingNo);
+		return result;
+	}
+
+	//희망도서 업데이트
+	@Override
+	public void wishBookUpdate(int applyNo) {
+		sqlSession.update("adminMapper.wishbookUpdate", applyNo);
+	}
+
+	//택배리스트 카운트
+	@Override
+	public int selectParcelListCount() {
+		int count = sqlSession.selectOne("adminMapper.selectParacelListCount");
+		return count;
+	}
+
+	//택배리스트 출력
+	@Override
+	public List<BookParcel> selectAllParacel(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<BookParcel> bList = sqlSession.selectList("adminMapper.ParcelBookList",pi,rowBounds);
+		return bList;
+	}
+
+	// 택배 업데이트
+	@Override
+	public int updateParcel(String deliveryNo) {
+		int result = sqlSession.update("adminMapper.ParcelUpdate",deliveryNo);
+		return result;
+	}
+
+	// 택배 완료
+	@Override
+	public Book selectBookInfo(String bookNo) {
+		Book books = sqlSession.selectOne("adminMapper.bookInfoSelect", bookNo);
+		return books;
 	}
 
 }

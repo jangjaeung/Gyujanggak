@@ -2,6 +2,7 @@ package com.daol.library.admin.store;
 
 import java.util.List;
 
+import com.daol.library.admin.domain.BookParcel;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
 import com.daol.library.admin.domain.Status;
@@ -13,8 +14,9 @@ import com.daol.library.post.domain.Post;
 import com.daol.library.post.domain.Reply;
 
 public interface AdminStore {
+	// 장서 카운트
 	public int selectListCount();
-
+	// 장서 리스트
 	public List<Book> selectAll(PageInfo pi);
 	//유저타입 끌어오기
 	public Member selectMemberCk(String login);
@@ -22,11 +24,11 @@ public interface AdminStore {
 	public List<Qna> selectAllQna(PageInfo pi);
 	//페이징처리용
 	public int selectQnaListCount();
-
+	// 장서 서치
 	public List<Book> selectSearchAll(Search search);
-
+	// 책 등록
 	public int insertAll(Book book);
-
+	// 책 다중삭제
 	public int deleteAll(int[] nums);
 	//검색
 	public List<Qna> selectSearchAll(Search search,PageInfo pi);
@@ -36,14 +38,14 @@ public interface AdminStore {
 	public Qna selectOneQna(int qnaNo);
 	//문의등록
 	public int updateAnswer(Qna qna);
-
+	//희망도서 리스트
 	public List<WishBook> selectAllWish(PageInfo pi);
 
 	// 희망도서 페이징
 	public int selectWishListCount();
-
+	// 대출 카운트
 	public int selectStatusListCount();
-
+	// 대출 리스트
 	public List<Status> selectAllStatus(PageInfo pi);
 
 	
@@ -55,4 +57,21 @@ public interface AdminStore {
 	public int selectReplyReportCount();
 	//신고된 댓글 리스트
 	public List<Reply> selectAllReportReply(PageInfo rpi);
+
+	// 상태 변경
+	public void updateBookState(int bookNo);
+	// 권수 변경
+	public void updateLending(String userId);
+	// 반납일 변경
+	public int updateDate(int lendingNo);
+	// 희망 도서
+	public void wishBookUpdate(int applyNo);
+	// 택배 리스트 카운트
+	public int selectParcelListCount();
+	// 택배 리스트
+	public List<BookParcel> selectAllParacel(PageInfo pi);
+	// 택배 완료처리
+	public int updateParcel(String deliveryNo);
+	// 택배 완료
+	public Book selectBookInfo(String bookNo);
 }
