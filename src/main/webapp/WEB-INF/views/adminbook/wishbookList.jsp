@@ -46,7 +46,7 @@
         <button class="btn btn-default" onclick="location.href='bookListView.do'">장서 목록</button>
         <button class="btn btn-default" onclick="location.href='statusList.do'">대출 현황</button>
         <button class="btn btn-default" onclick="location.href='wishbookList.do'">희망 도서 접수 목록</button>
-        <button class="btn btn-default">대출도서 택배 신청 목록</button>
+        <button class="btn btn-default" onclick="location.href='bookParcelList.do'">대출도서 택배 신청 목록</button>
 
         <hr>
 		
@@ -60,7 +60,7 @@
                     <th>회원 ID</th>
                     <th>신청일</th>
                     <th>처리상태</th>
-                    <th>등록처리</th>
+                    <th>처리</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -79,7 +79,9 @@
                     </td>
                     <td>${wishbook.applyDate }</td>
                     <td>${wishbook.applyStatus }</td>
-                    <td><button class="wishnum" style="border:none;">등록</button></td>
+                    <td>
+                    <a href="wishbookEnroll.do?bookName=${wishbook.bookName}&bookWriter=${wishbook.bookWriter}&publisher=${wishbook.publisher}&applyNo=${wishbook.applyNo}">등록</a>
+                    </td>
 				</tr>
 		
 		
@@ -129,27 +131,6 @@
 	</div>
   		<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
-	<script>
-		$('.wishnum').on("click",function(){
-			var check = $('#wishValue').val();
-			var check1 = $('#wishValue1').val();
-			var check2 = $('#wishValue2').val();
-			console.log(check);
-			console.log(check1);
-			console.log(check2);
-			$.ajax({
-				url : "wishbookEnroll.do",
-				type : "post",
-				data : {
-					"wishbookName" : check,
-					"wishbookWrtier" : check1,
-					"wishPublisher" : check2
-				},
-				success : function(data){
-					location.href = "bookEnrollView.do";
-				}
-			})
-		})
-	</script>
+	
 </body>
 </html>

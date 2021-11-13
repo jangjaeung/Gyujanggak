@@ -50,21 +50,23 @@
         <button class="btn btn-default" onclick="location.href='bookParcelList.do'">대출도서 택배 신청 목록</button>
 
         <hr>
-    
-	<form action="booksEnroll.do" method="post" enctype="multipart/form-data">
-		<table class="table table-striped" style="width: 50%;position: relative;left: 61px;margin-top: 10%">
+	<form action="wishbookEnr.do" method="post" enctype="multipart/form-data">
+		<input type="hidden" value="${applyNo }" name="applyNum">
+		<table class="table table-striped" style="width: 50%;position: relative;left: 61px;margin-top: 10%" >
 			<thead>
 				<tr>
                     <th>도서 명 </th>
-                    <td><input class="bEnroll" type="text" name="bookName"></td>
+                    <c:if test="${not empty bookName }"> 
+                    <td><input class="bEnroll" type="text" name="bookName" value="${bookName }" ></td>
+                    </c:if>
 				</tr>
                 <tr>
                     <th>저자</th>
-                    <td><input class="bEnroll" type="text" name="bookWriter"></td>
+                    <td><input class="bEnroll" type="text" name="bookWriter" value="${bookWriter }" ></td>
 				</tr>
                 <tr>
                     <th>출판사</th>
-                    <td><input class="bEnroll" type="text" name="publisher"></td>
+                    <td><input class="bEnroll" type="text" name="publisher" value="${publisher }" ></td>
 				</tr>
                 <tr>
                     <th>발행연도</th>
@@ -112,12 +114,12 @@
 			</tbody>
 		</table>
         <div class="image-container" style="width: 40%;float: right; position: relative;bottom: 358px;">
-            <img style="width: 52%;" id="preview-image" src="https://us.123rf.com/450wm/alekseyvanin/alekseyvanin1908/alekseyvanin190800297/128284615-%EC%B1%85-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%9D%BC%EC%9D%B8-%EC%95%84%EC%9D%B4%EC%BD%98%EC%9E%85%EB%8B%88%EB%8B%A4-%EB%AA%A8%EB%B0%94%EC%9D%BC-%EA%B0%9C%EB%85%90-%EB%B0%8F-%EC%9B%B9-%EB%94%94%EC%9E%90%EC%9D%B8%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%84%A0%ED%98%95-%EC%8A%A4%ED%83%80%EC%9D%BC-%EA%B8%B0%ED%98%B8%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%8E%BC%EC%B9%9C-%EC%B1%85-%EA%B0%9C%EC%9A%94-%EB%B2%A1%ED%84%B0-%EC%95%84%EC%9D%B4%EC%BD%98.jpg?ver=6">
+            <img style="width: 52%;" id="preview-image" src="https://media.istockphoto.com/vectors/photo-album-icon-vector-id1023892724?k=20&m=1023892724&s=170667a&w=0&h=zXZB3iWNnwhrDA055eJgxh4Sq814_ZNRSVAJT7lBgLY=">
             <input style="display: block; left: 54%;bottom: 46%;" type="file" id="input-image" name="bookCoverFile">
             </div>
   
-		<div style="    text-align: center; margin-top: 9%; position: relative;left: 23%;" >
-			<input class="myButton" type="submit" value="등록" style="border:none" onclick="return confirm('등록하시겠습니까?');">
+		<div style="text-align:center;  margin-top: 9%; position: relative;left: 23%;" >
+			<input type="submit" value="등록" class="myButton" style="border:none" onclick="return confirm('등록하시겠습니까?');">
 			<a href="bookListView.do" class="myButton">취소</a>
 		</div>
 	</form>
