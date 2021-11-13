@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%
-	Date nowTime = new Date();
-	SimpleDateFormat sf = new SimpleDateFormat("kk:mm");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,10 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<jsp:useBean id="now" class="java.util.Date" />
-	<fmt:formatDate value="${now}" pattern="kkmm" var="today" />
-	<fmt:parseNumber value="${today}" integerOnly="true" var="nowTime" scope="request"/>
-	<c:set value="${1500 - nowTime }" var="dateDiff"/>
     <jsp:include page="../common/header.jsp"></jsp:include>
 	<main>
 		<div class="readingRoomTitle">
@@ -34,48 +23,48 @@
 					<td>
 						<table class="readingRoomSubTable">
 							<tr>
-								<td class="seat" id="1">1</td>
-								<td class="seat" id="2">2</td>
-								<td class="seat" id="3">3</td>
-								<td class="seat" id="4">4</td>
+								<td class="seats" id="1">1</td>
+								<td class="seats" id="2">2</td>
+								<td class="seats" id="3">3</td>
+								<td class="seats" id="4">4</td>
 							</tr>
 							<tr>
-								<td class="seat" id="13">13</td>
-								<td class="seat" id="14">14</td>
-								<td class="seat" id="15">15</td>
-								<td class="seat" id="16">16</td>
-							</tr>
-						</table>
-					</td>
-					<td>
-						<table class="readingRoomSubTable">
-							<tr>
-								<td class="seat" id="5">5</td>
-								<td class="seat" id="6">6</td>
-								<td class="seat" id="7">7</td>
-								<td class="seat" id="8">8</td>
-							</tr>
-							<tr>
-								<td class="seat" id="17">17</td>
-								<td class="seat" id="18">18</td>
-								<td class="seat" id="19">19</td>
-								<td class="seat" id="20">20</td>
+								<td class="seats" id="13">13</td>
+								<td class="seats" id="14">14</td>
+								<td class="seats" id="15">15</td>
+								<td class="seats" id="16">16</td>
 							</tr>
 						</table>
 					</td>
 					<td>
 						<table class="readingRoomSubTable">
 							<tr>
-								<td class="seat" id="9">9</td>
-								<td class="seat" id="10">10</td>
-								<td class="seat" id="11">11</td>
-								<td class="seat" id="12">12</td>
+								<td class="seats" id="5">5</td>
+								<td class="seats" id="6">6</td>
+								<td class="seats" id="7">7</td>
+								<td class="seats" id="8">8</td>
 							</tr>
 							<tr>
-								<td class="seat" id="21">21</td>
-								<td class="seat" id="22">22</td>
-								<td class="seat" id="23">23</td>
-								<td class="seat" id="24">24</td>
+								<td class="seats" id="17">17</td>
+								<td class="seats" id="18">18</td>
+								<td class="seats" id="19">19</td>
+								<td class="seats" id="20">20</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table class="readingRoomSubTable">
+							<tr>
+								<td class="seats" id="9">9</td>
+								<td class="seats" id="10">10</td>
+								<td class="seats" id="11">11</td>
+								<td class="seats" id="12">12</td>
+							</tr>
+							<tr>
+								<td class="seats" id="21">21</td>
+								<td class="seats" id="22">22</td>
+								<td class="seats" id="23">23</td>
+								<td class="seats" id="24">24</td>
 							</tr>
 						</table>
 					</td>
@@ -84,54 +73,53 @@
 					<td>
 						<table class="readingRoomSubTable">
 							<tr>
-								<td class="seat" id="25">25</td>
-								<td class="seat" id="26">26</td>
-								<td class="seat" id="27">27</td>
-								<td class="seat" id="28">28</td>
+								<td class="seats" id="25">25</td>
+								<td class="seats" id="26">26</td>
+								<td class="seats" id="27">27</td>
+								<td class="seats" id="28">28</td>
 							</tr>
 							<tr>
-								<td class="seat" id="37">37</td>
-								<td class="seat" id="38">38</td>
-								<td class="seat" id="39">39</td>
-								<td class="seat" id="40">40</td>
-							</tr>
-						</table>
-					</td>
-					<td>
-						<table class="readingRoomSubTable">
-							<tr>
-								<td class="seat" id="29">29</td>
-								<td class="seat" id="30">30</td>
-								<td class="seat" id="31">31</td>
-								<td class="seat" id="32">32</td>
-							</tr>
-							<tr>
-								<td class="seat" id="41">41</td>
-								<td class="seat" id="42">42</td>
-								<td class="seat" id="43">43</td>
-								<td class="seat" id="44">44</td>
+								<td class="seats" id="37">37</td>
+								<td class="seats" id="38">38</td>
+								<td class="seats" id="39">39</td>
+								<td class="seats" id="40">40</td>
 							</tr>
 						</table>
 					</td>
 					<td>
 						<table class="readingRoomSubTable">
 							<tr>
-								<td class="seat" id="33">33</td>
-								<td class="seat" id="34">34</td>
-								<td class="seat" id="35">35</td>
-								<td class="seat" id="36">36</td>
+								<td class="seats" id="29">29</td>
+								<td class="seats" id="30">30</td>
+								<td class="seats" id="31">31</td>
+								<td class="seats" id="32">32</td>
 							</tr>
 							<tr>
-								<td class="seat" id="45">45</td>
-								<td class="seat" id="46">46</td>
-								<td class="seat" id="47">47</td>
-								<td class="seat" id="48">48</td>
+								<td class="seats" id="41">41</td>
+								<td class="seats" id="42">42</td>
+								<td class="seats" id="43">43</td>
+								<td class="seats" id="44">44</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table class="readingRoomSubTable">
+							<tr>
+								<td class="seats" id="33">33</td>
+								<td class="seats" id="34">34</td>
+								<td class="seats" id="35">35</td>
+								<td class="seats" id="36">36</td>
+							</tr>
+							<tr>
+								<td class="seats" id="45">45</td>
+								<td class="seats" id="46">46</td>
+								<td class="seats" id="47">47</td>
+								<td class="seats" id="48">48</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 			</table>
-			<p>현재 시간은 ${today } 입니다. ${dateDiff }</p>
 		</div>
 		<div class="rsvDiv hidden">
 			선택된 좌석 <input type="text" id="selectedSeat" readonly /> 
@@ -156,9 +144,18 @@
 </body>
 
 <script>
-
-	var date = new Date();
-	console.log(date.toLocaleTimeString());
+	// 현재 시간(시, 분)
+	var now = new Date();
+	/* console.log(now.toLocaleTimeString()); */
+	// 현재 시간만
+	var hr=now.getHours();
+	console.log("현재시간", hr);
+	if (hr < 15){
+		var time = 'am'
+	}else {
+		var time = 'pm'
+	}
+	console.log("오전오후", time);
 	// 좌석 현황
 	$.ajax({
 		url : 'printAllReadingRoom.do',
@@ -179,7 +176,7 @@
 				}
 			});
 
-			$('.seat').not('.seatRed').addClass('seatGreen');
+			$('.seats').not('.seatRed').addClass('seatGreen');
 
 			$('.seatGreen').click(function() {
 				$(this).css('background-color', '#e0e0e0');
@@ -201,18 +198,34 @@
 					},
 					success : function(data) {
 						//console.log(123,JSON.parse(data))
-						data = JSON.parse(data);
-						//만약 데이터가 1개 이상이면 그값이 AM일때 reservationTime value가 AM인걸 disabled PM이면 PM을 disabled
-						if(data.length > 0){
-							for(let i in data){
-								console.log(data[i].rReservationTime)
-								$("#reservationTime option[value*='"+data[i].rReservationTime+"']").prop('disabled',true);
-							}
+						$("#reservationTime option[value*='AM']").prop('disabled',false);
+						$("#reservationTime option[value*='PM']").prop('disabled',false);
+						if(hr>15) { // 현재 시간이 15시 이후라면 am 예약 불가능
+							$("#reservationTime option[value*='AM']").prop('disabled',true);
+						} else if(hr<15) { // 현재 시간이 15시 이전이라면 am, pm 둘다 예약 가능
+							$("#reservationTime option[value*='AM']").prop('disabled',false);
+							$("#reservationTime option[value*='PM']").prop('disabled',false);
+						} else if(hr>=21){ // 현재 시간이 21시 보다 크거나 같으면 am,pm 둘다 예약 불가능
+							$("#reservationTime option[value*='AM']").prop('disabled',true);
+							$("#reservationTime option[value*='PM']").prop('disabled',true);
 						}else{
 							$("#reservationTime option[value*='AM']").prop('disabled',false);
 							$("#reservationTime option[value*='PM']").prop('disabled',false);
 						}
+						data = JSON.parse(data);
+ 						if(data.length > 0){ //데이터가 1개 이상일때  reservationTime value 값이 AM이면  AM을 disabled PM이면 PM을 disabled
+							for(let i in data){
+								console.log(data[i].rReservationTime)
+								$("#reservationTime option[value*='"+data[i].rReservationTime+"']").prop('disabled',true);
+							} 
+						}
 						$("#reservationTime option[value*='default']").prop('selected',true);
+						
+/* 						if ($("#reservationTime option[value*='AM']").prop('disabled') && $("#reservationTime option[value*='PM']").prop('disabled')) {
+							$('#' + ele.seatNo + '').addClass('seatRed');
+						}  */
+						var rsvComplete = $('#reservationTime option:disabled').length;
+						console.log(rsvComplete);
 					},
 					error : function() {
 						alert('AJAX 통신오류.. 관리자에게 문의하세요');

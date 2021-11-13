@@ -64,9 +64,10 @@ main{
     margin-top : 25px;
 }
 
-.readingRoomDiv .readingRoomSubTable > tbody > tr > td {
-    border: 0.5px solid #d5d5d5;
-    border-radius : 10px;
+/* 충돌 나는 부분 */
+.readingRoomDiv .readingRoomSubTable .seats {
+    border: 0.1px solid #d5d5d5;
+    border-radius : 8px;
     height: 50px;
     width: 25%;
     /* box-shadow: 2px 3px 3px 1px #dedede; */

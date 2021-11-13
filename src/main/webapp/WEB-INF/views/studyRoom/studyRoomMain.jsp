@@ -138,6 +138,8 @@
 								console.log(data[i].rReservationTime)
 								$("#reservationTime option[value*='"+data[i].sReservationTime+"']").prop('disabled',true);
 							}
+						}else if() {
+							
 						}else {
 							$("#reservationTime option[value*='A']").prop('disabled',false);
 							$("#reservationTime option[value*='B']").prop('disabled',false);
