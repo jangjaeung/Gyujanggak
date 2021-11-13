@@ -54,7 +54,7 @@ a:visited { color: black; }
 					<td style="font-weight:bold;">내용</td>
 					<td><textarea rows="10" name="postContents" readonly>${post.postContents }</textarea></td>
 				</tr>
-				<c:if test="${userId eq post.postWriter}">
+				<c:if test="${userId eq post.postWriter || type eq '관리자'}">
 					<tr>
 						<td colspan="2">
 							<input type="submit" value="수정" onclick="javascript: form.action='postModify.do'">
@@ -98,9 +98,14 @@ a:visited { color: black; }
 				</tbody>
 			</table>
 		</form>
-		<div id="ft">
+		<div id="ft" style="margin-top : 10px;">
 			<a href="postList.do"><button type="button" class="qwe">목록으로</button></a>
-			<button type="button" class="qwe">게시물 신고</button>
+			<c:if test="${userId ne null }">
+				<button type="button" class="qwe">게시물 신고</button>
+			</c:if>
+			<c:if test="${type eq '관리자' }">
+				<a href="reportView.do"><button type="button" style ="border:none;padding:6px;">신고관리 페이지</button></a>
+			</c:if>
 		</div>
 	</div>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
@@ -150,7 +155,8 @@ a:visited { color: black; }
 	      });
 		function getReplyList(){
 			var postNo = ${post.postNo};
-			var userId = ${userId}
+			var userId = '${userId}';
+			var type = '${type}';
 			$.ajax({
 				type:'GET',
 				url:'replyList.do',
@@ -175,13 +181,13 @@ a:visited { color: black; }
 		                     $btnArea = $("<td width='80' class='modi'>")
 		                     .append("<a href ='#' onclick='modifyReply(this,"+postNo+","+data[i].replyNo+",\""+data[i].replyContents+"\");'>수정/<a> ")
 		                     .append("<a href ='#' onclick='removeReply("+postNo+","+data[i].replyNo+")'>삭제<a>");
-		                     $btnAreaT = $("<td width='80' class='modi'>").append("<a href='#'>신고<a>");
+		                     $btnAreaT = $("<c:if test='${userId ne null}'><td width='80' class='modi'>").append("<a href='#' onclick= 'replyReport("+postNo+","+data[i].replyNo+")'>신고<a></c:if>");
 		                     $tr.append($rWriter);
 		                     $tr.append($rContent);
 		                     $tr.append($rCreateDate);
-		                     if(data[i].replyWriter == userId){
+		                     if(data[i].replyWriter == userId || type == '관리자'){
 		                     	$tr.append($btnArea);
-		                     }else{
+		                     }else if(data[i].replyWriter != userId){
 		                    	 $tr.append($btnAreaT);
 		                     };
 		                     $tableBody.append($tr);
@@ -239,6 +245,39 @@ a:visited { color: black; }
 	           }
 	        })
 	     }
+		  
+		 $('.qwe').on("click",function(){
+			 var postNo = ${post.postNo};
+			 $.ajax({
+				 url : "postReport.do",
+				 type : "get",
+				 data : {"postNo" : postNo},
+				 success : function(data){
+					 if(data == 'success'){
+						alert("신고 되었습니다. 관리자 확인 후 처리 됩니다.");
+					 }else if(data == "fail"){
+					 	alert("이미 신고된 게시물 입니다.");
+					 }
+				 }
+			 })
+		 });
+		 function replyReport(postNo, replyNo){
+		        $.ajax({
+		           url : "postReply.do",
+		           type : "get",
+		           data : {"postNo" : postNo, "replyNo" : replyNo},
+		           success : function(data) {
+		        	   if(data == 'success'){
+		        	  	 alert("신고 되었습니다. 관리자 확인 후 처리 됩니다.");
+		        	   }else if(data == 'fail'){
+		        		   alert('이미 신고된 댓글 입니다.');
+		        	   }
+		           }
+		        })
+		     }
+		 
+		 
+		 
 		
 	</script>
 </body>

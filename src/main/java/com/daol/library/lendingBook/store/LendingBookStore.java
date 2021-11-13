@@ -10,6 +10,7 @@ import com.daol.library.lendingBook.domain.Parcel;
 public interface LendingBookStore {
 	public List<LendingBook> selectAll();
 	public LendingBook selectOne(int lendingNo);
+	public LendingBook selectOneForDetail(int lendingNo);
 	public int insertLending(LendingBook lendingBook);
 	public int insertLendingParcel(LendingBook lendingBook);
 	public int deleteLending(HashMap<String, String> deleteLending);

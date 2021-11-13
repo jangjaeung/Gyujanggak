@@ -11,14 +11,22 @@
 		<typeAlias type="com.daol.library.member.domain.Member" alias="Member"/>
 		<typeAlias type="com.daol.library.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.daol.library.book.domain.Book" alias="Book"/>
+		<typeAlias type="com.daol.library.book.domain.Keyword" alias="Keyword"/>
 		<typeAlias type="com.daol.library.lendingBook.domain.LendingBook" alias="LendingBook"/>
 		<typeAlias type="com.daol.library.lendingBook.domain.Parcel" alias="Parcel"/>
 		<typeAlias type="com.daol.library.post.domain.Post" alias="Post"/>
 		<typeAlias type="com.daol.library.post.domain.Reply" alias="Reply"/>
+		<typeAlias type="com.daol.library.post.domain.PostReport" alias="PostReport"/>
+		<typeAlias type="com.daol.library.post.domain.ReplyReport" alias="ReplyReport"/>
 		<typeAlias type="com.daol.library.readingRoom.domain.ReadingRoom" alias="ReadingRoom"/>
 		<typeAlias type="com.daol.library.studyRoom.domain.StudyRoom" alias="StudyRoom"/>
 		<typeAlias type="com.daol.library.book.domain.WishBook" alias="WishBook"/>
 		<typeAlias type="com.daol.library.mypage.domain.Qna" alias="Qna"/>
+		<typeAlias type="com.daol.library.admin.domain.Status" alias="Status"/>
+
+		<typeAlias type="com.daol.library.book.domain.Review" alias="Review"/>
+		<typeAlias type="com.daol.library.admin.domain.BookParcel" alias="BookParcel"/>
+
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>

@@ -14,6 +14,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.book.service.BookService;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.controller.MemberController;
 import com.daol.library.member.domain.Member;
+import com.daol.library.mypage.common.Pagination;
+import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.mypage.service.MypageService;
 import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 public class MypageController {
@@ -41,10 +50,13 @@ public class MypageController {
 	@Autowired
 	private MypageService service;
 	@Autowired
+	private BookService bService;
+	@Autowired
 	private MemberController mController;
 	
 
-	// 마이페이지 회원정보 조회 화면
+	//--- 회원정보 ---//
+	/** 마이페이지 회원정보 조회 화면  */
 	@RequestMapping(value = "mypageInfo.do", method = RequestMethod.GET)
 	public String mypageInfoView(@ModelAttribute Member member, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -60,14 +72,37 @@ public class MypageController {
 		}
 
 	}
+	
+	/** 연회비 결제 후 대기 상태로 변경  */
+	@RequestMapping(value="updatePaymentStatus.do", method=RequestMethod.GET)
+	public String updatePaymentStatus(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		Member member = new Member();
+		member.setUserId(userId);
+		try {
+			int result = service.updatePayment(member);
+			if (result > 0) {
+				session.setAttribute("loginUser", member);
+				return "redirect:mypageInfo.do?userId="+userId;
+			} else {
+				model.addAttribute("msg", "연회비 결제 정보 업데이트 실패!");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
 
-	// 마이페이지 정보 수정 화면
+	/** 마이페이지 정보 수정 화면  */
 	@RequestMapping(value = "modifyInfoView.do", method = RequestMethod.GET)
 	public String modifyInfoView(@ModelAttribute Member member, HttpServletRequest request) {
 		return "mypage/modifyInfo";
 	}
 
-	// 회원 정보 수정
+	/** 회원 정보 수정  */
 	@RequestMapping(value = "modifyInfo.do", method = RequestMethod.POST)
 	public String modifyInfo(@ModelAttribute Member member, @RequestParam("enrollDate2") String enrollDate2,
 			HttpServletRequest request, Model model,
@@ -101,6 +136,7 @@ public class MypageController {
 		}
 	}
 
+	/** 파일 삭제  */
 	public void deleteFile(String fileName, HttpServletRequest request) {// 경로를 만들어주기 위한 작업(경로를 알아야 해당 파일을 삭제할 수 있음)
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String fullPath = root + "\\muploadFiles";
@@ -110,7 +146,7 @@ public class MypageController {
 		}
 	}
 
-	// 마이페이지 회원탈퇴 화면
+	/** 마이페이지 회원탈퇴 화면  */
 	@RequestMapping(value = "leaveAccount.do", method = RequestMethod.GET)
 	public String leaveAccountView(@ModelAttribute Member member, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -120,6 +156,7 @@ public class MypageController {
 
 	}
 
+	/** 탈퇴  */
 	@RequestMapping(value = "removeMember.do", method = RequestMethod.GET)
 	public String removeMember(@ModelAttribute Member member, Model model, HttpServletRequest request) {
 		int result = service.removeMember(member);
@@ -133,7 +170,7 @@ public class MypageController {
 		}
 	}
 
-	// 비밀번호 일치 여부 검사
+	/** 비밀번호 일치 여부 검사  */
 	@ResponseBody
 	@RequestMapping(value = "checkDupPwd.do", method = RequestMethod.GET)
 	public String pwdDuplicateCheck(@ModelAttribute Member member, HttpServletRequest request) {
@@ -141,29 +178,89 @@ public class MypageController {
 		return String.valueOf(result);
 	}
 
-	// 대출현황
+	
+	
+	
+	
+	//--- 도서 ---//
+	/** 대출현황  */
 	@RequestMapping(value = "lendingStatus.do", method = RequestMethod.GET)
-	public String lendingStatus() {
-		return "mypage/lendingStatus";
+	public ModelAndView lendingStatus(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount(userId);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		
+		try {
+			List<Book> lendingList = service.printAllLendingHistory(pi, userId);
+			if(!lendingList.isEmpty()) {
+				mv.addObject("lendingList", lendingList);
+				mv.addObject("pi", pi);
+			}else {
+				mv.addObject("lendingList", null);
+			}
+			mv.setViewName("mypage/lendingStatus");
+		}catch(Exception e){
+			mv.addObject("msg", "대출 내역 조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
 	}
+	
+	
+	/** 서평 등록 */
+	@ResponseBody
+	@RequestMapping(value="registerReview.do", method=RequestMethod.POST)
+	public String registerReview(@RequestParam("bookNo") int bookNo,@RequestParam("reviewContents") String reviewContents, @RequestParam("reviewStar") String reviewStar, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		Review review = new Review();
+		review.setUserId(userId);
+		review.setBookNo(bookNo);
+		review.setReviewContents(reviewContents);
+		review.setReviewStar(Double.valueOf(reviewStar));
+		int result = service.registerReview(review);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	/** 서평 조회 */
+//	@RequestMapping(value="reviewDetail.do", method=RequestMethod.GET)
+//	public void getReviewDetail(@ModelAttribute Review review, HttpServletResponse response, HttpSession session, Model model) throws Exception{
+//		/* String userId = (String)session.getAttribute("userId"); */
+//		Review reviewOne = service.printOneReview(review);
+//		if(reviewOne != null) {
+//			Gson gson = new GsonBuilder().create();
+//			gson.toJson(reviewOne, response.getWriter());
+//			model.addAttribute("reivew", reviewOne);
+//		}
+//		
+//		
+//	}
+	
 
-	// 예약현황 조회
+	/** 예약현황 조회  */
 	@RequestMapping(value = "bookingList.do", method = RequestMethod.GET)
 	public String bookingList() {
 		return "mypage/bookingList";
 	}
 
-	// 희망도서 내역
+	/** 희망도서 내역  */
 	@RequestMapping(value = "wishList.do", method = RequestMethod.GET)
-	public String wishList(HttpServletRequest request, Model model, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
+	public String wishList(HttpServletRequest request, Model model, @RequestParam(value="page", required=false) Integer page, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", member);
-//		String userId = (String)session.getAttribute("userId");
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getWishListCount(member.getUserId());
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		try {
-			List<WishBook> wList = service.printWishBook(member.getUserId());
+			List<WishBook> wList = service.printWishBook(pi, member.getUserId());
 			if (!wList.isEmpty()) {
 				model.addAttribute("wList", wList);
-				/* session.setAttribute("newList", wList); */
+				model.addAttribute("pi", pi);
 			} else {
 				model.addAttribute("wList", null);
 			}
@@ -178,7 +275,7 @@ public class MypageController {
 
 
 	
-	// 희망도서 신청
+	/** 희망도서 신청  */
 	@RequestMapping(value = "applyBook.do", method = RequestMethod.POST)
 	public String applyBook(HttpServletRequest request, @ModelAttribute Member member,
 			@ModelAttribute WishBook wishbook, String div, Model model) throws Exception {
@@ -242,13 +339,15 @@ public class MypageController {
 	
 	
 	
-	// 관심 도서 내역
+	/** 관심 도서 내역  */
 	@RequestMapping(value = "likeList.do", method = RequestMethod.GET)
 	public String likeList() {
 		return "mypage/likeList";
 	}
 
-	// 취향분석설문 화면
+	
+	//--- 취향분석 ---//
+	/** 취향분석설문 화면  */
 	@RequestMapping(value = "tasteSurvey.do", method = RequestMethod.GET)
 	public String tasteSurveyView() {
 		return "mypage/tasteSurvey";
@@ -257,15 +356,19 @@ public class MypageController {
 	
 	
 	
-	
-	// 열람실 이용내역
+	//--- 시설 이용 ---//
+	/** 열람실 이용내역  */
 	@RequestMapping(value = "readingroomHistory.do", method = RequestMethod.GET)
-	public String readingroomHistory(@ModelAttribute ReadingRoom readingRoom, @RequestParam("userId") String userId, Model model) {
-		
+	public String readingroomHistory(@ModelAttribute ReadingRoom readingRoom, @RequestParam(value="page", required=false) Integer page, HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getrListCount(userId);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		try {
 			List<ReadingRoom> rList = service.printAllrList(userId);
 			if(!rList.isEmpty()) {
 				model.addAttribute("rList", rList);
+				model.addAttribute("pi", pi);
 			}else {
 				model.addAttribute("rList", null);
 			}
@@ -278,7 +381,7 @@ public class MypageController {
 		
 	}
 	
-	//열람실 이용 취소
+	/** 열람실 예약 취소  */
 	@RequestMapping(value="cancelReadingRoom.do", method=RequestMethod.GET)
 	public String cancleReadingRoom(HttpServletRequest request, @RequestParam("rReservationNo") int rReservationNo, Model model) {
 		HttpSession session = request.getSession();
@@ -299,7 +402,7 @@ public class MypageController {
 
 	}
 
-	// 스터디룸 이용내역
+	/** 스터디룸 이용 내역  */
 	@RequestMapping(value = "studyroomHistory.do", method = RequestMethod.GET)
 	public String studyroomHistory(@ModelAttribute StudyRoom studyRoom, @RequestParam("userId") String userId, Model model) {
 		
@@ -318,7 +421,7 @@ public class MypageController {
 		
 	}
 	
-	//스터디룸 이용 취소
+	/** 스터디룸 예약 취소  */
 	@RequestMapping(value="cancelStudyRoom.do", method=RequestMethod.GET)
 	public String cancleStudyRoom(HttpServletRequest request, @RequestParam("sReservationNo") int sReservationNo, Model model) {
 		HttpSession session = request.getSession();
@@ -339,6 +442,9 @@ public class MypageController {
 
 	}
 	
+	
+	
+	//--- 문의 ---//
 	//문의페이지
 	@RequestMapping(value="qnaList.do",method = RequestMethod.GET)
 	public ModelAndView qnaList(ModelAndView mv,HttpSession session) {

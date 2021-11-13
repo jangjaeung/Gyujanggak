@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.domain.Qna;
@@ -41,9 +42,9 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public int payment(String userId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updatePayment(Member member) {
+		int result = store.updatePayment(member);
+		return result;
 	}
 
 	@Override
@@ -64,28 +65,29 @@ public class MypageServiceImpl implements MypageService{
 		return result;
 	}
 
+	/** 전체 게시물 갯수 */
 	@Override
-	public int getListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getListCount(String userId) {
+		int totalCount = store.selectListCount(userId);
+		return totalCount;
 	}
 
 	@Override
-	public List<Book> printAllHistory(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> printAllLendingHistory(PageInfo pi, String userId) {
+		List<Book> lendingList = store.selectAllLendingHistory(pi, userId);
+		return lendingList;
 	}
 
 	@Override
-	public int printOneReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Review printOneReview(int bookNo) {
+		Review review = store.selectOneReview(bookNo);
+		return review;
 	}
 
 	@Override
 	public int registerReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.insertReview(review);
+		return result;
 	}
 
 	@Override
@@ -122,10 +124,18 @@ public class MypageServiceImpl implements MypageService{
 
 	//희망도서 내역조회
 	@Override
-	public List<WishBook> printWishBook(String userId) {
-		List<WishBook> wList = store.selectWishBook(userId);
+	public int getWishListCount(String userId) {
+		int totalCount = store.selectWishListCount(userId);
+		return totalCount;
+	}
+	
+	
+	@Override
+	public List<WishBook> printWishBook(PageInfo pi, String userId) {
+		List<WishBook> wList = store.selectWishBook(pi, userId);
 		return wList;
 	}
+
 
 	@Override
 	public Book printLikeList(Book book) {
@@ -133,6 +143,21 @@ public class MypageServiceImpl implements MypageService{
 		return null;
 	}
 
+	
+	
+	@Override
+	public int getrListCount(String userId) {
+		int totalCount = store.selectrListCount(userId);
+		return totalCount;
+	}
+
+	@Override
+	public int getsListCount(String userId) {
+		int totalCount = store.selectsListCount(userId);
+		return totalCount;
+	}
+
+	
 	@Override
 	public List<ReadingRoom> printAllrList(String userId) {
 		List<ReadingRoom> rList = store.selectAllrList(userId);
@@ -182,6 +207,9 @@ public class MypageServiceImpl implements MypageService{
 	public int removeQna(int qnaNo) {
 		return store.deleteQna(qnaNo);
 	}
+
+
+
 
 
 }

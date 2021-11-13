@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.daol.library.admin.service.AdminService;
 import com.daol.library.common.Pagination;
+import com.daol.library.member.domain.Member;
 import com.daol.library.post.domain.PageInfo;
 import com.daol.library.post.domain.Post;
+import com.daol.library.post.domain.PostReport;
 import com.daol.library.post.domain.Reply;
+import com.daol.library.post.domain.ReplyReport;
 import com.daol.library.post.service.PostService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,7 +35,8 @@ public class PostController {
 	
 	@Autowired
 	private PostService service;
-	
+	@Autowired
+	private AdminService adService;
 	//자유게시판 리스트 출력
 	@RequestMapping(value="postList.do",method=RequestMethod.GET)
 	public ModelAndView postListView(ModelAndView mv, @RequestParam(value="page",required=false)Integer page,HttpSession session) {
@@ -80,9 +85,12 @@ public class PostController {
 	@RequestMapping(value="postDetail.do",method=RequestMethod.GET)
 	public ModelAndView postDetailView(ModelAndView mv,@RequestParam("postNo") int postNo, HttpSession session) {
 		String member = (String)session.getAttribute("userId");
-		if(member != null) {
-			mv.addObject("userId",member);
+		Member typeCk = adService.memberCk(member);
+		if(typeCk != null) {
+			String type = typeCk.getUserType();
+			mv.addObject("type",type);
 		}
+		mv.addObject("userId",member);
 		int result = service.addReadCount(postNo);
 		Post post = service.printOne(postNo);
 		if(result>0) {
@@ -194,6 +202,38 @@ public class PostController {
 		}else {
 			return "fail";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="postReport.do",method=RequestMethod.GET)
+	public String postReport(@RequestParam("postNo")int postNo) {
+		PostReport pr = service.ckPostReport(postNo);
 		
+		if(pr == null) {
+			int result = service.reportPost(postNo);
+			if(result > 0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="postReply.do",method=RequestMethod.GET)
+	public String postReply(@RequestParam("postNo")int postNo,@RequestParam("replyNo")int replyNo) {
+		ReplyReport rr = service.ckReplyReport(replyNo);
+		if(rr == null) {
+			int result = service.reportReply(replyNo);
+			if(result>0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else {
+			return "fail";
+		}
 	}
 }

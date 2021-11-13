@@ -48,18 +48,136 @@
 		<result property="replyWriteDate" column="REPLY_WRITEDATE"></result>
 		<result property="replyUserId" column="REPLY_USERID"></result>
 	</resultMap>
+	<resultMap type="WishBook" id="wishbookResultMap">
+		<id property="applyNo" column="APPLY_NO"></id>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookName" column="BOOK_NAME"/>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="applyStatus" column="APPLY_STATUS"/>
+		<result property="applyDate" column="APPLY_DATE"/>
+	</resultMap>
+	<resultMap type="Status" id="StatusResultMap">
+		<id property="bookName" column="BOOK_NAME"></id>
+		<result property="userId" column="USER_ID"/>
+		<result property="bookNo" column="BOOK_NO"/>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="lendingDate" column="LENDING_DATE"/>
+		<result property="returnDate" column="RETURN_DATE"/>
+		<result property="extendCount" column="EXTEND_COUNT"/>
+		<result property="lendingNo" column="LENDING_NO"/>
+	</resultMap>
+	<resultMap type="BookParcel" id="BookParcelResultMap">
+		<id property="bookName" column="BOOK_NAME"></id>
+		<result property="bookWriter" column="BOOK_WRITER"/>
+		<result property="publisher" column="PUBLISHER"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="addr" column="ADDR"/>
+		<result property="dStatus" column="D_STATUS"/>
+		<result property="deliveryNo" column="DELIVERY_NO"/>
+		<result property="lendingNo" column="LENDING_NO"/>
+	</resultMap>
 	
+<!-- 	희망도서 리스트 -->
+	<select id="wishBookList" resultMap="wishbookResultMap">
+		SELECT * FROM WISH_BOOK WHERE APPLY_STATUS = '처리중' ORDER BY APPLY_NO DESC
+	</select>
+<!-- 	장서 리스트 -->
 	<select id="selectBookList" resultMap="bookResultMap">
 		SELECT * FROM BOOK ORDER BY BOOK_NO DESC
 	</select>
-	
+<!-- 	대출현황 리스트 -->
+	<select id="StatusBookList" resultMap="StatusResultMap">
+		SELECT a.BOOK_NO,a.BOOK_NAME, a.BOOK_WRITER,d.USER_ID, d.USER_NO,c.LENDING_DATE, c.RETURN_DATE, c.EXTEND_COUNT, c.LENDING_NO
+		FROM users d,BOOK a, BOOK_LENDING c
+		WHERE c.USER_ID = d.USER_ID AND c.BOOK_NO = a.BOOK_NO AND a.BOOK_STATE = '대출불가'
+	</select>
+<!-- 	택배 리스트 -->
+	<select id="ParcelBookList" resultMap="BookParcelResultMap">
+		SELECT a.BOOK_NAME, a.BOOK_WRITER, a.PUBLISHER, d.USER_ID, d.USER_NO, c.ADDR, c.D_STATUS, c.LENDING_NO, c.DELIVERY_NO
+		FROM users d, BOOK a,PARCEL c, BOOK_LENDING r
+		WHERE c.LENDING_NO = r.LENDING_NO AND r.BOOK_NO = a.BOOK_NO AND d.USER_ID = r.USER_ID AND c.D_STATUS = '대기'
+	</select>
+<!-- 		장서 count -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM BOOK
 	</select>
+<!-- 		택배목록 count -->
+	<select id="selectParacelListCount" resultType="_int">
+		SELECT COUNT(*) FROM(SELECT a.BOOK_NAME, a.BOOK_WRITER, a.PUBLISHER, d.USER_ID, d.USER_NO, c.ADDR, c.D_STATUS, c.LENDING_NO, c.DELIVERY_NO
+		FROM users d, BOOK a,PARCEL c, BOOK_LENDING r
+		WHERE c.LENDING_NO = r.LENDING_NO AND r.BOOK_NO = a.BOOK_NO AND d.USER_ID = r.USER_ID AND c.D_STATUS = '대기')
+	</select>
+<!-- 	희망도서 count -->
+	<select id="selectWishListCount" resultType="_int">
+		SELECT COUNT(*) FROM WISH_BOOK
+	</select>
+<!-- 	대출 현황 count -->
+	<select id="selectStatusListCount" resultType="_int">
+		SELECT COUNT(*) FROM(SELECT a.BOOK_NAME, a.BOOK_WRITER, d.USER_NO,c.LENDING_DATE, c.RETURN_DATE, c.EXTEND_COUNT, c.LENDING_NO
+		FROM users d,BOOK a, BOOK_LENDING c
+		WHERE c.USER_ID = d.USER_ID AND c.BOOK_NO = a.BOOK_NO AND a.BOOK_STATE = '대출불가')
+	</select>
+<!-- 	장서 검색 -->
+	<select id="selectSearchList" resultMap="bookResultMap">
+		SELECT * FROM BOOK
+		<if test="searchCondition.toString() == 'name'">
+		WHERE BOOK_NAME LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition.toString() == 'writer'">
+		WHERE BOOK_WRITER LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition.toString() == 'publisher'">
+		WHERE PUBLISHER LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="searchCondition.toString() == 'all'">
+		WHERE BOOK_NAME LIKE '%' || #{searchValue} || '%'
+		OR BOOK_WRITER LIKE '%' || #{searchValue} || '%'
+		OR PUBLISHER LIKE '%' || #{searchValue} || '%'
+		</if>
+		ORDER BY BOOK_NO ASC
+	</select>
+<!-- 		책 정보 -->
+	<select id="bookInfoSelect" resultMap="bookResultMap">
+		SELECT * FROM BOOK WHERE BOOK_NO = #{bookNo}
+	</select>
 	
-	
-	
-	<select id="selectQnaListCount"  resultType="_int">
+<!-- 	장서 등록 -->
+	<insert id="insertBook" parameterType="book">
+		INSERT INTO BOOK VALUES(SEQ_BOOKNUM.NEXTVAL,#{bookName},#{bookWriter},#{bookSubject},#{publisher},#{bookYear},#{callNo},#{isbn},#{bookCover},#{theme},DEFAULT,DEFAULT,DEFAULT)
+	</insert>
+<!-- 	장서 삭제 -->
+	<delete id="deleteBook" parameterType="java.util.ArrayList">
+		DELETE BOOK WHERE BOOK_NO IN (
+			<foreach collection="array" item="nums" index="index" separator=",">
+				${nums}
+			</foreach>
+		)
+	</delete>
+<!-- 		대출 상태 업데이트 -->
+	<update id="bookStateUpdate" >
+		UPDATE BOOK SET BOOK_STATE = '대출가능' WHERE BOOK_NO = #{bookNo}
+	</update>
+<!-- 		대출 가능권수 업데이트 -->
+	<update id="lendingUpdate" >
+		UPDATE USERS SET LENDING_COPY = LENDING_COPY + 1 WHERE USER_ID = #{userId}
+	</update>
+<!-- 		반납일 업데이트	 -->
+	<update id="returndateUpdate" >
+		UPDATE BOOK_LENDING SET RETURN_DATE = SYSDATE WHERE LENDING_NO = #{lendingNo}
+	</update>
+<!-- 		희망도서 업데이트 -->
+	<update id="wishbookUpdate">
+		UPDATE WISH_BOOK SET APPLY_STATUS = '완료' WHERE APPLY_NO = #{applyNo}
+	</update>
+<!-- 		택배 완료처리 -->
+	<update id="ParcelUpdate">
+		UPDATE PARCEL SET D_STATUS = '완료' WHERE DELIVERY_NO = #{deliveryNo}
+	</update>
+	<!-- 관리자페이지 문의관리 -->
+	<select id="selectQnaListCount" resultType="_int">
 		SELECT COUNT(*) FROM QNA
 	</select>
 	<select id="selectUser" resultMap="memberResultMap">
@@ -68,4 +186,37 @@
 	<select id="selectAllQna" resultMap="qnaResultMap">
 		SELECT * FROM QNA ORDER BY QNA_NO DESC
 	</select>
+	<select id="selectSearchQna" resultMap="qnaResultMap">
+		SELECT * FROM QNA
+    	<if test="searchCondition.toString() == 'writer'">
+    		WHERE USER_ID LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'title'">
+    		WHERE QNA_TITLE LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'state'">
+    		WHERE REPLY_STATE LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	ORDER BY QNA_NO DESC
+	</select>
+	<select id="getSearchCount" resultType="_int">
+		SELECT COUNT(*) FROM QNA
+    	<if test="searchCondition.toString() == 'writer'">
+    		WHERE USER_ID LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'title'">
+    		WHERE QNA_TITLE LIKE '%' || #{searchValue} || '%'
+    	</if>
+    	<if test="searchCondition.toString() == 'state'">
+    		WHERE REPLY_STATE LIKE '%' || #{searchValue} || '%'
+    	</if>
+	</select>
+	<select id="selectOneQna" resultMap="qnaResultMap">
+		SELECT * FROM QNA WHERE QNA_NO = #{qnaNo}
+	</select>
+	
+	<update id="updateQna" parameterType="Qna">
+		UPDATE QNA SET REPLY_STATE = 'Y', REPLY_CONTENT = #{replyContent}, REPLY_WRITEDATE = DEFAULT, REPLY_USERID = #{replyUserId} WHERE QNA_NO = #{qnaNo}
+	</update>
+	<!--                                                      -->
 </mapper>

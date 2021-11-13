@@ -17,7 +17,7 @@
 	<br><hr style="margin-top:13%">
 	<div class="container" style="margin-bottom: 15%;">
 		<h1 style="text-align:center;margin-bottom: 8%;">문의사항 등록</h1>
-		<form metohd="get" name="form">
+		<form method="get" name="form">
 			<div class="form-group">
 				<label for="exampleInputTitle">제목</label> 
 				<input type="text"class="form-control" name="qnaTitle" value="${qna.qnaTitle }" readonly>

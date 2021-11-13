@@ -13,31 +13,37 @@ import org.springframework.web.servlet.ModelAndView;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.service.BookService;
+import com.daol.library.lendingBook.domain.LendingBook;
+import com.daol.library.lendingBook.service.LendingBookService;
 
 @Controller
 public class BookController {
 	@Autowired
 	private BookService service;
 	
+	@Autowired
+	private LendingBookService LendingBookService;
+	
 //	간략 검색
-//	@RequestMapping(value="/search.do", method=RequestMethod.GET)
 	@GetMapping("/search.do")
 	public String searchView() {
 		return "book/bookSearchSimple";
 	}
-//	@RequestMapping(value="/searchSimple.do", method=RequestMethod.GET)
 	@GetMapping("/searchSimple.do")
 	public String simpleSearchList(@ModelAttribute Search search, Model model) {
 		List<Book> bList = service.printSearchSimple(search);
+		regiKeyword(search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
 			return "book/bookSearchSimple";
 		} else {
-//			model.addAttribute("msg", "검색 실패");
-//			return "common/errorPage";
 			return "book/bookSearchSimple";
 		}
+	}
+	//검색어 저장
+	public void regiKeyword(Search search) {
+		service.regiKeyword(search);
 	}
 	
 //	상세 검색
@@ -57,12 +63,55 @@ public class BookController {
 		}
 	}
 	
+//	주제별 검색
+	@GetMapping("/sSub.do")
+	public String sSub() {
+		return "book/bookSearchSubject";
+	}
+	@GetMapping("/searchSubject.do")
+	public String subjectSearchList(@ModelAttribute Search search, Model model) {
+		List<Book> bList = service.printSearchSub(search);
+		if(!bList.isEmpty()) {
+			model.addAttribute("bList", bList);
+			model.addAttribute("search", search);
+			return "book/bookSearchSubject";
+		} else {
+			return"book/bookSearchSubject";
+		}
+	}
+	
+//	신착 자료 조회
+	@GetMapping("/searchNew.do")
+	public String searchNewList(Model model) {
+		List<Book> bList = service.printNewBook();
+		if(!bList.isEmpty()) {
+			model.addAttribute("bList", bList);
+			return "book/bookSearchNew";
+		} else {
+			return"book/bookSearchNew";
+		}
+	}
+	
+//	대출 베스트 조회
+	@GetMapping("/bestBook.do")
+	public String bestBookList(Model model) {
+		List<Book> bList = service.printBestBook();
+		if(!bList.isEmpty()) {
+			model.addAttribute("bList", bList);
+			return "book/bookPopular";
+		} else {
+			return"book/bookPopular";
+		}
+	}
+	
 //	도서 상세 조회
 	@GetMapping("/bookDetail.do")
 	public ModelAndView bookDetail(ModelAndView mv, @RequestParam("bookNo") int bookNo) {
 		Book book = service.printOne(bookNo);
+		LendingBook lendingBook = LendingBookService.printOneForDetail(bookNo);
 		if(book != null) {
 			mv.addObject("book", book);
+			mv.addObject("lendingBook", lendingBook);
 			mv.setViewName("book/bookDetail");
 		} else {
 			mv.addObject("msg", "상세 조회 실패");

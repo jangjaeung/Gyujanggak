@@ -1,7 +1,9 @@
 package com.daol.library.mypage.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.domain.Qna;
@@ -29,9 +32,9 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public int updatePayment(String userId) {
-		
-		return 0;
+	public int updatePayment(Member member) {
+		int result = sqlSession.update("mypageMapper.updatePayment", member);
+		return result;
 	}
 
 	@Override
@@ -52,28 +55,31 @@ public class MypageStoreLogic implements MypageStore{
 		return result;
 	}
 
+	/** 전체 게시물 갯수 */
 	@Override
-	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selectListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectListCount", userId);
+		return count;
 	}
 
 	@Override
-	public List<Book> selectAllHistory(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> selectAllLendingHistory(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); //한 페이지당 보여줄 게시물 갯수
+		List<Book> lendingList = sqlSession.selectList("mypageMapper.selectAllLendingHistory", userId, rowBounds);
+		return lendingList;
 	}
 
 	@Override
-	public int selectOneReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Review selectOneReview(int bookNo) {
+		Review review = sqlSession.selectOne("mypageMapper.selectOneReview", bookNo);
+		return review;
 	}
 
 	@Override
 	public int insertReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSession.insert("mypageMapper.insertReview", review);
+		return result;
 	}
 
 	@Override
@@ -108,10 +114,20 @@ public class MypageStoreLogic implements MypageStore{
 	}
 	
 	@Override
-	public List<WishBook> selectWishBook(String userId) {
-		List<WishBook> wList = sqlSession.selectList("mypageMapper.selectWishList",userId);
+	public int selectWishListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectWishListCount", userId);
+		return count;
+	}
+	
+	@Override
+	public List<WishBook> selectWishBook(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); //한 페이지당 보여줄 게시물 갯수
+		List<WishBook> wList = sqlSession.selectList("mypageMapper.selectWishList",userId, rowBounds);
 		return wList;
 	}
+	
+
 
 	@Override
 	public Book selectLikeList(Book book) {
@@ -119,6 +135,20 @@ public class MypageStoreLogic implements MypageStore{
 		return null;
 	}
 
+	
+	@Override
+	public int selectrListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectrListCount", userId);
+		return count;
+	}
+
+	@Override
+	public int selectsListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectsListCount", userId);
+		return count;
+	}
+	
+	
 	@Override
 	public List<ReadingRoom> selectAllrList(String userId) {
 		List<ReadingRoom> rList = sqlSession.selectList("mypageMapper.selectReadingroomHistory",userId);
@@ -168,6 +198,8 @@ public class MypageStoreLogic implements MypageStore{
 	public int deleteQna(int qnaNo) {
 		return sqlSession.delete("mypageMapper.deleteQna",qnaNo);
 	}
+
+
 
 
 }

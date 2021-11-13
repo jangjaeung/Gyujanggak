@@ -9,6 +9,7 @@ public class Reply {
 	private String replyWriter;
 	private String replyContents;
 	private Date replyDate;
+	private ReplyReport replyReport;
 	
 	public Reply() {}
 
@@ -50,6 +51,15 @@ public class Reply {
 
 	public void setReplyDate(Date replyDate) {
 		this.replyDate = replyDate;
+	}
+	
+	
+	public ReplyReport getReplyReport() {
+		return replyReport;
+	}
+
+	public void setReplyReport(ReplyReport replyReport) {
+		this.replyReport = replyReport;
 	}
 
 	@Override

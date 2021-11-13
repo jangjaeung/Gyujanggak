@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.PageInfo;
 import com.daol.library.mypage.domain.Qna;
@@ -17,23 +18,22 @@ public interface MypageService {
 
 	//회원정보 관리
 	public Member printOneInfo(Member member);
-	
-	public int payment(String userId);
-	
+		
 	public int modifyMember(Member member);
 	
 	public int removeMember(Member member);
 	
 	public int checkPwdDup(Member member);
 	
+	public int updatePayment(Member member); //연회비 결제 후 상태 업데이트
 	
 	//도서
 	/** 대출 도서 전체 권수 */
-	public int getListCount();
+	public int getListCount(String userId);
 	/** 대출 내역 */
-	public List<Book> printAllHistory(PageInfo pi);
+	public List<Book> printAllLendingHistory(PageInfo pi, String userId);
 	/** 서평 조회 */
-	public int printOneReview(Review review);
+	public Review printOneReview(int bookNo);
 	/** 서평 등록 */
 	public int registerReview(Review review);
 	/** 서평 수정 */
@@ -45,8 +45,8 @@ public interface MypageService {
 	/** 예약 취소 */
 	public int cancelBooking(int bookNo);
 	/** 희망 도서 내역 */
-	public List<WishBook> printWishBook(String userId);
-	
+	public List<WishBook> printWishBook(PageInfo pi, String userId);
+	public int getWishListCount(String userId);
 	//희망도서  신청 db 저장
 	public int registerWishBook(WishBook wishbook);
 	//관심도서 목록 출력
@@ -54,6 +54,10 @@ public interface MypageService {
 	
 	
 	//시설 이용
+	/** 열람실 내역 전체 갯수 */
+	public int getrListCount(String userId);
+	/** 스터디룸 내역 전체 갯수 */
+	public int getsListCount(String userId);
 	public List<ReadingRoom> printAllrList(String userId);
 	public List<StudyRoom> printAllsList(String userId);
 	/** 예약 취소 */
@@ -69,6 +73,8 @@ public interface MypageService {
 	public int registQna(Qna qna);
 	public int modifyQna(Qna qna);
 	public int removeQna(int qnaNo);
+
+	
 
 	
 }

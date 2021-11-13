@@ -14,7 +14,7 @@ public interface MemberService {
 	public Member printOne(Member member);
 	
 //	특정 회원 정보 변경
-	public int modifyOne(String userId);
+	public int modifyOne(String userId) throws Exception;
 
 	//이메일발송
 	public void sendEmail(Member vo, String div) throws Exception;

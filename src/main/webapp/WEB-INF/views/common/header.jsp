@@ -46,9 +46,9 @@
 					<ul>
 						<li><a href="/search.do">간략 검색</a></li>
 						<li><a href="/sDetail.do">상세 검색</a></li>
-						<li><a href="#">주제별 검색</a></li>
-						<li><a href="#">신착 자료</a></li>
-						<li><a href="#">대출 베스트</a></li>
+						<li><a href="/sSub.do">주제별 검색</a></li>
+						<li><a href="/searchNew.do">신착 자료</a></li>
+						<li><a href="/bestBook.do">대출 베스트</a></li>
 					</ul>				
 				</li>
 				<li>
@@ -70,9 +70,9 @@
  					<a href="#">관리자페이지</a>
 					<ul>
 						<li><a href="#">회원관리</a></li>
-						<li><a href="#">도서관리</a></li>
-						<li><a href="#">문의관리</a></li>
-						<li><a href="#">신고관리</a></li>
+						<li><a href="bookListView.do">도서관리</a></li>
+						<li><a href="adQnaList.do?userId=${userId }">문의관리</a></li>
+						<li><a href="reportView.do">신고관리</a></li>
 						<li><a href="#">대출통계</a></li>
 					</ul>
 					</c:if>

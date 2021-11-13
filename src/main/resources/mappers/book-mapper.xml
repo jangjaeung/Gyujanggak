@@ -18,6 +18,19 @@
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="lendingCount" column="LENDING_COUNT"/>
 	</resultMap>
+	<!-- 간략 검색 -->
+	<!-- 인기키워드 적립용 -->
+	<resultMap type="Keyword" id="keywordResultMap">
+		<result property="keyword" column="KEYWORD"/>
+		<result property="searchDate" column="SEARCH_DATE"/>
+	</resultMap>
+	
+<!-- 	<insert id="insertKeyword" parameterType="Search"> -->
+<!-- 		INSERT INTO POPULAR_KEYWORD VALUES(#{searchValue},DEFAULT) -->
+<!-- 	</insert> -->
+	<select id="popKeyword" resultMap="keywordResultMap">
+		SELECT KEYWORD FROM(SELECT KEYWORD, COUNT(KEYWORD), ROW_NUMBER() OVER(ORDER BY COUNT(KEYWORD) DESC)RN FROM POPULAR_KEYWORD GROUP BY KEYWORD) <![CDATA[WHERE RN <= 10]]>
+	</select>
 	<select id="selectSearchSimple" resultMap="bookResultMap">
 		SELECT * FROM BOOK
 		<if test="searchCondition.toString() == 'title'">
@@ -31,6 +44,7 @@
 		</if>
 		ORDER BY UPDATE_DATE DESC
 	</select>
+	<!-- 상세 검색 -->
 	<select id="selectSearchDetail" resultMap="bookResultMap">
 		SELECT * FROM BOOK WHERE
 		<if test="searchValue1 != ''">
@@ -50,16 +64,25 @@
 		</if>
 		ORDER BY UPDATE_DATE DESC
 	</select>
-	<select id="selectOne" resultMap="bookResultMap">
-		SELECT * FROM BOOK WHERE BOOK_NO = #{bookNo}
+	<!-- 주제별 검색 -->
+	<select id="selectSearchSub" resultMap="bookResultMap">
+		SELECT * FROM BOOK WHERE BOOK_SUBJECT = #{ searchValue }
 	</select>
-	<!-- 메인페이지 신간도서 -->
+	<!-- 신착 도서 -->
 	<select id="selectPrintNew" resultMap="bookResultMap">
-		SELECT ROWNUM,B.* FROM (SELECT N.* FROM BOOK N ORDER BY N.BOOK_NO DESC)B WHERE ROWNUM BETWEEN 1 AND 10
+		SELECT ROWNUM, B.* FROM (SELECT N.* FROM BOOK N ORDER BY N.BOOK_NO DESC)B WHERE ROWNUM BETWEEN 1 AND 10
 	</select>
-	<!-- 대출 시 -->
+	<!-- 인기 대출 도서 -->
+	<select id="selectBestBook" resultMap="bookResultMap">
+		SELECT ROWNUM, B.* FROM (SELECT P.* FROM BOOK P WHERE LENDING_COUNT > 0 ORDER BY P.LENDING_COUNT DESC)B WHERE ROWNUM BETWEEN 1 AND 10
+	</select>
+	<!-- 도서 상세 조회 -->
+	<select id="selectOne" resultMap="bookResultMap">
+		SELECT * FROM BOOK WHERE BOOK_NO = #{ bookNo }
+	</select>
+	<!-- 대출 시 도서 상태 변경-->
 	<update id="updateLendingBook" parameterType="Book">
-		UPDATE BOOK SET BOOK_STATE = '대출불가', LENDING_COUNT = LENDING_COUNT + 1 WHERE BOOK_NO = #{bookNo} AND BOOK_STATE = '대출가능'
+		UPDATE BOOK SET BOOK_STATE = '대출불가', LENDING_COUNT = LENDING_COUNT + 1 WHERE BOOK_NO = #{ bookNo } AND BOOK_STATE = '대출가능'
 	</update>
 	
 </mapper>

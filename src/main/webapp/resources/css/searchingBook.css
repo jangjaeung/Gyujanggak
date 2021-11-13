@@ -24,6 +24,19 @@
     cursor: pointer;
 }
 
+button .sub__btt {
+    font-family: inherit;
+    font-size: 20px;
+    width: 100px;
+    height: 80px;
+    border: 0px;
+    background: #2e4f85;
+    border-radius: 5px;
+    color: whitesmoke;
+    cursor: pointer;
+    line-height: inherit;
+}
+
 .book__cover {
     width: 130px;
 }

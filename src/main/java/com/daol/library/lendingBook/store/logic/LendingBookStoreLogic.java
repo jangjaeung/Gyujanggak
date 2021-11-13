@@ -24,10 +24,16 @@ public class LendingBookStoreLogic implements LendingBookStore {
 
 	@Override
 	public LendingBook selectOne(int lendingNo) {
-		// TODO Auto-generated method stub
-		return null;
+		LendingBook lendingBook = sqlSession.selectOne("lendingBookMapper.selectOne", lendingNo);
+		return lendingBook;
 	}
 
+	@Override
+	public LendingBook selectOneForDetail(int lendingNo) {
+		LendingBook lendingBook = sqlSession.selectOne("lendingBookMapper.selectOneForDetail", lendingNo);
+		return lendingBook;
+	}
+	
 	@Override
 	public int insertLending(LendingBook lendingBook) {
 		int result = sqlSession.insert("lendingBookMapper.insertLending", lendingBook);
