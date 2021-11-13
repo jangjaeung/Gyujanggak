@@ -41,6 +41,7 @@ public class BookController {
 			return "book/bookSearchSimple";
 		}
 	}
+	
 	//검색어 저장
 	public void regiKeyword(Search search) {
 		service.regiKeyword(search);

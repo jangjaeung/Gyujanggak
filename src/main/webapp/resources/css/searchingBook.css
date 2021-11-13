@@ -35,6 +35,7 @@ button .sub__btt {
     color: whitesmoke;
     cursor: pointer;
     line-height: inherit;
+    margin: 10px;
 }
 
 .book__cover {

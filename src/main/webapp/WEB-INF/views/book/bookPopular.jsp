@@ -50,9 +50,10 @@
             </c:if>
             <c:if test="${ !empty bList }">
                 <h3>규장각 인기 대출 도서</h3>
-                <c:forEach items="${ bList }" var="book">
+                <c:forEach items="${ bList }" var="book" varStatus="status">
                     <hr>
                     <div class="section">
+                    	<b>${ status.count }</b>
                         <c:url var="bDetail" value="/bookDetail.do">
                             <c:param name="bookNo" value="${ book.bookNo }"></c:param>
                         </c:url>
@@ -66,7 +67,7 @@
                                 <h4>${ book.bookName }</h4>
                             </a>
                             <div>저자 : ${ book.bookWriter } ｜ 발행처 : ${ book.publisher } ｜ 발행연도 : ${ book.bookYear }</div>
-                            <div>자료상태 : ${ book.bookState }</div>
+                            <div>자료상태 : ${ book.bookState } ｜ 대출 횟수 : ${ book.lendingCount }</div>
                         </div>
                     </div>
                 </c:forEach>

@@ -70,11 +70,13 @@ public class BookStoreLogic implements BookStore {
 		List<Book> bList = sqlSession.selectList("bookMapper.selectBestBook");
 		return bList;
 	}
+	
 	//인기키워드 적립용
 	@Override
 	public void insertKeyword(Search search) {
 		sqlSession.insert("bookMapper.insertKeyword",search);
 	}
+	
 	//인기키워드 출력
 	@Override
 	public List<Keyword> selectPopKeyword() {

@@ -18,19 +18,20 @@
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="lendingCount" column="LENDING_COUNT"/>
 	</resultMap>
-	<!-- 간략 검색 -->
-	<!-- 인기키워드 적립용 -->
+	<!-- 인기 키워드 적립용 -->
 	<resultMap type="Keyword" id="keywordResultMap">
 		<result property="keyword" column="KEYWORD"/>
 		<result property="searchDate" column="SEARCH_DATE"/>
 	</resultMap>
-	
+	<!-- 검색 키워드 저장 -->
 	<insert id="insertKeyword" parameterType="Search">
 		INSERT INTO POPULAR_KEYWORD VALUES(#{searchValue},DEFAULT)
 	</insert>
+	<!-- 인기 키워드 출력 -->
 	<select id="popKeyword" resultMap="keywordResultMap">
 		SELECT KEYWORD FROM(SELECT KEYWORD, COUNT(KEYWORD), ROW_NUMBER() OVER(ORDER BY COUNT(KEYWORD) DESC)RN FROM POPULAR_KEYWORD GROUP BY KEYWORD) <![CDATA[WHERE RN <= 10]]>
 	</select>
+	<!-- 간략 검색 -->
 	<select id="selectSearchSimple" resultMap="bookResultMap">
 		SELECT * FROM BOOK
 		<if test="searchCondition.toString() == 'title'">

@@ -71,6 +71,7 @@ public class BookServiceImpl implements BookService {
 		List<Book> bList = store.selectBestBook();
 		return bList;
 	}
+	
 	//인기키워드 적립용
 	@Override
 	public void regiKeyword(Search search) {
@@ -79,6 +80,7 @@ public class BookServiceImpl implements BookService {
 			store.insertKeyword(search);
 		}
 	}
+	
 	//인기키워드 출력
 	@Override
 	public List<Keyword> printPopKeyword() {
