@@ -96,10 +96,31 @@
         <button type="button" onclick="location.href='${ intB }';" id="interesting-btn">관심도서담기</button>
     </div>
     <div>
-        <table>
+        <table border="1">
             <tr>
-                <td>회원 서평</td>
+                <td colspan="4">회원 서평</td>
             </tr>
+            <c:if test="${ empty rList }">
+            	<tr>
+            		<td colspan="4">등록된 서평이 없습니다.</td>
+            	</tr>
+            </c:if>
+            <c:if test="${ not empty rList }">
+	            <tr>
+	            	<td>별점</td>
+	                <td>서평</td>
+	                <td>아이디</td>
+	                <td>작성일</td>
+	            </tr>
+	            <c:forEach items="${ rList }" var="review">
+		            <tr>
+		                <td>${ review.reviewStar }</td>
+		                <td>${ review.reviewContents }</td>
+		                <td>${ review.userId }</td>
+		                <td>${ review.reviewDate }</td>
+		            </tr>
+	            </c:forEach>
+            </c:if>
         </table>
     </div>
 <!-- Footer -->

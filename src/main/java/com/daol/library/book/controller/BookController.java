@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.service.BookService;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.service.LendingBookService;
+import com.daol.library.mypage.service.MypageService;
 
 @Controller
 public class BookController {
@@ -23,6 +25,9 @@ public class BookController {
 	
 	@Autowired
 	private LendingBookService LendingBookService;
+	
+	@Autowired
+	private MypageService MypageService;
 	
 //	간략 검색
 	@GetMapping("/search.do")
@@ -109,10 +114,12 @@ public class BookController {
 	@GetMapping("/bookDetail.do")
 	public ModelAndView bookDetail(ModelAndView mv, @RequestParam("bookNo") int bookNo) {
 		Book book = service.printOne(bookNo);
+		List<Review> rList = MypageService.printOneForDetail(bookNo);
 		LendingBook lendingBook = LendingBookService.printOneForDetail(bookNo);
 		if(book != null) {
 			mv.addObject("book", book);
 			mv.addObject("lendingBook", lendingBook);
+			mv.addObject("rList", rList);
 			mv.setViewName("book/bookDetail");
 		} else {
 			mv.addObject("msg", "상세 조회 실패");

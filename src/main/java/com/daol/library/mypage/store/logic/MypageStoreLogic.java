@@ -199,7 +199,9 @@ public class MypageStoreLogic implements MypageStore{
 		return sqlSession.delete("mypageMapper.deleteQna",qnaNo);
 	}
 
-
-
+	@Override
+	public List<Review> selectOneForDetail(int bookNo) {
+		return sqlSession.selectList("mypageMapper.selectOneForDetail", bookNo);
+	}
 
 }
