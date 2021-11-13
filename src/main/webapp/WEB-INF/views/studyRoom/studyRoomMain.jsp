@@ -111,7 +111,6 @@
 </body>
 	
 <script>
-	/* $(document).ready({ */
 		// 예약일 달력
 		$('.dateSelector').flatpickr({
 		    dateFormat: 'Y/m/d',
@@ -139,6 +138,8 @@
 								console.log(data[i].rReservationTime)
 								$("#reservationTime option[value*='"+data[i].sReservationTime+"']").prop('disabled',true);
 							}
+						}else if() {
+							
 						}else {
 							$("#reservationTime option[value*='A']").prop('disabled',false);
 							$("#reservationTime option[value*='B']").prop('disabled',false);
@@ -203,6 +204,5 @@
 			alert('로그인페이지로 이동합니다.');
 			location.href="loginView.do";
 		} 
-	/* }); */
 </script>
 </html>
