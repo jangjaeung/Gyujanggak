@@ -19,6 +19,18 @@
 		<result property="lendingCount" column="LENDING_COUNT"/>
 	</resultMap>
 	<!-- 간략 검색 -->
+	<!-- 인기키워드 적립용 -->
+	<resultMap type="Keyword" id="keywordResultMap">
+		<result property="keyword" column="KEYWORD"/>
+		<result property="searchDate" column="SEARCH_DATE"/>
+	</resultMap>
+	
+<!-- 	<insert id="insertKeyword" parameterType="Search"> -->
+<!-- 		INSERT INTO POPULAR_KEYWORD VALUES(#{searchValue},DEFAULT) -->
+<!-- 	</insert> -->
+	<select id="popKeyword" resultMap="keywordResultMap">
+		SELECT KEYWORD FROM(SELECT KEYWORD, COUNT(KEYWORD), ROW_NUMBER() OVER(ORDER BY COUNT(KEYWORD) DESC)RN FROM POPULAR_KEYWORD GROUP BY KEYWORD) <![CDATA[WHERE RN <= 10]]>
+	</select>
 	<select id="selectSearchSimple" resultMap="bookResultMap">
 		SELECT * FROM BOOK
 		<if test="searchCondition.toString() == 'title'">

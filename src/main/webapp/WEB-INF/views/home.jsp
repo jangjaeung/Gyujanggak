@@ -37,7 +37,7 @@
 				<img src="/resources/mainPage/img/main_img6.jpg" alt="">
 			</div>
 		</div>
-		<form action="/searchSimple.do" method="get">
+		<form action="/searchSimple.do">
 			<div class="search-wrap">
 				<select name="searchCondition" id="" class="search__select" style ="width:20%;height:100%;">
 					<option value="title">도서명</option>
@@ -134,7 +134,9 @@
 			</div>
 			<div class="pop tab-3 sh">
 				<ol>
-					<li>asd</li>
+					<c:forEach items="${kList }" var="kList">
+						<li>${kList.keyword }</li>
+					</c:forEach>
 				</ol>
 			</div>
 			<div class="pop tab-4">
