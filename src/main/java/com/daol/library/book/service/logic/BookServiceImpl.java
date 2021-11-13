@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.Keyword;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.service.BookService;
 import com.daol.library.book.store.BookStore;
@@ -69,6 +70,19 @@ public class BookServiceImpl implements BookService {
 	public List<Book> printBestBook() {
 		List<Book> bList = store.selectBestBook();
 		return bList;
+	}
+	//인기키워드 적립용
+	@Override
+	public void regiKeyword(Search search) {
+		String keyword = search.getSearchCondition();
+		if(keyword.equals("title")) {
+			store.insertKeyword(search);
+		}
+	}
+	//인기키워드 출력
+	@Override
+	public List<Keyword> printPopKeyword() {
+		return store.selectPopKeyword();
 	}
 
 }

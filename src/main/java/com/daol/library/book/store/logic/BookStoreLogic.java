@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.Keyword;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.store.BookStore;
 
@@ -68,6 +69,16 @@ public class BookStoreLogic implements BookStore {
 	public List<Book> selectBestBook() {
 		List<Book> bList = sqlSession.selectList("bookMapper.selectBestBook");
 		return bList;
+	}
+	//인기키워드 적립용
+	@Override
+	public void insertKeyword(Search search) {
+		sqlSession.insert("bookMapper.insertKeyword",search);
+	}
+	//인기키워드 출력
+	@Override
+	public List<Keyword> selectPopKeyword() {
+		return sqlSession.selectList("bookMapper.popKeyword");
 	}
 	
 }

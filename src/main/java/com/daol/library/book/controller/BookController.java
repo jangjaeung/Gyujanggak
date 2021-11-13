@@ -32,6 +32,7 @@ public class BookController {
 	@GetMapping("/searchSimple.do")
 	public String simpleSearchList(@ModelAttribute Search search, Model model) {
 		List<Book> bList = service.printSearchSimple(search);
+		regiKeyword(search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
@@ -39,6 +40,10 @@ public class BookController {
 		} else {
 			return "book/bookSearchSimple";
 		}
+	}
+	//검색어 저장
+	public void regiKeyword(Search search) {
+		service.regiKeyword(search);
 	}
 	
 //	상세 검색
