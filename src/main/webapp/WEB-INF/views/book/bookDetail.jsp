@@ -89,11 +89,13 @@
 			<c:param name="bookNo" value="${ book.bookNo }"></c:param>
 			<c:param name="userId" value="${ sessionScope.userId }"></c:param>
 		</c:url>
-        <c:if test="${ book.bookState eq '대출가능' }">
+        <c:if test="${ book.bookState eq '대출가능' && not empty sessionScope.userId }">
 	        <button type="button" onclick="location.href='${ lendingB }';" id="lending-btn">대출신청</button>
         </c:if>
-        <button type="button" onclick="location.href='#';">도서예약</button>
-        <button type="button" onclick="location.href='${ intB }';" id="interesting-btn">관심도서담기</button>
+        <c:if test="${ not empty sessionScope.userId }">
+	        <button type="button" onclick="location.href='#';">도서예약</button>
+	        <button type="button" onclick="location.href='${ intB }';" id="interesting-btn">관심도서담기</button>
+        </c:if>
     </div>
     <div>
         <table border="1">
