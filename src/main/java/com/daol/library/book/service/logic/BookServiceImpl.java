@@ -71,7 +71,8 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void regiKeyword(Search search) {
 		String keyword = search.getSearchCondition();
-		if(keyword.equals("title")) {
+		String value = search.getSearchValue();
+		if(keyword.equals("title") && value!="") {
 			store.insertKeyword(search);
 		}
 	}

@@ -18,6 +18,9 @@
 	<select id="selectOneForDetail" resultMap="lendingBookResultMap">
 		SELECT * FROM (SELECT * FROM BOOK_LENDING WHERE BOOK_NO = #{ bookNo } ORDER BY RETURN_DATE DESC) WHERE ROWNUM = 1
 	</select>
+	<select id="selectManyList" resultMap="lendingBookResultMap">
+		SELECT USER_ID FROM(SELECT USER_ID, COUNT(USER_ID), ROW_NUMBER() OVER(ORDER BY COUNT(USER_ID) DESC)RN FROM BOOK_LENDING GROUP BY USER_ID)<![CDATA[WHERE RN <= 10]]>
+	</select>
 	<insert id="insertLending" parameterType="LendingBook">
 		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{ receive }, #{ userId }, #{ bookNo })
 	</insert>

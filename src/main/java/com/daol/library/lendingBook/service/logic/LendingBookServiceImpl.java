@@ -66,5 +66,10 @@ public class LendingBookServiceImpl implements LendingBookService {
 		if(result == 0) throw new Exception();
 		return result;
 	}
+	//다독자리스트
+	@Override
+	public List<LendingBook> printManyPeople() {
+		return store.selectManyPeople();
+	}
 
 }
