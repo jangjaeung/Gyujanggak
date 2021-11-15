@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.daol.library.book.common.Pagenation;
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.PageInfo;
 import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.service.BookService;
@@ -35,12 +37,16 @@ public class BookController {
 		return "book/bookSearchSimple";
 	}
 	@GetMapping("/searchSimple.do")
-	public String simpleSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchSimple(search);
+	public String simpleSearchList(@ModelAttribute Search search, Model model, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount1(search);
+		PageInfo pi = Pagenation.getPageInfo(currentPage, totalCount);
+		List<Book> bList = service.printSearchSimple(pi, search);
 		regiKeyword(search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
+			model.addAttribute("pi", pi);
 			return "book/bookSearchSimple";
 		} else {
 			return "book/bookSearchSimple";
@@ -58,11 +64,15 @@ public class BookController {
 		return "book/bookSearchDetail";
 	}
 	@GetMapping("/searchDetail.do")
-	public String detailSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchDetail(search);
+	public String detailSearchList(@ModelAttribute Search search, Model model, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount2(search);
+		PageInfo pi = Pagenation.getPageInfo(currentPage, totalCount);
+		List<Book> bList = service.printSearchDetail(pi, search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
+			model.addAttribute("pi", pi);
 			return "book/bookSearchDetail";
 		} else {
 			return "book/bookSearchDetail";
@@ -75,11 +85,15 @@ public class BookController {
 		return "book/bookSearchSubject";
 	}
 	@GetMapping("/searchSubject.do")
-	public String subjectSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchSub(search);
+	public String subjectSearchList(@ModelAttribute Search search, Model model, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount3(search);
+		PageInfo pi = Pagenation.getPageInfo(currentPage, totalCount);
+		List<Book> bList = service.printSearchSub(pi, search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
+			model.addAttribute("pi", pi);
 			return "book/bookSearchSubject";
 		} else {
 			return"book/bookSearchSubject";

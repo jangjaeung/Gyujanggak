@@ -2,12 +2,14 @@ package com.daol.library.book.store.logic;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Keyword;
+import com.daol.library.book.domain.PageInfo;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.store.BookStore;
 
@@ -17,7 +19,7 @@ public class BookStoreLogic implements BookStore {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Book> selectAll() {
+	public List<Book> selectAll(PageInfo pi) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -29,27 +31,24 @@ public class BookStoreLogic implements BookStore {
 	}
 	
 	@Override
-	public List<Book> selectSearchSimple(Search search) {
-		List<Book> bList = sqlSession.selectList("bookMapper.selectSearchSimple", search);
-		return bList;
+	public List<Book> selectSearchSimple(PageInfo pi, Search search) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("bookMapper.selectSearchSimple", search, rowBounds);
 	}
 
 	@Override
-	public List<Book> selectSearchDetail(Search search) {
-		List<Book> bList = sqlSession.selectList("bookMapper.selectSearchDetail", search);
-		return bList;
+	public List<Book> selectSearchDetail(PageInfo pi, Search search) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("bookMapper.selectSearchDetail", search, rowBounds);
 	}
 
 	@Override
-	public List<Book> selectSearchSub(Search search) {
-		List<Book> bList = sqlSession.selectList("bookMapper.selectSearchSub", search);
-		return bList;
-	}
-
-	@Override
-	public List<Book> selectSearchNew() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> selectSearchSub(PageInfo pi, Search search) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("bookMapper.selectSearchSub", search, rowBounds);
 	}
 
 	@Override
@@ -81,6 +80,24 @@ public class BookStoreLogic implements BookStore {
 	@Override
 	public List<Keyword> selectPopKeyword() {
 		return sqlSession.selectList("bookMapper.popKeyword");
+	}
+
+	@Override
+	public int selectListCount1(Search search) {
+		int count = sqlSession.selectOne("bookMapper.selectListCount1", search);
+		return count;
+	}
+
+	@Override
+	public int selectListCount2(Search search) {
+		int count = sqlSession.selectOne("bookMapper.selectListCount2", search);
+		return count;
+	}
+
+	@Override
+	public int selectListCount3(Search search) {
+		int count = sqlSession.selectOne("bookMapper.selectListCount3", search);
+		return count;
 	}
 	
 }

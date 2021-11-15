@@ -77,7 +77,6 @@
                 </tr>
         	</c:if>
         	<c:if test="${ !empty bList }">
-<%--                 <h2>"${ search.searchValue }" 검색 결과입니다.</h2> --%>
 	        	<c:forEach items="${ bList }" var="book">
                     <hr>
 		            <div class="section">
@@ -98,6 +97,48 @@
 		                </div>
 		            </div>
 	        	</c:forEach>
+<!-- 페이징 처리 -->
+				<div>
+		            <c:url var="before" value="/searchDetail.do">
+		            	<c:param name="page" value="${ pi.currentPage - 1 }"></c:param>
+		            	<c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
+	            		<c:param name="searchValue1" value="${ search.searchValue1 }"></c:param>
+	            		<c:param name="searchValue2" value="${ search.searchValue2 }"></c:param>
+	            		<c:param name="searchValue3" value="${ search.searchValue3 }"></c:param>
+	            		<c:param name="searchValue4" value="${ search.searchValue4 }"></c:param>
+	            		<c:param name="searchValue5" value="${ search.searchValue5 }"></c:param>
+		            </c:url>
+		            <c:if test="${ pi.currentPage <= 1 }">이전</c:if>
+		            <c:if test="${ pi.currentPage > 1 }"><a href="${ before }">이전</a></c:if>
+		            <c:forEach var="p" begin="${ pi.startNavi }" end="${ pi.endNavi }">
+		            	<c:url var="pagenation" value="/searchDetail.do">
+		            		<c:param name="page" value="${ p }"></c:param>
+		            		<c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
+		            		<c:param name="searchValue1" value="${ search.searchValue1 }"></c:param>
+		            		<c:param name="searchValue2" value="${ search.searchValue2 }"></c:param>
+		            		<c:param name="searchValue3" value="${ search.searchValue3 }"></c:param>
+		            		<c:param name="searchValue4" value="${ search.searchValue4 }"></c:param>
+		            		<c:param name="searchValue5" value="${ search.searchValue5 }"></c:param>
+		            	</c:url>
+		            	<c:if test="${ p eq pi.currentPage }">
+		                    <font color="red" size="4">[${ p }]</font>
+		            	</c:if>
+		                <c:if test="${ p ne pi.currentPage }">
+		                	<a href="${ pagenation }">${ p }</a>&nbsp;
+		                </c:if>
+		            </c:forEach>
+		            <c:url var="after" value="/searchDetail.do">
+		            	<c:param name="page" value="${ pi.currentPage + 1 }"></c:param>
+		            	<c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
+	            		<c:param name="searchValue1" value="${ search.searchValue1 }"></c:param>
+	            		<c:param name="searchValue2" value="${ search.searchValue2 }"></c:param>
+	            		<c:param name="searchValue3" value="${ search.searchValue3 }"></c:param>
+	            		<c:param name="searchValue4" value="${ search.searchValue4 }"></c:param>
+	            		<c:param name="searchValue5" value="${ search.searchValue5 }"></c:param>
+		            </c:url>
+		            <c:if test="${ pi.currentPage >= pi.maxPage }">다음</c:if>
+		            <c:if test="${ pi.currentPage < pi.maxPage }"><a href="${ after }">다음</a></c:if>
+				</div>
         	</c:if>
         </section>
     </div>

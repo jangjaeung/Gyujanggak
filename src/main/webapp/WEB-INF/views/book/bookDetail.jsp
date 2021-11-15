@@ -122,7 +122,7 @@
 	            </tr>
 	            <c:forEach items="${ rList }" var="review">
 		            <tr>
-		                <td>${ review.reviewStar }</td>
+		                <td>★ ${ review.reviewStar }</td>
 		                <td>${ review.reviewContents }</td>
 		                <td>${ review.userId }</td>
 		                <td>${ review.reviewDate }</td>
