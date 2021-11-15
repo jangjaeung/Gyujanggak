@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,10 +54,9 @@ public class MypageController {
 	private BookService bService;
 	@Autowired
 	private MemberController mController;
-	
 
-	//--- 회원정보 ---//
-	/** 마이페이지 회원정보 조회 화면  */
+	// --- 회원정보 ---//
+	/** 마이페이지 회원정보 조회 화면 */
 	@RequestMapping(value = "mypageInfo.do", method = RequestMethod.GET)
 	public String mypageInfoView(@ModelAttribute Member member, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -72,37 +72,37 @@ public class MypageController {
 		}
 
 	}
-	
-	/** 연회비 결제 후 대기 상태로 변경  */
-	@RequestMapping(value="updatePaymentStatus.do", method=RequestMethod.GET)
+
+	/** 연회비 결제 후 대기 상태로 변경 */
+	@RequestMapping(value = "updatePaymentStatus.do", method = RequestMethod.GET)
 	public String updatePaymentStatus(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		String userId = (String) session.getAttribute("userId");
 		Member member = new Member();
 		member.setUserId(userId);
 		try {
 			int result = service.updatePayment(member);
 			if (result > 0) {
 				session.setAttribute("loginUser", member);
-				return "redirect:mypageInfo.do?userId="+userId;
+				return "redirect:mypageInfo.do?userId=" + userId;
 			} else {
 				model.addAttribute("msg", "연회비 결제 정보 업데이트 실패!");
 				return "common/errorPage";
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
 		}
 	}
 
-	/** 마이페이지 정보 수정 화면  */
+	/** 마이페이지 정보 수정 화면 */
 	@RequestMapping(value = "modifyInfoView.do", method = RequestMethod.GET)
 	public String modifyInfoView(@ModelAttribute Member member, HttpServletRequest request) {
 		return "mypage/modifyInfo";
 	}
 
-	/** 회원 정보 수정  */
+	/** 회원 정보 수정 */
 	@RequestMapping(value = "modifyInfo.do", method = RequestMethod.POST)
 	public String modifyInfo(@ModelAttribute Member member, @RequestParam("enrollDate2") String enrollDate2,
 			HttpServletRequest request, Model model,
@@ -136,7 +136,7 @@ public class MypageController {
 		}
 	}
 
-	/** 파일 삭제  */
+	/** 파일 삭제 */
 	public void deleteFile(String fileName, HttpServletRequest request) {// 경로를 만들어주기 위한 작업(경로를 알아야 해당 파일을 삭제할 수 있음)
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String fullPath = root + "\\muploadFiles";
@@ -146,7 +146,7 @@ public class MypageController {
 		}
 	}
 
-	/** 마이페이지 회원탈퇴 화면  */
+	/** 마이페이지 회원탈퇴 화면 */
 	@RequestMapping(value = "leaveAccount.do", method = RequestMethod.GET)
 	public String leaveAccountView(@ModelAttribute Member member, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -156,7 +156,7 @@ public class MypageController {
 
 	}
 
-	/** 탈퇴  */
+	/** 탈퇴 */
 	@RequestMapping(value = "removeMember.do", method = RequestMethod.GET)
 	public String removeMember(@ModelAttribute Member member, Model model, HttpServletRequest request) {
 		int result = service.removeMember(member);
@@ -170,7 +170,7 @@ public class MypageController {
 		}
 	}
 
-	/** 비밀번호 일치 여부 검사  */
+	/** 비밀번호 일치 여부 검사 */
 	@ResponseBody
 	@RequestMapping(value = "checkDupPwd.do", method = RequestMethod.GET)
 	public String pwdDuplicateCheck(@ModelAttribute Member member, HttpServletRequest request) {
@@ -178,79 +178,84 @@ public class MypageController {
 		return String.valueOf(result);
 	}
 
-	
-	
-	
-	
-	//--- 도서 ---//
-	/** 대출현황  */
+	// --- 도서 ---//
+	/** 대출현황 */
 	@RequestMapping(value = "lendingStatus.do", method = RequestMethod.GET)
-	public ModelAndView lendingStatus(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, HttpServletRequest request) {
+	public ModelAndView lendingStatus(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		String userId = (String) session.getAttribute("userId");
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getListCount(userId);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		
+
 		try {
 			List<Book> lendingList = service.printAllLendingHistory(pi, userId);
-			if(!lendingList.isEmpty()) {
+			if (!lendingList.isEmpty()) {
 				mv.addObject("lendingList", lendingList);
 				mv.addObject("pi", pi);
-			}else {
+			} else {
 				mv.addObject("lendingList", null);
 			}
 			mv.setViewName("mypage/lendingStatus");
-		}catch(Exception e){
+		} catch (Exception e) {
 			mv.addObject("msg", "대출 내역 조회 실패");
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}
-	
-	
+
 	/** 서평 등록 */
 	@ResponseBody
-	@RequestMapping(value="registerReview.do", method=RequestMethod.POST)
-	public String registerReview(@RequestParam("bookNo") int bookNo,@RequestParam("reviewContents") String reviewContents, @RequestParam("reviewStar") String reviewStar, HttpSession session) {
-		String userId = (String)session.getAttribute("userId");
+	@RequestMapping(value = "registerReview.do", method = RequestMethod.POST)
+	public String registerReview(@RequestParam("bookNo") int bookNo,
+			@RequestParam("reviewContents") String reviewContents, @RequestParam("reviewStar") String reviewStar,
+			HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
 		Review review = new Review();
 		review.setUserId(userId);
 		review.setBookNo(bookNo);
 		review.setReviewContents(reviewContents);
 		review.setReviewStar(Double.valueOf(reviewStar));
 		int result = service.registerReview(review);
-		if(result>0) {
+		if (result > 0) {
 			return "success";
-		}else {
+		} else {
+			return "fail";
+		}
+	}
+
+	/** 서평 수정 */
+	@ResponseBody
+	@RequestMapping(value = "modifyReview.do", method = RequestMethod.POST)
+	public String modifyReview(@RequestParam("bookNo") int bookNo,
+			@RequestParam("reviewContents") String reviewContents, @RequestParam("reviewStar") String reviewStar,
+			HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		Review review = new Review();
+		review.setUserId(userId);
+		review.setBookNo(bookNo);
+		review.setReviewContents(reviewContents);
+		review.setReviewStar(Double.valueOf(reviewStar));
+		int result = service.modifyReview(review);
+		if (result > 0) {
+			return "success";
+		} else {
 			return "fail";
 		}
 	}
 	
-	/** 서평 조회 */
-//	@RequestMapping(value="reviewDetail.do", method=RequestMethod.GET)
-//	public void getReviewDetail(@ModelAttribute Review review, HttpServletResponse response, HttpSession session, Model model) throws Exception{
-//		/* String userId = (String)session.getAttribute("userId"); */
-//		Review reviewOne = service.printOneReview(review);
-//		if(reviewOne != null) {
-//			Gson gson = new GsonBuilder().create();
-//			gson.toJson(reviewOne, response.getWriter());
-//			model.addAttribute("reivew", reviewOne);
-//		}
-//		
-//		
-//	}
-	
 
-	/** 예약현황 조회  */
+	/** 예약현황 조회 */
 	@RequestMapping(value = "bookingList.do", method = RequestMethod.GET)
 	public String bookingList() {
 		return "mypage/bookingList";
 	}
 
-	/** 희망도서 내역  */
+	/** 희망도서 내역 */
 	@RequestMapping(value = "wishList.do", method = RequestMethod.GET)
-	public String wishList(HttpServletRequest request, Model model, @RequestParam(value="page", required=false) Integer page, @ModelAttribute Member member, @ModelAttribute WishBook wishbook) {
+	public String wishList(HttpServletRequest request, Model model,
+			@RequestParam(value = "page", required = false) Integer page, @ModelAttribute Member member,
+			@ModelAttribute WishBook wishbook) {
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", member);
 		int currentPage = (page != null) ? page : 1;
@@ -272,129 +277,142 @@ public class MypageController {
 		}
 	}
 
-
-
-	
-	/** 희망도서 신청  */
+	/** 희망도서 신청 */
 	@RequestMapping(value = "applyBook.do", method = RequestMethod.POST)
 	public String applyBook(HttpServletRequest request, @ModelAttribute Member member,
 			@ModelAttribute WishBook wishbook, String div, Model model) throws Exception {
 
-		//db 삽입 
+		// db 삽입
 		int result = service.registerWishBook(wishbook);
 
 		try {
 
-			if(result>0) { 
+			if (result > 0) {
 				HttpSession httpsession = request.getSession();
 				httpsession.setAttribute("loginUser", member);
 
 				final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory"; // 이메일 객체생성하기
-				Properties props = System.getProperties(); 
-				props.put("mail.smtp.user","daollibrary@gmail.com"); 
+				Properties props = System.getProperties();
+				props.put("mail.smtp.user", "daollibrary@gmail.com");
 				props.put("mail.smtp.host", "smtp.gmail.com");
-				props.put("mail.smtp.port", "465"); 
+				props.put("mail.smtp.port", "465");
 				props.put("mail.smtp.starttls", "true");
-				props.put("mail.smtp.ssl.enable", "true"); 
-				props.put("mail.smtp.auth","true"); 
+				props.put("mail.smtp.ssl.enable", "true");
+				props.put("mail.smtp.auth", "true");
 				props.put("mail.debug", "true");
 				props.put("mail.smtp.socketFactory.port", "465");
 				props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
-				props.put("mail.smtp.socketFactory.fallback", "false"); 
+				props.put("mail.smtp.socketFactory.fallback", "false");
 
-				final String username = "daollibrary@gmail.com";//발신자의 이메일 아이디 입력
-				final String password = "daol1234"; //발신자의 패스워드
+				final String username = "daollibrary@gmail.com";// 발신자의 이메일 아이디 입력
+				final String password = "daol1234"; // 발신자의 패스워드
 
 				try {
-					Session session = Session.getDefaultInstance(props, new Authenticator() { protected
-						PasswordAuthentication getPasswordAuthentication() { return new
-								PasswordAuthentication(username, password); }}); //메세지 설정 
+					Session session = Session.getDefaultInstance(props, new Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication(username, password);
+						}
+					}); // 메세지 설정
 					Message msg = new MimeMessage(session);
 
-					//보내는사람 받는사람 설정 
+					// 보내는사람 받는사람 설정
 					msg.setFrom(new InternetAddress("daollibrary@gmail.com"));
-					msg.setRecipients(Message.RecipientType.TO,
-							InternetAddress.parse("daollibrary@gmail.com",false));
+					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("daollibrary@gmail.com", false));
 					msg.setSubject(member.getUserId() + "님의 희망 도서 신청");
-					msg.setText("======  " + member.getUserId() + "님의 희망 도서 신청 내역   ====="  + "\n 도서명 : " +
-							wishbook.getBookName() + "\n 출판사 : " + wishbook.getPublisher() + "\n 저자명 : " +
-							wishbook.getBookWriter() +"\\n ============================"); Transport.send(msg);
-							System.out.println("발신성공!");  
+					msg.setText("======  " + member.getUserId() + "님의 희망 도서 신청 내역   =====" + "\n 도서명 : "
+							+ wishbook.getBookName() + "\n 출판사 : " + wishbook.getPublisher() + "\n 저자명 : "
+							+ wishbook.getBookWriter() + "\\n ============================");
+					Transport.send(msg);
+					System.out.println("발신성공!");
 
-							return "redirect: wishList.do?userId="+wishbook.getUserId();
+					return "redirect: wishList.do?userId=" + wishbook.getUserId();
 
-				}catch (Exception e){ 
-					model.addAttribute("msg", "희망 도서 신청 메일 전송 실패"); 
-					return "common/errorPage"; 
+				} catch (Exception e) {
+					model.addAttribute("msg", "희망 도서 신청 메일 전송 실패");
+					return "common/errorPage";
 				}
-			}else { 
-				model.addAttribute("msg", "희망 도서 등록 실패"); 
-				return "common/errorPage"; } 
-		}catch(Exception e) {
+			} else {
+				model.addAttribute("msg", "희망 도서 등록 실패");
+				return "common/errorPage";
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-			return "common/errorPage"; 
+			return "common/errorPage";
 		}
 
 	}
-	
-	
-	
-	/** 관심 도서 내역  */
+
+	/** 관심 도서 내역 */
 	@RequestMapping(value = "likeList.do", method = RequestMethod.GET)
-	public String likeList() {
-		return "mypage/likeList";
+	public ModelAndView likeList(ModelAndView mv, HttpSession session, @RequestParam(value="page", required = false) Integer page) {
+		String userId = (String) session.getAttribute("userId");
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getlikeListCount(userId);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		try {
+			List<Book> likeList = service.printLikeList(pi, userId);
+			if(!likeList.isEmpty()) {
+				mv.addObject("likeList", likeList);
+				mv.addObject("pi", pi);
+			}else {
+				mv.addObject("likeList", null);
+			}
+			mv.setViewName("mypage/likeList");
+		}catch(Exception e) {
+			mv.addObject("msg", "관심도서 내역 조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
 	}
 
-	
-	//--- 취향분석 ---//
-	/** 취향분석설문 화면  */
+	// --- 취향분석 ---//
+	/** 취향분석설문 화면 */
 	@RequestMapping(value = "tasteSurvey.do", method = RequestMethod.GET)
 	public String tasteSurveyView() {
 		return "mypage/tasteSurvey";
 	}
 
-	
-	
-	
-	//--- 시설 이용 ---//
-	/** 열람실 이용내역  */
+	// --- 시설 이용 ---//
+	/** 열람실 이용내역 */
 	@RequestMapping(value = "readingroomHistory.do", method = RequestMethod.GET)
-	public String readingroomHistory(@ModelAttribute ReadingRoom readingRoom, @RequestParam(value="page", required=false) Integer page, HttpSession session, Model model) {
-		String userId = (String)session.getAttribute("userId");
+	public String readingroomHistory(@ModelAttribute ReadingRoom readingRoom,
+			@RequestParam(value = "page", required = false) Integer page, HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("userId");
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getrListCount(userId);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		try {
 			List<ReadingRoom> rList = service.printAllrList(userId);
-			if(!rList.isEmpty()) {
+			if (!rList.isEmpty()) {
 				model.addAttribute("rList", rList);
 				model.addAttribute("pi", pi);
-			}else {
+			} else {
 				model.addAttribute("rList", null);
 			}
-			
+
 			return "mypage/readingroomHistory";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("msg", "열람실 내역 조회 실패");
 			return "common/errorPage";
 		}
-		
+
 	}
-	
-	/** 열람실 예약 취소  */
-	@RequestMapping(value="cancelReadingRoom.do", method=RequestMethod.GET)
-	public String cancleReadingRoom(HttpServletRequest request, @RequestParam("rReservationNo") int rReservationNo, Model model) {
+
+	/** 열람실 예약 취소 */
+	@RequestMapping(value = "cancelReadingRoom.do", method = RequestMethod.GET)
+	public String cancleReadingRoom(HttpServletRequest request, @RequestParam("rReservationNo") int rReservationNo,
+			Model model) {
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		String userId = (String) session.getAttribute("userId");
 		int result = service.cancelReadingRoom(rReservationNo);
 		try {
-			if(result > 0) {
-				return "redirect:readingroomHistory.do?userId="+userId;
-			}else {
+			if (result > 0) {
+				return "redirect:readingroomHistory.do?userId=" + userId;
+			} else {
 				model.addAttribute("msg", "예약 취소 실패");
 				return "common/errorPage";
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
@@ -402,136 +420,141 @@ public class MypageController {
 
 	}
 
-	/** 스터디룸 이용 내역  */
+	/** 스터디룸 이용 내역 */
 	@RequestMapping(value = "studyroomHistory.do", method = RequestMethod.GET)
-	public String studyroomHistory(@ModelAttribute StudyRoom studyRoom, @RequestParam("userId") String userId, Model model) {
-		
+	public String studyroomHistory(@ModelAttribute StudyRoom studyRoom, @RequestParam("userId") String userId,
+			Model model) {
+
 		try {
 			List<StudyRoom> sList = service.printAllsList(userId);
-			if(!sList.isEmpty()) {
+			if (!sList.isEmpty()) {
 				model.addAttribute("sList", sList);
-			}else {
+			} else {
 				model.addAttribute("sList", null);
 			}
 			return "mypage/studyroomHistory";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("msg", "스터디룸 내역 조회 실패");
 			return "common/errorPage";
 		}
-		
+
 	}
-	
-	/** 스터디룸 예약 취소  */
-	@RequestMapping(value="cancelStudyRoom.do", method=RequestMethod.GET)
-	public String cancleStudyRoom(HttpServletRequest request, @RequestParam("sReservationNo") int sReservationNo, Model model) {
+
+	/** 스터디룸 예약 취소 */
+	@RequestMapping(value = "cancelStudyRoom.do", method = RequestMethod.GET)
+	public String cancleStudyRoom(HttpServletRequest request, @RequestParam("sReservationNo") int sReservationNo,
+			Model model) {
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		String userId = (String) session.getAttribute("userId");
 		int result = service.cancelStudyRoom(sReservationNo);
 		try {
-			if(result > 0) {
-				return "redirect:studyroomHistory.do?userId="+userId;
-			}else {
+			if (result > 0) {
+				return "redirect:studyroomHistory.do?userId=" + userId;
+			} else {
 				model.addAttribute("msg", "예약 취소 실패");
 				return "common/errorPage";
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
 		}
 
 	}
-	
-	
-	
-	//--- 문의 ---//
-	//문의페이지
-	@RequestMapping(value="qnaList.do",method = RequestMethod.GET)
-	public ModelAndView qnaList(ModelAndView mv,HttpSession session) {
-		String userId = (String)session.getAttribute("userId");
-		if(userId != null) {
-			mv.addObject("userId",userId);
+
+	// --- 문의 ---//
+	// 문의페이지
+	@RequestMapping(value = "qnaList.do", method = RequestMethod.GET)
+	public ModelAndView qnaList(ModelAndView mv, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		if (userId != null) {
+			mv.addObject("userId", userId);
 		}
 		List<Qna> qList = service.printAllQna(userId);
-		if(!qList.isEmpty()) {
-			mv.addObject("qList",qList);
+		if (!qList.isEmpty()) {
+			mv.addObject("qList", qList);
 		}
 		mv.setViewName("mypage/qna");
 		return mv;
 	}
-	
-	//문의작성페이지이동
-	@RequestMapping(value="registQnaView.do",method=RequestMethod.GET)
-	public ModelAndView registViewQna(ModelAndView mv,HttpSession session) {
-		String userId = (String)session.getAttribute("userId");
-		if(userId != null) {
-			mv.addObject("userId",userId);
+
+	// 문의작성페이지이동
+	@RequestMapping(value = "registQnaView.do", method = RequestMethod.GET)
+	public ModelAndView registViewQna(ModelAndView mv, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		if (userId != null) {
+			mv.addObject("userId", userId);
 			mv.setViewName("mypage/qnaRegistView");
 		}
 		return mv;
 	}
-	//문의 작성
-	@RequestMapping(value="qnaRegist.do",method=RequestMethod.POST)
-	public String registQna(Model model,@ModelAttribute Qna qna){
+
+	// 문의 작성
+	@RequestMapping(value = "qnaRegist.do", method = RequestMethod.POST)
+	public String registQna(Model model, @ModelAttribute Qna qna) {
 		int result = service.registQna(qna);
-		if(result>0) {
+		if (result > 0) {
 			return "redirect:qnaList.do";
-		}else {
-			model.addAttribute("msg","등록실패");
+		} else {
+			model.addAttribute("msg", "등록실패");
 			return "common/errorPage";
 		}
 	}
-	//문의 디테일 페이지 이동
-	@RequestMapping(value="qnaDetail.do",method=RequestMethod.GET)
-	public ModelAndView qnaDetail(ModelAndView mv,@RequestParam("qnaNo") int qnaNo, HttpSession session) {
-		String member = (String)session.getAttribute("userId");
-		if(member != null) {
-			mv.addObject("userId",member);
+
+	// 문의 디테일 페이지 이동
+	@RequestMapping(value = "qnaDetail.do", method = RequestMethod.GET)
+	public ModelAndView qnaDetail(ModelAndView mv, @RequestParam("qnaNo") int qnaNo, HttpSession session) {
+		String member = (String) session.getAttribute("userId");
+		if (member != null) {
+			mv.addObject("userId", member);
 		}
 		Qna qna = service.printOneQna(qnaNo);
-			if(qna!=null) {
-				mv.addObject("qna", qna);
-				mv.setViewName("mypage/qnaDetail");
-			}else {
-				mv.addObject("msg","조회실패");
-				mv.setViewName("common/errorPage");
-			}
+		if (qna != null) {
+			mv.addObject("qna", qna);
+			mv.setViewName("mypage/qnaDetail");
+		} else {
+			mv.addObject("msg", "조회실패");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
-	//문의 수정페이지 이동
-	@RequestMapping(value="qnaModifyView.do",method=RequestMethod.GET)
-	public ModelAndView qnaModifyView(ModelAndView mv,@RequestParam("qnaNo") int qnaNo, HttpSession session) {
-		String member = (String)session.getAttribute("userId");
-		if(member != null) {
-			mv.addObject("userId",member);
+
+	// 문의 수정페이지 이동
+	@RequestMapping(value = "qnaModifyView.do", method = RequestMethod.GET)
+	public ModelAndView qnaModifyView(ModelAndView mv, @RequestParam("qnaNo") int qnaNo, HttpSession session) {
+		String member = (String) session.getAttribute("userId");
+		if (member != null) {
+			mv.addObject("userId", member);
 		}
 		Qna qna = service.printOneQna(qnaNo);
-			if(qna!=null) {
-				mv.addObject("qna", qna);
-				mv.setViewName("mypage/qnaModifyView");
-			}else {
-				mv.addObject("msg","조회실패");
-				mv.setViewName("common/errorPage");
-			}
+		if (qna != null) {
+			mv.addObject("qna", qna);
+			mv.setViewName("mypage/qnaModifyView");
+		} else {
+			mv.addObject("msg", "조회실패");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
-	//문의 수정
-	@RequestMapping(value="qnaModify.do",method=RequestMethod.POST)
+
+	// 문의 수정
+	@RequestMapping(value = "qnaModify.do", method = RequestMethod.POST)
 	public String qnaModify(@ModelAttribute Qna qna) {
 		int result = service.modifyQna(qna);
-		if(result > 0) {
+		if (result > 0) {
 			return "redirect:qnaList.do";
-		}else {
+		} else {
 			return "common/errorPage";
 		}
 	}
-	//문의 삭제
-	@RequestMapping(value="qnaRemove.do",method=RequestMethod.GET)
-	public String qnaRemove(@RequestParam("qnaNo")int qnaNo) {
+
+	// 문의 삭제
+	@RequestMapping(value = "qnaRemove.do", method = RequestMethod.GET)
+	public String qnaRemove(@RequestParam("qnaNo") int qnaNo) {
 		int result = service.removeQna(qnaNo);
-		if(result > 0) {
+		if (result > 0) {
 			return "redirect:qnaList.do";
-		}else {
+		} else {
 			return "common/errorpage";
 		}
 	}

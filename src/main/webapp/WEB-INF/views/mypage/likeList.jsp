@@ -67,6 +67,10 @@
 .btn-area{
 	text-align : center;
 }
+
+.page-area{
+	text-align :center;
+}
 input[type=checkbox] {
 transform : scale(1.5);
 }
@@ -101,89 +105,68 @@ transform : scale(1.5);
 				<b>관심 도서 내역</b>
 			</h2>
 			<br><br><br>
-				<div align="right">
-					<span>전체 선택</span>&nbsp;&nbsp;
-					<input type="checkbox"  value="" >&nbsp;
-				</div><br><br>
-			<!-- 본문 -->
-			<br> <br>
-			<div class="card">
-				<div class="checkbox">
-					<input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-				</div>
-				<div class="photo">
-					<img src="https://s-media-cache-ak0.pinimg.com/236x/3b/36/ca/3b36ca3afe0fa0fd4984b9eee2e154bb.jpg" width="160px" height="220px">
-				</div>
-				<div class="description">
-					<h3>달러구트 꿈 백화점</h3>
-					<p><span>팩토리나인</span>&nbsp;|&nbsp;<span>이미예</span>&nbsp;|&nbsp;<span>2021.07.27</span></p>
-					<br><br><br>	
-				</div>
+			<c:if test="${empty likeList }">
+				<tr>
+					<td colspan="6" align="center"> 관심 도서 내역이 없습니다. </td>
+				</tr>
+			</c:if>		
+			<c:if test="${not empty likeList }">	
+			<div id="book-count">
+				<p><span>${pi.totalCount}</span> 권의 책이 있습니다.</p> 
 			</div>
-							<!-- 버튼 --><br><br><br>
-				<div class="btn-area">
-					<a href="#layer" class="check-btn"><button class="btn btn-danger" id="withdraw-btn">삭제하기</button></a>
-				</div>
-				
-				<!-- 삭제 경고창 -->
-				<div id="layer" class="pop-layer">
-				<div class="pop-container">
-					<div class="pop-conts">
-						<!-- 내용 -->
-						<h4 class="ctxt mb20"><b>정말로 삭제하시겠습니까?</b></h4>
-						<div class="btn-r">
-							<a href="#" class="btn-layerClose"><button class="btn btn-danger">삭제</button></a> <a
-								href="#" class="btn-layerClose"><button class="btn btn-secondary" >취소</button></a>
-						</div>
-						<!--  // 내용 끝 -->
+			<br><br>
+			<c:forEach items="${likeList }" var="like" varStatus="index">
+			<!-- 본문 -->
+			<br>
+				<div class="card">
+					<div class="photo">
+						<img src="${pageContext.request.contextPath}/resources/bookcover/${like.bookCover}" width="173.3px" height="220px">
+					</div>
+					<div class="description">
+						<h3><a href="/bookDetail.do?bookNo=${like.bookNo }">${like.bookName}</a></h3><input type="hidden" name="bookNo" value="${like.bookNo }" id="bookNo">
+						<p><span>${like.publisher}</span>&nbsp;|&nbsp;<span>${like.bookWriter}</span>&nbsp;|&nbsp;<span>${like.bookYear}</span></p>
+						<br><br><br>	
 					</div>
 				</div>
-			</div>
+			</c:forEach>
+			<br><br>
+				<div class="page-area">
+					<c:url var="before" value="likeList.do">
+						<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+					</c:url>
+					<c:if test="${pi.currentPage <= 1 }">
+						[이전]
+					</c:if>
+					<c:if test="${pi.currentPage > 1 }">
+						<a href="${before }">[이전]</a>
+					</c:if>
+					<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+						<c:url var="pagination" value="likeList.do">
+							<c:param name="page" value="${p }"></c:param>
+						</c:url>
+						<c:if test="${p eq pi.currentPage }">
+						 	<font color = "#408c99" size="4">[${p }]</font>
+						</c:if>
+						<c:if test="${p ne pi.currentPage }">
+						 	<a href="${pagination }">[${p }]</a>&nbsp;
+						</c:if>
+					</c:forEach>
+					<c:url var="after" value="likeList.do">
+						<c:param name="page" value="${pi.currentPage + 1 }">></c:param>
+					</c:url>
+					<c:if test="${pi.currentPage >= pi.maxPage }">
+						[다음]
+					</c:if>
+					<c:if test="${pi.currentPage < pi.maxPage }">
+						<a href="${after } ">[다음]</a>
+					</c:if>
+				</div>	
+		</c:if>
 		</article>
 		<br><br>
 	</section>
 	</c:if>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
-<jsp:include page="../common/footer.jsp"></jsp:include>
-	<script>
-	$(".check-btn").click(function(){
-        var $href = $(this).attr("href");
-        layer_popup($href);
-    });
-    function layer_popup(el){
-
-        var $el = $(el);    //레이어의 id를 $el 변수에 저장
-        var isDim = $el.prev().hasClass("dimBg"); //dimmed 레이어를 감지하기 위한 boolean 변수
-
-        isDim ? $(".dim-layer").fadeIn() : $el.fadeIn();
-
-        var $elWidth = ~~($el.outerWidth()),
-            $elHeight = ~~($el.outerHeight()),
-            docWidth = $(document).width(),
-            docHeight = $(document).height();
-
-        // 화면의 중앙에 레이어를 띄운다.
-        if ($elHeight < docHeight || $elWidth < docWidth) {
-            $el.css({
-                marginTop: -$elHeight /2,
-                marginLeft: -$elWidth/2
-            })
-        } else {
-            $el.css({top: 0, left: 0});
-        }
-
-        $el.find("a.btn-layerClose").click(function(){
-            isDim ? $(".dim-layer").fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-            return false;
-        });
-
-        $(".layer .dimBg").click(function(){
-            $(".dim-layer").fadeOut();
-            return false;
-        });
-
-    }
-
-	</script>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.daol.library.mypage.store.logic;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -71,9 +72,9 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public Review selectOneReview(int bookNo) {
-		Review review = sqlSession.selectOne("mypageMapper.selectOneReview", bookNo);
-		return review;
+	public List<Review> selectOneReview(Review review) {
+		List<Review> rList = sqlSession.selectList("mypageMapper.selectOneReview",review);
+		return rList;
 	}
 
 	@Override
@@ -83,9 +84,9 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public int udpateReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateReview(Review review) {
+		int result = sqlSession.update("mypageMapper.updateReview", review);
+		return result;
 	}
 
 	@Override
@@ -128,11 +129,19 @@ public class MypageStoreLogic implements MypageStore{
 	}
 	
 
+	//관심도서
+	@Override
+	public int selectLikeListCount(String userId) {
+		int count = sqlSession.selectOne("mypageMapper.selectLikeListCount", userId);
+		return count;
+	}
 
 	@Override
-	public Book selectLikeList(Book book) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> selectLikeList(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); //한 페이지당 보여줄 게시물 갯수
+		List<Book> likeList = sqlSession.selectList("mypageMapper.selectLikeList", userId, rowBounds);
+		return likeList;
 	}
 
 	
@@ -203,5 +212,7 @@ public class MypageStoreLogic implements MypageStore{
 	public List<Review> selectOneForDetail(int bookNo) {
 		return sqlSession.selectList("mypageMapper.selectOneForDetail", bookNo);
 	}
+
+
 
 }

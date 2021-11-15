@@ -78,10 +78,11 @@ public class MypageServiceImpl implements MypageService{
 		return lendingList;
 	}
 
+	/** 마이페이지 서평 조회 */
 	@Override
-	public Review printOneReview(int bookNo) {
-		Review review = store.selectOneReview(bookNo);
-		return review;
+	public List<Review> printOneReview(Review review) {
+		List<Review> rList = store.selectOneReview(review);
+		return rList;
 	}
 
 	@Override
@@ -92,8 +93,8 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public int modifyReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.updateReview(review);
+		return result;
 	}
 
 	@Override
@@ -136,11 +137,17 @@ public class MypageServiceImpl implements MypageService{
 		return wList;
 	}
 
+	/**관심도서 게시물 갯수*/
+	@Override
+	public int getlikeListCount(String userId) {
+		int totalCount = store.selectLikeListCount(userId);
+		return totalCount;
+	}
 
 	@Override
-	public Book printLikeList(Book book) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> printLikeList(PageInfo pi, String userId) {
+		List<Book> likeList = store.selectLikeList(pi, userId);
+		return likeList;
 	}
 
 	
@@ -212,5 +219,9 @@ public class MypageServiceImpl implements MypageService{
 	public List<Review> printOneForDetail(int bookNo) {
 		return store.selectOneForDetail(bookNo);
 	}
+
+
+
+
 
 }
