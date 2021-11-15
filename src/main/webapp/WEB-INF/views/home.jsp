@@ -39,11 +39,11 @@
 		</div>
 		<form action="/searchSimple.do">
 			<div class="search-wrap">
-				<select name="searchCondition" id="" class="search__select" style ="width:20%;height:100%;">
+				<select name="searchCondition" id="selectbox" class="search__select" style ="width:20%;height:100%;">
 					<option value="title">도서명</option>
 	                <option value="writer">저자</option>
 	                <option value="publisher">출판사</option>
-				</select> <input type="text" name="searchValue" id="" class="search" style="width:79%;height:100%;" placeholder="검색어 입력">
+				</select> <input type="text" name="searchValue" id="input-box" class="search" style="width:79%;height:100%;" placeholder="검색어 입력">
 				<i class="material-icons zxc" style="position:absolute; z-index:199; margin-left:-30px; margin-top:13px; cursor:pointer;">search</i>
 				<input type="submit" value="검색" id="sbt" style="display:none;">
 			</div>
@@ -88,14 +88,14 @@
 			</div>
 			<div class="swiper mySwiper tab-0 act">
 				<div class="swiper-wrapper">
-					<c:forEach items="${bList }" var="bList">
+					<c:forEach items="${pList }" var="pList">
 						<div class="swiper-slide">
 							<div class="cont">
 								<c:url var="bDetail" value="/bookDetail.do">
-	                    			<c:param name="bookNo" value="${bList.bookNo }"></c:param>
+	                    			<c:param name="bookNo" value="${pList.bookNo }"></c:param>
 	                    		</c:url>
 								<a href="${bDetail }" style="text-decoration: none;">
-									<img class="" src="/resources/bookcover/${bList.bookCover }" alt="">
+									<img class="" src="/resources/bookcover/${pList.bookCover }" alt="">
 								</a>
 							</div>
 						</div>
@@ -128,20 +128,18 @@
 		<div class="keyword-area">
 			<div class="keyword">
 				<ul id="kate">
-					<li class="gori sel" data-tab="tab-3">인기 검색어</li>
-					<li class="gori" data-tab="tab-4">다독자</li>
+					<li class="gori sel" data-tab="tab-3" id="popKeykate">인기 검색어</li>
+					<li class="gori" data-tab="tab-4" id="manyPeople">다독자</li>
 				</ul>
 			</div>
 			<div class="pop tab-3 sh">
-				<ol>
-					<c:forEach items="${kList }" var="kList">
-						<li>${kList.keyword }</li>
-					</c:forEach>
+				<ol id="pop-K">
+					
 				</ol>
 			</div>
 			<div class="pop tab-4">
-				<ol>
-					<li>asdd</li>
+				<ol id="many">
+				
 				</ol>
 			</div>
 		</div>
@@ -208,6 +206,68 @@
 		$(this).addClass("sel");
 		$("."+pop_id).addClass("sh");
 	})
+	
+	getPopKeyword();
+	setInterval("getPopKeyword()",3000);
+	$("#popKeykate").on("click",function(){
+		getPopKeyword();
+	});
+	function getPopKeyword(){
+		$.ajax({
+			type:'GET',
+			url:'popKeyword.do',
+			dataType:"json",
+			success : function(data){
+				$("#pop-K li").remove();
+				if(data.length < 10){
+					for(var i in data){
+						$("#pop-K").append("<li><a href='/searchSimple.do?searchCondition=title&searchValue="+data[i].keyword+"'>"+data[i].keyword+"</a></li>");
+					}
+					for(var i = data.length; i<10; i++){
+						$("#pop-K").append("<li>-</li>");
+					}
+				}else{
+					for(var i in data){
+						$("#pop-K").append("<li><a href='/searchSimple.do?searchCondition=title&searchValue="+data[i].keyword+"'>"+data[i].keyword+"</a></li>");
+					}
+				}
+			},
+			error:function(){
+				alert("실패");
+			}
+		})
+	};
+
+	setInterval("manyBookPeople()",60000);
+	$("#manyPeople").on("click",function(){
+		manyBookPeople();
+	});
+	manyBookPeople();
+	function manyBookPeople(){
+		$.ajax({
+			type:'GET',
+			url:'manyBook.do',
+			dataType:"json",
+			success : function(data){
+				$("#many li").remove();
+				if(data.length < 10){
+					for(var i in data){
+						$("#many").append("<li>"+data[i].userId+"</li>");
+					}
+					for(var i = data.length; i<10; i++){
+						$("#many").append("<li>-</li>");
+					}
+				}else{
+					for(var i in data){
+						$("#many").append("<li>"+data[i].userId+"</li>");
+					}
+				}
+			},
+			error:function(){
+				alert("실패");
+			}
+		})
+	};
  	 </script>
 </body>
 </html>

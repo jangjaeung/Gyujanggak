@@ -17,4 +17,7 @@ public interface LendingBookService {
 	public int modifyLending(LendingBook lendingBook);
 	
 	public int registerParcel(Parcel parcel) throws Exception;
+	
+	//다독자 리스트
+	public List<LendingBook> printManyPeople();
 }

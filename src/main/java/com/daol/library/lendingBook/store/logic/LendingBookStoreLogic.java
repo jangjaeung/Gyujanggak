@@ -62,5 +62,10 @@ public class LendingBookStoreLogic implements LendingBookStore {
 		int result = sqlSession.insert("lendingBookMapper.insertLending", lendingBook);
 		return result;
 	}
+	//다독자리스트
+	@Override
+	public List<LendingBook> selectManyPeople() {
+		return sqlSession.selectList("lendingBookMapper.selectManyList");
+	}
 
 }
