@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.Keyword;
+import com.daol.library.book.domain.PageInfo;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.service.BookService;
 import com.daol.library.book.store.BookStore;
@@ -17,7 +18,7 @@ public class BookServiceImpl implements BookService {
 	private BookStore store;
 
 	@Override
-	public List<Book> printAll() {
+	public List<Book> printAll(PageInfo pi) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -29,27 +30,21 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	@Override
-	public List<Book> printSearchSimple(Search search) {
-		List<Book> bList = store.selectSearchSimple(search);
+	public List<Book> printSearchSimple(PageInfo pi, Search search) {
+		List<Book> bList = store.selectSearchSimple(pi, search);
 		return bList;
 	}
 
 	@Override
-	public List<Book> printSearchDetail(Search search) {
-		List<Book> bList = store.selectSearchDetail(search);
+	public List<Book> printSearchDetail(PageInfo pi, Search search) {
+		List<Book> bList = store.selectSearchDetail(pi, search);
 		return bList;
 	}
 
 	@Override
-	public List<Book> printSearchSub(Search search) {
-		List<Book> bList = store.selectSearchSub(search);
+	public List<Book> printSearchSub(PageInfo pi, Search search) {
+		List<Book> bList = store.selectSearchSub(pi, search);
 		return bList;
-	}
-
-	@Override
-	public List<Book> printSearchNew() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -71,18 +66,40 @@ public class BookServiceImpl implements BookService {
 		List<Book> bList = store.selectBestBook();
 		return bList;
 	}
+	
 	//인기키워드 적립용
 	@Override
 	public void regiKeyword(Search search) {
 		String keyword = search.getSearchCondition();
-		if(keyword.equals("title")) {
+		String value = search.getSearchValue();
+		if(keyword.equals("title") && value!="") {
 			store.insertKeyword(search);
 		}
 	}
+	
 	//인기키워드 출력
 	@Override
 	public List<Keyword> printPopKeyword() {
 		return store.selectPopKeyword();
+	}
+
+//	페이징 처리
+	@Override
+	public int getListCount1(Search search) {
+		int totalCount = store.selectListCount1(search);
+		return totalCount;
+	}
+
+	@Override
+	public int getListCount2(Search search) {
+		int totalCount = store.selectListCount2(search);
+		return totalCount;
+	}
+
+	@Override
+	public int getListCount3(Search search) {
+		int totalCount = store.selectListCount3(search);
+		return totalCount;
 	}
 
 }

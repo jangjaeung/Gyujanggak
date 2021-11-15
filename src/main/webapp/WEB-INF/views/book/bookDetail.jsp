@@ -36,6 +36,7 @@
     </aside>
 <!-- Contents -->
     <input type="hidden" name="bookNo" value="${ book.bookNo }">
+    <input type="hidden" name="userId" value="${ sessionScope.userId }">
     <div>
         <table border="1">
             <tr>
@@ -84,17 +85,50 @@
 		<c:url var="lendingB" value="/lendingBookView.do">
 			<c:param name="bookNo" value="${ book.bookNo }"></c:param>
 		</c:url>
-        <c:if test="${ book.bookState eq '대출가능' }">
+		<c:url var="intB" value="/interestingBook.do">
+			<c:param name="bookNo" value="${ book.bookNo }"></c:param>
+			<c:param name="userId" value="${ sessionScope.userId }"></c:param>
+		</c:url>
+		<c:url var="rsvB" value="/reservationBook.do">
+			<c:param name="bookNo" value="${ book.bookNo }"></c:param>
+			<c:param name="userId" value="${ sessionScope.userId }"></c:param>
+		</c:url>
+        <c:if test="${ book.bookState eq '대출가능' && not empty sessionScope.userId }">
 	        <button type="button" onclick="location.href='${ lendingB }';" id="lending-btn">대출신청</button>
         </c:if>
-        <button type="button" onclick="location.href='#';">도서예약</button>
-        <button type="button" onclick="location.href='#';">관심도서담기</button>
+        <c:if test="${ book.bookState eq '대출불가' && not empty sessionScope.userId }">
+	        <button type="button" onclick="location.href='${ rsvB }';">도서예약</button>
+        </c:if>
+        <c:if test="${ not empty sessionScope.userId }">
+	        <button type="button" onclick="location.href='${ intB }';" id="interesting-btn">관심도서담기</button>
+        </c:if>
     </div>
     <div>
-        <table>
+        <table border="1">
             <tr>
-                <td>회원 서평</td>
+                <td colspan="4">회원 서평</td>
             </tr>
+            <c:if test="${ empty rList }">
+            	<tr>
+            		<td colspan="4">등록된 서평이 없습니다.</td>
+            	</tr>
+            </c:if>
+            <c:if test="${ not empty rList }">
+	            <tr>
+	            	<td>별점</td>
+	                <td>서평</td>
+	                <td>아이디</td>
+	                <td>작성일</td>
+	            </tr>
+	            <c:forEach items="${ rList }" var="review">
+		            <tr>
+		                <td>★ ${ review.reviewStar }</td>
+		                <td>${ review.reviewContents }</td>
+		                <td>${ review.userId }</td>
+		                <td>${ review.reviewDate }</td>
+		            </tr>
+	            </c:forEach>
+            </c:if>
         </table>
     </div>
 <!-- Footer -->

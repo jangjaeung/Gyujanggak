@@ -32,6 +32,8 @@ public interface MypageStore {
 		public List<Book> selectAllLendingHistory(PageInfo pi, String userId);
 		/** 서평 조회 */
 		public Review selectOneReview(int bookNo);
+		/** 도서 상세 조회 페이지 서평 조회 */
+		public List<Review> selectOneForDetail(int bookNo);
 		/** 서평 등록 */
 		public int insertReview(Review review);
 		/** 서평 수정 */

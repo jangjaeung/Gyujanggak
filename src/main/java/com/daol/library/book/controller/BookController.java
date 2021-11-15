@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.daol.library.book.common.Pagenation;
 import com.daol.library.book.domain.Book;
+import com.daol.library.book.domain.PageInfo;
+import com.daol.library.book.domain.Review;
 import com.daol.library.book.domain.Search;
 import com.daol.library.book.service.BookService;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.service.LendingBookService;
+import com.daol.library.mypage.service.MypageService;
 
 @Controller
 public class BookController {
@@ -24,23 +28,31 @@ public class BookController {
 	@Autowired
 	private LendingBookService LendingBookService;
 	
+	@Autowired
+	private MypageService MypageService;
+	
 //	간략 검색
 	@GetMapping("/search.do")
 	public String searchView() {
 		return "book/bookSearchSimple";
 	}
 	@GetMapping("/searchSimple.do")
-	public String simpleSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchSimple(search);
+	public String simpleSearchList(@ModelAttribute Search search, Model model, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount1(search);
+		PageInfo pi = Pagenation.getPageInfo(currentPage, totalCount);
+		List<Book> bList = service.printSearchSimple(pi, search);
 		regiKeyword(search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
+			model.addAttribute("pi", pi);
 			return "book/bookSearchSimple";
 		} else {
 			return "book/bookSearchSimple";
 		}
 	}
+	
 	//검색어 저장
 	public void regiKeyword(Search search) {
 		service.regiKeyword(search);
@@ -52,11 +64,15 @@ public class BookController {
 		return "book/bookSearchDetail";
 	}
 	@GetMapping("/searchDetail.do")
-	public String detailSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchDetail(search);
+	public String detailSearchList(@ModelAttribute Search search, Model model, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount2(search);
+		PageInfo pi = Pagenation.getPageInfo(currentPage, totalCount);
+		List<Book> bList = service.printSearchDetail(pi, search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
+			model.addAttribute("pi", pi);
 			return "book/bookSearchDetail";
 		} else {
 			return "book/bookSearchDetail";
@@ -69,11 +85,15 @@ public class BookController {
 		return "book/bookSearchSubject";
 	}
 	@GetMapping("/searchSubject.do")
-	public String subjectSearchList(@ModelAttribute Search search, Model model) {
-		List<Book> bList = service.printSearchSub(search);
+	public String subjectSearchList(@ModelAttribute Search search, Model model, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount3(search);
+		PageInfo pi = Pagenation.getPageInfo(currentPage, totalCount);
+		List<Book> bList = service.printSearchSub(pi, search);
 		if(!bList.isEmpty()) {
 			model.addAttribute("bList", bList);
 			model.addAttribute("search", search);
+			model.addAttribute("pi", pi);
 			return "book/bookSearchSubject";
 		} else {
 			return"book/bookSearchSubject";
@@ -108,10 +128,12 @@ public class BookController {
 	@GetMapping("/bookDetail.do")
 	public ModelAndView bookDetail(ModelAndView mv, @RequestParam("bookNo") int bookNo) {
 		Book book = service.printOne(bookNo);
+		List<Review> rList = MypageService.printOneForDetail(bookNo);
 		LendingBook lendingBook = LendingBookService.printOneForDetail(bookNo);
 		if(book != null) {
 			mv.addObject("book", book);
 			mv.addObject("lendingBook", lendingBook);
+			mv.addObject("rList", rList);
 			mv.setViewName("book/bookDetail");
 		} else {
 			mv.addObject("msg", "상세 조회 실패");

@@ -96,6 +96,9 @@
 	<insert id="insertReview" parameterType="Review">
 		INSERT INTO REVIEW VALUES(SEQ_REVIEWNUM.NEXTVAL,#{bookNo}, #{reviewStar}, #{reviewContents}, SYSDATE, 'Y', #{userId})
 	</insert>
+	<select id="selectOneForDetail" resultMap="reviewResultMap">
+		SELECT * FROM REVIEW WHERE BOOK_NO = #{bookNo}
+	</select>
 	
 	<!-- 희망도서 -->
 	<resultMap type="WishBook" id="wishbookResultMap">

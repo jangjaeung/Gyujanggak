@@ -5,8 +5,9 @@ $(function() { $("#postcodify_search_button").postcodifyPopUp(); });
 function setDisplay(){
     if($('input:radio[id=bookReceive]').is(':checked')){
         $('#book-parcel').show();
+        $('#book-inperson').hide();
     }else{
+        $('#book-inperson').show();
         $('#book-parcel').hide();
     }
-
 }

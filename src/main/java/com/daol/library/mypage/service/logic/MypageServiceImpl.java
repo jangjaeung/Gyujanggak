@@ -208,8 +208,9 @@ public class MypageServiceImpl implements MypageService{
 		return store.deleteQna(qnaNo);
 	}
 
-
-
-
+	@Override
+	public List<Review> printOneForDetail(int bookNo) {
+		return store.selectOneForDetail(bookNo);
+	}
 
 }

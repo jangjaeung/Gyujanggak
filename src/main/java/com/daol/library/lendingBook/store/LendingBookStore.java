@@ -17,4 +17,5 @@ public interface LendingBookStore {
 	public int updateLending(LendingBook lendingBook);
 	
 	public int insertParcel(Parcel parcel);
+	public List<LendingBook> selectManyPeople();
 }
