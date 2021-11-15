@@ -59,4 +59,16 @@ public class MemberStoreLogic implements MemberStore{
 		int result = sqlSession.update("membermapper.updateLendingMember", userId);
 		return result;
 	}
+
+	@Override
+	public Member selectkakao(String kakaoId) {
+		Member mUser = sqlSession.selectOne("membermapper.selectkakaoMember", kakaoId);
+		return mUser;
+	}
+
+	@Override
+	public int selectIdCheck(String userId) {
+		int result = sqlSession.selectOne("membermapper.selectkakaoId", userId);
+		return result;
+	}
 }

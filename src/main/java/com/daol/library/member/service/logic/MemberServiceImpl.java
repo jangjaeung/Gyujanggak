@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService{
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		// 이메일 객체생성하기
 		Properties props = System.getProperties();
-		props.put("mail.smtp.user", "daollibrary@gmail.com");
+		props.put("mail.smtp.user", "daolLibrary1@gmail.com");
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "465");
 		props.put("mail.smtp.starttls", "true");
@@ -61,7 +61,7 @@ public class MemberServiceImpl implements MemberService{
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
 		props.put("mail.smtp.socketFactory.fallback", "false");
-		final String username = "daollibrary@gmail.com";//
+		final String username = "daolLibrary1@gmail.com";//
 		final String password = "daol1234";
 
 		try{
@@ -136,7 +136,7 @@ public class MemberServiceImpl implements MemberService{
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		// 이메일 객체생성하기
 		Properties props = System.getProperties();
-		props.put("mail.smtp.user", "daollibrary@gmail.com");
+		props.put("mail.smtp.user", "daolLibrary1@gmail.com");
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "465");
 		props.put("mail.smtp.starttls", "true");
@@ -146,7 +146,7 @@ public class MemberServiceImpl implements MemberService{
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
 		props.put("mail.smtp.socketFactory.fallback", "false");
-		final String username = "daollibrary@gmail.com";//
+		final String username = "daolLibrary1@gmail.com";//
 		final String password = "daol1234";
 
 		try{
@@ -195,6 +195,18 @@ public class MemberServiceImpl implements MemberService{
 	public int modifyOne(String userId) throws Exception {
 		int result = store.updateOne(userId);
 		if(result == 0) throw new Exception();
+		return result;
+	}
+
+	@Override
+	public Member kakaoMember(String kakaoId) {
+		Member mUser = store.selectkakao(kakaoId);
+		return mUser;
+	}
+
+	@Override
+	public int idCheck(String userId) {
+		int result = store.selectIdCheck(userId);
 		return result;
 	}
 }
