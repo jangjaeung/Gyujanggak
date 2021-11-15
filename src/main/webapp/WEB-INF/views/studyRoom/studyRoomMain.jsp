@@ -64,7 +64,7 @@
 	             	<div class="alert_div_con">
 						<p>예약이 완료되었습니다.</p>
 						<p>예약을 확인하시겠습니까?</p>
-	                  <input type="button" value="확인" />
+	                  <input type="button" onclick="location.href='readingroomHistory.do?userId=${loginUser.memberId }';" value="확인" />
 	                  <input type="button" onclick="location.reload();" value="취소" />
 	                </div>
 	            </div>
@@ -111,98 +111,144 @@
 </body>
 	
 <script>
-		// 예약일 달력
-		$('.dateSelector').flatpickr({
-		    dateFormat: 'Y/m/d',
-		    minDate: 'today', // 최소 날짜
-		    maxDate: new Date().fp_incr(31),
-		    // 31일 이내만 가능
-		});
-		
-		// 날짜 별 시간 조회
-			$("#selectedDate").on("change",function(){
-				$("#reservationTime option:eq(0)").prop("selected", true);
-	  			let selectedDate = $("#selectedDate").val();
-	  			console.log(selectedDate);
-				$.ajax({
-					url : 'selectTimeStatus.do',
-					type : 'post',
-					data : {
-						sReservationDate : selectedDate
-					},
-					dataType : 'json',
-					success : function(data) {
-// 						data = JSON.parse(data);
-						if(data.length > 0){
-							for(let i in data){
-								console.log(data[i].rReservationTime)
-								$("#reservationTime option[value*='"+data[i].sReservationTime+"']").prop('disabled',true);
-							}
-						}else if() {
-							
-						}else {
+	var now = new Date();
+	var year = now.getFullYear(); // 년도
+	var month = now.getMonth()+1; // 월
+	var date = now.getDate(); // 날짜
+	var dateString = year + '/' + month + '/' + date;
+//	console.log(dateString);
+	var hr = now.getHours(); // 현재 시간
+	if (hr < 12){
+		var time = 'A, 09:00~12:00'
+	}else if(hr >= 12 && hr < 15) {
+		var time = 'B, 12:00~15:00'
+	}else if(hr >= 15 && hr < 18) {
+		var time = 'C, 15:00~18:00'
+	}else if(hr >= 18 && hr < 21) {
+		var time = 'D, 18:00~21:00'
+	}else {
+		var time = '예약불가'
+	}
+	console.log("현재시간", time);
+	
+	// 예약일 달력
+	$('.dateSelector').flatpickr({
+	    dateFormat: 'Y/m/d',
+	    minDate: 'today', // 최소 날짜
+	    maxDate: new Date().fp_incr(31),
+	    // 31일 이내만 가능
+	});
+	
+	// 날짜 별 시간 조회
+		$("#selectedDate").on("change",function(){
+			$("#reservationTime option:eq(0)").prop("selected", true);
+  			let selectedDate = $("#selectedDate").val();
+  			console.log(selectedDate);
+			$.ajax({
+				url : 'selectTimeStatus.do',
+				type : 'post',
+				data : {
+					sReservationDate : selectedDate
+				},
+				dataType : 'json',
+				success : function(data) {
+					if(selectedDate == dateString) { 
+						if(hr < 9) { // 모두 가능 
 							$("#reservationTime option[value*='A']").prop('disabled',false);
 							$("#reservationTime option[value*='B']").prop('disabled',false);
 							$("#reservationTime option[value*='C']").prop('disabled',false);
 							$("#reservationTime option[value*='D']").prop('disabled',false);
+						} else if (hr >= 9 && hr < 12) { // 9 ~ 11시 이면 B, C, D민 가능
+							$("#reservationTime option[value*='A']").prop('disabled',true);
+							$("#reservationTime option[value*='B']").prop('disabled',false);
+							$("#reservationTime option[value*='C']").prop('disabled',false);
+							$("#reservationTime option[value*='D']").prop('disabled',false);
+						} else if (hr >= 12 && hr < 15) { // 12 ~ 14시 이면 C, D만 가능
+							$("#reservationTime option[value*='A']").prop('disabled',true);
+							$("#reservationTime option[value*='B']").prop('disabled',true);
+							$("#reservationTime option[value*='C']").prop('disabled',false);
+							$("#reservationTime option[value*='D']").prop('disabled',false);
+						} else if (hr >= 15 && hr < 18) { // 15 ~ 17시 이면 D만 가능
+							$("#reservationTime option[value*='A']").prop('disabled',true);
+							$("#reservationTime option[value*='B']").prop('disabled',true);
+							$("#reservationTime option[value*='C']").prop('disabled',true);
+							$("#reservationTime option[value*='D']").prop('disabled',false);
+						} else {
+							$("#reservationTime option[value*='A']").prop('disabled',true);
+							$("#reservationTime option[value*='B']").prop('disabled',true);
+							$("#reservationTime option[value*='C']").prop('disabled',true);
+							$("#reservationTime option[value*='D']").prop('disabled',true);
 						}
-					},
-					error : function() {
-						alert('AJAX 통신오류.. 관리자에게 문의하세요');
-					},
-				});
-			})
-		 
-		// 좌석예약
-		$('.rsv_btn').click(function () {
-		    if ($('.dateSelector').val() == '') {
-		        alert('예약일을 선택해주세요.');
-		    } else if ($('#purpose').val() == '') {
-		        alert('사용 목적을 입력해주세요.');
-		    } else if ($('#personnel').val() == '') {
-		        alert('사용 인원을 입력해주세요.');
-		    } else {
-		        $.ajax({
-		            url: 'reservationStudyRoom.do',
-		            type: 'post',
-		            data: {
-		                userId: $('#userId').val(),
-		                sReservationDate: $('.dateSelector').val(),
-		                sReservationTime: $('#reservationTime').val(),
-		                purpose: $('#purpose').val(),
-		                personnel: $('#personnel').val(),
-		            },
-		            success: function (data) {
-		                if (data === 'success') {
-		                    // alert('예약이 완료되었습니다.');
-		                    $('.alert_div').css('display', 'block');
-		                    // location.reload();
-		                } else {
-		                    alert('예약실패');
-		                }
-		            },
-		            error: function () {
-		                alert('AJAX 통신오류.. 관리자에게 문의하세요');
-		            },
-		        });
-		    }
-		});
-		
-		// 인원수 제한 1~8인
-		function inNumber() {
-		    if ($('#personnel').val().length < 1) {
-		        if (event.keyCode < 49 || event.keyCode > 56) {
-		            event.returnValue = false;
-		        }
-		    } else {
-		        event.returnValue = false;
-		    }
-		}
-		
-		// 로그인 페이지로 이동
-		function showLoginPage() {
-			alert('로그인페이지로 이동합니다.');
-			location.href="loginView.do";
-		} 
+					}
+						
+					if(data.length > 0){
+						for(let i in data){
+							console.log(data[i].sReservationTime)
+							$("#reservationTime option[value*='"+data[i].sReservationTime+"']").prop('disabled',true);
+						}
+					}else {
+						$("#reservationTime option[value*='A']").prop('disabled',false);
+						$("#reservationTime option[value*='B']").prop('disabled',false);
+						$("#reservationTime option[value*='C']").prop('disabled',false);
+						$("#reservationTime option[value*='D']").prop('disabled',false);
+					}
+				},
+				error : function() {
+					alert('AJAX 통신오류.. 관리자에게 문의하세요');
+				},
+			});
+		})
+	 
+	// 좌석예약
+	$('.rsv_btn').click(function () {
+	    if ($('.dateSelector').val() == '') {
+	        alert('예약일을 선택해주세요.');
+	    } else if ($('#purpose').val() == '') {
+	        alert('사용 목적을 입력해주세요.');
+	    } else if ($('#personnel').val() == '') {
+	        alert('사용 인원을 입력해주세요.');
+	    } else {
+	        $.ajax({
+	            url: 'reservationStudyRoom.do',
+	            type: 'post',
+	            data: {
+	                userId: $('#userId').val(),
+	                sReservationDate: $('.dateSelector').val(),
+	                sReservationTime: $('#reservationTime').val(),
+	                purpose: $('#purpose').val(),
+	                personnel: $('#personnel').val(),
+	            },
+	            success: function (data) {
+	                if (data === 'success') {
+	                    // alert('예약이 완료되었습니다.');
+	                    $('.alert_div').css('display', 'block');
+	                    // location.reload();
+	                } else {
+	                    alert('예약실패');
+	                }
+	            },
+	            error: function () {
+	                alert('AJAX 통신오류.. 관리자에게 문의하세요');
+	            },
+	        });
+	    }
+	});
+	
+	// 인원수 제한 1~8인
+	function inNumber() {
+	    if ($('#personnel').val().length < 1) {
+	        if (event.keyCode < 49 || event.keyCode > 56) {
+	            event.returnValue = false;
+	        }
+	    } else {
+	        event.returnValue = false;
+	    }
+	}
+	
+	// 로그인 페이지로 이동
+	function showLoginPage() {
+		alert('로그인페이지로 이동합니다.');
+		location.href="loginView.do";
+	} 
 </script>
 </html>

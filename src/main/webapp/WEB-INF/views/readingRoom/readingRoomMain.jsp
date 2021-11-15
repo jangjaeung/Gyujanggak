@@ -148,7 +148,7 @@
 	var now = new Date();
 	/* console.log(now.toLocaleTimeString()); */
 	// 현재 시간만
-	var hr=now.getHours();
+	var hr = now.getHours();
 	console.log("현재시간", hr);
 	if (hr < 15){
 		var time = 'am'
@@ -156,6 +156,7 @@
 		var time = 'pm'
 	}
 	console.log("오전오후", time);
+	
 	// 좌석 현황
 	$.ajax({
 		url : 'printAllReadingRoom.do',
