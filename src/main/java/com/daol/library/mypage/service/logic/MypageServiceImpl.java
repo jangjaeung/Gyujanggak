@@ -99,8 +99,8 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public int removeReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deleteReview(review);
+		return result;
 	}
 
 	@Override

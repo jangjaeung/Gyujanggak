@@ -228,8 +228,7 @@ public class MypageController {
 	@ResponseBody
 	@RequestMapping(value = "modifyReview.do", method = RequestMethod.POST)
 	public String modifyReview(@RequestParam("bookNo") int bookNo,
-			@RequestParam("reviewContents") String reviewContents, @RequestParam("reviewStar") String reviewStar,
-			HttpSession session) {
+			@RequestParam("reviewContents") String reviewContents, @RequestParam("reviewStar") String reviewStar, HttpSession session) {
 		String userId = (String) session.getAttribute("userId");
 		Review review = new Review();
 		review.setUserId(userId);
@@ -243,6 +242,24 @@ public class MypageController {
 			return "fail";
 		}
 	}
+	
+	
+	/** 서평 삭제 */
+	@ResponseBody
+	@RequestMapping(value = "deleteReview.do", method = RequestMethod.POST)
+	public String deleteReview(@RequestParam("bookNo") int bookNo, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		Review review = new Review();
+		review.setUserId(userId);
+		review.setBookNo(bookNo);
+		int result = service.removeReview(review);
+		if (result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
 	
 
 	/** 예약현황 조회 */

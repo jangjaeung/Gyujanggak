@@ -182,6 +182,7 @@
 										<input type="hidden" name="reviewStar" id="reviewStar">
 										 <br> <br>
 										<div class="btn-area">
+											<input type="hidden" name="bookNo" class="bookNo" value="${lending.bookNo }">
 											<button class="btn btn-info btn-sm" id="registerReview" onclick="registerReview(this);">등록</button>
 											<button class="btn btn-info btn-sm" id="cancelReview" onclick="cancelReview(this);">취소</button>
 										</div>	
@@ -198,11 +199,11 @@
 										<span class="starR1" data-value="3.5">별4_왼쪽</span> <span class="starR2" data-value="4.0">별4_오른쪽</span>
 										<span class="starR1" data-value="4.5">별5_왼쪽</span> <span class="starR2" data-value="5.0">별5_오른쪽</span>
 										<input type="hidden" name="reviewStar" id="reviewdStar" value="${lending.review.reviewStar }">
-										<input type="hidden" name="bookNo" class="bookNo" value="${lending.bookNo }">
-										 <br> <br>
+										 <br><br>
 										<div class="btn-area">
-											<button class="btn btn-info btn-sm" id="modifyReview">수정</button>
-											<button class="btn btn-info btn-sm" id="deleteReview">삭제</button>
+											<input type="hidden" name="bookNo" class="bookNo" value="${lending.bookNo }">
+											<button class="btn btn-info btn-sm" id="modifyReview" onclick="modifyReview(this);">수정</button>
+											<button class="btn btn-info btn-sm" id="deleteReview" onclick="deleteReview(this)">삭제</button>
 											<button class="btn btn-info btn-sm" id="closeReview" onclick="closeReview(this);">닫기</button>
 										</div>	
 									</div>
@@ -265,8 +266,9 @@ $(document).ready(function(){
 	$('.starRev span').click(function(){
 		 $(this).parent().children('span').removeClass('on');
 		 $(this).addClass('on').prevAll('span').addClass('on');
-		 var rating = $(this).attr('data-value');
-		 $("#reviewStar").val(rating); //히든 인풋에 값 저장
+// 		 var rating = $(this).attr('data-value');
+		 var rating = $(this).data("value");
+		 $(this).siblings("input[type=hidden]").val(rating); //히든 인풋에 값 저장
 		 console.log(rating);
 		 return false;
 	});
@@ -283,7 +285,8 @@ function reviewDetail(obj){
 	$(obj).hide();
 
 
-	var rating = $("#reviewdStar").val();
+	/* var rating = $("#reviewdStar").val(); */
+ 	var rating = $(obj).parent().parent().next().next().children($(".starRev")).children(("input[type=hidden]")).val();
 	console.log(rating);
 
 	$(obj).parent().parent().next().next().children($(".starRev")).find("span").each(function(index, item) {
@@ -315,9 +318,9 @@ function cancelReview(obj){
 	
 //등록
 function registerReview(obj){
- 	var bookNo = $(obj).parent().parent().parent().parent().children($("#bookNo")).val();//값?
-	var reviewContents = $(obj).parent().parent().parent().children($("#reviewContents")).val();
-	var reviewStar = $(obj).parent().prev().val(); //값?
+ 	var bookNo = $(obj).prev().val();
+	var reviewContents = $(obj).parent().parent().prev().val();
+	var reviewStar = $(obj).parent().siblings("input[type=hidden]").val(); 
 	console.log(bookNo);
 	console.log(reviewContents);
 	console.log(reviewStar); 
@@ -345,10 +348,10 @@ function registerReview(obj){
 }	
 	
 //수정
-$("#modifyReview").click(function(){
-	var bookNo = $(".bookNo").val();
-	var reviewContents = $("#modifyContents").val();
-	var reviewStar = $("#reviewStar").val();
+function modifyReview(obj){
+	var bookNo = $(obj).prev().val();
+	var reviewContents = $(obj).parent().parent().prev().val();
+	var reviewStar = $(obj).parent().siblings("input[type=hidden]").val(); 
 	console.log(bookNo);
 	console.log(reviewContents);
 	console.log(reviewStar);
@@ -362,6 +365,7 @@ $("#modifyReview").click(function(){
 		},
 		success : function(data){
 			if(data == "success"){
+				alert("서평 수정이 완료되었습니다.");
 				location.href="lendingStatus.do"
 			}else{
 				alert("리뷰 수정 실패");
@@ -372,7 +376,32 @@ $("#modifyReview").click(function(){
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	})
-});	
+}
+
+//삭제
+function deleteReview(obj){
+	var bookNo = $(obj).prev().prev().val();
+	console.log(bookNo);
+	$.ajax({
+		url : "deleteReview.do", 
+		type : "post",
+		data : {
+			"bookNo" : bookNo,
+		},
+		success : function(data){
+			if(data == "success"){
+				alert("작성하신 서평이 삭제되었습니다.");
+				location.href="lendingStatus.do"
+			}else{
+				alert("리뷰 삭제 실패");
+			}
+		},
+		error : function(request,status,error){
+			/* alert("AJAX 통신 오류"); */
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	})
+}
 	
 	
 </script>

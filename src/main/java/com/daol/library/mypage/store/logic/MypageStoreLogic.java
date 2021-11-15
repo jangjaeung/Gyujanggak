@@ -91,8 +91,8 @@ public class MypageStoreLogic implements MypageStore{
 
 	@Override
 	public int deleteReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSession.delete("mypageMapper.deleteReview", review);
+		return result;
 	}
 
 	@Override
