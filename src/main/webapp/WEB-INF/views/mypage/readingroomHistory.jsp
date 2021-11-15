@@ -135,7 +135,8 @@
 								<div class="pop-container">
 									<div class="pop-conts">
 										<!-- 내용 -->
-										<h4 class="ctxt mb20"><b>정말로 취소하시겠습니까?</b></h4><c:out value="${rList.rReservationNo}"/>
+										<h4 class="ctxt mb20"><b>정말로 취소하시겠습니까?</b></h4>
+										<br><p>예약번호 : <c:out value="${rList.rReservationNo}"/> </p>
 										<div class="btn-r">
 											<a href="#" class="btn-submit"><button class="btn btn-danger" onclick="location.href='cancelReadingRoom.do?rReservationNo=${rList.rReservationNo }';">확인</button></a> <a
 												href="#" class="btn-layerClose"><button class="btn btn-secondary" >취소</button></a>

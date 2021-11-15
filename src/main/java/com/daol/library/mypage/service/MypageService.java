@@ -32,8 +32,8 @@ public interface MypageService {
 	public int getListCount(String userId);
 	/** 대출 내역 */
 	public List<Book> printAllLendingHistory(PageInfo pi, String userId);
-	/** 서평 조회 */
-	public Review printOneReview(int bookNo);
+	/** 마이페이지 서평 조회 */
+	public List<Review> printOneReview(Review review);
 	/** 도서 상세 조회 페이지 서평 조회 */
 	public List<Review> printOneForDetail(int bookNo);
 	/** 서평 등록 */
@@ -52,7 +52,8 @@ public interface MypageService {
 	//희망도서  신청 db 저장
 	public int registerWishBook(WishBook wishbook);
 	//관심도서 목록 출력
-	public Book printLikeList(Book book);
+	public List<Book> printLikeList(PageInfo pi, String userId);
+	public int getlikeListCount(String userId);
 	
 	
 	//시설 이용
@@ -75,6 +76,10 @@ public interface MypageService {
 	public int registQna(Qna qna);
 	public int modifyQna(Qna qna);
 	public int removeQna(int qnaNo);
+
+	
+
+	
 
 	
 

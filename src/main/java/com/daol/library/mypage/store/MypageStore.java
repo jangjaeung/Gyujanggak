@@ -31,13 +31,13 @@ public interface MypageStore {
 		/** 대출 내역 */
 		public List<Book> selectAllLendingHistory(PageInfo pi, String userId);
 		/** 서평 조회 */
-		public Review selectOneReview(int bookNo);
+		public List<Review> selectOneReview(Review review);
 		/** 도서 상세 조회 페이지 서평 조회 */
 		public List<Review> selectOneForDetail(int bookNo);
 		/** 서평 등록 */
 		public int insertReview(Review review);
 		/** 서평 수정 */
-		public int udpateReview(Review review);
+		public int updateReview(Review review);
 		/** 서평 삭제 */
 		public int deleteReview(Review review);
 		/** 예약 내역 */
@@ -46,12 +46,15 @@ public interface MypageStore {
 		public int deleteBooking(int bookNo);
 		/** 희망 도서 내역 */
 		public List<WishBook> selectWishBook(PageInfo pi, String userId);
-		/** 희망 도서 전체갯수 */
+		
 		public int selectWishListCount(String userId);
 		/** 희망 도서 신청 */ 
 		public int insertWishBook(WishBook wishBook);
 		
-		public Book selectLikeList(Book book);
+		/** 관심 도서 전체갯수 */
+		public int selectLikeListCount(String userId);
+		/** 관심 도서 내역 */
+		public List<Book> selectLikeList(PageInfo pi, String userId);
 		
 		//취향 분석
 		
@@ -76,5 +79,9 @@ public interface MypageStore {
 		public int insertQna(Qna qna);
 		public int updateQna(Qna qna);
 		public int deleteQna(int qnaNo);
+
+		
+
+		
 
 }
