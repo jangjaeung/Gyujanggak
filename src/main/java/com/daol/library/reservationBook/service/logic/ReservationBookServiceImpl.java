@@ -16,20 +16,22 @@ public class ReservationBookServiceImpl implements ReservationBookService {
 
 	@Override
 	public List<ReservationBook> printAllRsvBook(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		return store.selectAllRsvBook(userId);
+	}
+
+	@Override
+	public List<ReservationBook> printAddCheck(ReservationBook reservationBook) {
+		return store.selectAddCheck(reservationBook);
 	}
 
 	@Override
 	public int registerRsv(ReservationBook reservationBook) {
-		// TODO Auto-generated method stub
-		return 0;
+		return store.insertRsv(reservationBook);
 	}
 
 	@Override
 	public int removeRsv(ReservationBook reservationBook) {
-		// TODO Auto-generated method stub
-		return 0;
+		return store.deleteRsv(reservationBook);
 	}
 
 	@Override

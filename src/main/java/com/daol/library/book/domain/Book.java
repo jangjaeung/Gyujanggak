@@ -128,8 +128,6 @@ public class Book {
 	public void setLendingCount(int lendingCount) {
 		this.lendingCount = lendingCount;
 	}
-	
-	
 
 	public LendingBook getLendingBook() {
 		return lendingBook;
@@ -139,8 +137,6 @@ public class Book {
 		this.lendingBook = lendingBook;
 	}
 
-	
-	
 	public Review getReview() {
 		return review;
 	}
@@ -149,9 +145,6 @@ public class Book {
 		this.review = review;
 	}
 
-	
-	
-	
 	public InterestingBook getInterestingBook() {
 		return interestingBook;
 	}
@@ -165,7 +158,8 @@ public class Book {
 		return "Book [bookNo=" + bookNo + ", bookName=" + bookName + ", bookWriter=" + bookWriter + ", bookSubject="
 				+ bookSubject + ", publisher=" + publisher + ", bookYear=" + bookYear + ", callNo=" + callNo + ", isbn="
 				+ isbn + ", bookCover=" + bookCover + ", theme=" + theme + ", bookState=" + bookState + ", updateDate="
-				+ updateDate + ", lendingCount=" + lendingCount + "]";
+				+ updateDate + ", lendingCount=" + lendingCount + ", lendingBook=" + lendingBook + ", review=" + review
+				+ ", interestingBook=" + interestingBook + "]";
 	}
-	
+
 }

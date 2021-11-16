@@ -16,20 +16,22 @@ public class ReservationBookStoreLogic implements ReservationBookStore {
 
 	@Override
 	public List<ReservationBook> selectAllRsvBook(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("rsvBookMapper.selectAllRsvBook", userId);
 	}
 
 	@Override
+	public List<ReservationBook> selectAddCheck(ReservationBook reservationBook) {
+		return sqlSession.selectList("rsvBookMapper.addCheck", reservationBook);
+	}
+	
+	@Override
 	public int insertRsv(ReservationBook reservationBook) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert("rsvBookMapper.insertRsv", reservationBook);
 	}
 
 	@Override
 	public int deleteRsv(ReservationBook reservationBook) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete("rsvBookMapper.deleteRsv", reservationBook);
 	}
 
 	@Override

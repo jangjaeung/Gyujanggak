@@ -259,14 +259,6 @@ public class MypageController {
 			return "fail";
 		}
 	}
-	
-	
-
-	/** 예약현황 조회 */
-	@RequestMapping(value = "bookingList.do", method = RequestMethod.GET)
-	public String bookingList() {
-		return "mypage/bookingList";
-	}
 
 	/** 희망도서 내역 */
 	@RequestMapping(value = "wishList.do", method = RequestMethod.GET)
