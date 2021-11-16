@@ -59,7 +59,7 @@
 				</li>
 				<li>
 					<div class="nav-logo">
-						<a href=""><img src="/resources/mainPage/img/logo2.png" alt=""> <span>시설이용</span></a>
+						<a href="informationView.do#room"><img src="/resources/mainPage/img/logo2.png" alt=""> <span>시설이용</span></a>
 					</div>
 				</li>
 				<li>
@@ -74,7 +74,7 @@
 				</li>
 				<li>
 					<div class="nav-logo">
-						<a href=""><img src="/resources/mainPage/img/logo5.png" alt=""> <span>이용시간</span></a>
+						<a href="informationView.do#time"><img src="/resources/mainPage/img/logo5.png" alt=""> <span>이용시간</span></a>
 					</div>
 				</li>
 			</ul>

@@ -353,6 +353,18 @@ public class AdminController {
 			return "common/errorPage";
 		}
 	}
+	//답변수정
+	@RequestMapping(value="qnaAnswerModify.do",method=RequestMethod.POST)
+	public String answerModify(@ModelAttribute Qna qna, HttpSession session) {
+		String login = (String)session.getAttribute("userId");
+		qna.setReplyUserId(login);
+		int result = service.modifyAnswer(qna);
+		if(result>0) {
+			return "redirect:adQnaList.do";
+		}else {
+			return "common/errorPage";
+		}
+	}
 	
 	//신고관리 리스트
 	@RequestMapping(value="reportView.do",method=RequestMethod.GET)

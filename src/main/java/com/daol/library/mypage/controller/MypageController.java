@@ -485,9 +485,7 @@ public class MypageController {
 			mv.addObject("userId", userId);
 		}
 		List<Qna> qList = service.printAllQna(userId);
-		if (!qList.isEmpty()) {
-			mv.addObject("qList", qList);
-		}
+		mv.addObject("qList", qList);
 		mv.setViewName("mypage/qna");
 		return mv;
 	}
