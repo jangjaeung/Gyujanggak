@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.daol.library.admin.domain.BookParcel;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Statistics;
 import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.admin.store.AdminStore;
@@ -193,5 +194,11 @@ public class AdminServiceImpl implements AdminService {
 	public Book bookinfoUpdate(String bookNo) {
 		Book books = store.selectBookInfo(bookNo);
 		return books;
+	}
+	// 대출 통계
+	@Override
+	public List<Statistics> statisAll() {
+		List<Statistics> sList = store.selectAllstatis();
+		return sList;
 	}
 }

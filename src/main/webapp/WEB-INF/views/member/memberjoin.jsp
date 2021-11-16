@@ -212,14 +212,14 @@ span.guide{
 			console.log('입력 이메일' + clientEmail);
 			
 			if(emailYN == true){
-				alert('이메일 형식입니다');
+				alert('잠시 후 이메일이 발송됩니다.');
 				
 				$.ajax({
 					type:"POST",
 					url : "mail.do",
 					data : {"userEmail" : clientEmail},
 					success : function(data){
-						alert('메일로 전송되었습니다!')
+						alert('이메일로 발송되었습니다!')
 					},error : function(e){
 						alert('오류입니다. 잠시 후 다시 시도해주세요.');
 					}

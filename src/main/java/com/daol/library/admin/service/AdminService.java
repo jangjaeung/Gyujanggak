@@ -5,6 +5,7 @@ import java.util.List;
 import com.daol.library.admin.domain.BookParcel;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Statistics;
 import com.daol.library.admin.domain.Status;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
@@ -77,4 +78,6 @@ public interface AdminService {
 	public int parcelUpdate(String deliveryNo);
 	// 완료
 	public Book bookinfoUpdate(String bookNo);
+	// 통계리스트
+	public List<Statistics> statisAll();
 }

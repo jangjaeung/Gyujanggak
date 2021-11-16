@@ -64,16 +64,12 @@
             </thead>
             <tbody>
             <tr>
-              <th scope="row">항목명</th>
-              <td>내용이 들어갑니다.</td>
+              <th scope="row">2호선</th>
+              <td>다올대입구역 5번출구</td>
             </tr>
             <tr>
-              <th scope="row">항목명</th>
-              <td>내용이 들어갑니다.</td>
-            </tr>
-            <tr>
-              <th scope="row">항목명</th>
-              <td>내용이 들어갑니다.</td>
+              <th scope="row">5호선</th>
+              <td>규장각역 2번출구</td>
             </tr>
             </tbody>
           </table>
@@ -89,16 +85,12 @@
             </thead>
             <tbody>
             <tr>
-              <th scope="row">항목명</th>
-              <td>내용이 들어갑니다.</td>
+              <th scope="row">다올대학교</th>
+              <td>1002-1</td>
             </tr>
             <tr>
-              <th scope="row">항목명</th>
-              <td>내용이 들어갑니다.</td>
-            </tr>
-            <tr>
-              <th scope="row">항목명</th>
-              <td>내용이 들어갑니다.</td>
+              <th scope="row">다올대입구역</th>
+              <td>603번</td>
             </tr>
             </tbody>
           </table>
