@@ -31,8 +31,10 @@ public class TasteController {
 	/** 취향분석설문 화면 */
 	@RequestMapping(value = "tasteSurveyView.do", method = RequestMethod.GET)
 	public ModelAndView tasteSurveyView(ModelAndView mv, HttpSession session) {
-
+		String surveyCheck = (String)session.getAttribute("surveyCheck");
+		
 		try {
+			session.setAttribute("surveyCheck", surveyCheck);
 			List<Book> surveyList = service.printSurveyList();
 			if(!surveyList.isEmpty()) {
 				mv.addObject("surveyList", surveyList);
