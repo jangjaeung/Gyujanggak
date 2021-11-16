@@ -93,13 +93,13 @@
 		<result property="reviewStatus" column="REVIEW_STATUS"/>
 		<result property="userId" column="USER_ID"/>
 	</resultMap>
-	
-	<insert id="insertReview" parameterType="Review">
-		INSERT INTO REVIEW VALUES(SEQ_REVIEWNUM.NEXTVAL,#{bookNo}, #{reviewStar}, #{reviewContents}, SYSDATE, 'Y', #{userId})
-	</insert>
+
 	<select id="selectOneForDetail" resultMap="reviewResultMap">
 		SELECT * FROM REVIEW WHERE BOOK_NO = #{bookNo}
 	</select>
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO REVIEW VALUES(SEQ_REVIEWNUM.NEXTVAL,#{bookNo}, #{reviewStar}, #{reviewContents}, SYSDATE, 'Y', #{userId})
+	</insert>
 	<update id="updateReview" parameterType="Review">
 		UPDATE REVIEW SET REVIEW_STAR = #{reviewStar}, REVIEW_CONTENTS = #{reviewContents} WHERE USER_ID = #{userId} AND BOOK_NO = #{bookNo} 
 	</update>

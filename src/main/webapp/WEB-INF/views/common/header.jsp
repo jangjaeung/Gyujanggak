@@ -61,7 +61,7 @@
 						<li><a href="bookingList.do?userId=${userId }">도서 예약 내역</a></li>
 						<li><a href="wishList.do?userId=${userId }">희망 도서 신청</a></li>
 						<li><a href="likeList.do?userId=${userId }">관심도서 내역</a></li>
-						<li><a href="tasteSurvey.do?userId=${userId }">취향 분석 설문</a></li>
+						<li><a href="tasteSurveyView.do?userId=${userId }">취향 분석 설문</a></li>
 						<li><a href="readingroomHistory.do?userId=${userId }">시설 이용 내역</a></li>
 						<li><a href="qnaList.do?userId=${userId }">문의하기</a></li>
 					</ul>

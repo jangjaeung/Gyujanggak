@@ -5,6 +5,8 @@ public class Taste {
 	private String taste1;
 	private String taste2;
 	private String taste3;
+	private TasteSurvey tasteSurvey;
+	
 	
 	public Taste () {}
 
@@ -38,6 +40,16 @@ public class Taste {
 
 	public void setTaste3(String taste3) {
 		this.taste3 = taste3;
+	}
+	
+	
+
+	public TasteSurvey getTasteSurvey() {
+		return tasteSurvey;
+	}
+
+	public void setTasteSurvey(TasteSurvey tasteSurvey) {
+		this.tasteSurvey = tasteSurvey;
 	}
 
 	@Override

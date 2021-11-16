@@ -166,6 +166,7 @@ public class MemberController {
 					HttpSession session = request.getSession();
 					session.setAttribute("userId", loginUser.getUserId());
 					session.setAttribute("userType", loginUser.getUserType());
+					session.setAttribute("surveyCheck", loginUser.getSurveyCheck());
 					resultmsg= "<script>location.href='/home.do'</script>";
 				}else {
 					resultmsg= "<script>location.href='/loginView.do';alert('정보가 일치하지 않습니다.')</script>";

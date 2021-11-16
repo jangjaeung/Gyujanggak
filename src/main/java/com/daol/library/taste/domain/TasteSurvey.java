@@ -2,13 +2,17 @@ package com.daol.library.taste.domain;
 
 import java.sql.Date;
 
+import com.daol.library.book.domain.Book;
+
 public class TasteSurvey {
 	private String userId;
 	private int bookNo;
 	private String bookName;
-	private String bookSubjecet;
+	private double bookRating;
+	private String bookSubject;
 	private String theme;
 	private Date surveyDate;
+	private Book book;
 	
 	public TasteSurvey() {}
 
@@ -36,12 +40,20 @@ public class TasteSurvey {
 		this.bookName = bookName;
 	}
 
-	public String getBookSubjecet() {
-		return bookSubjecet;
+	public double getBookRating() {
+		return bookRating;
 	}
 
-	public void setBookSubjecet(String bookSubjecet) {
-		this.bookSubjecet = bookSubjecet;
+	public void setBookRating(double bookRating) {
+		this.bookRating = bookRating;
+	}
+
+	public String getBookSubject() {
+		return bookSubject;
+	}
+
+	public void setBookSubject(String bookSubject) {
+		this.bookSubject = bookSubject;
 	}
 
 	public String getTheme() {
@@ -60,11 +72,26 @@ public class TasteSurvey {
 		this.surveyDate = surveyDate;
 	}
 
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
 	@Override
 	public String toString() {
-		return "TasteSurvey [회원 아이디 =" + userId + ", 도서 번호 =" + bookNo + ", 도서 제목 =" + bookName + ", 주제 ="
-				+ bookSubjecet + ", 테마 =" + theme + ", 설문일자 =" + surveyDate + "]";
+		return "TasteSurvey [userId=" + userId + ", bookNo=" + bookNo + ", bookName=" + bookName + ", bookRating="
+				+ bookRating + ", bookSubject=" + bookSubject + ", theme=" + theme + ", surveyDate=" + surveyDate + "]";
 	}
+
+	
+
+
+	
+	
+
 	
 	
 }

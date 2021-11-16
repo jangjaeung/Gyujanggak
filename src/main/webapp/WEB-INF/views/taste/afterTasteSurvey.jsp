@@ -46,7 +46,7 @@
 	border-bottom : 1px solid;
 }
 .photo{
-	width : 18%;
+	width : 25%;
 	float: left;
 	border : 0.5px solid;
 	margin : 2%;
@@ -107,47 +107,17 @@
 	<section>
 		<!-- 사이드메뉴 -->
 		<aside class="sideMenu">
-			
+		<br>
+		<br>	
 		</aside>
-
-		<!-- 내용 -->
-		<article class="mainContent">
-			<!-- 타이틀 --><br>
-			<h2 id="mainTitle">
-				<b>일용자님의 취향분석</b>
-			</h2>
-			<br><br><br>
-			<div id="book-count">
-				<p style='color : red;'>과거에 본 도서를 찾아 평가해보세요!</p>
+			<article class="mainContent" id="beforeLogin">
+			<h3 style='text-align:center;'> 설문이 완료되었습니다 </h3><br>
+			<div class="btn-area" style="text-align:center;">
+				<br>	
+				<a href="home.do" ><button style="text-align:center;" type="button" class="btn btn-primary" id="login-btn">추천도서 보러가기</button></a>
 			</div>
-			
-			<!-- 본문 -->
-			<br> <br>
-			<div class="card">
-				<div class="photo">
-					<img src="https://s-media-cache-ak0.pinimg.com/236x/3b/36/ca/3b36ca3afe0fa0fd4984b9eee2e154bb.jpg" width="120px" height="180px">
-				</div>
-				<div class="description">
-					<h3>달러구트 꿈 백화점</h3>
-					<p><span>팩토리나인</span>&nbsp;|&nbsp;<span>이미예</span>&nbsp;|&nbsp;<span>2021.07.27</span></p>
-					<br>
-					<div class="starRev">
-					<span class="starR1 on">별1_왼쪽</span> <span class="starR2">별1_오른쪽</span>
-					<span class="starR1">별2_왼쪽</span> <span class="starR2">별2_오른쪽</span>
-					<span class="starR1">별3_왼쪽</span> <span class="starR2">별3_오른쪽</span>
-					<span class="starR1">별4_왼쪽</span> <span class="starR2">별4_오른쪽</span>
-					<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
-					<br><br>
-				</div>
-			</div>
-			</div>
-			
-			<br><br>
-			<div class="btn-area">
-					<button class="btn btn-info">설문 완료</button>
-			</div>	
-		</article>
-
+			</article>
+	
 		<br>
 		<br>
 
@@ -156,12 +126,5 @@
 	<jsp:include page="../common/chat.jsp"></jsp:include>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 
-<script>
-$('.starRev span').click(function(){
-	  $(this).parent().children('span').removeClass('on');
-	  $(this).addClass('on').prevAll('span').addClass('on');
-	  return false;
-	});
-</script>
 </body>
 </html>

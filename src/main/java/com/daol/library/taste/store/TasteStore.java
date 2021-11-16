@@ -8,6 +8,16 @@ import com.daol.library.taste.domain.Taste;
 import com.daol.library.taste.domain.TasteSurvey;
 
 public interface TasteStore {
+	//설문화면
+	public List<Book> selectAllSurveyList();
+	//별점 등록
+	public int insertRating(TasteSurvey survey);
+	//설문초기화
+	public int deleteRating(String userId);
+	//설문 등록(서베이체크 상태 변경)
+	public int updateSurveyCheck(String userId);
+	
+	
 	//설문
 	public int insertTatseSurvey(TasteSurvey survey);
 	//취향 리스트 1,2,3
@@ -16,4 +26,8 @@ public interface TasteStore {
 	public List<Book> selectBooksByTaste(Taste taste);
 	//전공별 도서 추천, 멤버에 등록된 전공으로 책 추천
 	public List<Book> selectBooksByMajor(Member member);
+	
+	
+	
+	
 }

@@ -310,7 +310,7 @@ public class MypageController {
 
 				final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory"; // 이메일 객체생성하기
 				Properties props = System.getProperties();
-				props.put("mail.smtp.user", "daollibrary@gmail.com");
+				props.put("mail.smtp.user", "daolLibrary1@gmail.com");
 				props.put("mail.smtp.host", "smtp.gmail.com");
 				props.put("mail.smtp.port", "465");
 				props.put("mail.smtp.starttls", "true");
@@ -321,7 +321,7 @@ public class MypageController {
 				props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
 				props.put("mail.smtp.socketFactory.fallback", "false");
 
-				final String username = "daollibrary@gmail.com";// 발신자의 이메일 아이디 입력
+				final String username = "daolLibrary1@gmail.com";// 발신자의 이메일 아이디 입력
 				final String password = "daol1234"; // 발신자의 패스워드
 
 				try {
@@ -333,12 +333,12 @@ public class MypageController {
 					Message msg = new MimeMessage(session);
 
 					// 보내는사람 받는사람 설정
-					msg.setFrom(new InternetAddress("daollibrary@gmail.com"));
-					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("daollibrary@gmail.com", false));
+					msg.setFrom(new InternetAddress("daolLibrary1@gmail.com"));
+					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("daolLibrary1@gmail.com", false));
 					msg.setSubject(member.getUserId() + "님의 희망 도서 신청");
 					msg.setText("======  " + member.getUserId() + "님의 희망 도서 신청 내역   =====" + "\n 도서명 : "
 							+ wishbook.getBookName() + "\n 출판사 : " + wishbook.getPublisher() + "\n 저자명 : "
-							+ wishbook.getBookWriter() + "\\n ============================");
+							+ wishbook.getBookWriter() + "\n ==================================");
 					Transport.send(msg);
 					System.out.println("발신성공!");
 
@@ -382,12 +382,9 @@ public class MypageController {
 		return mv;
 	}
 
-	// --- 취향분석 ---//
-	/** 취향분석설문 화면 */
-	@RequestMapping(value = "tasteSurvey.do", method = RequestMethod.GET)
-	public String tasteSurveyView() {
-		return "mypage/tasteSurvey";
-	}
+
+	
+	
 
 	// --- 시설 이용 ---//
 	/** 열람실 이용내역 */

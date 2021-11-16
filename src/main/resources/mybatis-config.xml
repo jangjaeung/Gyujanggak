@@ -25,7 +25,8 @@
 		<typeAlias type="com.daol.library.book.domain.WishBook" alias="WishBook"/>
 		<typeAlias type="com.daol.library.mypage.domain.Qna" alias="Qna"/>
 		<typeAlias type="com.daol.library.admin.domain.Status" alias="Status"/>
-
+		<typeAlias type="com.daol.library.taste.domain.TasteSurvey" alias="TasteSurvey"/>
+		<typeAlias type="com.daol.library.taste.domain.Taste" alias="Taste"/>
 		<typeAlias type="com.daol.library.book.domain.Review" alias="Review"/>
 		<typeAlias type="com.daol.library.admin.domain.BookParcel" alias="BookParcel"/>
 
@@ -41,5 +42,6 @@
 		<mapper resource="mappers/studyRoom-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/admin-mapper.xml"/>
+		<mapper resource="mappers/taste-mapper.xml"/>
 	</mappers>
 </configuration>
