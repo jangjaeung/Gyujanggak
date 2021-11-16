@@ -30,15 +30,28 @@
 			<input style="height: 189px;" type="text"class="form-control" value="${qna.qnaContent }" readonly>
 		</div>
 		<hr>
-		<form action="answer.do" method="post">
-		<input type="hidden" name="qnaNo" value="${qna.qnaNo }">
-			<div class="form-group">
-				<label for="exampleInputContents">답변</label> 
-				<input style="height: 189px;" type="text"class="form-control" name="replyContent" placeholder="답변을 입력해 주세요">
-				<br>
-				<input type="submit" value="등록" style="float:right;">
-			</div>
-		</form>
+		<c:if test="${qna.replyContent eq null }">
+			<form action="answer.do" method="post">
+			<input type="hidden" name="qnaNo" value="${qna.qnaNo }">
+				<div class="form-group">
+					<label for="exampleInputContents">답변</label> 
+					<input style="height: 189px;" type="text"class="form-control" name="replyContent" placeholder="답변을 입력해 주세요">
+					<br>
+					<input type="submit" value="등록" style="float:right;">
+				</div>
+			</form>
+		</c:if>
+		<c:if test="${qna.replyContent ne null }">
+			<form method="post" name="form">
+			<input type="hidden" name="qnaNo" value="${qna.qnaNo }">
+				<div class="form-group">
+					<label for="exampleInputContents">답변</label> 
+					<input style="height: 189px;" type="text"class="form-control" name="replyContent" placeholder="답변을 입력해 주세요" value="${qna.replyContent }">
+					<br>
+					<input type="submit" value="수정" style="float:right;" onclick="javascript: form.action='qnaAnswerModify.do'">
+				</div>
+			</form>
+		</c:if>
 		<button id="list" style="float:right; margin-top:-15px;margin-right:10px;">목록으로</button>
 	</div>
   		<jsp:include page="../common/chat.jsp"></jsp:include>

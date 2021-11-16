@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>문의</title>
-<link rel="stylesheet" href="css/style.css" />
 
 <style>
 *{
@@ -39,7 +38,12 @@ footer{bottom:0}
 .qna-con{
 	width:1000px;
 }
-.talbe{padding : 10px;}
+table thead tr td{
+	font-weight:bold;
+	background-color:rgba(90,94,185);
+	color:#fff;
+	padding:10px;
+}
 .table thead tr td:first-child{width:15%; text-align:center;}
 .table thead tr td:nth-child(2){text-align:center;}
 .table thead tr td:last-child{width:15%; text-align:center;}
@@ -106,9 +110,5 @@ footer{bottom:0}
 	</c:if>
 <jsp:include page="../common/chat.jsp"></jsp:include>
 <jsp:include page="../common/footer.jsp"></jsp:include>
-
-<script>
-
-</script>
 </body>
 </html>

@@ -31,10 +31,16 @@ ul {
 	list-style: none;
 }
 
-a {
-	color: inherit;
+.tablink{
+	display:block;
 	text-decoration: none;
+	color:black;
 }
+
+.tablink:link { color: black; text-decoration: none;}
+.tablink:visited { color: black; text-decoration: none;}
+.tablink:hover { color: black; text-decoration: none;}
+
 
 #wrap {
 	width: 100%;
@@ -72,9 +78,16 @@ a {
 	text-align: center;
 }
 .button{
+	cursor:pointer;
+	display:block;
 	background-color : white;
 	border : none;
+	color:black;
+	font-size:20px;
 }
+.cont{display:none;}
+.act{display:block;}
+.active{color:cadetblue;font-size:27px;}
 
 </style>
 </head>
@@ -91,10 +104,10 @@ a {
 	<div id="wrap">
 		<nav id="navi1">
 			<ul>
-				<li><button class="button" id="menuOne" style="color:cadetblue; font-size:27px">이용시간</button></li>
-				<li><button class="button" id="menuTwo">이용증 발급</button></li>
-				<li><button class="button"id="menuThree">대출·반납·연장·예약</button></li>
-				<li><button class="button" id="menuFour">열람실·스터디룸 이용</button></li>
+				<li class="button"><a href="#time" class="tablink active" id="menuOne"data-tab="tab-1">이용시간</a></li>
+				<li class="button"><a href="#card" class="tablink"  id="menuTwo" data-tab="tab-2">이용증 발급</a></li>
+				<li class="button"><a href="#lend" class="tablink" id="menuThree" data-tab="tab-3">대출·반납·연장·예약</a></li>
+				<li class="button"><a href="#room" class="tablink"  id="menuFour" data-tab="tab-4">열람실·스터디룸 이용</a></li>
 			</ul>
 		</nav>
 		<div class="content" style="position: relative; right: 11%;">
@@ -102,7 +115,7 @@ a {
 
 
 
-			<div id="showOne">
+			<div class="cont tab-1 act">
 				<h2 id="introduce1">학기중 이용시간</h2>
 				<table class="table" style="text-align: center; width: 50%; margin-left: 25%;">
 					<tr>
@@ -207,7 +220,7 @@ a {
 
 
 
-			<div id="showTwo" style="display: none;">
+			<div class="cont tab-2">
 				<h2 id="introduce1">대상</h2>
 				<div id="introduce">· 다올 대학교 규장각 도서관 이용을 희망하는 자</div>
 
@@ -239,7 +252,7 @@ a {
 
 
 
-			<div id="showThree" style="display: none">
+			<div class="cont tab-3" id="tab-3">
 				<h2 id="introduce1">도서 대출</h2>
 				<div id="introduce">
 					· 대출 자격 : 다올 대학교 학생 및 이용증 발급 회원<br> · 대출 권수 및 기간<br>
@@ -312,7 +325,7 @@ a {
 
 
 
-			<div id="showFour" style="display:none">
+			<div class="cont tab-4">
 				<h2 id="introduce1">좌석 예약</h2>
 				<div id="introduce">
 					· 규장각 도서관 홈페이지 '열람실·스터디룸 이용'페이지에서 좌석 예약 가능하며, 마이페이지 '열람실·스터디룸 이용내역'에서 취소 가능<br>
@@ -378,49 +391,33 @@ a {
 		<jsp:include page="../common/chat.jsp"></jsp:include>
 		<jsp:include page="../common/footer.jsp"></jsp:include>
 <script>
-	$('#menuOne').click(function(){
-		$('#showOne').show();
-		$('#showTwo').hide();
-		$('#showThree').hide();
-		$('#showFour').hide();
-		$('#menuOne').css({'color':'cadetblue','font-size':'27px'});
-		$('#menuTwo').css({'color':'black','font-size':'20px'});
-		$('#menuThree').css({'color':'black','font-size':'20px'});
-		$('#menuFour').css({'color':'black','font-size':'20px'});
-	})
+	$(".tablink").on("click",function(){
+		var tab_id = $(this).attr('data-tab');
+		$(".tablink").removeClass("active");
+		$(".cont").removeClass("act");
+		$(this).addClass("active");
+		$("."+tab_id).addClass("act");
+	});
 	
-	$('#menuTwo').click(function(){
-		$('#showOne').hide();
-		$('#showTwo').show();
-		$('#showThree').hide();
-		$('#showFour').hide();
-		$('#menuOne').css({'color':'black','font-size':'20px'});
-		$('#menuThree').css({'color':'black','font-size':'20px'});
-		$('#menuFour').css({'color':'black','font-size':'20px'});
-		$('#menuTwo').css({'color':'cadetblue','font-size':'27px'});
-	})
+	if(location.hash === "#lend"){
+		$(".tablink").removeClass("active");
+		$(".cont").removeClass("act");
+		$("#menuThree").addClass("active");
+		$(".tab-3").addClass("act");
+	};
+	if(location.hash === "#room"){
+		$(".tablink").removeClass("active");
+		$(".cont").removeClass("act");
+		$("#menuFour").addClass("active");
+		$(".tab-4").addClass("act");
+	};
+	if(location.hash === "#card"){
+		$(".tablink").removeClass("active");
+		$(".cont").removeClass("act");
+		$("#menuTwo").addClass("active");
+		$(".tab-2").addClass("act");
+	};
 	
-	$('#menuThree').click(function(){
-		$('#showOne').hide();
-		$('#showTwo').hide();
-		$('#showThree').show();
-		$('#showFour').hide();
-		$('#menuTwo').css({'color':'black','font-size':'20px'});
-		$('#menuOne').css({'color':'black','font-size':'20px'});
-		$('#menuFour').css({'color':'black','font-size':'20px'});
-		$('#menuThree').css({'color':'cadetblue','font-size':'27px'});
-	})
-	
-	$('#menuFour').click(function(){
-		$('#showOne').hide();
-		$('#showTwo').hide();
-		$('#showThree').hide();
-		$('#showFour').show();
-		$('#menuThree').css({'color':'black','font-size':'20px'});
-		$('#menuOne').css({'color':'black','font-size':'20px'});
-		$('#menuTwo').css({'color':'black','font-size':'20px'});
-		$('#menuFour').css({'color':'cadetblue','font-size':'27px'});
-	})
 </script>
 </body>
 </html>
