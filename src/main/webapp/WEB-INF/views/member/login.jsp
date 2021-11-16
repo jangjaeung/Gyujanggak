@@ -47,9 +47,6 @@
 <!-- 			<input type="hidden" name="id" id="kakaoId" /> -->
 <!-- 			<input type="hidden" name="flag" id="flag" value="kakao" /> -->
 <!-- 		  </form> -->
-          <div class="instagram">
-            <span>Naver</span>
-          </div>
         </div>
         <div class="signup">아직 계정이 없으신가요?
           <a href="enrollType.do">Signup Now</a>
