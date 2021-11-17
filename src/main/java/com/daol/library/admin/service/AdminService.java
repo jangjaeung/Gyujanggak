@@ -14,6 +14,10 @@ import com.daol.library.post.domain.Post;
 import com.daol.library.post.domain.Reply;
 
 public interface AdminService {
+	// 회원관리 전체 조회
+	public List<Member> printAllMember(PageInfo pi);
+	// 회원 카운트
+	public int getUserListCount();
 	// 장서 카운트
 	public int getListCount();
 	// 장서 리스트

@@ -24,6 +24,20 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminStore store;
 
+	// 회원관리 전체 조회
+	@Override
+	public List<Member> printAllMember(PageInfo pi) {
+		List<Member> uList = store.selectAllMember(pi);
+		return uList;
+	}
+	
+	// 회원 카운트
+	@Override
+	public int getUserListCount() {
+		int totalCount = store.selectUserListCount();
+		return totalCount;
+	}
+	
 	@Override
 	// 장서 카운트
 	public int getListCount() {
