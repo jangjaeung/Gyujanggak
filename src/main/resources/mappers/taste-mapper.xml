@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tasteMapper">
-	<!-- 취향 설문 화면에 출력될 책 정보 -->
+	<!-- 취향 화면에 출력될 책 정보 -->
 	<resultMap type="Book" id="bResultMap">
 		<id property="bookNo" column="BOOK_NO"/>
 		<result property="bookName" column="BOOK_NAME"/>
@@ -23,7 +23,18 @@
 	<select id="selectSurveyList" resultMap="bResultMap">
 	 	SELECT * FROM(SELECT * FROM BOOK ORDER BY DBMS_RANDOM.VALUE) WHERE ROWNUM <![CDATA[<=100]]>
  	</select>
-	
+ 	<!-- 취향별 도서 추천 -->
+	<select id="selectTaste1" resultMap="bResultMap">
+		SELECT * FROM(SELECT * FROM BOOK WHERE THEME = #{taste1} ORDER BY DBMS_RANDOM.VALUE) WHERE ROWNUM <![CDATA[<=10]]>
+	</select>
+	<select id="selectTaste2" resultMap="bResultMap">
+		SELECT * FROM(SELECT * FROM BOOK WHERE THEME = #{taste2} ORDER BY DBMS_RANDOM.VALUE) WHERE ROWNUM <![CDATA[<=10]]>
+	</select>
+	<select id="selectTaste3" resultMap="bResultMap">
+		SELECT * FROM(SELECT * FROM BOOK WHERE THEME = #{taste3} ORDER BY DBMS_RANDOM.VALUE) WHERE ROWNUM <![CDATA[<=10]]>
+	</select>
+
+
 	
 	<!-- 취향 설문 -->
 	<resultMap type="Member" id="memberResultMap">
@@ -78,6 +89,12 @@
 		<result property="taste3" column="TASTE3"></result>
 		<collection property="tasteSurvey" resultMap="TasteSurveyResultMap"/>
  	</resultMap>
+ 	
+ 	<!-- 나의 취향 불러오기 -->
+	<select id="selectMyTaste" resultMap="tasteResultMap">
+		SELECT * FROM WHERE USER_ID = #{userId}
+	</select>
+ 	
 	<insert id="insertTaste" parameterType="Taste">	
   		INSERT INTO TASTE(USER_ID, TASTE1, TASTE2, TASTE3) 
 			VALUES(

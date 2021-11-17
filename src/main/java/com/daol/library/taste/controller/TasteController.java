@@ -131,4 +131,53 @@ public class TasteController {
 		int result = service.registerTaste(taste);
 	}
 	
+	
+	/** 취향별 도서 추천 */
+	@RequestMapping(value="home.do", method=RequestMethod.GET)
+	public ModelAndView recommendBookListbyTaste(ModelAndView mv, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		Taste taste = service.selectMyTaste(userId);
+		String taste1 = taste.getTaste1();
+		String taste2 = taste.getTaste2();
+		String taste3 = taste.getTaste3();
+		
+		try {
+			List<Book> taste1List = service.printTaste1List(taste1);
+			List<Book> taste2List = service.printTaste2List(taste2);
+			List<Book> taste3List = service.printTaste3List(taste3);
+			if(!taste1List.isEmpty()) {
+				mv.addObject("taste1List", taste1List);
+			}else {
+				mv.addObject("taste1List", null);
+			}
+			
+			if(!taste2List.isEmpty()) {
+				mv.addObject("taste2List", taste2List);
+			}else {
+				mv.addObject("taste2List", null);
+			}
+			
+			if(!taste3List.isEmpty()) {
+				mv.addObject("taste3List", taste3List);
+			}else {
+				mv.addObject("taste3List", null);
+			}
+			mv.setViewName("home");
+			
+		}catch(Exception e){
+			mv.addObject("msg", "추천 도서 조히 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+
+	/** 전공별 도서 추천 */
+	/*
+	 * @RequestMapping(value="home.do", method=RequestMethod.GET) public
+	 * ModelAndView recommendBookListByMajor(ModelAndView mv, HttpSession session) {
+	 * 
+	 * return mv; }
+	 */
+	
 }

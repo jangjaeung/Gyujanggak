@@ -46,12 +46,13 @@ public class TasteStoreLogic implements TasteStore{
 		return result;
 	}
 	
-	
+	/** 취향 불러오기  */
 	@Override
-	public int insertTatseSurvey(TasteSurvey survey) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Taste selectMyTaste(String userId) {
+		Taste taste = sqlSession.selectOne("tasteMapper.selectMyTaste",userId);
+		return taste;
 	}
+	
 
 	@Override
 	public int insertTaste(Taste taste) {
@@ -59,17 +60,35 @@ public class TasteStoreLogic implements TasteStore{
 		return result;
 	}
 
+	/** 취향별 도서 추천*/
 	@Override
-	public List<Book> selectBooksByTaste(Taste taste) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> selectTaste1List(String taste1) {
+		List<Book> taste1List = sqlSession.selectList("tasteMapper.selectTaste1", taste1);
+		return taste1List;
 	}
 
+	@Override
+	public List<Book> selectTaste2List(String taste2) {
+		List<Book> taste2List = sqlSession.selectList("tasteMapper.selectTaste2", taste2);
+		return taste2List;
+	}
+
+	@Override
+	public List<Book> selectTaste3List(String taste3) {
+		List<Book> taste3List = sqlSession.selectList("tasteMapper.selectTaste3", taste3);
+		return taste3List;
+	}
+
+	
+	/** 전공별 도서 추천*/
 	@Override
 	public List<Book> selectBooksByMajor(Member member) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 
 
 

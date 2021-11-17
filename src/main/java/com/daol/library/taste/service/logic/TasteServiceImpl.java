@@ -46,12 +46,7 @@ public class TasteServiceImpl implements TasteService{
 		return result;
 	}
 	
-	
-	@Override
-	public int doTatseSurvey(TasteSurvey survey) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 
 	@Override
 	public int registerTaste(Taste taste) {
@@ -59,17 +54,44 @@ public class TasteServiceImpl implements TasteService{
 		return result;
 	}
 
+	
+	/** 나의 취향 불러오기 */
 	@Override
-	public List<Book> printBooksByTaste(Taste taste) {
-		// TODO Auto-generated method stub
-		return null;
+	public Taste selectMyTaste(String userId) {
+		Taste taste = store.selectMyTaste(userId);
+		return taste;
+	}
+	
+	/** 취향별 도서 추천 */
+	@Override
+	public List<Book> printTaste1List(String taste1) {
+		List<Book> taste1List = store.selectTaste1List(taste1);
+		return taste1List;
 	}
 
+	@Override
+	public List<Book> printTaste2List(String taste2) {
+		List<Book> taste2List = store.selectTaste2List(taste2);
+		return taste2List;
+	}
+
+	@Override
+	public List<Book> printTaste3List(String taste3) {
+		List<Book> taste3List = store.selectTaste3List(taste3);
+		return taste3List;
+	}
+
+	
+	/** 전공별 도서 추천 */
 	@Override
 	public List<Book> printBooksByMajor(Member member) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 
 
 
