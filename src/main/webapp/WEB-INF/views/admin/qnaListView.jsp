@@ -45,6 +45,11 @@ footer{bottom:0}
 .table thead tr td:last-child{width:15%; text-align:center;}
 .table tbody tr td:first-child{width:15%; text-align:center;}
 .table tbody tr td:last-child{width:15%; text-align:center;}
+.side{width:200px;position:absolute;left:3%;top:25%;}
+.side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+.side ul li:first-child{line-height:80px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; !importent}
+.side ul li:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 </head>
 <body>
@@ -65,7 +70,16 @@ footer{bottom:0}
 	<section>
 		<!-- 사이드메뉴 -->
 		<aside class="sideMenu">
-			
+			<div class="side">
+				<ul>
+					<li>관 리 자</li>
+					<li>회원관리</li>
+					<li>도서관리</li>
+					<li class="sideact">문의관리</li>
+					<li>신고관리</li>
+					<li>대출통계</li>
+				</ul>
+			</div>
 		</aside>
 
 		<!-- 내용 -->

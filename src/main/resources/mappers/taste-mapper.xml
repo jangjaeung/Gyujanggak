@@ -92,7 +92,7 @@
  	
  	<!-- 나의 취향 불러오기 -->
 	<select id="selectMyTaste" resultMap="tasteResultMap">
-		SELECT * FROM WHERE USER_ID = #{userId}
+		SELECT * FROM TASTE WHERE USER_ID = #{userId}
 	</select>
  	
 	<insert id="insertTaste" parameterType="Taste">	
