@@ -13,11 +13,11 @@
    
    <footer>
    	<br><br>
-   	<div class="footer">
-   		<div class="footer logo" id="logo">
+   	<div class="footer" style="min-width : 700px">
+   		<div class="footer-logo" id="logo" >
    			<a href="home.do"><img src="resources/img/logo_transparent.png" alt="logo" id="footer-logo"></a>
    		</div>
-   		<div class="footer info" id="footer-info">
+   		<div class="footer info" id="footer-info" style="width : 700px">
    		<br><br>
    			<p><a href="#"><b>개인정보 처리방침</b></a> &nbsp;&nbsp;  <a href="#"><b>이메일 주소 무단 수집 거부</b></a> &nbsp;&nbsp;   <a href="#"><b>찾아오는 길</b></a></p>
    			

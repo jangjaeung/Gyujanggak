@@ -18,10 +18,12 @@
 					<a href="home.do"><h3 id="logoText" style="font-weight:bold;">다올대학교 도서관 규장각</h3></a>
 			</div>
 			<c:if test="${sessionScope.userId eq null }">
-				<div class="wrapper right" id="right"><a href="loginView.do" >LOGIN</a></div>
+				<div class="wrapper right" id="loginbutton" >&nbsp;&nbsp;<a href="loginView.do" >LOGIN</a></div>
 			</c:if>
 			<c:if test="${sessionScope.userId ne null and userId ne ''}">
-				<div class="wrapper right" id="right">${sessionScope.userId}님 환영합니다!&nbsp;&nbsp;&nbsp;&nbsp;<a href="logout.do" style="color : gray;">LOGOUT</a></div>
+				<div class="wrapper right" id="logoutbutton" >
+					${sessionScope.userId}님 환영합니다!&nbsp;&nbsp;&nbsp;&nbsp;<a href="logout.do" style="color : gray;">LOGOUT</a>
+				</div>
 			</c:if>
 		</div>
 		<div class="nav" id="nav">

@@ -36,6 +36,7 @@
 	display: grid;
 	text-align : center;
 	position: relative;
+	min-width: 600px;
 }
 #mainTitle{
 	color : #656379;

@@ -106,6 +106,7 @@ public class TasteController {
 		int result = service.updateSurveyCheck(userId);
 		try {
 			if(result>0) {
+				session.setAttribute("userId", userId);
 				session.setAttribute("surveyCheck", surveyCheck);
 				taste.setUserId(userId);
 				insertTaste(taste);
@@ -131,6 +132,7 @@ public class TasteController {
 		int result = service.registerTaste(taste);
 	}
 
+	
 	/** 전공별 도서 추천 */
 	/*
 	 * @RequestMapping(value="home.do", method=RequestMethod.GET) public
