@@ -9,6 +9,7 @@
 <title>공지사항</title>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+	
 
 
 <style>
@@ -50,25 +51,46 @@
 		<h1 style="text-align: center; margin-bottom: 8%;">대출통계</h1>
 
 
-			<c:forEach items="${sList }" var="statis">
-				<c:if test="${statis.lendingDate eq '11월'}">
-					<input type="hidden" id="subject" value="${statis.bookSubject }">
-					<input type="hidden" class="lending-count11" value="${statis.lendingCount }">
-				</c:if>
-			</c:forEach>
 
+
+
+		<c:if test="${not empty sList}">
+			<c:forEach items="${sList }" var="statis">
+				<input type="hidden" id="subject" value="${statis.bookSubject }">
+				<input type="hidden" class="lending-count11"
+					value="${statis.lendingCount }">
+			</c:forEach>
+		</c:if>
 		<div class="chart-div" align="center">
 			<canvas id="myChart" width="400" height="200"></canvas>
 		</div>
-		
-		<script src="script.js"></script>
+
+
 
 
 
 	</div>
+
+
+		<script src="script.js"></script>
+
+
+
+	
 	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<script>
+// 	function setDisplay(){
+// 	    if($('input:radio[id=weekly-check]').is(':checked')){
+// 	        $('.month-box').hide();
+// 	    }else{
+	  
+// 	    }
+// 	};
+	
+	
+	
+	
 	var checkArr = [];
 	$('.lending-count11').each(function(i){
 		checkArr.push($(this).val());
@@ -161,6 +183,8 @@
 	        }
 	    }
 	});
+	
+
 	</script>
 </body>
 </html>

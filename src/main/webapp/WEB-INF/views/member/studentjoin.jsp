@@ -198,7 +198,7 @@ $('#out').css({'color':'red','width':'110%','font-size':'12px','border':'none','
 		});
 		
 		$('#e-email').click(function(){
-			var reg=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[d,D]{1}[a,A]{1}[o,O]{1}[l,L]{1}.[c,C]{1}[o,O]{1}.[k,K]{1}[r,R]{1}$/;
+			var reg=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[d,D]{1}[a,A]{1}[o,O]{1}[l,L]{1}.[a,A]{1}[r,R]{1}.[k,K]{1}[r,R]{1}$/;
 			var email =$('#userEmail').val().trim();
 			
 			if(!reg.test(email)){
