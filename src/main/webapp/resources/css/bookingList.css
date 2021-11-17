@@ -1,0 +1,37 @@
+* {
+	margin: 0;
+	padding : 0;
+}
+
+#beforeLogin{
+	margin-top : 5%;
+	margin-bottom : 10%;
+}
+
+.sideMenu{
+	float: left;
+	width: 25%;
+}
+
+.mainContent {
+	margin: auto;
+	vertical-align: middle;
+	justify-content: center;
+	width : 85%;
+	display: grid;
+}
+
+#mainTitle{
+	color : #656379;
+	text-align : center;
+}
+
+#book-count{
+	border-bottom : 1px solid gray;
+	font-size : 1.1em;
+}
+
+table {
+	width : 800px;
+	height: 80px;
+}

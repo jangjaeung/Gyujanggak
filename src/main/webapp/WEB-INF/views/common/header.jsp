@@ -18,10 +18,12 @@
 					<a href="home.do"><h3 id="logoText" style="font-weight:bold;">다올대학교 도서관 규장각</h3></a>
 			</div>
 			<c:if test="${sessionScope.userId eq null }">
-				<div class="wrapper right" id="right"><a href="loginView.do" >LOGIN</a></div>
+				<div class="wrapper right" id="loginbutton" >&nbsp;&nbsp;<a href="loginView.do" >LOGIN</a></div>
 			</c:if>
 			<c:if test="${sessionScope.userId ne null and userId ne ''}">
-				<div class="wrapper right" id="right">${sessionScope.userId}님 환영합니다!&nbsp;&nbsp;&nbsp;&nbsp;<a href="logout.do" style="color : gray;">LOGOUT</a></div>
+				<div class="wrapper right" id="logoutbutton" >
+					${sessionScope.userId}님 환영합니다!&nbsp;&nbsp;&nbsp;&nbsp;<a href="logout.do" style="color : gray;">LOGOUT</a>
+				</div>
 			</c:if>
 		</div>
 		<div class="nav" id="nav">
@@ -61,7 +63,7 @@
 						<li><a href="bookingList.do?userId=${userId }">도서 예약 내역</a></li>
 						<li><a href="wishList.do?userId=${userId }">희망 도서 신청</a></li>
 						<li><a href="likeList.do?userId=${userId }">관심도서 내역</a></li>
-						<li><a href="tasteSurvey.do?userId=${userId }">취향 분석 설문</a></li>
+						<li><a href="tasteSurveyView.do?userId=${userId }">취향 분석 설문</a></li>
 						<li><a href="readingroomHistory.do?userId=${userId }">시설 이용 내역</a></li>
 						<li><a href="qnaList.do?userId=${userId }">문의하기</a></li>
 					</ul>

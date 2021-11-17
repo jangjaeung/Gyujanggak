@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import com.daol.library.book.domain.Keyword;
 import com.daol.library.book.service.BookService;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.service.LendingBookService;
+import com.daol.library.taste.domain.Taste;
+import com.daol.library.taste.service.TasteService;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 
@@ -31,12 +34,35 @@ public class HomeController {
 	private BookService book;
 	@Autowired
 	private LendingBookService lend;
+	@Autowired
+	private TasteService asd;
 	
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model,HttpSession session) {
+		String surveyCheck = (String)session.getAttribute("surveyCheck");
+
+		String userId = (String)session.getAttribute("userId");
+		if(userId != null) {
+			Taste taste = asd.selectMyTaste(userId);
+			if(taste != null) {
+				String taste1 = taste.getTaste1();
+				String taste2 = taste.getTaste2();
+				String taste3 = taste.getTaste3();
+				List<Book> taste1List = asd.printTaste1List(taste1);
+				List<Book> taste2List = asd.printTaste2List(taste2);
+				List<Book> taste3List = asd.printTaste3List(taste3);
+				model.addAttribute("taste1List",taste1List);
+				model.addAttribute("taste2List",taste2List);
+				model.addAttribute("taste3List",taste3List);
+				model.addAttribute("taste",taste);
+			}
+		}
 		List<Book> bList = book.printNewBook();
 		List<Book> pList = book.printBestBook();
 		if(!bList.isEmpty()) {
+			model.addAttribute("userId",userId);
+			model.addAttribute("surveyCheck",surveyCheck);
+			
 			model.addAttribute("bList",bList);
 			model.addAttribute("pList",pList);
 			return "home";

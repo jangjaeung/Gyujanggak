@@ -15,6 +15,7 @@
 		<typeAlias type="com.daol.library.book.domain.Search" alias="Search"/>
 		<typeAlias type="com.daol.library.lendingBook.domain.LendingBook" alias="LendingBook"/>
 		<typeAlias type="com.daol.library.interestingBook.domain.InterestingBook" alias="InterestingBook"/>
+		<typeAlias type="com.daol.library.reservationBook.domain.ReservationBook" alias="ReservationBook"/>
 		<typeAlias type="com.daol.library.lendingBook.domain.Parcel" alias="Parcel"/>
 		<typeAlias type="com.daol.library.post.domain.Post" alias="Post"/>
 		<typeAlias type="com.daol.library.post.domain.Reply" alias="Reply"/>
@@ -25,7 +26,9 @@
 		<typeAlias type="com.daol.library.book.domain.WishBook" alias="WishBook"/>
 		<typeAlias type="com.daol.library.mypage.domain.Qna" alias="Qna"/>
 		<typeAlias type="com.daol.library.admin.domain.Status" alias="Status"/>
-
+		<typeAlias type="com.daol.library.taste.domain.TasteSurvey" alias="TasteSurvey"/>
+		<typeAlias type="com.daol.library.taste.domain.Taste" alias="Taste"/>
+		<typeAlias type="com.daol.library.admin.domain.Statistics" alias="Statistics"/>
 		<typeAlias type="com.daol.library.book.domain.Review" alias="Review"/>
 		<typeAlias type="com.daol.library.admin.domain.BookParcel" alias="BookParcel"/>
 
@@ -36,10 +39,12 @@
 		<mapper resource="mappers/book-mapper.xml"/>
 		<mapper resource="mappers/lendingBook-mapper.xml"/>
 		<mapper resource="mappers/intBook-mapper.xml"/>
+		<mapper resource="mappers/rsvBook-mapper.xml"/>
 		<mapper resource="mappers/post-mapper.xml"/>
 		<mapper resource="mappers/readingRoom-mapper.xml"/>
 		<mapper resource="mappers/studyRoom-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/admin-mapper.xml"/>
+		<mapper resource="mappers/taste-mapper.xml"/>
 	</mappers>
 </configuration>

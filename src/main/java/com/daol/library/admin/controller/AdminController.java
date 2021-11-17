@@ -23,6 +23,7 @@ import com.daol.library.admin.common.Pagination;
 import com.daol.library.admin.domain.BookParcel;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Statistics;
 import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.book.domain.Book;
@@ -99,6 +100,7 @@ public class AdminController {
 	  	public String bookEnrollView() {
 		  return "adminbook/bookEnroll"; 
 	  	}
+	 
 	 // 장서 등록
 	 @RequestMapping(value="booksEnroll.do", method=RequestMethod.POST)
 	 	public String bookEnroll(@ModelAttribute Book book,@RequestParam(value="bookCoverFile", required=false)MultipartFile bookCover,Model model, HttpServletRequest request ) {
@@ -118,7 +120,20 @@ public class AdminController {
 			 return "common/errorPage";
 		 }
 	 }
-	 
+	// 대출 통계 
+		 @RequestMapping(value="statisticsView.do", method=RequestMethod.GET)
+		  	public ModelAndView statisticsView(ModelAndView mv, @ModelAttribute Statistics statistics) {
+			  
+			 List<Statistics> sList = service.statisAll();
+			 if(!sList.isEmpty()) {
+				mv.addObject("sList", sList);
+				mv.setViewName("adminbook/statistics");
+			 }else {
+				mv.addObject("msg", "대출통계 조회 실패");
+				mv.setViewName("common/errorPage");
+			 }
+			 return mv; 
+		  	}
 	 // 책 수정
 	 @RequestMapping(value="bookUpdate.do", method=RequestMethod.GET)
 	 public ModelAndView bookUpdate(ModelAndView mv,@ModelAttribute Book book, @RequestParam(value="bookNo") String bookNo,HttpServletRequest request,Model model) {
@@ -366,6 +381,18 @@ public class AdminController {
 		qna.setReplyUserId(login);
 		int result = service.modifyAnswer(qna);
 		System.out.println(qna.toString());
+		if(result>0) {
+			return "redirect:adQnaList.do";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	//답변수정
+	@RequestMapping(value="qnaAnswerModify.do",method=RequestMethod.POST)
+	public String answerModify(@ModelAttribute Qna qna, HttpSession session) {
+		String login = (String)session.getAttribute("userId");
+		qna.setReplyUserId(login);
+		int result = service.modifyAnswer(qna);
 		if(result>0) {
 			return "redirect:adQnaList.do";
 		}else {

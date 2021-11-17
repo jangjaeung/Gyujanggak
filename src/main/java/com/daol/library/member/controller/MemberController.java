@@ -47,7 +47,16 @@ public class MemberController {
 	  	}
 	 
 	 @RequestMapping(value="enrollView.do", method=RequestMethod.GET)
-	 	public String enrollView() {
+	 	public String enrollView(Model model) {
+		 return "member/memberjoin";
+	 }
+	 
+	 @RequestMapping(value="kakaoEnrollView.do", method=RequestMethod.GET)
+	 	public String kakaoenrollView(@RequestParam("userId")String userId,Model model) {
+		 if(userId != null) {
+			 model.addAttribute("kakaoId", userId);
+			 return "member/memberjoin";
+		 }
 		 return "member/memberjoin";
 	 }
 	 
@@ -93,11 +102,13 @@ public class MemberController {
 			}
 	 }
 	 
-	 @RequestMapping(value="enroll.do", method=RequestMethod.POST)
+	 @ResponseBody
+	 @RequestMapping(value="enroll.do", method=RequestMethod.POST, produces = "text/html; charset=UTF-8")
 	 	public String Memberregister(@ModelAttribute Member member, @RequestParam(value="uploadFile", required=false)MultipartFile uploadFile,Model model, HttpServletRequest request) {
 		// value값은 jsp의 input태그의 name값이고
 			// required=false는 파일이 필수가 아님을 알려주는 것이고,
 			// MultipartFile은 MultipartResolver 객체를 빈으로 등록해서 사용한다는 것이다.
+		 	String resultmsg = "";
 			if (!uploadFile.getOriginalFilename().equals("")) {
 				// uploadFile이 비어있지 않으면
 				String filePath = saveFile(uploadFile, request);
@@ -107,11 +118,11 @@ public class MemberController {
 			}
 			int result = service.registerMember(member);
 			if (result > 0) {
-				return "redirect:loginView.do";
+				resultmsg= "<script>location.href='/loginView.do';alert('회원가입이 완료되었습니다.')</script>";
 			} else {
-				model.addAttribute("msg", "공지사항 등록 실패");
-				return "common/errorPage";
+				resultmsg= "<script>location.href='/enrollView.do';alert('회원가입 실패!')</script>";
 			}
+			return resultmsg;
 	 }
 	 
 
@@ -138,9 +149,11 @@ public class MemberController {
 			// 파일경로 리턴
 			return filePath;
 		}
-		
-		@RequestMapping(value="login.do", method=RequestMethod.POST)
-		public String memberLogin(HttpServletRequest request) {
+		@ResponseBody
+		@RequestMapping(value="login.do", method=RequestMethod.POST, produces = "text/html; charset=UTF-8")
+		public String memberLogin(HttpServletRequest request, Model model, HttpServletResponse response) {
+			response.setContentType("text/html;charset=utf-8");
+			String resultmsg = "";
 			String memberId = request.getParameter("user-id");
 			String memberPwd = request.getParameter("user-pwd");
 			// 이제 비지니스 로직(백단)이 실행된다.!!
@@ -153,14 +166,16 @@ public class MemberController {
 					HttpSession session = request.getSession();
 					session.setAttribute("userId", loginUser.getUserId());
 					session.setAttribute("userType", loginUser.getUserType());
-					return "redirect:home.do";
+					session.setAttribute("surveyCheck", loginUser.getSurveyCheck());
+					resultmsg= "<script>location.href='/home.do'</script>";
 				}else {
-					return "redirect:loginView.do";
+					resultmsg= "<script>location.href='/loginView.do';alert('정보가 일치하지 않습니다.')</script>";
 				}
 			}catch(Exception e) {
 				request.setAttribute("msg", e.toString());
 				return "common/errorPage";
 			}
+			return resultmsg;
 		}
 		
 		@RequestMapping(value="logout.do", method=RequestMethod.GET)
@@ -204,5 +219,28 @@ public class MemberController {
 			boolean result = service.emailCertification(session, userEmail, Integer.parseInt(inputCode));
 			
 			return result;
+		}
+		@ResponseBody
+		@RequestMapping(value="idDuplicateCheck.do", method=RequestMethod.POST)
+		public String idDupCheck(@RequestParam("userId")String userId,Model model) {
+			int result = service.idCheck(userId);
+			
+			return String.valueOf(result);
+		}
+		
+		@RequestMapping(value="kakaoLogin.do", method=RequestMethod.POST)
+			public String kakaoLogin(HttpServletRequest request, Model model,@ModelAttribute Member member,@RequestParam("userid") String kakaoId) {
+				
+			Member mUser = service.kakaoMember(kakaoId);
+			if(mUser != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("userId", mUser.getUserId());
+				session.setAttribute("userType", mUser.getUserType());
+				return "redirect:home.do";
+			}else {
+				model.addAttribute("msg", "공지사항 등록 실패");
+				return "common/errorPage";
+			}
+				
 		}
 }

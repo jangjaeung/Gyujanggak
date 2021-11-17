@@ -137,7 +137,7 @@
 				<p><span>${pi.totalCount}</span> 권의 책이 있습니다.</p> 
 			</div>
 			<br> <br>
-				<c:forEach items="${lendingList }" var="lending" varStatus="index">
+				<c:forEach items="${lendingList }" var="lending" varStatus="status">
 				<!-- 본문 -->
 				<br>
 					<div class="card">
@@ -145,60 +145,70 @@
 							<img src="${pageContext.request.contextPath}/resources/bookcover/${lending.bookCover}" width="173.3px" height="220px">
 						</div>
 						<div class="description">
-							<h3>${lending.bookName}</h3><input type="hidden" name="bookNo" value="${lending.bookNo }" id="bookNo">
+							<h3><a href="/bookDetail.do?bookNo=${lending.bookNo }">${lending.bookName}</a></h3><input type="hidden" name="bookNo" value="${lending.bookNo }" id="bookNo">
 							<p><span>${lending.publisher}</span>&nbsp;|&nbsp;<span>${lending.bookWriter}</span>&nbsp;|&nbsp;<span>${lending.bookYear}</span></p>
 							<br>	
 							<p>대출일 : ${lending.lendingBook.lendingDate }</p>
 							<p>
 								<c:if test="${lending.bookState eq '대출불가'}">반납예정일 : ${lending.lendingBook.returnDate}</c:if>
 								<c:if test="${lending.bookState eq '대출가능'}">반납일자 : ${lending.lendingBook.returnDate}</c:if>
-							</p>${review.userId }
+							</p>
 							<br>
 								<div class="btn-area">
 									<c:if test="${lending.bookState eq '대출불가'}">
 										<button class="btn btn-success ">연장하기</button>
 									</c:if>
 									<c:if test="${lending.bookState eq '대출가능'}">
-											<button class="btn btn-info" id="reviewDetail">서평보기</button>
-											<button class="btn btn-info" id="writeReview">서평쓰기</button>
+										<c:if test="${lending.review.reviewContents ne null and lending.review.reviewContents ne ''}">
+											<button class="btn btn-info" id="reviewDetail" onclick="reviewDetail(this);">서평보기</button>
+										</c:if>
+										<c:if test="${lending.review.reviewContents eq null or lending.review.reviewContents eq ''}">
+											<button class="btn btn-info" id="writeReview" onclick="writeReview(this);">서평쓰기</button>
+										</c:if>
 									</c:if>
 								</div>
 							<br>
 						</div>
 						<c:if test="${lending.bookState eq '대출가능'}">
-							<div class="review" id="reviewBoxWrite">
-								<textarea rows="7" cols="92" placeholder="내용을 입력해주세요" name="reviewContents" id="reviewContents"></textarea>
-								<div class="starRev">
-									<span class="starR1 on" data-value="0.5">별1_왼쪽</span> <span class="starR2" data-value="1.0">별1_오른쪽</span>
-									<span class="starR1" data-value="1.5">별2_왼쪽</span> <span class="starR2" data-value="2.0">별2_오른쪽</span>
-									<span class="starR1" data-value="2.5">별3_왼쪽</span> <span class="starR2" data-value="3.0">별3_오른쪽</span>
-									<span class="starR1" data-value="3.5">별4_왼쪽</span> <span class="starR2" data-value="4.0">별4_오른쪽</span>
-									<span class="starR1" data-value="4.5">별5_왼쪽</span> <span class="starR2" data-value="5.0">별5_오른쪽</span>
-									<input type="hidden" name="reviewStar" id="reviewStar">
-									 <br> <br>
-									<div class="btn-area">
-										<button class="btn btn-info btn-sm" id="registerReview">등록</button>
-										<button class="btn btn-info btn-sm" id="cancelReview">취소</button>
-									</div>	
+							<%-- <c:if test="${lending.review.reviewContents eq null or lending.review.reviewContents eq ''}"> --%>
+								<div class="review reviewBoxWrite" id="reviewBoxWrite">
+									<textarea rows="7" cols="92" placeholder="내용을 입력해주세요" name="reviewContents" id="reviewContents"></textarea>
+									<div class="starRev">
+										<span class="starR1 on" data-value="0.5">별1_왼쪽</span> <span class="starR2" data-value="1.0">별1_오른쪽</span>
+										<span class="starR1" data-value="1.5">별2_왼쪽</span> <span class="starR2" data-value="2.0">별2_오른쪽</span>
+										<span class="starR1" data-value="2.5">별3_왼쪽</span> <span class="starR2" data-value="3.0">별3_오른쪽</span>
+										<span class="starR1" data-value="3.5">별4_왼쪽</span> <span class="starR2" data-value="4.0">별4_오른쪽</span>
+										<span class="starR1" data-value="4.5">별5_왼쪽</span> <span class="starR2" data-value="5.0">별5_오른쪽</span>
+										<input type="hidden" name="reviewStar" id="reviewStar">
+										 <br> <br>
+										<div class="btn-area">
+											<input type="hidden" name="bookNo" class="bookNo" value="${lending.bookNo }">
+											<button class="btn btn-info btn-sm" id="registerReview" onclick="registerReview(this);">등록</button>
+											<button class="btn btn-info btn-sm" id="cancelReview" onclick="cancelReview(this);">취소</button>
+										</div>	
+									</div>
 								</div>
-							</div>
-							<div class="review" id="reviewBoxView">
-								<textarea rows="7" cols="92" placeholder="내용을 입력해주세요" name="reviewContents" id="modifyContents">${review.reviewContents }</textarea>
-								<div class="starRev">
-									<span class="starR1 on" data-value="0.5">별1_왼쪽</span> <span class="starR2" data-value="1.0">별1_오른쪽</span>
-									<span class="starR1" data-value="1.5">별2_왼쪽</span> <span class="starR2" data-value="2.0">별2_오른쪽</span>
-									<span class="starR1" data-value="2.5">별3_왼쪽</span> <span class="starR2" data-value="3.0">별3_오른쪽</span>
-									<span class="starR1" data-value="3.5">별4_왼쪽</span> <span class="starR2" data-value="4.0">별4_오른쪽</span>
-									<span class="starR1" data-value="4.5">별5_왼쪽</span> <span class="starR2" data-value="5.0">별5_오른쪽</span>
-									<input type="hidden" name="reviewStar" id="reviewStar">
-									 <br> <br>
-									<div class="btn-area">
-										<button class="btn btn-info btn-sm" id="modifyReview">수정</button>
-										<button class="btn btn-info btn-sm" id="deleteReview">삭제</button>
-										<button class="btn btn-info btn-sm" id="closeReview">닫기</button>
-									</div>	
+							<%-- </c:if> --%>
+						<%-- 	<c:if test="${lending.review.reviewContents ne null and lending.review.reviewContents ne ''}"> --%>
+								<div class="review reviewBoxView" id="reviewBoxView">
+									<textarea rows="7" cols="92" placeholder="내용을 입력해주세요" name="reviewContents" id="modifyContents">${lending.review.reviewContents }</textarea>
+									<div class="starRev">
+										<span class="starR1 on" data-value="0.5">별1_왼쪽</span> <span class="starR2" data-value="1.0">별1_오른쪽</span>
+										<span class="starR1" data-value="1.5">별2_왼쪽</span> <span class="starR2" data-value="2.0">별2_오른쪽</span>
+										<span class="starR1" data-value="2.5">별3_왼쪽</span> <span class="starR2" data-value="3.0">별3_오른쪽</span>
+										<span class="starR1" data-value="3.5">별4_왼쪽</span> <span class="starR2" data-value="4.0">별4_오른쪽</span>
+										<span class="starR1" data-value="4.5">별5_왼쪽</span> <span class="starR2" data-value="5.0">별5_오른쪽</span>
+										<input type="hidden" name="reviewStar" id="reviewdStar" value="${lending.review.reviewStar }">
+										 <br><br>
+										<div class="btn-area">
+											<input type="hidden" name="bookNo" class="bookNo" value="${lending.bookNo }">
+											<button class="btn btn-info btn-sm" id="modifyReview" onclick="modifyReview(this);">수정</button>
+											<button class="btn btn-info btn-sm" id="deleteReview" onclick="deleteReview(this)">삭제</button>
+											<button class="btn btn-info btn-sm" id="closeReview" onclick="closeReview(this);">닫기</button>
+										</div>	
+									</div>
 								</div>
-							</div>							
+							<%-- </c:if>	 --%>					
 						</c:if>
 					</div>
 			</c:forEach>
@@ -247,100 +257,151 @@
 <script>
 $(document).ready(function(){
 	
-	$("#reviewBoxView").hide();
-	$("#reviewBoxWrite").hide(); //서평 박스 숨기기
-	
-	//서평쓰기 버튼 클릭시 보이기
-	$("#writeReview").click(function(){
-		$("#reviewBoxWrite").show();
-		$(this).hide();
-	});
-	
-	//취소 버튼 누르면 작성란 사라지고, 다시 서평쓰기 버튼 생성
-	$("#cancelReview").click(function(){
-		$("#reviewBoxWrite").hide();
-		$("#writeReview").show();
-	});
-	
-	
-	$("#reviewDetail").click(function(){
-		$("#reviewBoxView").show();
-		$(this).hide();
-	});
-	
-	
-	$("#closeReview").click(function(){
-		$("#reviewBoxView").hide();
-		$("#reviewDetail").show();
-	});
+	$(".reviewBoxView").hide();
+	$(".reviewBoxWrite").hide(); //서평 박스 숨기기
+
 	
 	
 	//별점(색)
 	$('.starRev span').click(function(){
 		 $(this).parent().children('span').removeClass('on');
 		 $(this).addClass('on').prevAll('span').addClass('on');
-		 var rating = $(this).attr('data-value');
-		 $("#reviewStar").val(rating); //히든 인풋에 값 저장
+// 		 var rating = $(this).attr('data-value');
+		 var rating = $(this).data("value");
+		 $(this).siblings("input[type=hidden]").val(rating); //히든 인풋에 값 저장
 		 console.log(rating);
 		 return false;
 	});
 	
-	//등록
-	$("#registerReview").click(function(){
-		var bookNo = $("#bookNo").val();
-		var reviewContents = $("#reviewContents").val();
-		var reviewStar = $("#reviewStar").val();
-		console.log(bookNo);
-		console.log(reviewContents);
-		console.log(reviewStar);
-		$.ajax({
-			url : "registerReview.do", 
-			type : "post",
-			data : {
-				"bookNo" : bookNo,
-				"reviewContents" : reviewContents,
-				"reviewStar" : reviewStar
-			},
-			success : function(data){
-				if(data == "success"){
-					location.href="lendingStatus.do"
-				}else{
-					alert("리뷰 등록 실패");
-				}
-			},
-			error : function(request,status,error){
-				/* alert("AJAX 통신 오류"); */
-			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
-		})
-	});	
 	
-	$("#reviewDetail").click(function(){
-		var bookNo = $("#bookNo").val();
-		var userId = '${sessionScope.userId}';
-		$.ajax({
-			url : "reviewDetail.do",
-			type : "get",
-			data : {
-				"bookNo" : bookNo,
-				"userId" : userId
-			},
-			dataType : "json",
-			success : function(data){
-				if(data.length>0){
-					$("#modifyContents").text(data.reviewContents);
-				}
-			}
-		})
-	});
 
 });
 
 
+
+//서평보기
+function reviewDetail(obj){
+	$(obj).parent().parent().next().next().show();
+	$(obj).hide();
+
+
+	/* var rating = $("#reviewdStar").val(); */
+ 	var rating = $(obj).parent().parent().next().next().children($(".starRev")).children(("input[type=hidden]")).val();
+	console.log(rating);
+
+	$(obj).parent().parent().next().next().children($(".starRev")).find("span").each(function(index, item) {
+		if($(item).data("value") <= rating) {
+			$(item).addClass("on");
+		}
+	});
 	
 
-	
+}
+//서평보기 닫기
+function closeReview(obj){
+	$(obj).parent().parent().parent().hide();
+	$(obj).parent().parent().parent().prev().prev().children().children("#reviewDetail").show();
+}
 
+	
+//서평쓰기창 열기
+function writeReview(obj){
+	$(obj).parent().parent().next().show();
+	$(obj).hide();
+
+}
+//서평쓰기 닫기
+function cancelReview(obj){
+	$(obj).parent().parent().parent().hide();
+	$(obj).parent().parent().parent().prev().children().children().last("#cancelReview").show();
+}
+	
+//등록
+function registerReview(obj){
+ 	var bookNo = $(obj).prev().val();
+	var reviewContents = $(obj).parent().parent().prev().val();
+	var reviewStar = $(obj).parent().siblings("input[type=hidden]").val(); 
+	console.log(bookNo);
+	console.log(reviewContents);
+	console.log(reviewStar); 
+
+	$.ajax({
+		url : "registerReview.do", 
+		type : "post",
+		data : {
+			"bookNo" : bookNo,
+			"reviewContents" : reviewContents,
+			"reviewStar" : reviewStar
+		},
+		success : function(data){
+			if(data == "success"){
+				location.href="lendingStatus.do"
+			}else{
+				alert("리뷰 등록 실패");
+			}
+		},
+		error : function(request,status,error){
+			/* alert("AJAX 통신 오류"); */
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	})
+}	
+	
+//수정
+function modifyReview(obj){
+	var bookNo = $(obj).prev().val();
+	var reviewContents = $(obj).parent().parent().prev().val();
+	var reviewStar = $(obj).parent().siblings("input[type=hidden]").val(); 
+	console.log(bookNo);
+	console.log(reviewContents);
+	console.log(reviewStar);
+	$.ajax({
+		url : "modifyReview.do", 
+		type : "post",
+		data : {
+			"bookNo" : bookNo,
+			"reviewContents" : reviewContents,
+			"reviewStar" : reviewStar
+		},
+		success : function(data){
+			if(data == "success"){
+				alert("서평 수정이 완료되었습니다.");
+				location.href="lendingStatus.do"
+			}else{
+				alert("리뷰 수정 실패");
+			}
+		},
+		error : function(request,status,error){
+			/* alert("AJAX 통신 오류"); */
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	})
+}
+
+//삭제
+function deleteReview(obj){
+	var bookNo = $(obj).prev().prev().val();
+	console.log(bookNo);
+	$.ajax({
+		url : "deleteReview.do", 
+		type : "post",
+		data : {
+			"bookNo" : bookNo,
+		},
+		success : function(data){
+			if(data == "success"){
+				alert("작성하신 서평이 삭제되었습니다.");
+				location.href="lendingStatus.do"
+			}else{
+				alert("리뷰 삭제 실패");
+			}
+		},
+		error : function(request,status,error){
+			/* alert("AJAX 통신 오류"); */
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	})
+}
 	
 	
 </script>

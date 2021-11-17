@@ -28,4 +28,8 @@ public interface MemberService {
 
 	public boolean emailCertification(HttpSession session, String userEmail, int parseInt);
 
+	public Member kakaoMember(String kakaoId);
+
+	public int idCheck(String userId);
+
 }

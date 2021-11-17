@@ -79,6 +79,11 @@
 		<result property="deliveryNo" column="DELIVERY_NO"/>
 		<result property="lendingNo" column="LENDING_NO"/>
 	</resultMap>
+	<resultMap type="Statistics" id="StatisResultMap">
+		<id property="bookSubject" column="BOOK_SUBJECT"></id>
+		<result property="lendingCount" column="LENDING_COUNT"/>
+		<result property="lendingDate" column="LENDING_DATE"/>
+	</resultMap>
 	
 <!-- 유저리스트 페이징 -->	
 	<select id="selectUserListCount" resultType="_int">
@@ -152,6 +157,12 @@
 <!-- 		책 정보 -->
 	<select id="bookInfoSelect" resultMap="bookResultMap">
 		SELECT * FROM BOOK WHERE BOOK_NO = #{bookNo}
+	</select>
+<!-- 		대출 통계 리스트 -->
+	<select id="statisList" resultMap="StatisResultMap">
+	select * from (SELECT d.BOOK_SUBJECT, SUM(d.LENDING_COUNT) "LENDING_COUNT",to_char(c.lending_date,'mon') "LENDING_DATE"
+	FROM BOOK d, BOOK_LENDING c 
+	WHERE c.BOOK_NO = d.BOOK_NO GROUP BY d.BOOK_SUBJECT,to_char(c.lending_date,'mon'))order by book_subject
 	</select>
 	
 <!-- 	장서 등록 -->

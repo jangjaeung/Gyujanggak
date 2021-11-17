@@ -21,4 +21,8 @@ public interface MemberStore {
 //	특정 회원 정보 변경
 	public int updateOne(String userId);
 
+	public Member selectkakao(String kakaoId);
+
+	public int selectIdCheck(String userId);
+
 }

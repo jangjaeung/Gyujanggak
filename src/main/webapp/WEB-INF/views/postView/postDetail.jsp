@@ -29,7 +29,7 @@ textarea{width:100%;border:none}
 #rtb tbodt tr td{font-size:1.7rem;}
 .de{height:100px;width:100%;border:none;}
 #ft{margin-bottom:200px;}
-.qwe{border:none;padding:6px;}
+.qwe,.wer{border:none;padding:6px;}
 a{text-style:none; color:black;}
 a:visited { color: black; }
 .modifyR{width:100%;}
@@ -99,7 +99,7 @@ a:visited { color: black; }
 			</table>
 		</form>
 		<div id="ft" style="margin-top : 10px;">
-			<a href="postList.do"><button type="button" class="qwe">목록으로</button></a>
+			<a href="postList.do"><button type="button" class="wer">목록으로</button></a>
 			<c:if test="${userId ne null }">
 				<button type="button" class="qwe">게시물 신고</button>
 			</c:if>

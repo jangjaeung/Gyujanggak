@@ -26,7 +26,7 @@
 }
 .mainContent {
 	margin-left: 15%;
-	margin-right: 15%;
+	margin-right: 10%;
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
@@ -40,6 +40,7 @@
 .table{
 	margin-left : 5%;
 	margin-right : 5%;
+	min-width: 900px;
 	width : 100%;
 }
 .table th{
@@ -167,14 +168,6 @@
 				<table class="table">
 					<tbody>
 						<tr>
-							<th class="bg-info" width="20%" style='vertical-align:middle;'>주소</th>
-							<td width="77%" style='vertical-align:middle;'>
-<%-- 							택배에 입력한 주소 없으면...	
-								<c:if test="${loginUser.passCheck ne null}">${loginUser.endDate }</c:if>
-								<c:if test="${loginUser.passCheck eq null}">-</c:if> --%>
-							</td>
-						</tr>
-						<tr>
 							<th class="bg-info" width="20%" style='vertical-align:middle;'>전화번호</th>
 							<td width="77%" style='vertical-align:middle;'>${loginUser.userPhone }</td>
 						</tr>
@@ -227,11 +220,6 @@
 				<br>
 				<table class="table">
 					<tbody>
-						<tr>
-							<!-- 주소 추가해야함!!!  -->
-							<th class="bg-info" width="20%" style='vertical-align:middle;'>주소</th>
-							<td width="77%" style='vertical-align:middle;'>서울특별시 양천구</td>
-						</tr>
 						<tr>
 							<th class="bg-info" width="20%" style='vertical-align:middle;'>전화번호</th>
 							<td width="77%" style='vertical-align:middle;'>${loginUser.userPhone }</td>

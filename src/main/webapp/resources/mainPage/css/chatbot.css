@@ -1,5 +1,5 @@
  <!----> 
-    
+*{margin:0;padding:0}
 #center-text {          
   display: flex;
   flex: 1;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.daol.library.admin.domain.BookParcel;
 import com.daol.library.admin.domain.PageInfo;
 import com.daol.library.admin.domain.Search;
+import com.daol.library.admin.domain.Statistics;
 import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
@@ -237,6 +238,12 @@ public class AdminStoreLogic implements AdminStore{
 	public Book selectBookInfo(String bookNo) {
 		Book books = sqlSession.selectOne("adminMapper.bookInfoSelect", bookNo);
 		return books;
+	}
+
+	@Override
+	public List<Statistics> selectAllstatis() {
+		List<Statistics> sList = sqlSession.selectList("adminMapper.statisList");
+		return sList;
 	}
 
 }
