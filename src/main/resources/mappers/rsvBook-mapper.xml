@@ -34,6 +34,10 @@
 	<select id="selectAllRsvBook" resultMap="rsvBookResultMap">
 		SELECT * FROM BOOK_RESERVATION JOIN BOOK USING (BOOK_NO) WHERE USER_ID = #{ userId }
 	</select>
+	<!-- 페이징 처리 -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM BOOK_RESERVATION JOIN BOOK USING (BOOK_NO) WHERE USER_ID = #{ userId }
+	</select>
 	<!-- 도서 예약 추가 -->
 	<insert id="insertRsv" parameterType="ReservationBook">
 		INSERT INTO BOOK_RESERVATION VALUES(SEQ_RSV_NO.NEXTVAL, #{ bookNo }, #{ userId }, DEFAULT, DEFAULT)

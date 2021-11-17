@@ -1,4 +1,4 @@
-package com.daol.library.book.common;
+package com.daol.library.reservationBook.common;
 
 import com.daol.library.book.domain.PageInfo;
 

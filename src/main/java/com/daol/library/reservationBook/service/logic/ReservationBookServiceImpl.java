@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.daol.library.book.domain.PageInfo;
 import com.daol.library.reservationBook.domain.ReservationBook;
 import com.daol.library.reservationBook.service.ReservationBookService;
 import com.daol.library.reservationBook.store.ReservationBookStore;
@@ -15,8 +16,8 @@ public class ReservationBookServiceImpl implements ReservationBookService {
 	private ReservationBookStore store;
 
 	@Override
-	public List<ReservationBook> printAllRsvBook(String userId) {
-		return store.selectAllRsvBook(userId);
+	public List<ReservationBook> printAllRsvBook(PageInfo pi, String userId) {
+		return store.selectAllRsvBook(pi, userId);
 	}
 
 	@Override
@@ -38,6 +39,11 @@ public class ReservationBookServiceImpl implements ReservationBookService {
 	public int modifyRsv(ReservationBook reservationBook) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int getListCount(String userId) {
+		return store.selectListCount(userId);
 	}
 
 }

@@ -35,7 +35,7 @@
 <!-- 타이틀 -->
 				<h2 id="mainTitle"><b>도서 예약 내역</b></h2><br><br><br>
 				<div id="book-count">
-					<p>n 권의 책이 있습니다.</p>
+					<p>${ pi.totalCount } 권의 책이 있습니다.</p>
 				</div>
 <!-- 본문 -->
 				<table>
@@ -68,6 +68,39 @@
 							<td><button type="button" onclick="location.href='${ deleteRsv }';" id="delete-rsv">예약취소</button></td>
 						</tr>
 					</c:forEach>
+					<tr>
+						<td colspan="8" align="right">
+							<button type="button">선택도서 일괄 예약취소</button>
+						</td>
+					</tr>
+					<tr align="center" height="20">
+						<td colspan="8">
+							<c:url var="before" value="/bookingList.do">
+								<c:param name="page" value="${ pi.currentPage - 1 }"></c:param>
+								<c:param name="userId" value="${ rsv.userId }"></c:param>
+							</c:url>
+							<c:if test="${ pi.currentPage <= 1 }">이전</c:if>
+							<c:if test="${ pi.currentPage > 1 }"><a href="${ before }">이전</a></c:if>
+							<c:forEach var="p" begin="${ pi.startNavi }" end="${ pi.endNavi }">
+								<c:url var="pagenation" value="/bookingList.do">
+									<c:param name="page" value="${ p }"></c:param>
+									<c:param name="userId" value="${ rsv.userId }"></c:param>
+								</c:url>
+								<c:if test="${ p eq pi.currentPage }">
+									<font color="red" size="4">[${ p }]</font>
+								</c:if>
+								<c:if test="${ p ne pi.currentPage }">
+									<a href="${ pagenation }">${ p }</a>&nbsp;
+								</c:if>
+							</c:forEach>
+							<c:url var="after" value="/bookingList.do">
+								<c:param name="page" value="${ pi.currentPage + 1 }"></c:param>
+								<c:param name="userId" value="${ rsv.userId }"></c:param>
+							</c:url>
+							<c:if test="${ pi.currentPage >= pi.maxPage }">다음</c:if>
+							<c:if test="${ pi.currentPage < pi.maxPage }"><a href="${ after }">다음</a></c:if>
+						</td>
+					</tr>
 				</table>
 			</article>
 			<br>

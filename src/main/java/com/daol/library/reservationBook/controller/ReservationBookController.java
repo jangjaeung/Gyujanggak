@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.daol.library.book.common.Pagenation;
+import com.daol.library.book.domain.PageInfo;
 import com.daol.library.reservationBook.domain.ReservationBook;
 import com.daol.library.reservationBook.service.ReservationBookService;
 
@@ -41,10 +43,14 @@ public class ReservationBookController {
 	
 //	도서 예약 조회
 	@GetMapping("/bookingList.do")
-	public String bookingList(@ModelAttribute ReservationBook rsvBook, Model model) {
-		List<ReservationBook> rList = service.printAllRsvBook(rsvBook.getUserId());
+	public String bookingList(@ModelAttribute ReservationBook rsvBook, Model model, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount(rsvBook.getUserId());
+		PageInfo pi = Pagenation.getPageInfo(currentPage, totalCount);
+		List<ReservationBook> rList = service.printAllRsvBook(pi, rsvBook.getUserId());
 		if(!rList.isEmpty()) {
 			model.addAttribute("rList", rList);
+			model.addAttribute("pi", pi);
 			return "mypage/bookingList";
 		} else {
 			return "mypage/bookingList";
