@@ -41,6 +41,25 @@ public class AdminController {
 	@Autowired
 	private PostService pService;
 	
+	// 회원 관리 목록
+	@RequestMapping(value="userListView.do", method=RequestMethod.GET)
+	public ModelAndView showUserList(ModelAndView mv, @ModelAttribute Member member, @RequestParam(value="page", required=false) Integer page ) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getUserListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<Member> uList = service.printAllMember(pi);
+		if(!uList.isEmpty()) {
+			mv.addObject("uList", uList);
+			mv.addObject("pi", pi);
+			mv.setViewName("admin/userListView");
+		}else {
+			mv.addObject("msg", "회원 정보 전체조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
 	//장서 목록 리스트
 	@RequestMapping(value="bookListView.do", method=RequestMethod.GET)
   	public ModelAndView bookListView(ModelAndView mv,@ModelAttribute Book book, @RequestParam(value="page", required=false)Integer page, HttpServletRequest request) {

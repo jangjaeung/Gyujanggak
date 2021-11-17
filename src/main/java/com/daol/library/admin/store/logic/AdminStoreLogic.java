@@ -25,6 +25,22 @@ public class AdminStoreLogic implements AdminStore{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	// 회원관리 전체 조회
+	@Override
+	public List<Member> selectAllMember(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Member> uList = sqlSession.selectList("adminMapper.selectAllUserList", pi, rowBounds);
+		return uList;
+	}
+	
+	// 회원 카운트
+	@Override
+	public int selectUserListCount() {
+		int count = sqlSession.selectOne("adminMapper.selectUserListCount");
+		return count;
+	}
+	
 	//유저타입 끌어오기용
 	@Override
 	public Member selectMemberCk(String login) {
