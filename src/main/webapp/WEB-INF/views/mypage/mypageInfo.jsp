@@ -26,7 +26,7 @@
 }
 .mainContent {
 	margin-left: 15%;
-	margin-right: 15%;
+	margin-right: 10%;
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
@@ -40,6 +40,7 @@
 .table{
 	margin-left : 5%;
 	margin-right : 5%;
+	min-width: 900px;
 	width : 100%;
 }
 .table th{

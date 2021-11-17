@@ -10,6 +10,7 @@
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style>
+
 *{
 	margin:0;
 	padding : 0;
@@ -24,16 +25,19 @@
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
-	width : 90%;
+	width : 75%;
 	display: grid;
-	
+	 
 }
 #mainTitle{
 	color : #656379;
 	text-align : center;
 }
 .table{
+	margin-left : 5%;
+	margin-right : 5%;
 	width : 800px;
+	min-width: 600px;
 	justify-content : center;
 }
 .table th{
@@ -80,9 +84,9 @@
 			
 				<table class="table table-borderless" align="center">
 					<colgroup>
-						<col width="20%">
-						<col width="40%">
-						<col width="40%">
+						<col width="120px">
+						<col width="200px">
+						<col width="220px">
 					</colgroup>
 					<tr>
 						<th style='vertical-align:middle;'>아이디  </th>

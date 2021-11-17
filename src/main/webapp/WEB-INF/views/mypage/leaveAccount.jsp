@@ -44,7 +44,8 @@
 .table {
 	margin-left : 5%;
 	margin-right : 5%;
-	width : 80%;
+	width : 800px;
+	min-width: 600px;
 	justify-content : center;
 }
 
