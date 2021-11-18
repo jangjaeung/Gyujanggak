@@ -1,5 +1,6 @@
 package com.daol.library.taste.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -82,9 +83,11 @@ public class TasteStoreLogic implements TasteStore{
 	
 	/** 전공별 도서 추천*/
 	@Override
-	public List<Book> selectBooksByMajor(Member member) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> selectBooksByMajor(String majorKeyword) {
+		HashMap<String, String> mMap = new HashMap<String, String>();
+		mMap.put("major", majorKeyword);
+		List<Book> mList = sqlSession.selectList("tasteMapper.selectMajorBookList", mMap);
+		return mList;
 	}
 
 

@@ -186,6 +186,30 @@
 					<div class="swiper-button-next"></div>
 				</div>
 			</c:if>
+			<c:if test="${userId ne null && member.userType eq '학생' }">
+				<h2>${member.major} 전공 추천 도서</h2><br>
+				<div class="swiper mySwiper" style="display:block;">
+					<div class="swiper-wrapper">
+						<c:forEach items="${mList }" var="mList">
+							<div class="swiper-slide">
+								<div class="cont">
+									<c:url var="bDetail" value="/bookDetail.do">
+		                    			<c:param name="bookNo" value="${mList.bookNo }"></c:param>
+		                    		</c:url>
+									<a href="${bDetail }" style="text-decoration: none;">
+										<img class="" src="/resources/bookcover/${mList.bookCover }" alt="" style="width:200px;">
+									</a>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					<div class="swiper-pagination"></div>
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
+				</div>
+			
+			
+			</c:if>
 		</div>
 		<div class="keyword-area">
 			<div class="keyword">

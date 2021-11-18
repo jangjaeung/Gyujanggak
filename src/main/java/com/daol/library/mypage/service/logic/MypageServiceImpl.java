@@ -42,6 +42,12 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
+	public Member printOneInfo(String userId) {
+		Member member = store.selectOneInfo(userId);
+		return member;
+	}
+	
+	@Override
 	public int updatePayment(Member member) {
 		int result = store.updatePayment(member);
 		return result;
@@ -78,6 +84,12 @@ public class MypageServiceImpl implements MypageService{
 		return lendingList;
 	}
 
+	@Override
+	public int extendLending(int lendingNo) {
+		int result = store.updateExtend(lendingNo);
+		return result;
+	}
+	
 	/** 마이페이지 서평 조회 */
 	@Override
 	public List<Review> printOneReview(Review review) {
@@ -103,17 +115,8 @@ public class MypageServiceImpl implements MypageService{
 		return result;
 	}
 
-	@Override
-	public Book printBookingHistory(Book book) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public int cancelBooking(int bookNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 
 	//희망도서 신청 메일, 디비저장
@@ -219,6 +222,10 @@ public class MypageServiceImpl implements MypageService{
 	public List<Review> printOneForDetail(int bookNo) {
 		return store.selectOneForDetail(bookNo);
 	}
+
+
+
+
 
 
 

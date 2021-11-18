@@ -96,6 +96,11 @@
 .starR1.on{background-position:0 0;}
 .starR2.on{background-position:-15px 0;}
 
+.side{background-color:white; width:200px;position:fixed;left:3%;top:18%;}
+.side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+.side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+.side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 </head>
 <body>
@@ -116,7 +121,21 @@
 	<section>
 		<!-- 사이드메뉴 -->
 		<aside class="sideMenu">
-			
+			<div class="side">
+	            <ul>
+	               <li>마이페이지</li>
+	               <li class="lo" onclick="location.href='mypageInfo.do?userId=${userId }'">회원정보</li>
+	               <li class="lo" onclick="leaveAccount.do?userId=${userId }'">회원탈퇴</li>
+	               <li class="lo sideact" onclick="location.href='lendingStatus.do?userId=${userId }'" style="background-color:rgb(155,158,213); color:#fff; font-weight:bold;">대출내역</li>
+	               <li class="lo" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
+	               <li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
+	               <li class="lo" onclick="location.href='likeList.do?userId=${userId }'">관심도서내역</li>
+	               <li class="lo" onclick="location.href='tasteSurveyView.do?userId=${userId }'">취향분석</li>
+	               <li class="lo" onclick="location.href='readingroomHistory.do?userId=${userId }'">열람실이용내역</li>
+	               <li class="lo" onclick="location.href='studyroomHistory.do?userId=${userId }'">스터디룸이용내역</li>
+	               <li class="lo" onclick="location.href='qnaList.do?userId=${userId }'">문의하기</li>
+	            </ul>
+         	</div>	
 		</aside>
 
 		<!-- 내용 -->
@@ -150,13 +169,24 @@
 							<br>	
 							<p>대출일 : ${lending.lendingBook.lendingDate }</p>
 							<p>
-								<c:if test="${lending.bookState eq '대출불가'}">반납예정일 : ${lending.lendingBook.returnDate}</c:if>
+								<c:if test="${lending.bookState eq '대출불가'}">
+									<jsp:useBean id="now" class="java.util.Date" />
+									<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="today" />
+									<fmt:parseNumber value="${today}" integerOnly="true" var="nowTime" scope="request"/>
+									<fmt:formatDate pattern = "yyyyMMdd" value="${lending.lendingBook.returnDate}" var="returnDate"/>
+									<fmt:parseNumber value="${returnDate}" integerOnly="true" var="returnDate" scope="page"/> 
+									<c:set value="${returnDate - nowTime }" var="dateDiff"/>
+									<%-- <c:out value="${dateDiff }"/> --%>
+									<c:if test="${lending.lendingBook.extendCount eq 0}">반납예정일 : ${lending.lendingBook.returnDate}<c:if test="${dateDiff < 0}">&nbsp;&nbsp;<p style="color :red;">연체중</p></c:if></c:if>
+									<c:if test="${lending.lendingBook.extendCount eq 1}">반납예정일 : ${lending.lendingBook.returnDate} (연장 1회)<c:if test="${dateDiff < 0}"><p style="color :red;">연체중</p></c:if></c:if>
+								</c:if>
 								<c:if test="${lending.bookState eq '대출가능'}">반납일자 : ${lending.lendingBook.returnDate}</c:if>
 							</p>
 							<br>
 								<div class="btn-area">
-									<c:if test="${lending.bookState eq '대출불가'}">
-										<button class="btn btn-success ">연장하기</button>
+									<c:if test="${sessionScope.userId eq lending.lendingBook.userId and lending.bookState eq '대출불가'}">
+									<c:if test="${lending.lendingBook.extendCount eq 0}"><c:if test="${dateDiff >= 0}"><button class="btn btn-success" onclick="extendLending(this);">연장하기</button></c:if></c:if>
+										<input type="hidden" name="lendingNo" value="${lending.lendingBook.lendingNo }">
 									</c:if>
 									<c:if test="${lending.bookState eq '대출가능'}">
 										<c:if test="${lending.review.reviewContents ne null and lending.review.reviewContents ne ''}">
@@ -169,7 +199,7 @@
 								</div>
 							<br>
 						</div>
-						<c:if test="${lending.bookState eq '대출가능'}">
+						<c:if test="${sessionScope.userId eq lending.lendingBook.userId and lending.bookState eq '대출가능'}">
 							<%-- <c:if test="${lending.review.reviewContents eq null or lending.review.reviewContents eq ''}"> --%>
 								<div class="review reviewBoxWrite" id="reviewBoxWrite">
 									<textarea rows="7" cols="92" placeholder="내용을 입력해주세요" name="reviewContents" id="reviewContents"></textarea>
@@ -403,7 +433,30 @@ function deleteReview(obj){
 	})
 }
 	
-	
+//대출연장
+function extendLending(obj){
+	var lendingNo = $(obj).next().val();
+	console.log(lendingNo);
+	$.ajax({
+		url : "extendLending.do", 
+		type : "post",
+		data : {
+			"lendingNo" : lendingNo,
+		},
+		success : function(data){
+			if(data == "success"){
+				alert("연장 신청이 완료되었습니다.");
+				location.href="lendingStatus.do"
+			}else{
+				alert("연장 신청 실패");
+			}
+		},
+		error : function(request,status,error){
+			/* alert("AJAX 통신 오류"); */
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	})
+}
 </script>
 </body>
 </html>

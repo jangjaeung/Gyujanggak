@@ -18,6 +18,8 @@ public interface MypageService {
 
 	//회원정보 관리
 	public Member printOneInfo(Member member);
+	
+	public Member printOneInfo(String userId); //아이디로만 조회
 		
 	public int modifyMember(Member member);
 	
@@ -32,6 +34,8 @@ public interface MypageService {
 	public int getListCount(String userId);
 	/** 대출 내역 */
 	public List<Book> printAllLendingHistory(PageInfo pi, String userId);
+	/** 대출 연장 */	
+	public int extendLending(int lendingNo);
 	/** 마이페이지 서평 조회 */
 	public List<Review> printOneReview(Review review);
 	/** 도서 상세 조회 페이지 서평 조회 */
@@ -42,10 +46,8 @@ public interface MypageService {
 	public int modifyReview(Review review);
 	/** 서평 삭제 */
 	public int removeReview(Review review);
-	/** 예약 내역 */
-	public Book printBookingHistory(Book book);
-	/** 예약 취소 */
-	public int cancelBooking(int bookNo);
+
+
 	/** 희망 도서 내역 */
 	public List<WishBook> printWishBook(PageInfo pi, String userId);
 	public int getWishListCount(String userId);
@@ -76,6 +78,10 @@ public interface MypageService {
 	public int registQna(Qna qna);
 	public int modifyQna(Qna qna);
 	public int removeQna(int qnaNo);
+
+	
+
+	
 
 	
 
