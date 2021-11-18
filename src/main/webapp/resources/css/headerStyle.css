@@ -11,7 +11,7 @@ header{
 	width : 100%;
 	position : fixed;
 	background-color : white;
-	min-width : 300px;
+	min-width : 800px;
 } 
 
 header a{
@@ -41,6 +41,7 @@ header a{
 	padding-bottom : 3px;
 }
 #logoText{
+	margin-left : 20px;
 	width : 350px;
 	float : left;
 	line-height : 10px;
