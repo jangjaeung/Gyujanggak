@@ -12,6 +12,7 @@ public interface ReservationBookStore {
 	public List<ReservationBook> selectRsvList(int bookNo);
 	public ReservationBook selectRsvBookInfo(int bookNo);
 	public List<Member> selectUserEmail(int bookNo);
+	public int selectRsvCount(int bookNo);
 	public int insertRsv(ReservationBook reservationBook);
 	public int deleteRsv(ReservationBook reservationBook);
 	public int updateRsv(int bookNo);

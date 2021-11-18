@@ -45,6 +45,11 @@ public class ReservationBookStoreLogic implements ReservationBookStore {
 	}
 	
 	@Override
+	public int selectRsvCount(int bookNo) {
+		return sqlSession.selectOne("rsvBookMapper.selectRsvCount", bookNo);
+	}
+	
+	@Override
 	public int insertRsv(ReservationBook reservationBook) {
 		return sqlSession.insert("rsvBookMapper.insertRsv", reservationBook);
 	}

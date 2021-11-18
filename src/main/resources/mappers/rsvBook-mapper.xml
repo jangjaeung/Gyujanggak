@@ -68,6 +68,9 @@
 	<update id="updateRsvState">
 		UPDATE BOOK_RESERVATION SET RSV_STATE = '완료' WHERE BOOK_NO = #{ bookNo } AND RSV_STATE = '대기'
 	</update>
+	<select id="selectRsvCount" resultType="_int">
+		SELECT COUNT(*) FROM BOOK_RESERVATION WHERE BOOK_NO = #{ bookNo } AND RSV_STATE = '대기'
+	</select>
 	<!-- 도서 예약 목록 조회 -->
 	<select id="selectAllRsvBook" resultMap="rsvBookResultMap">
 		SELECT * FROM BOOK_RESERVATION JOIN BOOK USING (BOOK_NO) WHERE USER_ID = #{ userId }

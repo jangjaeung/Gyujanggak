@@ -12,6 +12,7 @@ public interface ReservationBookService {
 	public List<ReservationBook> printRsvList(int bookNo);
 	public ReservationBook printRsvBookInfo(int bookNo);
 	public List<Member> printUserEmail(int bookNo);
+	public int printRsvCount(int bookNo);
 	public int registerRsv(ReservationBook reservationBook);
 	public int removeRsv(ReservationBook reservationBook);
 	public int modifyRsv(int bookNo);

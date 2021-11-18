@@ -77,7 +77,7 @@
                 		${ lendingBook.returnDate }
                     </c:if>
                 </td>
-                <td></td>
+                <td>${ rsvCount }명</td>
             </tr>
         </table>
     </div>

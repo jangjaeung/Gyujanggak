@@ -40,6 +40,11 @@ public class ReservationBookServiceImpl implements ReservationBookService {
 	public List<Member> printUserEmail(int bookNo) {
 		return store.selectUserEmail(bookNo);
 	}
+	
+	@Override
+	public int printRsvCount(int bookNo) {
+		return store.selectRsvCount(bookNo);
+	}
 
 	@Override
 	public int registerRsv(ReservationBook reservationBook) {
