@@ -4,7 +4,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Transparent Login Form</title>
+    <title>아이디 찾기</title>
     <link rel="stylesheet" href="style.css">
    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/loginPage/css/login.css"/>
@@ -17,13 +17,13 @@
 
         <form action="idSearch.do" method="post">
             <div class="field space">
-                <input type="text" class="pass-key" required placeholder="name" name="userName">
+                <input type="text" class="pass-key" required placeholder="NAME" name="userName">
             </div>
             <div class="field space">
-                <input type="text" class="pass-key" required placeholder="email" name="userEmail">
+                <input type="text" class="pass-key" required placeholder="EMAIL" name="userEmail">
             </div>
             <div class="field space">
-                <input type="text" class="pass-key" required placeholder="phone(-제거)" name="userPhone">
+                <input type="text" class="pass-key" required placeholder="PHONE(-제거)" name="userPhone">
             </div>
             <div class="field space">
                 <input type="submit" value="아이디찾기" style="background: #d9ca40;border: #d9ca40;">
