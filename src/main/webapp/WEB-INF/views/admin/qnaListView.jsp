@@ -19,6 +19,7 @@ footer{bottom:0}
 	margin-top : 5%;
 	margin-bottom : 10%;
 }
+section{height:800px;}
 .sideMenu{
 	float: left;
 	width: 25%;
@@ -40,15 +41,18 @@ footer{bottom:0}
 	width:1000px;
 }
 .talbe{padding : 10px;}
-.table thead tr td:first-child{width:15%; text-align:center;}
-.table thead tr td:nth-child(2){text-align:center;}
-.table thead tr td:last-child{width:15%; text-align:center;}
-.table tbody tr td:first-child{width:15%; text-align:center;}
+.table thead tr td{text-align:center;}
+.table thead tr td:first-child{width:10%;}
+.table thead tr td:nth-child(3){width:15%;}
+.table tbody tr td:nth-child(1){text-align:center;}
+.table tbody tr td:nth-child(3){width:15%; text-align:center;}
+.table tbody tr td:nth-child(4){width:15%; text-align:center;}
 .table tbody tr td:last-child{width:15%; text-align:center;}
+
 .side{width:200px;position:absolute;left:3%;top:25%;}
 .side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
-.side ul li:first-child{line-height:80px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; !importent}
-.side ul li:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.side ul li:first-child{line-height:80px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+.side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 </head>
@@ -73,11 +77,11 @@ footer{bottom:0}
 			<div class="side">
 				<ul>
 					<li>관 리 자</li>
-					<li>회원관리</li>
-					<li>도서관리</li>
-					<li class="sideact">문의관리</li>
-					<li>신고관리</li>
-					<li>대출통계</li>
+					<li class="lo" onclick="location.href='userListView.do'">회원관리</li>
+					<li class="lo" onclick="location.href='bookListView.do'">도서관리</li>
+					<li class="lo sideact" onclick="location.href='adQnaList.do'">문의관리</li>
+					<li class="lo" onclick="location.href='reportView.do'">신고관리</li>
+					<li class="lo" onclick="location.href='statisticsView.do'">대출통계</li>
 				</ul>
 			</div>
 		</aside>

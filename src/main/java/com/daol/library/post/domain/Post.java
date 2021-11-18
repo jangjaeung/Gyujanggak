@@ -1,8 +1,9 @@
 package com.daol.library.post.domain;
 
+
 import java.sql.Date;
 
-public class Post {
+public abstract class Post {
 	
 	private int postNo;
 	private String postWriter;

@@ -11,6 +11,7 @@
 	margin:0;
 	padding : 0;
 }
+section{height:1000px;}
 header{top:0}
 footer{bottom:0}
 #beforeLogin{
@@ -46,6 +47,12 @@ footer{bottom:0}
 .table thead tr td:last-child{width:10%;}
 .table tbody tr td:nth-child(2){text-overflow:ellipsis; overflow:hidden;white-space:nowrap;}
 .del{padding:5px; border:none;}
+
+.side{width:200px;position:absolute;left:3%;top:25%;}
+.side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+.side ul li:first-child{line-height:80px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+.side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 </head>
 <body>
@@ -65,7 +72,16 @@ footer{bottom:0}
 	<section>
 		<!-- 사이드메뉴 -->
 		<aside class="sideMenu">
-			
+			<div class="side">
+				<ul>
+					<li>관 리 자</li>
+					<li class="lo" onclick="location.href='userListView.do'">회원관리</li>
+					<li class="lo" onclick="location.href='bookListView.do'">도서관리</li>
+					<li class="lo" onclick="location.href='adQnaList.do'">문의관리</li>
+					<li class="lo sideact" onclick="location.href='reportView.do'">신고관리</li>
+					<li class="lo" onclick="location.href='statisticsView.do'">대출통계</li>
+				</ul>
+			</div>
 		</aside>
 
 		<!-- 내용 -->
