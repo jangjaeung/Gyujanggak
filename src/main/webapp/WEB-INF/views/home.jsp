@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>main</title>
+<title>다올대학교 도서관 ｜ 규장각</title>
 <link rel="stylesheet" href="/resources/mainPage/css/mainPage.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 

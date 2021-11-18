@@ -37,6 +37,7 @@ footer{bottom:0}
 }
 .qna-con{
 	width:1000px;
+	min-height:500px;
 }
 table thead tr td{
 	font-weight:bold;

@@ -19,7 +19,6 @@ textarea{outline:none;resize:none;padding:5px;}
 #rtb tbody td{padding:5px;}
 #jtb{margin:0 auto;width:100%; border:none;}
 #con{margin:0 auto; width:100%;}
-#con td:first-child{border-right:1px solid rgba(221,221,221);}
 input{border:none; padding:5px;}
 textarea{width:100%;border:none}
 #title{font-size:2rem;}
@@ -38,7 +37,6 @@ a:visited { color: black; }
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div id="wrap">
-	<h1>자유게시판</h1><br><br>
 		<form method="get" name="form">
 			<input type="hidden" name="postNo" value="${post.postNo }">
 			<table id="con">
@@ -51,8 +49,7 @@ a:visited { color: black; }
 					<td><input type="text" size="50" id="writer"name="postWriter" value="${post.postWriter }" readonly></td>
 				</tr>
 				<tr>
-					<td style="font-weight:bold;">내용</td>
-					<td><textarea rows="10" name="postContents" readonly>${post.postContents }</textarea></td>
+					<td colspan="2"><textarea rows="10" name="postContents" readonly>${post.postContents }</textarea></td>
 				</tr>
 				<c:if test="${userId eq post.postWriter || type eq '관리자'}">
 					<tr>
@@ -175,7 +172,7 @@ a:visited { color: black; }
 		             if(data.length > 0){
 		            	 for(var i in data){
 		            		 $tr = $("<tr id='modifyTr'>");
-		                     $rWriter = $("<td width='80'>").text(data[i].replyWriter);
+		                     $rWriter = $("<td width='80' style='font-weight:bold'>").text(data[i].replyWriter);
 		                     $rContent = $("<td>").text(data[i].replyContents);
 		                     $rCreateDate = $("<td width='100'>").text(data[i].replyDate);
 		                     $btnArea = $("<td width='80' class='modi'>")
