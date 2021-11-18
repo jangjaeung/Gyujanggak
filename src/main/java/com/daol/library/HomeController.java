@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +20,8 @@ import com.daol.library.book.domain.Keyword;
 import com.daol.library.book.service.BookService;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.service.LendingBookService;
+import com.daol.library.member.domain.Member;
+import com.daol.library.mypage.service.MypageService;
 import com.daol.library.taste.domain.Taste;
 import com.daol.library.taste.service.TasteService;
 import com.google.gson.Gson;
@@ -36,12 +39,14 @@ public class HomeController {
 	private LendingBookService lend;
 	@Autowired
 	private TasteService asd;
+	@Autowired
+	private MypageService mypage;
 	
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,HttpSession session) {
 		String surveyCheck = (String)session.getAttribute("surveyCheck");
-
 		String userId = (String)session.getAttribute("userId");
+		session.setAttribute("surveyCheck", surveyCheck);
 		if(userId != null) {
 			Taste taste = asd.selectMyTaste(userId);
 			if(taste != null) {
@@ -55,6 +60,13 @@ public class HomeController {
 				model.addAttribute("taste2List",taste2List);
 				model.addAttribute("taste3List",taste3List);
 				model.addAttribute("taste",taste);
+			}
+			Member member = mypage.printOneInfo(userId);
+			model.addAttribute("member", member);
+			if(member.getUserType().equals("학생")) {
+				String major = member.getMajor();
+				List<Book> mList = asd.printBooksByMajor(major);
+				model.addAttribute("mList", mList);
 			}
 		}
 		List<Book> bList = book.printNewBook();

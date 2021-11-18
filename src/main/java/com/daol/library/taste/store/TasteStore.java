@@ -27,7 +27,7 @@ public interface TasteStore {
 	public List<Book> selectTaste3List(String taste3);
 	
 	//전공별 도서 추천, 멤버에 등록된 전공으로 책 추천
-	public List<Book> selectBooksByMajor(Member member);
+	public List<Book> selectBooksByMajor(String majorKeyword);
 
 	
 	

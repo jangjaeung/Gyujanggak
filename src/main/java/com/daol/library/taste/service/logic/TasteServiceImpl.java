@@ -84,9 +84,9 @@ public class TasteServiceImpl implements TasteService{
 	
 	/** 전공별 도서 추천 */
 	@Override
-	public List<Book> printBooksByMajor(Member member) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> printBooksByMajor(String major) {
+		List<Book> mList = store.selectBooksByMajor(major);
+		return mList;
 	}
 
 

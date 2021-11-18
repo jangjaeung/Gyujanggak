@@ -259,6 +259,24 @@ public class MypageController {
 			return "fail";
 		}
 	}
+	
+	
+	/** 대출연장 */
+	@ResponseBody
+	@RequestMapping(value = "extendLending.do", method = RequestMethod.POST)
+	public String extendLending(@RequestParam("lendingNo") int lendingNo,
+			 HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		int result = service.extendLending(lendingNo);
+		if (result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	
+	
 
 	/** 희망도서 내역 */
 	@RequestMapping(value = "wishList.do", method = RequestMethod.GET)

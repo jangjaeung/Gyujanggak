@@ -31,6 +31,12 @@ public class MypageStoreLogic implements MypageStore{
 		Member memberOne = sqlSession.selectOne("mypageMapper.selectMember", member);
 		return memberOne;
 	}
+	
+	@Override
+	public Member selectOneInfo(String userId) {
+		Member member = sqlSession.selectOne("mypageMapper.selectMemberOne", userId);
+		return member;
+	}
 
 	@Override
 	public int updatePayment(Member member) {
@@ -70,6 +76,13 @@ public class MypageStoreLogic implements MypageStore{
 		List<Book> lendingList = sqlSession.selectList("mypageMapper.selectAllLendingHistory", userId, rowBounds);
 		return lendingList;
 	}
+	
+	@Override
+	public int updateExtend(int lendingNo) {
+		int result = sqlSession.update("mypageMapper.updateExtend", lendingNo);
+		return result;
+	}
+
 
 	@Override
 	public List<Review> selectOneReview(Review review) {
@@ -95,17 +108,7 @@ public class MypageStoreLogic implements MypageStore{
 		return result;
 	}
 
-	@Override
-	public Book selectBookingHistory(Book book) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public int deleteBooking(int bookNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 
 	@Override
@@ -212,6 +215,9 @@ public class MypageStoreLogic implements MypageStore{
 	public List<Review> selectOneForDetail(int bookNo) {
 		return sqlSession.selectList("mypageMapper.selectOneForDetail", bookNo);
 	}
+
+
+
 
 
 
