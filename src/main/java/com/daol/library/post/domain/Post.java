@@ -3,7 +3,7 @@ package com.daol.library.post.domain;
 
 import java.sql.Date;
 
-public abstract class Post {
+public class Post {
 	
 	private int postNo;
 	private String postWriter;
