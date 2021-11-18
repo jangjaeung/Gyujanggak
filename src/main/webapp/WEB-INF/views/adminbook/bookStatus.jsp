@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>대출현황</title>
 <style>
 .myButton {
 	box-shadow: 0px 10px 14px -7px #276873;
@@ -31,7 +31,11 @@
 	position:relative;
 	top:1px;
 }
-
+.side{width:200px;position:absolute;left:3%;top:25%;}
+.side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+.side ul li:first-child{line-height:80px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+.side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 
 </head>
@@ -39,10 +43,19 @@
 
 
 <jsp:include page="../common/header.jsp"></jsp:include>
-	<br><hr style="margin-top:13%">
-	<div class="container" style="margin-bottom: 15%;">
+	<br>
+	<div class="container" style="margin-bottom: 15%;margin-top: 8%;margin-right: 10%;">
 		<h1 style="text-align:center;margin-bottom: 8%;">도서관리</h1>
-
+		<div class="side">
+            <ul>
+               <li>관 리 자</li>
+               <li class="lo" onclick="location.href='userListView.do'">회원관리</li>
+               <li class="lo sideact" onclick="location.href='bookListView.do'">도서관리</li>
+               <li class="lo" onclick="location.href='adQnaList.do'">문의관리</li>
+               <li class="lo" onclick="location.href='reportView.do'">신고관리</li>
+               <li class="lo" onclick="location.href='statisticsView.do'">대출통계</li>
+            </ul>
+         </div>
         <button class="btn btn-default" onclick="location.href='bookListView.do'">장서 목록</button>
         <button class="btn btn-default" onclick="location.href='statusList.do'">대출 현황</button>
         <button class="btn btn-default" onclick="location.href='wishbookList.do'">희망 도서 접수 목록</button>

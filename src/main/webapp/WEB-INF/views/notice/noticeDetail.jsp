@@ -82,8 +82,8 @@
 <body>
 
 <jsp:include page="../common/header.jsp"></jsp:include>
-	<br><hr style="margin-top:13%">
-	<div class="container" style="margin-bottom: 15%;">
+	<br>
+	<div class="container" style="margin-bottom: 15%;margin-top:13%;">
 		<h1 style="text-align:center;margin-bottom: 8%;">${notice.noticeNo }번 공지사항</h1>
 			<input type="hidden" value="${notice.noticeNo }" id="noticeNo" name="noticeNo">
 			
