@@ -48,7 +48,7 @@
 		<result property="lendingCopy" column="LENDING_COPY"></result>
 		<collection property="reservationBook" resultMap="rsvBookResultMap"/>
 	</resultMap>
-	<!-- 도서 예약 추가 시, 중복 여부 -->
+	<!-- 도서 예약 추가 시, 중복 여부 확인 -->
 	<select id="addCheck" resultMap="rsvBookResultMap">
 		SELECT * FROM BOOK_RESERVATION WHERE BOOK_NO = #{ bookNo } AND USER_ID = #{ userId } AND RSV_STATE = '대기'
 	</select>
