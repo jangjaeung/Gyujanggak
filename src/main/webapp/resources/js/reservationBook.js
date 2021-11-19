@@ -1,22 +1,25 @@
-$("#delete-rsv").click(function(){
-    let bookNo = '${ rsv.rsvNo }'
-    let userId = '${ rsv.userId }'
+function deleteAll(userId){
+    let checkArr = [];
+    $('.list-checkBox:checked').each(function(i){
+        checkArr.push($(this).val());
+    })
     $.ajax({
-        url : "deleteReservation.do",
-        type : "get",
-        data : {
-            "rsvNo" : rsvNo,
+        url : 'deleteRsvList.do',
+        type : 'post',
+        traditional : true, // 배열 전송 시, 입력
+        data : { 
+            "rsvNum" : checkArr,
             "userId" : userId
         },
-        success : function(data) {
-            if(data == "success") {
-                alert("완료");
-            } else {
-                alert("실패");
+        success : function(data){
+            console.log(checkArr);
+            if(data == "success"){
+                alert("예약 내역을 일괄 삭제하였습니다.");
+                location.href = "bookingList.do?userId=" + userId;
+            }else{
+                console.log("실패");
+                alert("일괄 삭제 실패");
             }
-        },
-        error : function() {
-            alert("Ajax 통신 오류");
         }
     });
-});
+}

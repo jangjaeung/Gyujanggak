@@ -8,6 +8,7 @@
 <title>도서 예약 내역 ｜ 다올대학교 도서관</title>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../../../resources/css/bookingList.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../../../resources/js/reservationBook.js"></script>
 </head>
 <body>
@@ -72,19 +73,19 @@
                     		<c:param name="bookNo" value="${ rsv.book.bookNo }"></c:param>
                     	</c:url>
 						<tr>
-							<td><input type="checkbox" name="" id=""></td>
+							<td><input type="checkbox" name="rsvNum" class="list-checkBox" value="${ rsv.rsvNo }"></td>
 							<td>${ status.count }</td>
 							<td><a href="${ bDetail }">${ rsv.book.bookName }</a></td>
 							<td>${ rsv.book.bookWriter }</td>
 							<td>${ rsv.book.publisher }</td>
 							<td>${ rsv.rsvDate }</td>
 							<td>${ rsv.rsvState }</td>
-							<td><button type="button" onclick="location.href='${ deleteRsv }';" id="delete-rsv">예약취소</button></td>
+							<td><button type="button" onclick="location.href='${ deleteRsv }';">예약취소</button></td>
 						</tr>
 					</c:forEach>
 					<tr>
 						<td colspan="8" align="right">
-							<button type="button">선택도서 일괄 예약취소</button>
+							<button type="button" onclick="deleteAll('${sessionScope.userId }');">선택도서 일괄 예약취소</button>
 						</td>
 					</tr>
 					<tr align="center" height="20">
