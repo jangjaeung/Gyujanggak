@@ -23,16 +23,17 @@ header{top:0}
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
-	width : 90%;
 	display: grid;
 }
 #mainTitle{
 	color : #656379;
 	text-align : center;
 }
+#book-count{margin-left:150px;}
 .qna-con{
 	width:1000px;
 	height:600px;
+	margin-left:150px;
 }
 table thead tr td{
 	font-weight:bold;
@@ -45,7 +46,7 @@ table thead tr td{
 .table thead tr td:last-child{width:15%; text-align:center;}
 .table tbody tr td:first-child{width:15%; text-align:center;}
 .table tbody tr td:last-child{width:15%; text-align:center;}
-.side{background-color:white; width:200px;position:sticky;left:3%;top:18%;}
+.side{background-color:white; width:200px;position:sticky;top:18%;}
 .side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
 .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
 .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
@@ -69,7 +70,7 @@ table thead tr td{
 	<c:if test="${userId ne null}">
 	<section>
 		<!-- 사이드메뉴 -->
-		<aside class="">
+		<aside class="sideMenu" style="position:absolute; height:800px; left:2%">
 			<div class="side">
 	            <ul>
 	               <li>마이페이지</li>
@@ -86,7 +87,6 @@ table thead tr td{
 	            </ul>
          	</div>			
 		</aside>
-
 		<!-- 내용 -->
 		<article class="mainContent">
 			<!-- 타이틀 --><br>
@@ -119,8 +119,7 @@ table thead tr td{
 				<button onclick="location.href='registQnaView.do?userId=${userId}'">문의 등록</button>
 			</div>
 		</article>
-		
-	</section>
+		</section>
 	</c:if>
 
 <jsp:include page="../common/chat.jsp"></jsp:include>

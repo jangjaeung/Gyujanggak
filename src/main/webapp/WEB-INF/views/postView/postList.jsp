@@ -10,7 +10,7 @@
 
 <style>
 header{top:0} 
-footer{bottom:0}
+
 *{margin:0;padding:0;}
 .post{ 
 width:1400px; 
