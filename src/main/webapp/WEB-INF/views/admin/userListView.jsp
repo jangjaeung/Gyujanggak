@@ -81,7 +81,12 @@
 	  							없음
 	  						</c:if>
 	  						<c:if test="${member.payDate ne null}">	
-	  							대기
+	  							<c:if test="${member.passCheck eq 'N'}">
+	  								대기
+	  							</c:if>
+	  							<c:if test="${member.passCheck eq 'Y'}">
+	  								승인완료
+	  							</c:if>
 	  						</c:if>
 	                    </td>
 					</tr>

@@ -136,7 +136,7 @@
 		    <c:forEach items="${lList }" var="lending">
 	    	<tr>
 	    		<td>${lendingBook.lendingNo }</td>
-	    		<td name="bookName" value="${lendingBook.bookNo }"> ${book.bookName}</td>
+	    		<td> 책이름</td>
 	    		<td>${lendingBook.lendingDate }</td>
 	    		<td>${lendingBook.returnDate }</td>
 	    		<td>
@@ -154,6 +154,41 @@
 		    </c:forEach>
     	</tbody>
     </table>
+    		<table class="lendingBookListPaging">
+			<tr>
+				<td>
+					<c:url var="before" value="userDetail.do">
+						<c:param name="page" value="${pi.currentPage -1 }"></c:param>
+					</c:url>
+					<c:if test="${pi.currentPage <= 1 }">
+						[이전]
+					</c:if>
+					<c:if test="${pi.currentPage > 1 }">
+						<a href="${before }">[이전]</a>
+					</c:if>
+					<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+						<c:url var="pagination" value="userDetail.do">
+							<c:param name="page" value="${p }"></c:param>
+						</c:url>
+						<c:if test="${p eq pi.currentPage }">
+							[${p }]
+						</c:if>
+						<c:if test="${p ne pi.currentPage }">
+							<a href="${pagination }">${p }</a>&nbsp;
+						</c:if>
+					</c:forEach>
+						<c:url var="after" value="userDetail.do">
+							<c:param name="page" value="${pi.currentPage +1 }"></c:param>
+						</c:url>
+					<c:if test="${pi.currentPage >= pi.maxPage }">
+						[다음]
+					</c:if>
+					<c:if test="${pi.currentPage < pi.maxPage }">
+						<a href="${after }">[다음]</a>
+					</c:if>
+				</td>
+			</tr>
+		</table>
     </div>
 </main>
 </c:if>
@@ -212,17 +247,32 @@
 		});
 	});
 	
-/* 	var now = new Date(); // 오늘
+/*  	var now = new Date(); // 오늘
 	var late = new Date(now.setDate(now.getDate() +14)); // 14일 뒤
-	console.log("반납일 : ", late); */
+	console.log("반납일 : ", late); 
 	// 대출 이력
-/* 	$.ajax({
-		url : 'printUserLendingBook',
+	var lendingNo = '${lendingBook.lendingNo}';
+	var lendingDate = '${lendingBook.lendingDate}';
+	var returnDate = '${lendingBook.returnDate}';
+ 	$.ajax({
+		url : 'printUserLendingBook.do',
 		type : 'post',
 		data : {
-			"data" : "data"
+			"lendingNo" : lendingNo,
+			"lendingDate" : lendingDate,
+			"returnDate" : returnDate
 		},
-	}) */
+		success : function(data) {
+			if (data === 'success') {
+				printUserLendingBook();
+			} else {
+				alrt("목록 불러오기 실패");
+			}
+		},
+		error : function() {
+			alert('AJAX 통신오류.. 관리자에게 문의하세요');
+		},
+	}); */
 	
 </script>
 </html>
