@@ -13,7 +13,7 @@
 }
 section{height:1000px;}
 header{top:0}
-footer{bottom:0}
+
 #beforeLogin{
 	margin-top : 5%;
 	margin-bottom : 10%;
