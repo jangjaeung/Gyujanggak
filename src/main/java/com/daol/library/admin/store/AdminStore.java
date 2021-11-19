@@ -18,6 +18,16 @@ public interface AdminStore {
 	public List<Member> selectAllMember(PageInfo pi);
 	// 회원 카운트
 	public int selectUserListCount();
+	// 회원 검색
+	public List<Member> selectSearchUser(Search search);
+	// 선택한 회원 삭제
+	public int deleteUser(int[] nums);
+	// 회원 상세 보기
+	public Member printUser(int userNo);
+	// 이용증 발급
+	public int userPassIssued(Member member);
+	// 이용 기간 설정
+	public int userEndDateUpdate(Member member);
 	// 장서 카운트
 	public int selectListCount();
 	// 장서 리스트

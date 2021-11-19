@@ -20,7 +20,6 @@
 	
 <!-- 열람실 현황 -->
 	<select id="selectAllReadingRoom" resultMap="readingRoomResultMap">
-		<!-- SELECT * FROM READINGROOM WHERE R_RESERVATION_DATE >= TO_CHAR(SYSDATE, 'YYYY-MM-DD') -->
 		SELECT SEAT_NO, COUNT(*) AS COUNT FROM READINGROOM WHERE R_RESERVATION_DATE >= TO_CHAR(SYSDATE, 'YYYY-MM-DD') GROUP BY SEAT_NO HAVING COUNT(*) >0 
 	</select>
 <!-- 좌석 번호로 조회 후 시간 확인 -->

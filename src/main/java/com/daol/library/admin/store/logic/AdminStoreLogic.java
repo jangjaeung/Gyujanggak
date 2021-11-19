@@ -41,6 +41,42 @@ public class AdminStoreLogic implements AdminStore{
 		return count;
 	}
 	
+	// 회원 검색
+	@Override
+	public List<Member> selectSearchUser(Search search) {
+		List<Member> searchList = sqlSession.selectList("adminMapper.selectSearchUser", search);
+		return searchList;
+	}
+
+	// 선택한 회원 삭제
+	@Override
+	public int deleteUser(int[] nums) {
+		int result = sqlSession.delete("adminMapper.deleteSelectedUser", nums);
+		return result;
+	}
+	
+	// 회원 상세 보기
+	@Override
+	public Member printUser(int userNo) {
+		Member member = sqlSession.selectOne("adminMapper.selectOneUser", userNo);
+		return member;
+	}
+
+	// 이용증 발급
+	@Override
+	public int userPassIssued(Member member) {
+		int result = sqlSession.update("adminMapper.userPassIssued",member);
+		return result;
+	}
+	
+	// 이용 기간 설정
+	@Override
+	public int userEndDateUpdate(Member member) {
+		int result = sqlSession.update("adminMapper.userEndDateUpdate",member);
+		return result;
+	}
+
+	
 	//유저타입 끌어오기용
 	@Override
 	public Member selectMemberCk(String login) {

@@ -67,9 +67,9 @@
 					</ul>
 					</c:if>
 					<c:if test="${sessionScope.userType eq '관리자' }">
- 					<a href="#">관리자페이지</a>
+ 					<a href="userListView.do">관리자페이지</a>
 					<ul>
-						<li><a href="#">회원관리</a></li>
+						<li><a href="userListView.do">회원관리</a></li>
 						<li><a href="bookListView.do">도서관리</a></li>
 						<li><a href="adQnaList.do?userId=${userId }">문의관리</a></li>
 						<li><a href="reportView.do">신고관리</a></li>
