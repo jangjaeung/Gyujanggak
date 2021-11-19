@@ -15,6 +15,7 @@ import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.post.domain.Post;
@@ -41,6 +42,58 @@ public class AdminStoreLogic implements AdminStore{
 		int count = sqlSession.selectOne("adminMapper.selectUserListCount");
 		return count;
 	}
+	
+	// 회원 검색
+	@Override
+	public List<Member> selectSearchUser(Search search) {
+		List<Member> searchList = sqlSession.selectList("adminMapper.selectSearchUser", search);
+		return searchList;
+	}
+
+	// 선택한 회원 삭제
+	@Override
+	public int deleteUser(int[] nums) {
+		int result = sqlSession.delete("adminMapper.deleteSelectedUser", nums);
+		return result;
+	}
+	
+	// 회원 상세 보기
+	@Override
+	public Member printUser(int userNo) {
+		Member member = sqlSession.selectOne("adminMapper.selectOneUser", userNo);
+		return member;
+	}
+
+	// 이용증 발급
+	@Override
+	public int userPassIssued(Member member) {
+		int result = sqlSession.update("adminMapper.userPassIssued",member);
+		return result;
+	}
+	
+	// 이용 기간 설정
+	@Override
+	public int userEndDateUpdate(Member member) {
+		int result = sqlSession.update("adminMapper.userEndDateUpdate",member);
+		return result;
+	}
+
+	// 대출 이력 조회
+	@Override
+	public List<LendingBook> selectAllLendingBook(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<LendingBook> lList = sqlSession.selectList("adminMapper.selectAllLendingBook", userId, rowBounds);
+		return lList;
+	}
+	
+	// 대출 카운트
+	@Override
+	public int selectLendingBookListCount() {
+		int count = sqlSession.selectOne("adminMapper.selectLendingBookListCount");
+		return count;
+	}
+
 	
 	//유저타입 끌어오기용
 	@Override

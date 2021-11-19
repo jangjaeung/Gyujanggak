@@ -9,6 +9,7 @@ import com.daol.library.admin.domain.Statistics;
 import com.daol.library.admin.domain.Status;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.post.domain.Post;
@@ -19,6 +20,20 @@ public interface AdminStore {
 	public List<Member> selectAllMember(PageInfo pi);
 	// 회원 카운트
 	public int selectUserListCount();
+	// 회원 검색
+	public List<Member> selectSearchUser(Search search);
+	// 선택한 회원 삭제
+	public int deleteUser(int[] nums);
+	// 회원 상세 보기
+	public Member printUser(int userNo);
+	// 이용증 발급
+	public int userPassIssued(Member member);
+	// 이용 기간 설정
+	public int userEndDateUpdate(Member member);
+	// 대출이력 조회
+	public List<LendingBook> selectAllLendingBook(PageInfo pi, String userId);
+	// 대출 카운트
+	public int selectLendingBookListCount();
 	// 장서 카운트
 	public int selectListCount();
 	// 장서 리스트

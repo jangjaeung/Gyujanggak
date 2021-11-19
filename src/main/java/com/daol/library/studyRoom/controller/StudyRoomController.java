@@ -24,7 +24,7 @@ public class StudyRoomController {
 	// 스터디룸 메인 화면
 	@RequestMapping(value = "studyRoom.do", method = RequestMethod.GET)
 	public String readingRoomView() {
-		return "studyroom/studyRoomMain";
+		return "studyRoom/studyRoomMain";
 	}
 
 	// 스터디룸 예약
@@ -41,21 +41,17 @@ public class StudyRoomController {
 		}
 	}
 
-	
-	  // 날짜 선택 후 예약 시간 조회
-	  
-	  @ResponseBody
-	  
-	  @RequestMapping(value = "selectTimeStatus.do", method = RequestMethod.POST)
-		  public String selectTimeStatus(@ModelAttribute StudyRoom studyRoom ) {
-		  System.out.println("예약일 : " + studyRoom.getsReservationDate()); 
-		  String rsvDate = studyRoom.getsReservationDate();
-		  
-		  List<StudyRoom> result = service.selectTimeStatus(rsvDate); 
-		  Gson gson = new Gson(); 
-		  String rsvList = gson.toJson(result); System.out.println(rsvList); 
-		  	return rsvList; 
-	  }
+	// 날짜 선택 후 예약 시간 조회
+	@ResponseBody
+	@RequestMapping(value = "selectTimeStatus.do", method = RequestMethod.POST)
+	public String selectTimeStatus(@ModelAttribute StudyRoom studyRoom ) {
+	System.out.println("예약일 : " + studyRoom.getsReservationDate()); 
+	String rsvDate = studyRoom.getsReservationDate();
+	List<StudyRoom> result = service.selectTimeStatus(rsvDate); 
+	Gson gson = new Gson(); 
+	String rsvList = gson.toJson(result); System.out.println(rsvList); 
+	return rsvList; 
+	}
 	 
 
 	// 예약 취소

@@ -35,6 +35,8 @@ import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.service.AdminService;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
+import com.daol.library.lendingBook.service.LendingBookService;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.post.domain.Post;
@@ -70,6 +72,106 @@ public class AdminController {
 		return mv;
 	}
 	
+	// 회원 검색
+	@RequestMapping(value="userSearch.do", method=RequestMethod.GET)
+	public String searchUserList(@ModelAttribute Search search, Model model){
+		List<Member> searchList = service.printSearchAllUser(search);
+		if(!searchList.isEmpty()) {
+			model.addAttribute("uList", searchList);
+			model.addAttribute("search", search);
+			return "admin/userListView";
+		}else {
+			model.addAttribute("msg", "회원 검색 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	// 선택한 회원 삭제
+	 @ResponseBody
+	 @RequestMapping(value="userDelete.do", method=RequestMethod.POST)
+	 public String deleteUser(@RequestParam(value="userNo[]") String[] userNo,HttpServletRequest request,Model model) {
+		 int[]nums = new int[userNo.length];
+		 for(int i =0; i<userNo.length; i++) {
+			 nums[i] = Integer.parseInt(userNo[i]);
+		 }
+		 int result = service.deleteUser(nums);
+		 if(result > 0) {
+			 return "success";
+		 }else {
+			 return "fail";
+		 }
+	 }
+	 
+	// 회원 상세보기
+	@RequestMapping(value="userDetail.do", method=RequestMethod.GET)
+	public ModelAndView userDetail(@RequestParam("userNo") int userNo, @ModelAttribute LendingBook lendingBook, ModelAndView mv, @RequestParam(value="page",required=false)Integer page) {
+		Member member = service.printUser(userNo);
+		try {
+			if(member != null) {
+				mv.addObject("member", member);
+				mv.setViewName("admin/userDetailView");
+			}else {
+				mv.addObject("msg", "회원 상세조회 실패");
+				mv.setViewName("common/errorPage");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.toString());
+			mv.setViewName("common/errorPage");
+		}
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getLendingBookListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<LendingBook> lList = service.printAllLendingBook(pi, member.getUserId());
+		if(!lList.isEmpty()) {
+			mv.addObject("lList", lList);
+			mv.addObject("pi", pi);
+			mv.setViewName("admin/userDetailView");
+		}else {
+			mv.addObject("msg", "대출 정보 전체조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/*
+	 * // 대출 이력
+	 * 
+	 * @RequestMapping(value="printUserLendingBook.do", method=RequestMethod.GET)
+	 * public ModelAndView printUserLendingBook(ModelAndView mv, @ModelAttribute
+	 * LendingBook lendingBook, @RequestParam(value="page", required=false) Integer
+	 * page ) { int currentPage = (page != null) ? page : 1; int totalCount =
+	 * service.getLendingBookListCount(); PageInfo pi =
+	 * Pagination.getPageInfo(currentPage, totalCount); List<LendingBook> lList =
+	 * service.printAllLendingBook(pi); if(!lList.isEmpty()) { mv.addObject("lList",
+	 * lList); mv.addObject("pi", pi); mv.setViewName("admin/userDetailView"); }else
+	 * { mv.addObject("msg", "대출 정보 전체조회 실패"); mv.setViewName("common/errorPage"); }
+	 * return mv; }
+	 */
+	
+	// 이용증 발급
+	@ResponseBody
+	@RequestMapping(value="userPassIssued.do", method = RequestMethod.POST)
+	public String userPassIssued(@ModelAttribute Member member, HttpSession session) {
+		int result = service.userPassIssued(member);
+		if (result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 이용 기간 설정
+	@ResponseBody
+	@RequestMapping(value="userEndDateUpdate.do", method = RequestMethod.POST)
+	public String userEndDateUpdate(@ModelAttribute Member member, HttpSession session) {
+		int result = service.userEndDateUpdate(member);
+		if (result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}	
 	
 	//장서 목록 리스트
 	@RequestMapping(value="bookListView.do", method=RequestMethod.GET)

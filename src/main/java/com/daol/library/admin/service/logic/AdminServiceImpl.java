@@ -14,6 +14,7 @@ import com.daol.library.admin.service.AdminService;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.post.domain.Post;
@@ -36,6 +37,55 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int getUserListCount() {
 		int totalCount = store.selectUserListCount();
+		return totalCount;
+	}
+	
+	// 회원 검색
+	@Override
+	public List<Member> printSearchAllUser(Search search) {
+		List<Member> searchList = store.selectSearchUser(search);
+		return searchList;
+	}
+	
+	// 선택한 회원 삭제
+	@Override
+	public int deleteUser(int[] nums) {
+		int result = store.deleteUser(nums);
+		return result;
+	}
+	
+	// 회원 상세보기
+	@Override
+	public Member printUser(int userNo) {
+		Member member = store.printUser(userNo);
+		return member;
+	}
+	
+	// 이용증 발급
+	@Override
+	public int userPassIssued(Member member) {
+		int result = store.userPassIssued(member);
+		return result;
+	}
+	
+	// 이용 기간 설정
+	@Override
+	public int userEndDateUpdate(Member member) {
+		int result = store.userEndDateUpdate(member);
+		return result;
+	}
+	
+	// 대출 이력 조회
+	@Override
+	public List<LendingBook> printAllLendingBook(PageInfo pi, String userId) {
+		List<LendingBook> lList = store.selectAllLendingBook(pi, userId);
+		return lList;
+	}
+
+	// 대출 카운트
+	@Override
+	public int getLendingBookListCount() {
+		int totalCount = store.selectLendingBookListCount();
 		return totalCount;
 	}
 	
@@ -215,4 +265,5 @@ public class AdminServiceImpl implements AdminService {
 		List<Statistics> sList = store.selectAllstatis();
 		return sList;
 	}
+
 }

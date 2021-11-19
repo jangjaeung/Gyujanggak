@@ -11,6 +11,7 @@
 #introduce1 {
 	margin-bottom: 2%;
 	font-size: revert;
+	text-align:center;
 }
 
 #introduce {
@@ -43,40 +44,33 @@ ul {
 
 
 #wrap {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-items: flex-start;
-	margin-top: 8%;
-	align-items: stretch
+	width:1000px;
+	margin: 0 auto;
 }
 
 
-#navi1 {
-	flex-basis: 20vw;
-	flex-grow: 1;
-	flex-shrink: 4;
-	text-align: center;
+.navi1 {
+	width:300px;
+	float:left;
+	text-align:center;
+	position:sticky;
+	top:20%;
 }
 
-#navi1 ul li {
+.navi1 ul li {
 	line-height: 50px;
 	font-weight: bold;
 	font-size: 20px;
+	border:1px solid rgb(181,181,181);
+	border-left:none;
+	border-right:none;
 }
 
 .logoli {
 	padding: 20px 0;
 }
 
-.content {
-	height: 100vh;
-	flex-grow: 4;
-	flex-shrink: 1;
-	text-align: center;
-}
+
 .button{
 	cursor:pointer;
 	display:block;
@@ -87,8 +81,8 @@ ul {
 }
 .cont{display:none;}
 .act{display:block;}
-.active{color:cadetblue;font-size:27px;}
-
+.active{background-color:rgb(155,158,213);}
+.active span{color:#fff;}
 </style>
 </head>
 <body>
@@ -101,23 +95,21 @@ ul {
 	<div style="text-align: center; margin-bottom: 2%;">
 		
 	</div>
-	<div id="wrap">
-		<nav id="navi1">
+	<div style="width:310px;height:80vh;position:absolute;left:2%;">
+		<div class="navi1">
 			<ul>
-				<li class="button"><a href="#time" class="tablink active" id="menuOne"data-tab="tab-1">이용시간</a></li>
-				<li class="button"><a href="#card" class="tablink"  id="menuTwo" data-tab="tab-2">이용증 발급</a></li>
-				<li class="button"><a href="#lend" class="tablink" id="menuThree" data-tab="tab-3">대출·반납·연장·예약</a></li>
-				<li class="button"><a href="#room" class="tablink"  id="menuFour" data-tab="tab-4">열람실·스터디룸 이용</a></li>
+				<li class="button"><a href="#time" class="tablink active" id="menuOne"data-tab="tab-1"><span>이용시간</span></a></li>
+				<li class="button"><a href="#card" class="tablink"  id="menuTwo" data-tab="tab-2"><span>이용증 발급</span></a></li>
+				<li class="button"><a href="#lend" class="tablink" id="menuThree" data-tab="tab-3"><span>대출·반납·연장·예약</span></a></li>
+				<li class="button"><a href="#room" class="tablink"  id="menuFour" data-tab="tab-4"><span>열람실·스터디룸 이용</span></a></li>
 			</ul>
-		</nav>
-		<div class="content" style="position: relative; right: 11%;">
-
-
-
-
+		</div>
+	</div>
+	<div id="wrap">
+		<div class="content">
 			<div class="cont tab-1 act">
 				<h2 id="introduce1">학기중 이용시간</h2>
-				<table class="table" style="text-align: center; width: 50%; margin-left: 25%;">
+				<table class="table" style="text-align: center; width: 100%; margin-left: 25%;">
 					<tr>
 						<th style="text-align: center;background-color: aliceblue;">구분</th>
 						<th colspan="2" style="text-align: center;background-color: aliceblue;">학기</th>
@@ -212,14 +204,6 @@ ul {
 					</tr>
 				</table>
 			</div>
-
-
-
-
-
-
-
-
 			<div class="cont tab-2">
 				<h2 id="introduce1">대상</h2>
 				<div id="introduce">· 다올 대학교 규장각 도서관 이용을 희망하는 자</div>
@@ -247,11 +231,6 @@ ul {
 				<h2 id="introduce1">안내 및 문의</h2>
 				<div id="introduce">규장각 1F 인포메이션 : 02-1234-5678</div>
 			</div>
-
-
-
-
-
 			<div class="cont tab-3" id="tab-3">
 				<h2 id="introduce1">도서 대출</h2>
 				<div id="introduce">
@@ -319,12 +298,6 @@ ul {
 					</tr>
 				</table>
 			</div>
-
-
-
-
-
-
 			<div class="cont tab-4">
 				<h2 id="introduce1">좌석 예약</h2>
 				<div id="introduce">
@@ -375,16 +348,6 @@ ul {
 					</tr>
 				</table>
 			</div>
-
-
-
-
-
-
-
-
-
-
 		</div>
 </div>
 <div style="margin-top:20%"></div>
