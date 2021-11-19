@@ -19,26 +19,15 @@ header{top:0}
 	margin-top : 5%;
 	margin-bottom : 10%;
 }
-section{height:800px;}
-.sideMenu{
-	float: left;
-	width: 25%;
-}
-.mainContent {
-	margin-left: 15%;
-	margin-right: 15%;
-	margint-bottom: 15%;
-	vertical-align: middle;
-	justify-content: center;
-	width : 85%;
-	display: grid;
-}
+section{width:1000px; height:800px; margin: 0 auto;margin-left:20%}
+.mainContent{width:100%}
 #mainTitle{
 	color : #656379;
 	text-align : center;
 }
 .qna-con{
-	width:1000px;
+	width:800px;
+	margin: 0 auto;
 }
 .talbe{padding : 10px;}
 .table thead tr td{text-align:center;}
@@ -49,7 +38,7 @@ section{height:800px;}
 .table tbody tr td:nth-child(4){width:15%; text-align:center;}
 .table tbody tr td:last-child{width:15%; text-align:center;}
 
-.side{width:200px;position:absolute;left:3%;top:25%;}
+.side{width:200px;left:3%;top:25%;}
 .side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
 .side ul li:first-child{line-height:80px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
 .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
@@ -71,9 +60,8 @@ section{height:800px;}
 	</c:if>
 	
 	<c:if test="${userType eq '관리자'}">
-	<section>
 		<!-- 사이드메뉴 -->
-		<aside class="sideMenu">
+		<div class="sideMenu" style="width:310px;height:80vh;position:absolute;left:2%; top:25%;">
 			<div class="side">
 				<ul>
 					<li>관 리 자</li>
@@ -84,10 +72,10 @@ section{height:800px;}
 					<li class="lo" onclick="location.href='statisticsView.do'">대출통계</li>
 				</ul>
 			</div>
-		</aside>
-
+		</div>
+	<section>
 		<!-- 내용 -->
-		<article class="mainContent">
+		<div class="mainContent">
 			<!-- 타이틀 --><br>
 			<h2 id="mainTitle">
 				<b>문의내역</b>
@@ -204,16 +192,11 @@ section{height:800px;}
 					</div>
 				</c:if>
 			</div>
-		</article>
-		<br>
-		<br>
+		</div>
 	</section>
 	</c:if>
 <jsp:include page="../common/chat.jsp"></jsp:include>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 
-<script>
-
-</script>
 </body>
 </html>
