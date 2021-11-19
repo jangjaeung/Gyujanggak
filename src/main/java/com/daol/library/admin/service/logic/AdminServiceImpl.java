@@ -39,6 +39,41 @@ public class AdminServiceImpl implements AdminService {
 		return totalCount;
 	}
 	
+	// 회원 검색
+	@Override
+	public List<Member> printSearchAllUser(Search search) {
+		List<Member> searchList = store.selectSearchUser(search);
+		return searchList;
+	}
+	
+	// 선택한 회원 삭제
+	@Override
+	public int deleteUser(int[] nums) {
+		int result = store.deleteUser(nums);
+		return result;
+	}
+	
+	// 회원 상세보기
+	@Override
+	public Member printUser(int userNo) {
+		Member member = store.printUser(userNo);
+		return member;
+	}
+	
+	// 이용증 발급
+	@Override
+	public int userPassIssued(Member member) {
+		int result = store.userPassIssued(member);
+		return result;
+	}
+	
+	// 이용 기간 설정
+	@Override
+	public int userEndDateUpdate(Member member) {
+		int result = store.userEndDateUpdate(member);
+		return result;
+	}
+	
 	@Override
 	// 장서 카운트
 	public int getListCount() {
