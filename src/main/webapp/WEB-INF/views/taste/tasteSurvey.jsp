@@ -8,7 +8,7 @@
 <title>취향분석설문</title>
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css" />
-
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 *{
 	margin:0;
@@ -22,6 +22,8 @@
 .sideMenu{
 	float: left;
 	width: 25%;
+	height : auto;
+	position: absolute;
 }
 .mainContent {
 	margin-left: 15%;
@@ -86,12 +88,22 @@
 }
 .starR1.on{background-position:0 0;}
 .starR2.on{background-position:-15px 0;}
-.side{width:200px;position:fixed;left:3%;top:18%;}
+
+.side{width:200px;position:sticky;left:3%;top:20%;}
 .side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
 .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
 .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+
 </style>
+<script>
+$(document).ready(function(){
+var asideH = $(".mainContent").height();
+console.log(asideH);
+$(".sideMenu").css("height", asideH);
+
+});
+</script>
 </head>
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
@@ -148,11 +160,11 @@
 	
 			
 				<div id="book-count">
-					<p style='color : red;'>과거에 본 도서를 찾아 평가해보세요!</p>
+					<p style='color : #5a5eb9;'>과거에 본 도서를 찾아 평가해보세요!</p>
 				</div>
 				
 				<!-- 본문 -->
-				<br><br>
+				<br><br><p style='color : red;'>평가한 도서 각각 확인 버튼을 눌러주세요. 더 많은 도서를 평가할 수록 추천의 정확도가 높아집니다!</p>
 				<c:forEach items="${surveyList }" var = "survey" varStatus="status">
 					<div class="card">
 						<div class="photo">
@@ -249,6 +261,8 @@ function checkRating(obj){
 	})
 	
 }
+
+
 </script>
 </body>
 </html>
