@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -51,10 +52,8 @@ public class ReservationBookController {
 		if(!rList.isEmpty()) {
 			model.addAttribute("rList", rList);
 			model.addAttribute("pi", pi);
-			return "mypage/bookingList";
-		} else {
-			return "mypage/bookingList";
-		}
+		} 
+		return "mypage/bookingList";
 	}
 	
 //	도서 예약 삭제
@@ -70,6 +69,22 @@ public class ReservationBookController {
 		} else {
 			out.println("<script>alert('도서 예약 취소 실패'); location.href='/bookingList.do?userId="+ rsvBook.getUserId() +"';</script>");
 			out.flush();
+		}
+	}
+	
+//	도서 예약 다중 삭제
+	@ResponseBody
+	@PostMapping("/deleteRsvList.do")
+	public String deleteRsvList(@RequestParam("rsvNum") String[] rsvNo) {
+		int nums[] = new int[rsvNo.length];
+		for(int i = 0; i < rsvNo.length; i++) {
+			nums[i] = Integer.parseInt(rsvNo[i]);
+		}
+		int result = service.removeRsvList(nums);
+		if (result > 0) {
+			return "success";
+		} else {
+			return "fail";
 		}
 	}
 	

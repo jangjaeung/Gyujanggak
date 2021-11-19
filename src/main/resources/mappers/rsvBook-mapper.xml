@@ -87,4 +87,11 @@
 	<delete id="deleteRsv" parameterType="_int">
 		DELETE FROM BOOK_RESERVATION WHERE RSV_NO = #{ rsvNo }
 	</delete>
+	<delete id="deleteRsvList" parameterType="java.util.ArrayList">
+		DELETE FROM BOOK_RESERVATION WHERE RSV_NO IN (
+		<foreach collection="array" item="nums" index="index" separator=",">
+			${ nums }
+		</foreach>
+		)
+	</delete>
 </mapper>

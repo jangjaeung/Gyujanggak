@@ -15,6 +15,7 @@ public interface ReservationBookStore {
 	public int selectRsvCount(int bookNo);
 	public int insertRsv(ReservationBook reservationBook);
 	public int deleteRsv(ReservationBook reservationBook);
+	public int deleteRsvList(int[] nums);
 	public int updateRsv(int bookNo);
 //	페이징 처리
 	public int selectListCount(String userId);

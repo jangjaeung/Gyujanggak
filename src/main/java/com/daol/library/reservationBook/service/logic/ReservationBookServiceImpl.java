@@ -55,6 +55,11 @@ public class ReservationBookServiceImpl implements ReservationBookService {
 	public int removeRsv(ReservationBook reservationBook) {
 		return store.deleteRsv(reservationBook);
 	}
+	
+	@Override
+	public int removeRsvList(int[] nums) {
+		return store.deleteRsvList(nums);
+	}
 
 	@Override
 	public int modifyRsv(int bookNo) {
