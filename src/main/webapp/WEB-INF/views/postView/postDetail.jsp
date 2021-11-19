@@ -10,7 +10,6 @@
 <style>
 *{margin:0;padding:0}
 header{top:0}
-footer{bottom:0}
 #wrap{width:1400px;margin:0 auto;margin-top:200px}
 input{outline:none;}
 textarea{outline:none;resize:none;padding:5px;}
