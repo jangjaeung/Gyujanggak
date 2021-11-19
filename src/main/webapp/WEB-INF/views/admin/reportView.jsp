@@ -23,7 +23,7 @@ header{top:0}
 	width: 25%;
 }
 .mainContent {
-	margin-left: 15%;
+	margin-left: 20%;
 	margin-right: 15%;
 	margint-bottom: 15%;
 	vertical-align: middle;
@@ -69,8 +69,6 @@ header{top:0}
 	</section>
 	</c:if>
 	<c:if test="${userType eq '관리자'}">
-	<section>
-		<!-- 사이드메뉴 -->
 		<aside class="sideMenu">
 			<div class="side">
 				<ul>
@@ -83,6 +81,7 @@ header{top:0}
 				</ul>
 			</div>
 		</aside>
+	<section>
 
 		<!-- 내용 -->
 			<article class="mainContent">
