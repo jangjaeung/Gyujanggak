@@ -23,6 +23,7 @@
 .sideMenu{
 	float: left;
 	width: 25%;
+	position: absolute;
 }
 .mainContent {
 	margin-left: 20%;
@@ -73,12 +74,20 @@
 aside{
 min-width : 200px;
 }
-.side{background-color:white; width:200px;position:fixed;left:3%;top:18%;}
+.side{width:200px;position:sticky;left:3%;top:20%;}
 .side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
 .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
 .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
+<script>
+$(document).ready(function() {
+var asideH = $(".mainContent").height();
+console.log(asideH);
+$(".sideMenu").css("height", asideH);
+
+});
+</script>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>

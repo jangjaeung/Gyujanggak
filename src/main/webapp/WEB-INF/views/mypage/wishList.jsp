@@ -13,6 +13,7 @@
 *{
 	margin:0;
 	padding : 0;
+	height : auto;
 }
 #beforeLogin{
 	margin-top : 5%;
@@ -29,7 +30,7 @@
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
-	width : 90%;
+	width : 85%;
 	display: grid;
 	text-align : center;
 	position: relative;
@@ -76,7 +77,15 @@
 	border: 5px solid #788DB6;
 	z-index: 10;
 }
-.side{background-color:white; width:200px;position:fixed;left:3%;top:18%;}
+.sideMenu{
+	position:absolute; !important;
+}
+.side{
+	width:200px;
+	position:sticky; !important;
+	left:3%;
+	top:18%; !important;
+}
 .side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
 .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
 .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
@@ -100,8 +109,8 @@
 	<c:if test="${sessionScope.userId ne null}">
 	<section>
 		<!-- 사이드메뉴 -->
-		<aside class="sideMenu">
-			<div class="side">
+		<aside class="sideMenu" style="position:absolute; left:2%; height:800px">
+			<div class="side" id="fixedMenu">
 	            <ul>
 	               <li>마이페이지</li>
 	               <li class="lo" onclick="location.href='mypageInfo.do?userId=${userId }'">회원정보</li>
@@ -278,6 +287,7 @@
 
     }
 
+    
 	</script>
 </body>
 </html>
