@@ -19,6 +19,7 @@ import com.daol.library.book.service.BookService;
 import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.lendingBook.service.LendingBookService;
 import com.daol.library.mypage.service.MypageService;
+import com.daol.library.reservationBook.service.ReservationBookService;
 
 @Controller
 public class BookController {
@@ -30,6 +31,9 @@ public class BookController {
 	
 	@Autowired
 	private MypageService MypageService;
+	
+	@Autowired
+	private ReservationBookService rService;
 	
 //	간략 검색
 	@GetMapping("/search.do")
@@ -130,10 +134,12 @@ public class BookController {
 		Book book = service.printOne(bookNo);
 		List<Review> rList = MypageService.printOneForDetail(bookNo);
 		LendingBook lendingBook = LendingBookService.printOneForDetail(bookNo);
+		int rsvCount = rService.printRsvCount(bookNo);
 		if(book != null) {
 			mv.addObject("book", book);
 			mv.addObject("lendingBook", lendingBook);
 			mv.addObject("rList", rList);
+			mv.addObject("rsvCount", rsvCount);
 			mv.setViewName("book/bookDetail");
 		} else {
 			mv.addObject("msg", "상세 조회 실패");

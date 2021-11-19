@@ -33,8 +33,26 @@
 	<select id="selectTaste3" resultMap="bResultMap">
 		SELECT * FROM(SELECT * FROM BOOK WHERE THEME = #{taste3} ORDER BY DBMS_RANDOM.VALUE) WHERE ROWNUM <![CDATA[<=10]]>
 	</select>
-
-
+	<!-- 전공별 도서 추천 -->
+	<select id="selectMajorBookList" resultMap="bResultMap">
+		SELECT * FROM (SELECT * FROM BOOK
+		<if test="major == '인문사회'.toString()">
+		WHERE BOOK_SUBJECT IN ('사회과학','언어','철학','종교','문학','역사')
+		</if>
+		<if test="major == '자연과학'.toString()">
+		WHERE BOOK_SUBJECT = '자연과학'
+		</if>
+		<if test="major == '공학'.toString()">
+		WHERE BOOK_SUBJECT = '기술과학'
+		</if>
+		<if test="major == '예체능'.toString()">
+		WHERE BOOK_SUBJECT = '예술'
+		</if>
+		<if test="major == '의학'.toString()">
+		WHERE BOOK_SUBJECT IN '철학'
+		</if>
+		ORDER BY DBMS_RANDOM.VALUE) WHERE ROWNUM <![CDATA[<=10]]>
+	</select>
 	
 	<!-- 취향 설문 -->
 	<resultMap type="Member" id="memberResultMap">

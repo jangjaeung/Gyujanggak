@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>대출 통계</title>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+	
 
 
 <style>
@@ -37,6 +38,11 @@
 	position: relative;
 	top: 1px;
 }
+.side{width:200px;position:absolute;left:3%;top:25%;}
+.side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+.side ul li:first-child{line-height:80px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+.side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 
 </head>
@@ -45,30 +51,59 @@
 
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<br>
-	<hr style="margin-top: 13%">
-	<div class="container" style="margin-bottom: 15%;">
+	
+	<div class="container" style="margin-bottom: 15%;margin-top: 8%;margin-right: 10%;">
 		<h1 style="text-align: center; margin-bottom: 8%;">대출통계</h1>
 
+		<div class="side">
+            <ul>
+               <li>관 리 자</li>
+               <li class="lo" onclick="location.href='userListView.do'">회원관리</li>
+               <li class="lo" onclick="location.href='bookListView.do'">도서관리</li>
+               <li class="lo" onclick="location.href='adQnaList.do'">문의관리</li>
+               <li class="lo" onclick="location.href='reportView.do'">신고관리</li>
+               <li class="lo sideact" onclick="location.href='statisticsView.do'">대출통계</li>
+            </ul>
+         </div>
 
+
+		<c:if test="${not empty sList}">
 			<c:forEach items="${sList }" var="statis">
-				<c:if test="${statis.lendingDate eq '11월'}">
-					<input type="hidden" id="subject" value="${statis.bookSubject }">
-					<input type="hidden" class="lending-count11" value="${statis.lendingCount }">
-				</c:if>
+				<input type="hidden" id="subject" value="${statis.bookSubject }">
+				<input type="hidden" class="lending-count11"
+					value="${statis.lendingCount }">
 			</c:forEach>
-
+		</c:if>
 		<div class="chart-div" align="center">
 			<canvas id="myChart" width="400" height="200"></canvas>
 		</div>
-		
-		<script src="script.js"></script>
+
+
 
 
 
 	</div>
+
+
+		<script src="script.js"></script>
+
+
+
+	
 	<jsp:include page="../common/chat.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<script>
+// 	function setDisplay(){
+// 	    if($('input:radio[id=weekly-check]').is(':checked')){
+// 	        $('.month-box').hide();
+// 	    }else{
+	  
+// 	    }
+// 	};
+	
+	
+	
+	
 	var checkArr = [];
 	$('.lending-count11').each(function(i){
 		checkArr.push($(this).val());
@@ -161,6 +196,8 @@
 	        }
 	    }
 	});
+	
+
 	</script>
 </body>
 </html>

@@ -16,7 +16,7 @@
 <jsp:include page="../common/header.jsp"></jsp:include>
 	<br><hr style="margin-top:13%">
 	<div class="container" style="margin-bottom: 15%;">
-		<h1 style="text-align:center;margin-bottom: 8%;">문의사항 등록</h1>
+		<h1 style="text-align:center;margin-bottom: 8%;">문의사항</h1>
 		<form method="get" name="form">
 			<div class="form-group">
 				<label for="exampleInputTitle">제목</label> 

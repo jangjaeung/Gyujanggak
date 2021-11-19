@@ -4,7 +4,6 @@ public class Statistics {
 
 	private String bookSubject;
 	private int lendingCount;
-	private String lendingDate;
 	
 	public Statistics() {}
 
@@ -24,19 +23,9 @@ public class Statistics {
 		this.lendingCount = lendingCount;
 	}
 
-	public String getLendingDate() {
-		return lendingDate;
-	}
-
-	public void setLendingDate(String lendingDate) {
-		this.lendingDate = lendingDate;
-	}
-
 	@Override
 	public String toString() {
-		return "Statistics [bookSubject=" + bookSubject + ", lendingCount=" + lendingCount + ", lendingDate="
-				+ lendingDate + "]";
+		return "Statistics [bookSubject=" + bookSubject + ", lendingCount=" + lendingCount + "]";
 	}
-	
 	
 }

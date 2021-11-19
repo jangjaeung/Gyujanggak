@@ -26,9 +26,50 @@
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="lendingCount" column="LENDING_COUNT"/>
 	</resultMap>
-	<!-- 도서 예약 중복 여부 -->
+	<resultMap type="Member" id="memberResultMap">
+		<id property="userId" column="USER_ID"></id>
+		<result property="userPwd" column="USER_PWD"></result>
+		<result property="userNo" column="USER_NO"></result>
+		<result property="userName" column="USER_NAME"></result>
+		<result property="userPhone" column="USER_PHONE"></result>
+		<result property="userType" column="USER_TYPE"></result>
+		<result property="userEmail" column="USER_EMAIL"></result>
+		<result property="studentId" column="STUDENT_ID"></result>
+		<result property="major" column="MAJOR"></result>
+		<result property="profilePic" column="PROFILE_PIC"></result>
+		<result property="annualFee" column="ANNUAL_FEE"></result>
+		<result property="payDate" column="PAY_DATE"></result>
+		<result property="enrollDate" column="ENROLL_DATE"></result>
+		<result property="passCheck" column="PASS_CHECK"></result>
+		<result property="approvalDate" column="APPROVAL_DATE"></result>
+		<result property="endDate" column="END_DATE"></result>
+		<result property="socialId" column="SOCIAL_ID"></result>
+		<result property="surveyCheck" column="SURVEY_CHECK"></result>
+		<result property="lendingCopy" column="LENDING_COPY"></result>
+		<collection property="reservationBook" resultMap="rsvBookResultMap"/>
+	</resultMap>
+	<!-- 도서 예약 추가 시, 중복 여부 확인 -->
 	<select id="addCheck" resultMap="rsvBookResultMap">
 		SELECT * FROM BOOK_RESERVATION WHERE BOOK_NO = #{ bookNo } AND USER_ID = #{ userId } AND RSV_STATE = '대기'
+	</select>
+	<!-- 도서 예약 알림 대상 조회 -->
+	<select id="selectNotice" resultMap="rsvBookResultMap">
+		SELECT * FROM BOOK_RESERVATION WHERE BOOK_NO = #{ bookNo } AND RSV_STATE = '대기'
+	</select>
+	<!-- 도서 예약 회원 정보 조회 -->
+	<select id="selectUserEmail" resultMap="memberResultMap">
+		SELECT * FROM USERS JOIN BOOK_RESERVATION USING (USER_ID) WHERE BOOK_NO = #{ bookNo } AND RSV_STATE = '대기'
+	</select>
+	<!-- 예약 도서 정보 조회 -->
+	<select id="selectRsvBookInfo" resultMap="rsvBookResultMap">
+		SELECT DISTINCT(BOOK_NAME) FROM BOOK_RESERVATION R JOIN BOOK USING (BOOK_NO) WHERE BOOK_NO = #{ bookNo }
+	</select>
+	<!-- 도서 예약 상태 변경 -->
+	<update id="updateRsvState">
+		UPDATE BOOK_RESERVATION SET RSV_STATE = '완료' WHERE BOOK_NO = #{ bookNo } AND RSV_STATE = '대기'
+	</update>
+	<select id="selectRsvCount" resultType="_int">
+		SELECT COUNT(*) FROM BOOK_RESERVATION WHERE BOOK_NO = #{ bookNo } AND RSV_STATE = '대기'
 	</select>
 	<!-- 도서 예약 목록 조회 -->
 	<select id="selectAllRsvBook" resultMap="rsvBookResultMap">

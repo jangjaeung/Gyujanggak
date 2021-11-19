@@ -29,7 +29,7 @@ public interface TasteService {
 	
 	
 	//전공별 도서 추천, 멤버에 등록된 전공으로 책 추천
-	public List<Book> printBooksByMajor(Member member);
+	public List<Book> printBooksByMajor(String major);
 
 	
 	

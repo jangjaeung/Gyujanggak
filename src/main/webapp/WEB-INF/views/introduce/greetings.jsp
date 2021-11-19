@@ -39,11 +39,9 @@
 <jsp:include page="../common/header.jsp"></jsp:include>
 	<br>
 	<div class="container" style="margin-bottom: 0%; margin-top:10%">
-		 <div style="text-align: center; margin-bottom: 2%;">
-      		
-    	</div>	
+		
     </div>  
-<h1 style="text-align:center">인사말</h1>
+<h1 style="text-align:center; margin-bottom: 4%;" >인사말</h1>
     <hr>
     <div style="width: 50%;text-align: center;margin: auto;height: 340px; background-image: url('/resources/img/greetings.png');background-repeat: no-repeat; background-size: 100% 100%;margin-top: 6%;"></div>
 

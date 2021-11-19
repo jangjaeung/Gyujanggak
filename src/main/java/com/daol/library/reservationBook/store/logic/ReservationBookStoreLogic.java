@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.daol.library.book.domain.PageInfo;
+import com.daol.library.member.domain.Member;
 import com.daol.library.reservationBook.domain.ReservationBook;
 import com.daol.library.reservationBook.store.ReservationBookStore;
 
@@ -29,6 +30,26 @@ public class ReservationBookStoreLogic implements ReservationBookStore {
 	}
 	
 	@Override
+	public List<ReservationBook> selectRsvList(int bookNo) {
+		return sqlSession.selectList("rsvBookMapper.selectNotice", bookNo);
+	}
+	
+	@Override
+	public ReservationBook selectRsvBookInfo(int bookNo) {
+		return sqlSession.selectOne("rsvBookMapper.selectRsvBookInfo", bookNo);
+	}
+	
+	@Override
+	public List<Member> selectUserEmail(int bookNo) {
+		return sqlSession.selectList("rsvBookMapper.selectUserEmail", bookNo);
+	}
+	
+	@Override
+	public int selectRsvCount(int bookNo) {
+		return sqlSession.selectOne("rsvBookMapper.selectRsvCount", bookNo);
+	}
+	
+	@Override
 	public int insertRsv(ReservationBook reservationBook) {
 		return sqlSession.insert("rsvBookMapper.insertRsv", reservationBook);
 	}
@@ -39,11 +60,11 @@ public class ReservationBookStoreLogic implements ReservationBookStore {
 	}
 
 	@Override
-	public int updateRsv(ReservationBook reservationBook) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateRsv(int bookNo) {
+		return sqlSession.update("rsvBookMapper.updateRsvState", bookNo);
 	}
 
+//	페이징 처리
 	@Override
 	public int selectListCount(String userId) {
 		return sqlSession.selectOne("rsvBookMapper.selectListCount", userId);

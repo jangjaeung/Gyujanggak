@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>학생 회원가입</title>
  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
  <script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/loginPage/css/login.css"/>
@@ -198,7 +198,7 @@ $('#out').css({'color':'red','width':'110%','font-size':'12px','border':'none','
 		});
 		
 		$('#e-email').click(function(){
-			var reg=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[d,D]{1}[a,A]{1}[o,O]{1}[l,L]{1}.[c,C]{1}[o,O]{1}.[k,K]{1}[r,R]{1}$/;
+			var reg=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[d,D]{1}[a,A]{1}[o,O]{1}[l,L]{1}.[a,A]{1}[r,R]{1}.[k,K]{1}[r,R]{1}$/;
 			var email =$('#userEmail').val().trim();
 			
 			if(!reg.test(email)){

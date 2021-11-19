@@ -28,7 +28,7 @@ footer{bottom:0}
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
-	width : 85%;
+	width : 90%;
 	display: grid;
 }
 #mainTitle{
@@ -37,6 +37,7 @@ footer{bottom:0}
 }
 .qna-con{
 	width:1000px;
+	min-height:500px;
 }
 table thead tr td{
 	font-weight:bold;
@@ -49,6 +50,12 @@ table thead tr td{
 .table thead tr td:last-child{width:15%; text-align:center;}
 .table tbody tr td:first-child{width:15%; text-align:center;}
 .table tbody tr td:last-child{width:15%; text-align:center;}
+
+.side{background-color:white; width:200px;position:absolute;left:3%;top:18%;}
+.side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+.side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+.side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 </head>
 <body>
@@ -69,7 +76,21 @@ table thead tr td{
 	<section>
 		<!-- 사이드메뉴 -->
 		<aside class="sideMenu">
-			
+			<div class="side">
+	            <ul>
+	               <li>마이페이지</li>
+	               <li class="lo" onclick="location.href='mypageInfo.do?userId=${userId }'" >회원정보</li>
+	               <li class="lo" onclick="location.href='leaveAccount.do?userId=${userId }'">회원탈퇴</li>
+	               <li class="lo" onclick="location.href='lendingStatus.do?userId=${userId }'">대출내역</li>
+	               <li class="lo" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
+	               <li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
+	               <li class="lo" onclick="location.href='likeList.do?userId=${userId }'">관심도서내역</li>
+	               <li class="lo" onclick="location.href='tasteSurveyView.do?userId=${userId }'">취향분석</li>
+	               <li class="lo" onclick="location.href='readingroomHistory.do?userId=${userId }'">열람실이용내역</li>
+	               <li class="lo" onclick="location.href='studyroomHistory.do?userId=${userId }'">스터디룸이용내역</li>
+	               <li class="lo" onclick="location.href='qnaList.do?userId=${userId }'" style="background-color:rgb(155,158,213); color:#fff; font-weight:bold;">문의하기</li>
+	            </ul>
+         	</div>			
 		</aside>
 
 		<!-- 내용 -->
@@ -104,11 +125,14 @@ table thead tr td{
 				<button onclick="location.href='registQnaView.do?userId=${userId}'">문의 등록</button>
 			</div>
 		</article>
+		<br><br><br><br><br><br><br><br><br><br>
 		<br>
 		<br>
 	</section>
 	</c:if>
+<br><br><br><br><br><br>
 <jsp:include page="../common/chat.jsp"></jsp:include>
+<br><br><br><br><br><br>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

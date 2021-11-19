@@ -1,5 +1,6 @@
 package com.daol.library.post.domain;
 
+
 import java.sql.Date;
 
 public class Post {

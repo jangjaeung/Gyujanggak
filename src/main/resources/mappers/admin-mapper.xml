@@ -82,7 +82,6 @@
 	<resultMap type="Statistics" id="StatisResultMap">
 		<id property="bookSubject" column="BOOK_SUBJECT"></id>
 		<result property="lendingCount" column="LENDING_COUNT"/>
-		<result property="lendingDate" column="LENDING_DATE"/>
 	</resultMap>
 	
 <!-- 유저리스트 페이징 -->	
@@ -204,9 +203,9 @@
 	</select>
 <!-- 		대출 통계 리스트 -->
 	<select id="statisList" resultMap="StatisResultMap">
-	select * from (SELECT d.BOOK_SUBJECT, SUM(d.LENDING_COUNT) "LENDING_COUNT",to_char(c.lending_date,'mon') "LENDING_DATE"
+	select d.BOOK_SUBJECT,SUM(d.LENDING_COUNT)"LENDING_COUNT"
 	FROM BOOK d, BOOK_LENDING c 
-	WHERE c.BOOK_NO = d.BOOK_NO GROUP BY d.BOOK_SUBJECT,to_char(c.lending_date,'mon'))order by book_subject
+	WHERE c.BOOK_NO = d.BOOK_NO GROUP BY d.BOOK_SUBJECT order by book_subject
 	</select>
 	
 <!-- 	장서 등록 -->

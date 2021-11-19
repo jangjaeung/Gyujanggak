@@ -25,7 +25,7 @@
 	width: 25%;
 }
 .mainContent {
-	margin-left: 15%;
+	margin-left: 20%;
 	margin-right: 10%;
 	margint-bottom: 15%;
 	vertical-align: middle;
@@ -70,6 +70,14 @@
 #login-btn{
 	text-align : center;
 }
+aside{
+min-width : 200px;
+}
+.side{background-color:white; width:200px;position:fixed;left:3%;top:18%;}
+.side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+.side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+.side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+.sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
 </style>
 </head>
 <body>
@@ -90,6 +98,21 @@
 	<section>
 		<aside class="sideMenu">
 			<!-- 사이드메뉴 -->
+			<div class="side">
+	            <ul>
+	               <li>마이페이지</li>
+	               <li class="lo sideact" onclick="location.href='mypageInfo.do?userId=${userId }'" style="background-color:rgb(155,158,213); color:#fff; font-weight:bold;">회원정보</li>
+	               <li class="lo" onclick="location.href='leaveAccount.do?userId=${userId }'">회원탈퇴</li>
+	               <li class="lo" onclick="location.href='lendingStatus.do?userId=${userId }'">대출내역</li>
+	               <li class="lo" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
+	               <li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
+	               <li class="lo" onclick="location.href='likeList.do?userId=${userId }'">관심도서내역</li>
+	               <li class="lo" onclick="location.href='tasteSurveyView.do?userId=${userId }'">취향분석</li>
+	               <li class="lo" onclick="location.href='readingroomHistory.do?userId=${userId }'">열람실이용내역</li>
+	               <li class="lo" onclick="location.href='studyroomHistory.do?userId=${userId }'">스터디룸이용내역</li>
+	               <li class="lo" onclick="location.href='qnaList.do?userId=${userId }'">문의하기</li>
+	            </ul>
+         	</div>	
 		</aside>
 
 		<article class="mainContent">
@@ -152,7 +175,7 @@
 								<c:if test="${loginUser.annualFee eq null or loginUser.payDate eq null }">
 									없음
 								</c:if>
-								<c:if test="${loginUser.annualFee ne null or mloginUserember.passCheck eq 'N'}">
+								<c:if test="${loginUser.annualFee ne null and loginUser.passCheck eq 'N'}">
 									대기
 								</c:if>
 								<c:if test="${loginUser.passCheck ne 'N' and loginUser.approvalDate ne null}">
@@ -238,7 +261,9 @@
 		</article>
 	</section>
 	</c:if>
+	<br><br><br><br><br>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
+	<br><br><br><br><br><br><br>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 
 
@@ -253,7 +278,7 @@
 		    pay_method : 'card',
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '연회비 결제',
-		    amount : 100, //판매 가격
+		    amount : 50000, //판매 가격
 		    buyer_name : '${loginUser.userId}',
 		    buyer_email : '${loginUser.userEmail}',
 		}, function(rsp) {

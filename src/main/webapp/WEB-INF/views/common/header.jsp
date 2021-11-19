@@ -14,7 +14,7 @@
 	<header>
 		<div class="wrapper">
 			<div class="wrapper left" id="left">
-					<a href="home.do"><img src="resources/img/notextLogo.jpg" alt="logo" id="header-logo"></a>&nbsp;&nbsp;
+					<!--  <a href="home.do"><img src="resources/img/logoNew.png" alt="logo" id="header-logo"></a> -->&nbsp;&nbsp;
 					<a href="home.do"><h3 id="logoText" style="font-weight:bold;">다올대학교 도서관 규장각</h3></a>
 			</div>
 			<c:if test="${sessionScope.userId eq null }">
@@ -75,7 +75,7 @@
 						<li><a href="bookListView.do">도서관리</a></li>
 						<li><a href="adQnaList.do?userId=${userId }">문의관리</a></li>
 						<li><a href="reportView.do">신고관리</a></li>
-						<li><a href="#">대출통계</a></li>
+						<li><a href="statisticsView.do">대출통계</a></li>
 					</ul>
 					</c:if>
 				</li>

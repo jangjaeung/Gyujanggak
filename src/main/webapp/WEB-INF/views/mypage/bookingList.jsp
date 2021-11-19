@@ -27,20 +27,34 @@
 		<input type="hidden" name="userId" value="${ sessionScope.userId }">
 		<section>
 <!-- 사이드메뉴 -->
-			<aside class="sideMenu">
-				
-			</aside>
+		<aside class="sideMenu">
+			<div class="side">
+				<ul>
+				<li>마이페이지</li>
+				<li class="lo" onclick="location.href='mypageInfo.do?userId=${userId }'">회원정보</li>
+				<li class="lo" onclick="leaveAccount.do?userId=${userId }">회원탈퇴</li>
+				<li class="lo" onclick="location.href='lendingStatus.do?userId=${userId }'">대출내역</li>
+				<li class="lo sideact" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
+				<li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
+				<li class="lo" onclick="location.href='likeList.do?userId=${userId }'">관심도서내역</li>
+				<li class="lo" onclick="location.href='tasteSurveyView.do?userId=${userId }'">취향분석</li>
+				<li class="lo" onclick="location.href='readingroomHistory.do?userId=${userId }'">열람실이용내역</li>
+				<li class="lo" onclick="location.href='studyroomHistory.do?userId=${userId }'">스터디룸이용내역</li>
+				<li class="lo" onclick="location.href='qnaList.do?userId=${userId }'">문의하기</li>
+				</ul>
+			</div>	
+		</aside>
 <!-- 내용 -->
 			<article class="mainContent"><br>
 <!-- 타이틀 -->
 				<h2 id="mainTitle"><b>도서 예약 내역</b></h2><br><br><br>
 				<div id="book-count">
-					<p>${ pi.totalCount } 권의 책이 있습니다.</p>
+					<p>${ pi.totalCount }권의 책이 있습니다.</p>
 				</div>
 <!-- 본문 -->
 				<table>
 					<tr align="center">
-						<th><input type="checkbox" name="" id=""></th>
+						<th></th>
 						<th>No.</th>
 						<th>도서명</th>
 						<th>저자</th>

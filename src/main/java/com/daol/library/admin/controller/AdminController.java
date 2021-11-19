@@ -1,10 +1,17 @@
 package com.daol.library.admin.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -35,15 +42,17 @@ import com.daol.library.mypage.domain.Qna;
 import com.daol.library.post.domain.Post;
 import com.daol.library.post.domain.Reply;
 import com.daol.library.post.service.PostService;
-import com.daol.library.readingRoom.domain.ReadingRoom;
+import com.daol.library.reservationBook.domain.ReservationBook;
+import com.daol.library.reservationBook.service.ReservationBookService;
 
 @Controller
 public class AdminController {
-
 	@Autowired
 	private AdminService service;
 	@Autowired
 	private PostService pService;
+	@Autowired
+	private ReservationBookService rService;
 	
 	// 회원 관리 목록
 	@RequestMapping(value="userListView.do", method=RequestMethod.GET)
@@ -373,9 +382,10 @@ public class AdminController {
 	 // 도서 반납
 	 @RequestMapping(value="bookReturn.do", method=RequestMethod.GET)
 	 public String returnBook(@RequestParam(value="userId") String userId,@RequestParam(value="bookNo") int bookNo
-			 ,@RequestParam(value="lendingNo") int lendingNo,HttpServletRequest request,Model model) {
+			 ,@RequestParam(value="lendingNo") int lendingNo,HttpServletRequest request,Model model) throws Exception {
 		service.lendingCopy(userId);
 		service.bookState(bookNo);
+		sendEmailForRsv(bookNo);
 		int result = service.dateUpdate(lendingNo);
 		if(result > 0) {
 			return "redirect:statusList.do";
@@ -384,6 +394,55 @@ public class AdminController {
 		}
 		
 	 }
+	 
+//	예약 도서 알림 (이메일 발송)
+	public void sendEmailForRsv(int bookNo) throws Exception {
+		List<ReservationBook> rList = rService.printRsvList(bookNo);
+		try {
+			if (!rList.isEmpty()) {
+				List<Member> mList = rService.printUserEmail(bookNo);
+				ReservationBook rInfo = rService.printRsvBookInfo(bookNo);
+				final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory"; // 이메일 객체 생성
+				Properties props = System.getProperties();
+				props.put("mail.smtp.user", "daolLibrary1@gmail.com");
+				props.put("mail.smtp.host", "smtp.gmail.com");
+				props.put("mail.smtp.port", "465");
+				props.put("mail.smtp.starttls", "true");
+				props.put("mail.smtp.ssl.enable", "true");
+				props.put("mail.smtp.auth", "true");
+				props.put("mail.debug", "true");
+				props.put("mail.smtp.socketFactory.port", "465");
+				props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+				props.put("mail.smtp.socketFactory.fallback", "false");
+				final String username = "daolLibrary1@gmail.com"; // 발신자 이메일
+				final String password = "daol1234"; // 발신자 비밀번호
+				InternetAddress[] addr = new InternetAddress[mList.size()];
+				for(int i = 0; i < mList.size(); i++) {
+					addr[i] = new InternetAddress(mList.get(i).getUserEmail().trim());
+				}
+				try {
+					Session session = Session.getDefaultInstance(props, new Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication(username, password);
+						}
+					});
+					Message msg = new MimeMessage(session);
+					msg.setFrom(new InternetAddress("daolLibrary1@gmail.com"));
+					msg.setRecipients(Message.RecipientType.TO, addr);
+					msg.setSubject("[다올대학교 도서관 규장각] 예약 도서 대출 가능 알림");
+					msg.setText("안녕하십니까, 다올대학교 도서관 규장각입니다.\n\n예약 신청하신 도서 <" + rInfo.getBook().getBookName() + ">가 대출 가능 상태입니다.\n도서관 이용에 참고바랍니다.\n\n감사합니다.");
+					Transport.send(msg);
+					System.out.println("이메일 전송 완료");
+					rService.modifyRsv(bookNo);
+				} catch (Exception e) {
+					System.out.println("전송 실패");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	 
 	 // 택배 완료처리
 	 @RequestMapping(value="parcelSuccess.do", method=RequestMethod.GET)
 	 public String parcelSuc(@RequestParam(value="deliveryNo") String deliveryNo,HttpServletRequest request,Model model) {
@@ -395,9 +454,6 @@ public class AdminController {
 		}
 		
 	 }
-
-	 
-	 
 	 
 	//관리자페이지 문의관리 이동
 	@RequestMapping(value="adQnaList.do",method=RequestMethod.GET)

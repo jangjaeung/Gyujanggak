@@ -7,6 +7,18 @@
 <meta charset="UTF-8">
 <title>다올대학교 도서관 ｜ 규장각</title>
 <link rel="stylesheet" href="../../../resources/css/searchingBook.css">
+<style>
+    .sideMenu{
+        float: left;
+        width: 25%;
+        position: static;
+    }
+    .side{width:200px;position:fixed;left:3%;top:18%;}
+    .side ul li{line-height:50px;text-align:center; border:1px solid rgb(181,181,181);text-decoration: none;list-style: none;font-size:1.5rem; cursor:pointer;}
+    .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
+    .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+    .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+</style>
 </head>
 <body>
 <!-- Header -->
@@ -15,32 +27,28 @@
     <div>
         <span style="font-size: 8rem;">&nbsp;</span>
     </div>
-<!-- Navibar -->
-    <nav>
-
-    </nav>
 <!-- Aside -->
-    <aside>
-        <div class="s__sidebar">
-            <h3>자료검색</h3>
+    <aside class="sideMenu">
+        <div class="side">
             <ul>
-                <li><a href="/search.do">간략검색</a></li>
-                <li><a href="/sDetail.do">상세검색</a></li>
-                <li><a href="/sSub.do">주제별검색</a></li>
-                <li><a href="/searchNew.do">신착자료</a></li>
-                <li><a href="/bestBook.do">대출베스트</a></li>
+            <li>자료검색</li>
+            <li class="lo" onclick="location.href='/search.do'">간략검색</li>
+            <li class="lo" onclick="location.href='/sDetail.do'">상세검색</li>
+            <li class="lo" onclick="location.href='/sSub.do'">주제별검색</li>
+            <li class="lo sideact" onclick="location.href='/searchNew.do'">신착자료</li>
+            <li class="lo" onclick="location.href='/bestBook.do'">대출베스트</li>
             </ul>
-        </div>
+        </div>	
     </aside>
 <!-- Contents -->
-    <div>
-        <div>
+    <div style="margin: auto; display: grid; vertical-align: middle; justify-content: center; text-align: center">
+        <div style="margin-top: 50px;">
             <h1>신착자료</h1>
         </div>
         <div>
             <h5><a href="/home.do">Home</a> > 자료검색 > 신착자료</h5>
         </div>
-        <section>
+        <section style="padding-top: 60px;">
             <c:if test="${ empty bList }">
                 <tr>
                     <td>

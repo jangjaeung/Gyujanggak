@@ -97,8 +97,8 @@ public class MemberController {
 			 model.addAttribute("mOne", mOne);
 				return "member/idCheck";
 			} else {
-				model.addAttribute("msg", "공지사항 상세조회 실패");
-				return "common/errorPage";
+				
+				return "member/idSearchfail";
 			}
 	 }
 	 

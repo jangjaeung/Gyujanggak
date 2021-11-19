@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daol.library.book.domain.PageInfo;
+import com.daol.library.member.domain.Member;
 import com.daol.library.reservationBook.domain.ReservationBook;
 import com.daol.library.reservationBook.service.ReservationBookService;
 import com.daol.library.reservationBook.store.ReservationBookStore;
@@ -24,6 +25,26 @@ public class ReservationBookServiceImpl implements ReservationBookService {
 	public List<ReservationBook> printAddCheck(ReservationBook reservationBook) {
 		return store.selectAddCheck(reservationBook);
 	}
+	
+	@Override
+	public List<ReservationBook> printRsvList(int bookNo) {
+		return store.selectRsvList(bookNo);
+	}
+	
+	@Override
+	public ReservationBook printRsvBookInfo(int bookNo) {
+		return store.selectRsvBookInfo(bookNo);
+	}
+	
+	@Override
+	public List<Member> printUserEmail(int bookNo) {
+		return store.selectUserEmail(bookNo);
+	}
+	
+	@Override
+	public int printRsvCount(int bookNo) {
+		return store.selectRsvCount(bookNo);
+	}
 
 	@Override
 	public int registerRsv(ReservationBook reservationBook) {
@@ -36,11 +57,11 @@ public class ReservationBookServiceImpl implements ReservationBookService {
 	}
 
 	@Override
-	public int modifyRsv(ReservationBook reservationBook) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int modifyRsv(int bookNo) {
+		return store.updateRsv(bookNo);
 	}
 
+//	페이징 처리
 	@Override
 	public int getListCount(String userId) {
 		return store.selectListCount(userId);

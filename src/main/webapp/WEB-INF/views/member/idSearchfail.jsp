@@ -4,18 +4,21 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>정보 찾기</title>
+    <meta http-equiv="refresh" content="1 url=/idView.do">
+    <title>아이디 찾기 실패</title>
     <link rel="stylesheet" href="style.css">
    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/loginPage/css/login.css"/>
   </head>
   <body>
     <div class="bg-img">
-     <div class="content">
-        <a href="idView.do" style="color: blanchedalmond;margin-right: 11%;">아이디 찾기</a>
-        <a href="pwdView.do" style="color: paleturquoise;">비밀번호 찾기</a>
+      <div class="content">
+        <header style="    color: burlywood;">아이디 찾기 실패<br><br>
+		<b style="font-size: 19px;color: cornsilk;">정보를 다시 입력해주세요.</b>        
+        </header>
+        
+        </div>
       </div>
-    </div>
     <script>
       const pass_field = document.querySelector('.pass-key');
       const showBtn = document.querySelector('.show');
