@@ -15,6 +15,7 @@ import com.daol.library.admin.domain.Status;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.post.domain.Post;
@@ -75,6 +76,22 @@ public class AdminStoreLogic implements AdminStore{
 	public int userEndDateUpdate(Member member) {
 		int result = sqlSession.update("adminMapper.userEndDateUpdate",member);
 		return result;
+	}
+
+	// 대출 이력 조회
+	@Override
+	public List<LendingBook> selectAllLendingBook(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<LendingBook> lList = sqlSession.selectList("adminMapper.selectAllLendingBook", userId, rowBounds);
+		return lList;
+	}
+	
+	// 대출 카운트
+	@Override
+	public int selectLendingBookListCount() {
+		int count = sqlSession.selectOne("adminMapper.selectLendingBookListCount");
+		return count;
 	}
 
 	

@@ -14,6 +14,7 @@ import com.daol.library.admin.service.AdminService;
 import com.daol.library.admin.store.AdminStore;
 import com.daol.library.book.domain.Book;
 import com.daol.library.book.domain.WishBook;
+import com.daol.library.lendingBook.domain.LendingBook;
 import com.daol.library.member.domain.Member;
 import com.daol.library.mypage.domain.Qna;
 import com.daol.library.post.domain.Post;
@@ -72,6 +73,20 @@ public class AdminServiceImpl implements AdminService {
 	public int userEndDateUpdate(Member member) {
 		int result = store.userEndDateUpdate(member);
 		return result;
+	}
+	
+	// 대출 이력 조회
+	@Override
+	public List<LendingBook> printAllLendingBook(PageInfo pi, String userId) {
+		List<LendingBook> lList = store.selectAllLendingBook(pi, userId);
+		return lList;
+	}
+
+	// 대출 카운트
+	@Override
+	public int getLendingBookListCount() {
+		int totalCount = store.selectLendingBookListCount();
+		return totalCount;
 	}
 	
 	@Override
@@ -250,4 +265,5 @@ public class AdminServiceImpl implements AdminService {
 		List<Statistics> sList = store.selectAllstatis();
 		return sList;
 	}
+
 }
