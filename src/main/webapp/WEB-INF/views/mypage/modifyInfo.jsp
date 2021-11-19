@@ -72,7 +72,7 @@
 	            <ul>
 	               <li>마이페이지</li>
 	               <li class="lo sideact" onclick="location.href='mypageInfo.do?userId=${userId }'" style="background-color:rgb(155,158,213); color:#fff; font-weight:bold;">회원정보</li>
-	               <li class="lo" onclick="leaveAccount.do?userId=${userId }'">회원탈퇴</li>
+	               <li class="lo" onclick="location.href='leaveAccount.do?userId=${userId }'">회원탈퇴</li>
 	               <li class="lo" onclick="location.href='lendingStatus.do?userId=${userId }'">대출내역</li>
 	               <li class="lo" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
 	               <li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
@@ -105,7 +105,7 @@
 				<table class="table table-borderless" align="center">
 					<colgroup>
 						<col width="120px">
-						<col width="200px">
+						<col width="300px">
 						<col width="220px">
 					</colgroup>
 					<tr>

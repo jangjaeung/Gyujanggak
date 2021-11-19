@@ -102,7 +102,7 @@ min-width : 200px;
 	            <ul>
 	               <li>마이페이지</li>
 	               <li class="lo sideact" onclick="location.href='mypageInfo.do?userId=${userId }'" style="background-color:rgb(155,158,213); color:#fff; font-weight:bold;">회원정보</li>
-	               <li class="lo" onclick="leaveAccount.do?userId=${userId }'">회원탈퇴</li>
+	               <li class="lo" onclick="location.href='leaveAccount.do?userId=${userId }'">회원탈퇴</li>
 	               <li class="lo" onclick="location.href='lendingStatus.do?userId=${userId }'">대출내역</li>
 	               <li class="lo" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
 	               <li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
@@ -175,7 +175,7 @@ min-width : 200px;
 								<c:if test="${loginUser.annualFee eq null or loginUser.payDate eq null }">
 									없음
 								</c:if>
-								<c:if test="${loginUser.annualFee ne null or mloginUserember.passCheck eq 'N'}">
+								<c:if test="${loginUser.annualFee ne null and loginUser.passCheck eq 'N'}">
 									대기
 								</c:if>
 								<c:if test="${loginUser.passCheck ne 'N' and loginUser.approvalDate ne null}">
@@ -261,7 +261,9 @@ min-width : 200px;
 		</article>
 	</section>
 	</c:if>
+	<br><br><br><br><br>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
+	<br><br><br><br><br><br><br>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 
 
@@ -276,7 +278,7 @@ min-width : 200px;
 		    pay_method : 'card',
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '연회비 결제',
-		    amount : 100, //판매 가격
+		    amount : 50000, //판매 가격
 		    buyer_name : '${loginUser.userId}',
 		    buyer_email : '${loginUser.userEmail}',
 		}, function(rsp) {

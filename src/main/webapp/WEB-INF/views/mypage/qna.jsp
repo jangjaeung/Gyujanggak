@@ -28,7 +28,7 @@ footer{bottom:0}
 	margint-bottom: 15%;
 	vertical-align: middle;
 	justify-content: center;
-	width : 85%;
+	width : 90%;
 	display: grid;
 }
 #mainTitle{
@@ -80,7 +80,7 @@ table thead tr td{
 	            <ul>
 	               <li>마이페이지</li>
 	               <li class="lo" onclick="location.href='mypageInfo.do?userId=${userId }'" >회원정보</li>
-	               <li class="lo" onclick="leaveAccount.do?userId=${userId }'">회원탈퇴</li>
+	               <li class="lo" onclick="location.href='leaveAccount.do?userId=${userId }'">회원탈퇴</li>
 	               <li class="lo" onclick="location.href='lendingStatus.do?userId=${userId }'">대출내역</li>
 	               <li class="lo" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
 	               <li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
@@ -125,11 +125,14 @@ table thead tr td{
 				<button onclick="location.href='registQnaView.do?userId=${userId}'">문의 등록</button>
 			</div>
 		</article>
+		<br><br><br><br><br><br><br><br><br><br>
 		<br>
 		<br>
 	</section>
 	</c:if>
+<br><br><br><br><br><br>
 <jsp:include page="../common/chat.jsp"></jsp:include>
+<br><br><br><br><br><br>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

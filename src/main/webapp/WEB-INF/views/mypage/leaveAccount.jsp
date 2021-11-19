@@ -114,7 +114,7 @@ span.error {
 	            <ul>
 	               <li>마이페이지</li>
 	               <li class="lo" onclick="location.href='mypageInfo.do?userId=${userId }'">회원정보</li>
-	               <li class="lo sideact" onclick="leaveAccount.do?userId=${userId }'" style="background-color:rgb(155,158,213); color:#fff; font-weight:bold;">회원탈퇴</li>
+	               <li class="lo sideact" onclick="location.href='leaveAccount.do?userId=${userId }'" style="background-color:rgb(155,158,213); color:#fff; font-weight:bold;">회원탈퇴</li>
 	               <li class="lo" onclick="location.href='lendingStatus.do?userId=${userId }'">대출내역</li>
 	               <li class="lo" onclick="location.href='bookingList.do?userId=${userId }'">예약내역</li>
 	               <li class="lo" onclick="location.href='wishList.do?userId=${userId }'">희망도서신청</li>
@@ -207,7 +207,9 @@ span.error {
 		<br>
 	</section>
 	</c:if>
+	<br><br><br><br><br><br>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
+	<br><br><br><br><br>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<script>
 	$("#userPwd").on("blur", function(){

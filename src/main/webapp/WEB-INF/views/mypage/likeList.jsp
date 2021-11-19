@@ -116,7 +116,7 @@ transform : scale(1.5);
 	            </ul>
          	</div>	
 		</aside>
-
+	
 		<!-- 내용 -->
 		<article class="mainContent">
 			<!-- 타이틀 --><br>
@@ -185,7 +185,9 @@ transform : scale(1.5);
 		<br><br>
 	</section>
 	</c:if>
+	<br><br><br><br><br><br><br><br><br><br><br><br>
 	<jsp:include page="../common/chat.jsp"></jsp:include>
+	<br><br><br><br><br><br>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>
