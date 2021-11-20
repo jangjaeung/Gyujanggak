@@ -177,7 +177,7 @@ console.log(asideH);
 							<br>	
 							<p>대출일 : ${lending.lendingBook.lendingDate }</p>
 							<p>
-								<c:if test="${lending.bookState eq '대출불가'}">
+								<c:if test="${lending.lendingBook.returnState eq 'N'}">
 									<jsp:useBean id="now" class="java.util.Date" />
 									<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="today" />
 									<fmt:parseNumber value="${today}" integerOnly="true" var="nowTime" scope="request"/>
@@ -188,18 +188,18 @@ console.log(asideH);
 									<c:if test="${lending.lendingBook.extendCount eq 0}">반납예정일 : ${lending.lendingBook.returnDate}<c:if test="${dateDiff < 0}">&nbsp;&nbsp;<p style="color :red;">연체중</p></c:if></c:if>
 									<c:if test="${lending.lendingBook.extendCount eq 1}">반납예정일 : ${lending.lendingBook.returnDate} (연장 1회)<c:if test="${dateDiff < 0}"><p style="color :red;">연체중</p></c:if></c:if>
 								</c:if>
-								<c:if test="${lending.bookState eq '대출가능'}">반납일자 : ${lending.lendingBook.returnDate}</c:if>
+								<c:if test="${lending.lendingBook.returnState eq 'Y'}">반납일자 : ${lending.lendingBook.returnDate}</c:if>
 							</p>
 							<br>
 								<div class="btn-area">
-									<c:if test="${sessionScope.userId eq lending.lendingBook.userId and lending.bookState eq '대출불가'}">
+									<c:if test="${sessionScope.userId eq lending.lendingBook.userId and lending.lendingBook.returnState eq 'N'}">
 									<c:if test="${lending.lendingBook.extendCount eq 0}"><c:if test="${dateDiff >= 0}"><button class="btn btn-success" onclick="extendLending(this);">연장하기</button></c:if></c:if>
 										<input type="hidden" name="lendingNo" value="${lending.lendingBook.lendingNo }">
 									</c:if>
-									<c:if test="${lending.bookState eq '대출가능'}">
-										<c:if test="${lending.review.reviewContents ne null and lending.review.reviewContents ne ''}">
+									<c:if test="${lending.lendingBook.returnState ne 'N'}">
+										<c:if test="${lending.review.reviewContents ne null and lending.review.reviewContents ne ''}"> 
 											<button class="btn btn-info" id="reviewDetail" onclick="reviewDetail(this);">서평보기</button>
-										</c:if>
+										</c:if> 
 										<c:if test="${lending.review.reviewContents eq null or lending.review.reviewContents eq ''}">
 											<button class="btn btn-info" id="writeReview" onclick="writeReview(this);">서평쓰기</button>
 										</c:if>
@@ -207,8 +207,7 @@ console.log(asideH);
 								</div>
 							<br>
 						</div>
-						<c:if test="${sessionScope.userId eq lending.lendingBook.userId and lending.bookState eq '대출가능'}">
-							<%-- <c:if test="${lending.review.reviewContents eq null or lending.review.reviewContents eq ''}"> --%>
+						<c:if test="${sessionScope.userId eq lending.lendingBook.userId and lending.lendingBook.returnState eq 'Y'}">
 								<div class="review reviewBoxWrite" id="reviewBoxWrite">
 									<textarea rows="7" cols="92" placeholder="내용을 입력해주세요" name="reviewContents" id="reviewContents"></textarea>
 									<div class="starRev">
@@ -226,8 +225,6 @@ console.log(asideH);
 										</div>	
 									</div>
 								</div>
-							<%-- </c:if> --%>
-						<%-- 	<c:if test="${lending.review.reviewContents ne null and lending.review.reviewContents ne ''}"> --%>
 								<div class="review reviewBoxView" id="reviewBoxView">
 									<textarea rows="7" cols="92" placeholder="내용을 입력해주세요" name="reviewContents" id="modifyContents">${lending.review.reviewContents }</textarea>
 									<div class="starRev">
@@ -246,7 +243,6 @@ console.log(asideH);
 										</div>	
 									</div>
 								</div>
-							<%-- </c:if>	 --%>					
 						</c:if>
 					</div>
 			</c:forEach>
