@@ -2,6 +2,8 @@ package com.daol.library.lendingBook.domain;
 
 import java.sql.Date;
 
+import com.daol.library.book.domain.Book;
+
 public class LendingBook {
 	private int lendingNo;
 	private Date lendingDate;
@@ -10,6 +12,7 @@ public class LendingBook {
 	private String receive;
 	private String userId;
 	private int bookNo;
+	private Book book;
 	
 	public LendingBook() {}
 
@@ -74,6 +77,14 @@ public class LendingBook {
 		return "LendingBook [lendingNo=" + lendingNo + ", lendingDate=" + lendingDate + ", returnDate=" + returnDate
 				+ ", extendCount=" + extendCount + ", receive=" + receive + ", userId=" + userId + ", bookNo=" + bookNo
 				+ "]";
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
 	
 }

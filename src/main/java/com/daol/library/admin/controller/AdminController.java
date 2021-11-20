@@ -119,17 +119,21 @@ public class AdminController {
 			mv.addObject("msg", e.toString());
 			mv.setViewName("common/errorPage");
 		}
+		
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getLendingBookListCount();
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<LendingBook> lList = service.printAllLendingBook(pi, member.getUserId());
+		
+		
 		if(!lList.isEmpty()) {
 			mv.addObject("lList", lList);
 			mv.addObject("pi", pi);
 			mv.setViewName("admin/userDetailView");
 		}else {
-			mv.addObject("msg", "대출 정보 전체조회 실패");
-			mv.setViewName("common/errorPage");
+			mv.addObject("lList", lList);
+			mv.addObject("pi", pi);
+			mv.setViewName("admin/userDetailView");
 		}
 		return mv;
 	}

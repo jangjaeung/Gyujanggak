@@ -135,23 +135,28 @@
 	    <tbody>
 		    <c:forEach items="${lList }" var="lending">
 	    	<tr>
-	    		<td>${lendingBook.lendingNo }</td>
-	    		<td> 책이름</td>
-	    		<td>${lendingBook.lendingDate }</td>
-	    		<td>${lendingBook.returnDate }</td>
+	    		<td>${lending.lendingNo }</td>
+	    		<td> ${lending.book.bookName } </td>
+	    		<td>${lending.lendingDate }</td>
+	    		<td>${lending.returnDate }</td>
 	    		<td>
-					<c:if test="${lendingBook.returnDate eq null}">	
+					<c:if test="${lending.returnDate eq null}">	
 						대출중
 					</c:if>
 <%-- 					<c:if test="${lendingBook.returnDate ne null}">	
 						연체
 					</c:if> --%>
-					<c:if test="${lendingBook.returnDate ne null}">	
+					<c:if test="${lending.returnDate ne null}">	
 						반납
 					</c:if>	 		
 	    		</td>
 	    	</tr>
 		    </c:forEach>
+			<c:if test="${empty lList }">
+				<tr>
+					<td colspan="5" align="center"> 대출 내역이 없습니다. </td>
+				</tr>
+			</c:if>		    
     	</tbody>
     </table>
     		<table class="lendingBookListPaging">

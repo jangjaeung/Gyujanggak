@@ -64,7 +64,7 @@
 	             	<div class="alert_div_con">
 						<p>예약이 완료되었습니다.</p>
 						<p>예약을 확인하시겠습니까?</p>
-	                  <input type="button" onclick="location.href='readingroomHistory.do?userId=${loginUser.memberId }';" value="확인" />
+	                  <input type="button" onclick="location.href='studyroomHistory.do?userId=${loginUser.userId }';" value="확인" />
 	                  <input type="button" onclick="location.reload();" value="취소" />
 	                </div>
 	            </div>

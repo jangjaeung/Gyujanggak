@@ -155,6 +155,10 @@
 	}else {
 		var time = 'pm'
 	}
+	if (hr >= 21){
+		alert("예약 가능한 시간이 아닙니다.");
+		window.history.back();
+	}
 	console.log("오전오후", time);
 	
 	// 좌석 현황
@@ -201,18 +205,18 @@
 						//console.log(123,JSON.parse(data))
 						$("#reservationTime option[value*='AM']").prop('disabled',false);
 						$("#reservationTime option[value*='PM']").prop('disabled',false);
-						if(hr>15) { // 현재 시간이 15시 이후라면 am 예약 불가능
-							$("#reservationTime option[value*='AM']").prop('disabled',true);
-						} else if(hr<15) { // 현재 시간이 15시 이전이라면 am, pm 둘다 예약 가능
-							$("#reservationTime option[value*='AM']").prop('disabled',false);
-							$("#reservationTime option[value*='PM']").prop('disabled',false);
-						} else if(hr>=21){ // 현재 시간이 21시 보다 크거나 같으면 am,pm 둘다 예약 불가능
+						console.log(1231232,hr)
+						if(hr>=21){ // 현재 시간이 21시 보다 크거나 같으면 am,pm 둘다 예약 불가능
 							$("#reservationTime option[value*='AM']").prop('disabled',true);
 							$("#reservationTime option[value*='PM']").prop('disabled',true);
-						}else{
+						}else if(hr>=15) { // 현재 시간이 15시 이후라면 am 예약 불가능
+							$("#reservationTime option[value*='AM']").prop('disabled',true);
+						}else if(hr<15) { // 현재 시간이 15시 이전이라면 am, pm 둘다 예약 가능
 							$("#reservationTime option[value*='AM']").prop('disabled',false);
 							$("#reservationTime option[value*='PM']").prop('disabled',false);
-						}
+						} 
+						
+					
 						data = JSON.parse(data);
  						if(data.length > 0){ //데이터가 1개 이상일때  reservationTime value 값이 AM이면  AM을 disabled PM이면 PM을 disabled
 							for(let i in data){
