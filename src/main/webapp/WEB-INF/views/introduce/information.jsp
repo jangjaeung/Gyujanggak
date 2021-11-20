@@ -12,15 +12,15 @@
 	margin-bottom: 2%;
 	font-size: revert;
 	text-align:center;
+	width: 90%;
 }
 
 #introduce {
 	margin-bottom: 4%;
-	text-align: left;
+	text-align: center;
 	background-color: aliceblue;
-	width: 32%;
 	margin: left;
-	margin-left: 34%;
+	width: 90%;
 }
 
 * {
@@ -79,7 +79,7 @@ ul {
 	color:black;
 	font-size:20px;
 }
-.cont{display:none;}
+.cont{display:none;margin-left:14%;}
 .act{display:block;}
 .active{background-color:rgb(155,158,213);}
 .active span{color:#fff;}
@@ -109,7 +109,7 @@ ul {
 		<div class="content">
 			<div class="cont tab-1 act">
 				<h2 id="introduce1">학기중 이용시간</h2>
-				<table class="table" style="text-align: center; width: 100%; margin-left: 25%;">
+				<table class="table" style="text-align: center;">
 					<tr>
 						<th style="text-align: center;background-color: aliceblue;">구분</th>
 						<th colspan="2" style="text-align: center;background-color: aliceblue;">학기</th>
@@ -141,7 +141,7 @@ ul {
 				
 				<h2 id="introduce1" style="margin-top: 8%;">방학중 이용시간</h2>
 				<table class="table"
-					style="text-align: center; width: 55%; margin-left: 22%;">
+					style="text-align: center;">
 					<tr>
 						<th rowspan="2" colspan="2" style="text-align: center;background-color: aliceblue;">구분</th>
 						<th colspan="2" style="text-align: center;background-color: aliceblue;">하계방학</th>
@@ -184,7 +184,7 @@ ul {
 				</table>
 				
 				<h2 id="introduce1" style="margin-top: 8%;">열람실 · 스터디룸 개관시간</h2>
-				<table class="table" style="text-align: center; width: 50%; margin-left: 25%;">
+				<table class="table" style="text-align: center;">
 					<tr>
 						<th colspan="2" style="text-align: center;background-color: aliceblue;">구분</th>
 						<th style="text-align: center;background-color: aliceblue;">학기</th>
@@ -236,7 +236,7 @@ ul {
 				<div id="introduce">
 					· 대출 자격 : 다올 대학교 학생 및 이용증 발급 회원<br> · 대출 권수 및 기간<br>
 				</div>
-				<table class="table" style="    text-align: center;width: 35%;margin-left: 32%;">
+				<table class="table" style="text-align: center;width: 90%;">
 					<tr>
 						<th  style="text-align: center;">권수</th>
 						<th  style="text-align: center;">기간</th>
@@ -248,8 +248,8 @@ ul {
 				</table>
 				
 
-				<h2 id="introduce1" style="margin-top: 6%;}">도서 반납</h2>
-				<div id="introduce" style="width: 55%;margin-left: 24%;">
+				<h2 id="introduce1" style="margin-top: 6%;">도서 반납</h2>
+				<div id="introduce" >
 					반납 장소 : 자료실 대출 반남 데스크 (일반 열람실), 무인반납기<br> · 무인반납기 운영<br>
 					- 설치 위치 : 규장각 도서관 후문 옆<br> - 운영 시간 : 도서관 폐관 시간 (※코로나19로 제한적 운영
 					중에는 임시 운영 시간 기준으로 무인 반납기 운영)<br> - 주의 사항 : 무인 반납기는 부록을 대출하지 않은
@@ -258,11 +258,11 @@ ul {
 				
 
 				<h2 id="introduce1" style="margin-top: 6%;}">대출 연장</h2>
-				<div id="introduce" style="    width: 44%;margin-left: 29%;">
+				<div id="introduce" >
 					도서 대출 기간은 기본 14일(대출일 포함)이나, 예약이 없는 책은 1회(7일)에 한해 연장 신청이 가능<br>
 					반납 예정일 7일전부터 연장 신청이 가능하며, 연체도서가 있는 경우 연장 불가
 				</div>
-				<table class="table" style="text-align: center;width: 61%;margin-left: 20%;">
+				<table class="table" style="text-align: center;width: 90%;">
 					<tr>
 						<th  style="text-align: center;">STEP 01</th>
 						<th  style="text-align: center;">STEP 02</th>
@@ -283,7 +283,7 @@ ul {
 					대출중인 도서를 예약하면 예약 순서에 따라 도서가 반납되는 즉시 개별 통보(Email)<br> 예약자가 대출가능
 					통보를 받은 후 3일 이내에 대출하지 않으면 자동 취소
 				</div>
-				<table class="table" style="text-align: center;width: 61%;margin-left: 20%;">
+				<table class="table" style="text-align: center;width: 90%;">
 					<tr>
 						<th  style="text-align: center;">STEP 01</th>
 						<th  style="text-align: center;">STEP 02</th>
@@ -305,7 +305,7 @@ ul {
 					· 1일 1회에 한하여 원하는 좌석을 예약할 수 있으며, 예약은 당일 예약만 가능<br>
 				</div>
 				<table class="table"
-					style="text-align: center; width: 35%; margin-left: 32%;">
+					style="text-align: center; width: 90%;">
 					<tr>
 						<th style="text-align: center;">STEP 01</th>
 						<th style="text-align: center;">STEP 02</th>
@@ -320,7 +320,7 @@ ul {
 
 
 				<h2 id="introduce1" style="margin-top: 6%;">스터디룸 예약</h2>
-				<div id="introduce" style="width: 55%; margin-left: 24%;">
+				<div id="introduce">
 					· 규장각 도서관 홈페이지 '열람실·스터디룸 이용' 페이지에서 사전 예약 후 이용 <br>
 					· 3인 이상(최대 수용인원 8명) 이용시 예약가능하며, 1일 최대 2시간 이용 가능 <br>
 					· 예약시 날짜, 이용시간, 사용목적, 사용인원 입력
@@ -329,7 +329,7 @@ ul {
 
 				<h2 id="introduce1" style="margin-top: 6%;">이용시간</h2>
 				<table class="table"
-					style="text-align: center; width: 61%; margin-left: 20%;">
+					style="text-align: center; width: 90%;">
 					<tr>
 						<th style="text-align: center;">구분</th>
 						<th style="text-align: center;">스터디룸 01</th>
