@@ -41,7 +41,7 @@
         </div>	
     </aside>
 <!-- Contents -->
-    <div style="margin: auto; display: grid; vertical-align: middle; justify-content: center; text-align: center">
+    <article style="margin: auto; margin-bottom: 70px; display: grid; vertical-align: middle; justify-content: center; text-align: center">
         <div style="margin-top: 50px;">
             <h1>간략검색</h1>
         </div>
@@ -56,21 +56,20 @@
                     <option value="publisher" <c:if test="${ search.searchCondition eq 'publisher' }">selected</c:if>>출판사</option>
                 </select>
                 <input type="text" name="searchValue" placeholder="검색어 입력" value="${ search.searchValue }" class="search">
-                <input type="submit" value="검색" class="s__button">
+                <input type="submit" value="검색" class="s__button" style="border-radius: 3px; font-weight: bolder;">
             </form>
         </div>
-        <section>
+        <div>
         	<c:if test="${ empty bList }">
-                <tr>
-                    <td>
-                        <p>검색 결과가 없습니다.</p>
-                    </td>
-                </tr>
+                <div style="margin-bottom: 180px;">
+                        <p style="margin-top: 100px;">검색 결과가 없습니다.</p>
+                </div>
         	</c:if>
         	<c:if test="${ !empty bList }">
-                <h2>"${ search.searchValue }" 검색 결과입니다.</h2>
+                <div style="margin-bottom: 50px; margin-top: 50px;">
+                    <h2>"${ search.searchValue }" 검색 결과입니다.</h2>
+                </div>
 	        	<c:forEach items="${ bList }" var="book">
-                    <hr>
 		            <div class="section">
      			        <c:url var="bDetail" value="/bookDetail.do">
                     		<c:param name="bookNo" value="${ book.bookNo }"></c:param>
@@ -120,8 +119,8 @@
 		            <c:if test="${ pi.currentPage < pi.maxPage }"><a href="${ after }">다음</a></c:if>
 				</div>
         	</c:if>
-        </section>
-    </div>
+        </div>
+    </article>
 <!-- Footer -->
     <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

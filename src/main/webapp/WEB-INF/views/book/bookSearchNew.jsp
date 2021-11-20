@@ -41,7 +41,7 @@
         </div>	
     </aside>
 <!-- Contents -->
-    <div style="margin: auto; display: grid; vertical-align: middle; justify-content: center; text-align: center">
+    <div style="margin: auto; margin-bottom: 70px; display: grid; vertical-align: middle; justify-content: center; text-align: center">
         <div style="margin-top: 50px;">
             <h1>신착자료</h1>
         </div>
@@ -59,7 +59,6 @@
             <c:if test="${ !empty bList }">
                 <h3>규장각 신착 도서</h3>
                 <c:forEach items="${ bList }" var="book">
-                    <hr>
                     <div class="section">
                         <c:url var="bDetail" value="/bookDetail.do">
                             <c:param name="bookNo" value="${ book.bookNo }"></c:param>

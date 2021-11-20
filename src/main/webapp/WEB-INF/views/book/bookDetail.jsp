@@ -8,7 +8,6 @@
 <title>다올대학교 도서관 ｜ 규장각</title>
 <link rel="stylesheet" href="../../../resources/css/searchingBook.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../../../resources/js/bookDetail.js"></script>
 <style>
     .sideMenu{
         float: left;
@@ -19,6 +18,29 @@
     .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
     .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
     .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+
+    .len__btn, .rsv__btn, .back__btn {
+        width: 70px;
+		height: 40px;
+		background-color: #2e4f85;
+		color: whitesmoke;
+		border-radius: 5px;
+		outline: none;
+		box-shadow: none;
+        border: none;
+        outline: none;
+    }
+    .int__btn {
+        width: 100px;
+		height: 40px;
+		background-color: #2e4f85;
+		color: whitesmoke;
+		border-radius: 5px;
+		outline: none;
+		box-shadow: none;
+        border: none;
+        outline: none;
+    }
 </style>
 </head>
 <body>
@@ -44,11 +66,14 @@
 <!-- Contents -->
     <input type="hidden" name="bookNo" value="${ book.bookNo }">
     <input type="hidden" name="userId" value="${ sessionScope.userId }">
-    <section style="margin: auto; display: grid; vertical-align: middle; justify-content: center; text-align: center;">
+    <article style="margin: auto; margin-bottom: 70px; display: grid; vertical-align: middle; justify-content: center; text-align: center;">
+        <div style="margin-top: 50px; margin-bottom: 20px;">
+            <h1 style="color: gray;">도서정보</h1>
+        </div>
         <div>
-            <table border="1">
-                <tr>
-                    <td colspan="3">${ book.bookName }</td>
+            <table class="table" style="width: 800px;">
+                <tr style="font-size: 1.2em;">
+                    <td colspan="3"><b>${ book.bookName }</b></td>
                 </tr>
                 <tr>
                     <td rowspan="4"><img src="${pageContext.request.contextPath}/resources/bookcover/${book.bookCover}" alt="" class="book__cover"></td>
@@ -70,12 +95,12 @@
             </table>
         </div>
         <div>
-            <table border="1">
+            <table class="table">
                 <tr>
-                    <td>청구기호</td>
-                    <td>도서상태</td>
-                    <td>반납예정일</td>
-                    <td>예약신청</td>
+                    <td><b>청구기호</b></td>
+                    <td><b>도서상태</b></td>
+                    <td><b>반납예정일</b></td>
+                    <td><b>예약신청</b></td>
                 </tr>
                 <tr>
                     <td>${ book.callNo }</td>
@@ -89,7 +114,7 @@
                 </tr>
             </table>
         </div>
-        <div>
+        <div style="margin-bottom: 30px;">
             <c:url var="lendingB" value="/lendingBookView.do">
                 <c:param name="bookNo" value="${ book.bookNo }"></c:param>
             </c:url>
@@ -102,20 +127,20 @@
                 <c:param name="userId" value="${ sessionScope.userId }"></c:param>
             </c:url>
             <c:if test="${ book.bookState eq '대출가능' && not empty sessionScope.userId }">
-                <button type="button" onclick="location.href='${ lendingB }';" id="lending-btn">대출신청</button>
+                <button type="button" onclick="location.href='${ lendingB }';" class="len__btn" id="lending-btn">대출신청</button>
             </c:if>
             <c:if test="${ book.bookState eq '대출불가' && not empty sessionScope.userId }">
-                <button type="button" onclick="location.href='${ rsvB }';" id="reservation-btn">도서예약</button>
+                <button type="button" onclick="location.href='${ rsvB }';" class="rsv__btn" id="reservation-btn">도서예약</button>
             </c:if>
             <c:if test="${ not empty sessionScope.userId }">
-                <button type="button" onclick="location.href='${ intB }';" id="interesting-btn">관심도서담기</button>
+                <button type="button" onclick="location.href='${ intB }';" class="int__btn" id="interesting-btn">관심도서담기</button>
             </c:if>
-            <button type="button" onclick="javascript:history.back();">뒤로가기</button>
+            <button type="button" class="back__btn" onclick="javascript:history.back();">뒤로가기</button>
         </div>
         <div>
-            <table border="1">
+            <table class="table">
                 <tr>
-                    <td colspan="4">회원 서평</td>
+                    <td colspan="4"><b>회원 서평</b></td>
                 </tr>
                 <c:if test="${ empty rList }">
                     <tr>
@@ -124,10 +149,10 @@
                 </c:if>
                 <c:if test="${ not empty rList }">
                     <tr>
-                        <td>별점</td>
-                        <td>서평</td>
-                        <td>아이디</td>
-                        <td>작성일</td>
+                        <td><b>별점</b></td>
+                        <td><b>서평</b></td>
+                        <td><b>아이디</b></td>
+                        <td><b>작성일</b></td>
                     </tr>
                     <c:forEach items="${ rList }" var="review">
                         <tr>
@@ -140,7 +165,7 @@
                 </c:if>
             </table>
         </div>
-    </section>
+    </article>
 <!-- Footer -->
     <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

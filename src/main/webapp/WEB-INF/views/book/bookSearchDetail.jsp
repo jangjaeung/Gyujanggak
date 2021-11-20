@@ -19,6 +19,19 @@
     .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
     .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
     .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+
+    .search__btn {
+        width: 70px;
+		height: 40px;
+		background-color: #2e4f85;
+		color: whitesmoke;
+		border-radius: 5px;
+		outline: none;
+		box-shadow: none;
+        border: none;
+        outline: none;
+        font-weight: bolder;
+    }
 </style>
 </head>
 <body>
@@ -42,7 +55,7 @@
         </div>	
     </aside>
 <!-- Contents -->
-    <div style="margin: auto; display: grid; vertical-align: middle; justify-content: center; text-align: center">
+    <div style="margin: auto; margin-bottom: 70px; display: grid; vertical-align: middle; justify-content: center; text-align: center">
         <div style="margin-top: 50px;">
             <h1>상세검색</h1>
         </div>
@@ -51,7 +64,7 @@
         </div>
         <div style="padding-top: 60px;">
             <form action="/searchDetail.do" id="detailForm" method="get">
-                <table>
+                <table class="table" style="width: 500px;">
                     <tr>
                         <td><label for="title"><b>도서명</b></label></td>
                         <td><input type="text" id="title" name="searchValue1" value="${ search.searchValue1 }"></td>
@@ -73,7 +86,7 @@
                         <td><input type="text" id="year" name="searchValue5" value="${ search.searchValue5 }"></td>
                     </tr>
                 </table>
-                <input type="submit" value="검색" id="b_search" class="">
+                <input type="submit" value="검색" id="b_search" class="search__btn">
             </form>
         </div>
         <section>
@@ -86,7 +99,6 @@
         	</c:if>
         	<c:if test="${ !empty bList }">
 	        	<c:forEach items="${ bList }" var="book">
-                    <hr>
 		            <div class="section">
      			        <c:url var="bDetail" value="/bookDetail.do">
                     		<c:param name="bookNo" value="${ book.bookNo }"></c:param>

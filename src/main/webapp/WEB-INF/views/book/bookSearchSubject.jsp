@@ -18,6 +18,21 @@
     .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
     .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
     .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+
+    table button {
+        width: 80px;
+		height: 50px;
+        font-size: 15px;
+        font-weight: bolder;
+        margin: 10px;
+		background-color: #2e4f85;
+		color: whitesmoke;
+		border-radius: 5px;
+		outline: none;
+		box-shadow: none;
+        border: none;
+        outline: none;
+    }
 </style>
 </head>
 <body>
@@ -48,7 +63,7 @@
         <div>
             <h5><a href="/home.do">Home</a> > 자료검색 > 주제별검색</h5>
         </div>
-        <div style="padding-top: 60px;">
+        <div style="padding-top: 30px;">
             <form action="/searchSubject.do" method="get">
                 <table>
                     <tr>
@@ -68,18 +83,17 @@
                 </table>
             </form>
         </div>
-        <section>
+        <article>
             <c:if test="${ empty bList }">
-                <tr>
-                    <td>
-                        <p>검색 결과가 없습니다.</p>
-                    </td>
-                </tr>
+                <div style="margin-top: 50px; margin-bottom: 230px;">
+                    <p>주제를 선택해 주세요.</p>
+                </div>
             </c:if>
             <c:if test="${ !empty bList }">
-                <h2>"${ search.searchValue }" 검색 결과입니다.</h2>
+                <div style="margin-bottom: 50px; margin-top: 50px;">
+                    <h2>"${ search.searchValue }" 검색 결과입니다.</h2>
+                </div>
                 <c:forEach items="${ bList }" var="book">
-                    <hr>
                     <div class="section">
                         <c:url var="bDetail" value="/bookDetail.do">
                             <c:param name="bookNo" value="${ book.bookNo }"></c:param>
@@ -126,7 +140,7 @@
 		            <c:if test="${ pi.currentPage < pi.maxPage }"><a href="${ after }">다음</a></c:if>
 				</div>
             </c:if>
-        </section>
+        </article>
     </div>
 <!-- Footer -->
     <jsp:include page="../common/footer.jsp"></jsp:include>
