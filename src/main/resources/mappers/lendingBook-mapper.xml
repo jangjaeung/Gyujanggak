@@ -11,6 +11,7 @@
 		<result property="receive" column="RECEIVE"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="bookNo" column="BOOK_NO"/>
+		<result property="returnState" column="RETURN_STATE"/>
 	</resultMap>
 	<select id="selectOne" resultMap="lendingBookResultMap">
 		SELECT * FROM BOOK_LENDING WHERE BOOK_NO = #{ bookNo }
@@ -22,7 +23,7 @@
 		SELECT USER_ID FROM(SELECT USER_ID, COUNT(USER_ID), ROW_NUMBER() OVER(ORDER BY COUNT(USER_ID) DESC)RN FROM BOOK_LENDING GROUP BY USER_ID)<![CDATA[WHERE RN <= 10]]>
 	</select>
 	<insert id="insertLending" parameterType="LendingBook">
-		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{ receive }, #{ userId }, #{ bookNo })
+		INSERT INTO BOOK_LENDING VALUES(SEQ_LENDING_NO.NEXTVAL, SYSDATE, SYSDATE + 14, DEFAULT, #{ receive }, #{ userId }, #{ bookNo }, DEFAULT)
 	</insert>
 	<insert id="insertParcel">
 		INSERT INTO PARCEL VALUES(SEQ_DELIVERY_NO.NEXTVAL, SEQ_LENDING_NO.CURRVAL, #{ addr }, DEFAULT)

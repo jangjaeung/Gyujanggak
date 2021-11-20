@@ -10,6 +10,7 @@ public class LendingBook {
 	private String receive;
 	private String userId;
 	private int bookNo;
+	private String returnState;
 	
 	public LendingBook() {}
 
@@ -69,11 +70,19 @@ public class LendingBook {
 		this.bookNo = bookNo;
 	}
 
+	public String getReturnState() {
+		return returnState;
+	}
+
+	public void setReturnState(String returnState) {
+		this.returnState = returnState;
+	}
+
 	@Override
 	public String toString() {
 		return "LendingBook [lendingNo=" + lendingNo + ", lendingDate=" + lendingDate + ", returnDate=" + returnDate
 				+ ", extendCount=" + extendCount + ", receive=" + receive + ", userId=" + userId + ", bookNo=" + bookNo
-				+ "]";
+				+ ", returnState=" + returnState + "]";
 	}
-	
+
 }
