@@ -52,9 +52,6 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<br>
 	
-	<div class="container" style="margin-bottom: 15%;margin-top: 8%;margin-right: 10%;">
-		<h1 style="text-align: center; margin-bottom: 8%;">대출통계</h1>
-
 		<div class="side">
             <ul>
                <li>관 리 자</li>
@@ -65,6 +62,9 @@
                <li class="lo sideact" onclick="location.href='statisticsView.do'">대출통계</li>
             </ul>
          </div>
+	<div class="container" style="margin-bottom: 15%;margin-top: 8%;margin-right: 10%;margin-left:20%;">
+		<h1 style="text-align: center; margin-bottom: 8%;">대출통계</h1>
+
 
 
 		<c:if test="${not empty sList}">

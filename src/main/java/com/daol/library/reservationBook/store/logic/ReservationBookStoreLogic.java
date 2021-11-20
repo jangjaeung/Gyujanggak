@@ -58,6 +58,11 @@ public class ReservationBookStoreLogic implements ReservationBookStore {
 	public int deleteRsv(ReservationBook reservationBook) {
 		return sqlSession.delete("rsvBookMapper.deleteRsv", reservationBook);
 	}
+	
+	@Override
+	public int deleteRsvList(int[] nums) {
+		return sqlSession.delete("rsvBookMapper.deleteRsvList", nums);
+	}
 
 	@Override
 	public int updateRsv(int bookNo) {
