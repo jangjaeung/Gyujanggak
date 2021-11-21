@@ -68,7 +68,7 @@
     <input type="hidden" name="userId" value="${ sessionScope.userId }">
     <article style="margin: auto; margin-bottom: 70px; display: grid; vertical-align: middle; justify-content: center; text-align: center;">
         <div style="margin-top: 50px; margin-bottom: 20px;">
-            <h1 style="color: gray;">도서정보</h1>
+            <h1 style="color: gray; font-weight: bolder;">도서정보</h1>
         </div>
         <div>
             <table class="table" style="width: 800px;">

@@ -18,6 +18,10 @@
     .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
     .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
     .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+    .contents__table tr{
+        height: 10px;
+        text-align: left;
+    }
 </style>
 </head>
 <body>
@@ -43,12 +47,12 @@
 <!-- Contents -->
     <article style="margin: auto; margin-bottom: 70px; display: grid; vertical-align: middle; justify-content: center; text-align: center">
         <div style="margin-top: 50px;">
-            <h1>간략검색</h1>
+            <h1 style="font-weight: bolder;">간략검색</h1>
         </div>
         <div>
             <h5><a href="/home.do">Home</a> > 자료검색 > 간략검색</h5>
         </div>
-        <div style="padding-top: 60px;">
+        <div style="padding-top: 60px; text-align: center; margin: auto;">
             <form action="/searchSimple.do" method="get">
                 <select name="searchCondition" id="" class="search__select">
                     <option value="title" <c:if test="${ search.searchCondition eq 'title' }">selected</c:if>>도서명</option>
@@ -69,55 +73,71 @@
                 <div style="margin-bottom: 50px; margin-top: 50px;">
                     <h2>"${ search.searchValue }" 검색 결과입니다.</h2>
                 </div>
-	        	<c:forEach items="${ bList }" var="book">
-		            <div class="section">
-     			        <c:url var="bDetail" value="/bookDetail.do">
-                    		<c:param name="bookNo" value="${ book.bookNo }"></c:param>
-                    	</c:url>
-		                <div class="section1">
-                            <a href="${ bDetail }">
-                                <img src="${pageContext.request.contextPath}/resources/bookcover/${book.bookCover}" alt="" class="book__cover">
-                            </a>
-		                </div>
-		                <div class="section2">
-                            <a href="${ bDetail }">
-                                <h4>${ book.bookName }</h4>
-                            </a>
-		                    <div>저자 : ${ book.bookWriter } ｜ 발행처 : ${ book.publisher } ｜ 발행연도 : ${ book.bookYear }</div>
-		                    <div>자료상태 : ${ book.bookState }</div>
-		                </div>
-		            </div>
-	        	</c:forEach>
+                <table class="contents__table" style="width: 800px;">
+                    <c:forEach items="${ bList }" var="book">
+                        <tr>
+                            <td rowspan="5" style="padding: 40px;">
+                                <c:url var="bDetail" value="/bookDetail.do">
+                                    <c:param name="bookNo" value="${ book.bookNo }"></c:param>
+                                </c:url>
+                                    <a href="${ bDetail }">
+                                        <img src="${pageContext.request.contextPath}/resources/bookcover/${book.bookCover}" alt="" class="book__cover">
+                                    </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="${ bDetail }">
+                                    <h4>${ book.bookName }</h4>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                저자 : ${ book.bookWriter } ｜ 발행처 : ${ book.publisher } ｜ 발행연도 : ${ book.bookYear }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                자료상태 : ${ book.bookState }
+                            </td>
+                        </tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                    </c:forEach>
 <!-- 페이징 처리 -->
-				<div>
-		            <c:url var="before" value="/searchSimple.do">
-		            	<c:param name="page" value="${ pi.currentPage - 1 }"></c:param>
-		            	<c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
-	            		<c:param name="searchValue" value="${ search.searchValue }"></c:param>
-		            </c:url>
-		            <c:if test="${ pi.currentPage <= 1 }">이전</c:if>
-		            <c:if test="${ pi.currentPage > 1 }"><a href="${ before }">이전</a></c:if>
-		            <c:forEach var="p" begin="${ pi.startNavi }" end="${ pi.endNavi }">
-		            	<c:url var="pagenation" value="/searchSimple.do">
-		            		<c:param name="page" value="${ p }"></c:param>
-		            		<c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
-		            		<c:param name="searchValue" value="${ search.searchValue }"></c:param>
-		            	</c:url>
-		            	<c:if test="${ p eq pi.currentPage }">
-		                    <font color="red" size="4">[${ p }]</font>
-		            	</c:if>
-		                <c:if test="${ p ne pi.currentPage }">
-		                	<a href="${ pagenation }">${ p }</a>&nbsp;
-		                </c:if>
-		            </c:forEach>
-		            <c:url var="after" value="/searchSimple.do">
-		            	<c:param name="page" value="${ pi.currentPage + 1 }"></c:param>
-		            	<c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
-	            		<c:param name="searchValue" value="${ search.searchValue }"></c:param>
-		            </c:url>
-		            <c:if test="${ pi.currentPage >= pi.maxPage }">다음</c:if>
-		            <c:if test="${ pi.currentPage < pi.maxPage }"><a href="${ after }">다음</a></c:if>
-				</div>
+                    <tr>
+                        <td colspan="2" style="text-align: center; height: 80px;">
+                            <c:url var="before" value="/searchSimple.do">
+                                <c:param name="page" value="${ pi.currentPage - 1 }"></c:param>
+                                <c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
+                                <c:param name="searchValue" value="${ search.searchValue }"></c:param>
+                            </c:url>
+                            <c:if test="${ pi.currentPage <= 1 }">이전</c:if>
+                            <c:if test="${ pi.currentPage > 1 }"><a href="${ before }">이전</a></c:if>
+                            <c:forEach var="p" begin="${ pi.startNavi }" end="${ pi.endNavi }">
+                                <c:url var="pagenation" value="/searchSimple.do">
+                                    <c:param name="page" value="${ p }"></c:param>
+                                    <c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
+                                    <c:param name="searchValue" value="${ search.searchValue }"></c:param>
+                                </c:url>
+                                <c:if test="${ p eq pi.currentPage }">
+                                    <font color="red" size="4">[${ p }]</font>
+                                </c:if>
+                                <c:if test="${ p ne pi.currentPage }">
+                                    <a href="${ pagenation }">${ p }</a>&nbsp;
+                                </c:if>
+                            </c:forEach>
+                            <c:url var="after" value="/searchSimple.do">
+                                <c:param name="page" value="${ pi.currentPage + 1 }"></c:param>
+                                <c:param name="searchCondition" value="${ search.searchCondition }"></c:param>
+                                <c:param name="searchValue" value="${ search.searchValue }"></c:param>
+                            </c:url>
+                            <c:if test="${ pi.currentPage >= pi.maxPage }">다음</c:if>
+                            <c:if test="${ pi.currentPage < pi.maxPage }"><a href="${ after }">다음</a></c:if>
+                        </td>
+                    </tr>
+                </table>
         	</c:if>
         </div>
     </article>

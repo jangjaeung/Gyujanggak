@@ -90,7 +90,7 @@
 <!-- Contents -->
     <article class="mainContent">
         <div style="margin-top: 50px; margin-bottom: 20px;">
-            <h1 style="color: gray; text-align: center;">대출신청</h1>
+            <h1 style="color: gray; text-align: center; font-weight: bolder;">대출신청</h1>
         </div>
         <div>
             <div>

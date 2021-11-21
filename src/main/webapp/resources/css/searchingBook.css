@@ -42,22 +42,6 @@ button .sub__btt {
     width: 130px;
 }
 
-.section {
-    height: 230px;
-}
-
-.section1 {
-    display: inline-block;
-    position: relative;
-    width: 130px;
-    padding: 15px;
-}
-.section2 {
-    display: inline-block;
-    position: absolute;
-    margin-left: 50px;
-}
-
 .search__select {
     text-align: center;
     float: left;

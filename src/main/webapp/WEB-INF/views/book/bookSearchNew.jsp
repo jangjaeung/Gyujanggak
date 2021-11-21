@@ -18,6 +18,10 @@
     .side ul li:first-child{line-height:65px;font-weight:bold; font-size:2rem;background-color:#5a5eb9; color:#fff; cursor:Default;}
     .side ul .lo:hover{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
     .sideact{background-color:rgb(155,158,213); color:#fff; font-weight:bold;}
+    .contents__table tr{
+        height: 10px;
+        text-align: left;
+    }
 </style>
 </head>
 <body>
@@ -43,12 +47,12 @@
 <!-- Contents -->
     <div style="margin: auto; margin-bottom: 70px; display: grid; vertical-align: middle; justify-content: center; text-align: center">
         <div style="margin-top: 50px;">
-            <h1>신착자료</h1>
+            <h1 style="font-weight: bolder;">신착자료</h1>
         </div>
         <div>
             <h5><a href="/home.do">Home</a> > 자료검색 > 신착자료</h5>
         </div>
-        <section style="padding-top: 60px;">
+        <article style="padding-top: 60px;">
             <c:if test="${ empty bList }">
                 <tr>
                     <td>
@@ -57,28 +61,43 @@
                 </tr>
             </c:if>
             <c:if test="${ !empty bList }">
-                <h3>규장각 신착 도서</h3>
-                <c:forEach items="${ bList }" var="book">
-                    <div class="section">
-                        <c:url var="bDetail" value="/bookDetail.do">
-                            <c:param name="bookNo" value="${ book.bookNo }"></c:param>
-                        </c:url>
-                        <div class="section1">
-                            <a href="${ bDetail }">
-                                <img src="${pageContext.request.contextPath}/resources/bookcover/${book.bookCover}" alt="" class="book__cover">
-                            </a>
-                        </div>
-                        <div class="section2">
-                            <a href="${ bDetail }">
-                                <h4>${ book.bookName }</h4>
-                            </a>
-                            <div>저자 : ${ book.bookWriter } ｜ 발행처 : ${ book.publisher } ｜ 발행연도 : ${ book.bookYear }</div>
-                            <div>자료상태 : ${ book.bookState }</div>
-                        </div>
-                    </div>
-                </c:forEach>
+                <h3 style="color: gray;">규장각 신착 도서</h3>
+                <table class="contents__table" style="width: 800px;">
+                    <c:forEach items="${ bList }" var="book" varStatus="status">
+                        <tr><td rowspan="5">${ status.count }</td></tr>
+                        <tr>
+                            <td rowspan="5" style="padding: 40px;">
+                                <c:url var="bDetail" value="/bookDetail.do">
+                                    <c:param name="bookNo" value="${ book.bookNo }"></c:param>
+                                </c:url>
+                                    <a href="${ bDetail }">
+                                        <img src="${pageContext.request.contextPath}/resources/bookcover/${book.bookCover}" alt="" class="book__cover">
+                                    </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="${ bDetail }">
+                                    <h4>${ book.bookName }</h4>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                저자 : ${ book.bookWriter } ｜ 발행처 : ${ book.publisher } ｜ 발행연도 : ${ book.bookYear }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                자료상태 : ${ book.bookState }
+                            </td>
+                        </tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                    </c:forEach>
+                </table>
             </c:if>
-        </section>
+        </article>
     </div>
 <!-- Footer -->
     <jsp:include page="../common/footer.jsp"></jsp:include>
