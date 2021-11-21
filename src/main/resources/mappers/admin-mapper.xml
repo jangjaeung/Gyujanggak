@@ -91,6 +91,7 @@
 		<result property="receive" column="RECEIVE" />
 		<result property="userId" column="USER_ID" />
 		<result property="bookNo" column="BOOK_NO" />
+		<result property="returnState" column="RETURN_STATE"/>
 		<collection property="book" resultMap="bookResultMap" />
 	</resultMap>
 	<!-- 유저리스트 페이징 -->
@@ -157,7 +158,7 @@
 	<!-- 대출 이력 조회 -->
 	<select id="selectAllLendingBook"
 		resultMap="lendingBookResultMap">
-	    SELECT  L.LENDING_NO, B.BOOK_NAME , L.LENDING_DATE, L.RETURN_DATE, B.BOOK_STATE, B.BOOK_NAME
+	    SELECT  L.LENDING_NO, B.BOOK_NAME , L.LENDING_DATE, L.RETURN_DATE, L.RETURN_STATE, B.BOOK_STATE, B.BOOK_NAME 
 		FROM BOOK_LENDING L
 		INNER JOIN BOOK B
 		ON L.BOOK_NO = B.BOOK_NO

@@ -140,15 +140,24 @@
 	    		<td>${lending.lendingDate }</td>
 	    		<td>${lending.returnDate }</td>
 	    		<td>
-					<c:if test="${lending.returnDate eq null}">	
-						대출중
-					</c:if>
-<%-- 					<c:if test="${lendingBook.returnDate ne null}">	
-						연체
-					</c:if> --%>
-					<c:if test="${lending.returnDate ne null}">	
-						반납
-					</c:if>	 		
+	    			<jsp:useBean id="today" class="java.util.Date" />
+					<fmt:formatDate var="now" value="${today}" pattern="yyyyMMdd" />
+					<fmt:formatDate var="bdate" value="${lending.returnDate}" pattern="yyyyMMdd" />
+					
+					<c:if test="${lending.returnState eq 'Y'}">	
+							반납
+					</c:if>	 	
+								
+					<c:if test="${lending.returnState eq 'N'}">	
+						<c:if test="${bdate- now < 0}">	
+							연체
+						</c:if> 
+					
+						<c:if test="${bdate- now >= 0}">
+							대출중
+						</c:if> 
+					</c:if>	
+ 	
 	    		</td>
 	    	</tr>
 		    </c:forEach>
@@ -164,6 +173,7 @@
 				<td>
 					<c:url var="before" value="userDetail.do">
 						<c:param name="page" value="${pi.currentPage -1 }"></c:param>
+						<c:param name="userNo" value="${member.userNo}"></c:param>
 					</c:url>
 					<c:if test="${pi.currentPage <= 1 }">
 						[이전]
@@ -174,6 +184,7 @@
 					<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
 						<c:url var="pagination" value="userDetail.do">
 							<c:param name="page" value="${p }"></c:param>
+							<c:param name="userNo" value="${member.userNo}"></c:param>
 						</c:url>
 						<c:if test="${p eq pi.currentPage }">
 							[${p }]
@@ -184,6 +195,7 @@
 					</c:forEach>
 						<c:url var="after" value="userDetail.do">
 							<c:param name="page" value="${pi.currentPage +1 }"></c:param>
+							<c:param name="userNo" value="${member.userNo}"></c:param>
 						</c:url>
 					<c:if test="${pi.currentPage >= pi.maxPage }">
 						[다음]

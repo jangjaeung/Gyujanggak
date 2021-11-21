@@ -84,8 +84,8 @@ public class AdminServiceImpl implements AdminService {
 
 	// 대출 카운트
 	@Override
-	public int getLendingBookListCount() {
-		int totalCount = store.selectLendingBookListCount();
+	public int getLendingBookListCount(String userId) {
+		int totalCount = store.selectLendingBookListCount(userId);
 		return totalCount;
 	}
 	

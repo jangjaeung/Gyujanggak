@@ -121,11 +121,12 @@ public class AdminController {
 		}
 		
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = service.getLendingBookListCount();
+		int totalCount = service.getLendingBookListCount(member.getUserId());
+		System.out.println(totalCount);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<LendingBook> lList = service.printAllLendingBook(pi, member.getUserId());
-		
-		
+
+		System.out.println(pi.toString());
 		if(!lList.isEmpty()) {
 			mv.addObject("lList", lList);
 			mv.addObject("pi", pi);
