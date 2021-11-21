@@ -1,4 +1,4 @@
-$("#interesting-btn").click(function(){
+/* $("#interesting-btn").click(function(){
     let bookNo = '${ book.bookNo }'
     let userId = '${ sessionScope.userId }'
     $.ajax({
@@ -42,4 +42,4 @@ $("#reservation-btn").click(function(){
             alert("Ajax 통신 오류");
         }
     });
-});
+}); */

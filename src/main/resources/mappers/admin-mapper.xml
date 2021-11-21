@@ -289,10 +289,9 @@
 		UPDATE USERS SET LENDING_COPY =
 		LENDING_COPY + 1 WHERE USER_ID = #{userId}
 	</update>
-	<!-- 반납일 업데이트 -->
-	<update id="returndateUpdate">
-		UPDATE BOOK_LENDING SET
-		RETURN_DATE = SYSDATE WHERE LENDING_NO = #{lendingNo}
+	<!-- 반납일, 반납여부 업데이트 -->	
+	<update id="returndateUpdate" >
+		UPDATE BOOK_LENDING SET RETURN_DATE = SYSDATE, RETURN_STATE = 'Y' WHERE LENDING_NO = #{lendingNo}
 	</update>
 	<!-- 희망도서 업데이트 -->
 	<update id="wishbookUpdate">
