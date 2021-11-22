@@ -133,12 +133,5 @@ public class TasteController {
 	}
 
 	
-	/** 전공별 도서 추천 */
-	/*
-	 * @RequestMapping(value="home.do", method=RequestMethod.GET) public
-	 * ModelAndView recommendBookListByMajor(ModelAndView mv, HttpSession session) {
-	 * 
-	 * return mv; }
-	 */
-	
+
 }

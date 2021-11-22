@@ -33,7 +33,7 @@
 		SELECT * FROM USERS WHERE USER_ID = #{userId}
 	</select>
 	<select id="checkPwdDup" parameterType="Member" resultType="_int">
-		<!-- 결과값이 int로 나와야함 -->
+		<!-- 결과값 int -->
 		SELECT COUNT(*) FROM USERS WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd }
 	</select>
 	<update id="updateMember" parameterType="Member">
@@ -166,7 +166,6 @@
 	<select id="selectReadingroomHistory" resultMap="rRoomResultMap">
 		SELECT * FROM READINGROOM WHERE USER_ID = #{userId} ORDER BY R_RESERVATION_DATE DESC
  	</select>
- 	<!-- 열람실 예약 취소 -->
 	<delete id="deleteReadingRoom" parameterType="_int">
 		DELETE FROM READINGROOM WHERE R_RESERVATION_NO = #{rReservationNo}
 	</delete>
@@ -219,7 +218,4 @@
 	<update id="updateQna" parameterType="Qna">
 		UPDATE QNA SET QNA_TITLE = #{qnaTitle}, QNA_CONTENT = #{qnaContent} WHERE QNA_NO = #{qnaNo}
 	</update>
-	<!-- 문의사항끝 -->
-	
-	
 </mapper>

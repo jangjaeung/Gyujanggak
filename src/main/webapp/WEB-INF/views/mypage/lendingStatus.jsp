@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> <!-- 리스트 갯수 -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,7 +184,6 @@ console.log(asideH);
 									<fmt:formatDate pattern = "yyyyMMdd" value="${lending.lendingBook.returnDate}" var="returnDate"/>
 									<fmt:parseNumber value="${returnDate}" integerOnly="true" var="returnDate" scope="page"/> 
 									<c:set value="${returnDate - nowTime }" var="dateDiff"/>
-									<%-- <c:out value="${dateDiff }"/> --%>
 									<c:if test="${lending.lendingBook.extendCount eq 0}">반납예정일 : ${lending.lendingBook.returnDate}<c:if test="${dateDiff < 0}">&nbsp;&nbsp;<p style="color :red;">연체중</p></c:if></c:if>
 									<c:if test="${lending.lendingBook.extendCount eq 1}">반납예정일 : ${lending.lendingBook.returnDate} (연장 1회)<c:if test="${dateDiff < 0}"><p style="color :red;">연체중</p></c:if></c:if>
 								</c:if>
@@ -301,9 +300,8 @@ $(document).ready(function(){
 	$('.starRev span').click(function(){
 		 $(this).parent().children('span').removeClass('on');
 		 $(this).addClass('on').prevAll('span').addClass('on');
-// 		 var rating = $(this).attr('data-value');
 		 var rating = $(this).data("value");
-		 $(this).siblings("input[type=hidden]").val(rating); //히든 인풋에 값 저장
+		 $(this).siblings("input[type=hidden]").val(rating); 
 		 console.log(rating);
 		 return false;
 	});
@@ -319,10 +317,7 @@ function reviewDetail(obj){
 	$(obj).parent().parent().next().next().show();
 	$(obj).hide();
 
-
-	/* var rating = $("#reviewdStar").val(); */
  	var rating = $(obj).parent().parent().next().next().children($(".starRev")).children(("input[type=hidden]")).val();
-	console.log(rating);
 
 	$(obj).parent().parent().next().next().children($(".starRev")).find("span").each(function(index, item) {
 		if($(item).data("value") <= rating) {
@@ -356,9 +351,6 @@ function registerReview(obj){
  	var bookNo = $(obj).prev().val();
 	var reviewContents = $(obj).parent().parent().prev().val();
 	var reviewStar = $(obj).parent().siblings("input[type=hidden]").val(); 
-	console.log(bookNo);
-	console.log(reviewContents);
-	console.log(reviewStar); 
 
 	$.ajax({
 		url : "registerReview.do", 
@@ -376,7 +368,6 @@ function registerReview(obj){
 			}
 		},
 		error : function(request,status,error){
-			/* alert("AJAX 통신 오류"); */
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	})
@@ -387,9 +378,6 @@ function modifyReview(obj){
 	var bookNo = $(obj).prev().val();
 	var reviewContents = $(obj).parent().parent().prev().val();
 	var reviewStar = $(obj).parent().siblings("input[type=hidden]").val(); 
-	console.log(bookNo);
-	console.log(reviewContents);
-	console.log(reviewStar);
 	$.ajax({
 		url : "modifyReview.do", 
 		type : "post",
@@ -407,7 +395,6 @@ function modifyReview(obj){
 			}
 		},
 		error : function(request,status,error){
-			/* alert("AJAX 통신 오류"); */
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	})
@@ -416,7 +403,6 @@ function modifyReview(obj){
 //삭제
 function deleteReview(obj){
 	var bookNo = $(obj).prev().prev().val();
-	console.log(bookNo);
 	$.ajax({
 		url : "deleteReview.do", 
 		type : "post",
@@ -432,7 +418,6 @@ function deleteReview(obj){
 			}
 		},
 		error : function(request,status,error){
-			/* alert("AJAX 통신 오류"); */
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	})
@@ -441,7 +426,6 @@ function deleteReview(obj){
 //대출연장
 function extendLending(obj){
 	var lendingNo = $(obj).next().val();
-	console.log(lendingNo);
 	$.ajax({
 		url : "extendLending.do", 
 		type : "post",
@@ -457,7 +441,6 @@ function extendLending(obj){
 			}
 		},
 		error : function(request,status,error){
-			/* alert("AJAX 통신 오류"); */
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	})
