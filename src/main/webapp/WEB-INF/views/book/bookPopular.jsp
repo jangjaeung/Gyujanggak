@@ -89,7 +89,7 @@
                         </tr>
                         <tr>
                             <td>
-                                자료상태 : ${ book.bookState }
+                                자료상태 : ${ book.bookState } ｜ 대출 횟수 : ${ book.lendingCount }
                             </td>
                         </tr>
                         <tr><td></td></tr>
