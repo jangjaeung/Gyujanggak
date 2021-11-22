@@ -106,7 +106,7 @@
 
 		<hr>
 
-		<form action="booksEnroll.do" method="post"
+		<form action="bookEnroll.do" method="post"
 			enctype="multipart/form-data">
 			<table class="table table-striped"
 				style="width: 50%; position: relative; left: 61px; margin-top: 10%">

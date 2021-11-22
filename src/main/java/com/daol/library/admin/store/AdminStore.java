@@ -102,4 +102,6 @@ public interface AdminStore {
 	public List<Statistics> selectAllstatis();
 	// 회원 이메일 조회
 	public String selectUserE(String usersId);
+	// 책 등록
+	public int insertbooks(Book book);
 }

@@ -107,4 +107,6 @@ public interface AdminService {
 	public String selectEmail(String usersId);
 	// 메일 보내기
 	public void mailSend(String userEmail);
+	// 도서 등록
+	public int enrollBooks(Book book);
 }

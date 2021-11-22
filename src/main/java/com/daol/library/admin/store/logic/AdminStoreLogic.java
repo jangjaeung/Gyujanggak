@@ -320,4 +320,10 @@ public class AdminStoreLogic implements AdminStore{
 		return userEmail;
 	}
 
+	@Override
+	public int insertbooks(Book book) {
+		int result = sqlSession.insert("adminMapper.insertBook", book);
+		return result;
+	}
+
 }

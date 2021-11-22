@@ -307,12 +307,15 @@
 		WHERE c.BOOK_NO = d.BOOK_NO GROUP BY d.BOOK_SUBJECT
 		order by book_subject
 	</select>
-
 	<!-- 장서 등록 -->
 	<insert id="insertBook" parameterType="book">
 		INSERT INTO BOOK
 		VALUES(SEQ_BOOKNUM.NEXTVAL,#{bookName},#{bookWriter},#{bookSubject},#{publisher},#{bookYear},#{callNo},#{isbn},#{bookCover},#{theme},DEFAULT,DEFAULT,DEFAULT)
 	</insert>
+<!-- 	장서 수정 -->
+	<update id="updateBook">
+		UPDATE BOOK SET BOOK_NAME = #{bookName},BOOK_WRITER = #{bookWriter},BOOK_SUBJECT = #{bookSubject},PUBLISHER = #{publisher},BOOK_YEAR = #{bookYear}, CALL_NO = #{callNo},ISBN = #{isbn},BOOK_COVER = #{bookCover},THEME = #{theme} WHERE BOOK_NO = #{bookNo}
+	</update>
 	<!-- 장서 삭제 -->
 	<delete id="deleteBook" parameterType="java.util.ArrayList">
 		DELETE BOOK WHERE BOOK_NO IN (

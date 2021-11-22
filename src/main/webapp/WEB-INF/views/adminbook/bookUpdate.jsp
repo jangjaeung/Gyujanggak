@@ -59,6 +59,7 @@
 		<hr>
 		<form action="booksEnroll.do" method="post"
 			enctype="multipart/form-data">
+			<input type="hidden" value="${book.bookNo }" name="bookNo">
 			<table class="table table-striped"
 				style="width: 50%; position: relative; left: 61px; margin-top: 10%">
 				<thead>
