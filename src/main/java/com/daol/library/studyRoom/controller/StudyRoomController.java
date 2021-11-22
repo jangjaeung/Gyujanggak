@@ -48,7 +48,7 @@ public class StudyRoomController {
 	String rsvDate = studyRoom.getsReservationDate();
 	List<StudyRoom> result = service.selectTimeStatus(rsvDate); 
 	Gson gson = new Gson(); 
-	String rsvList = gson.toJson(result); System.out.println(rsvList); 
+	String rsvList = gson.toJson(result);
 	return rsvList; 
 	}
 	 

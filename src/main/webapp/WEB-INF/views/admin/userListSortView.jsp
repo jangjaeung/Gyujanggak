@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>전체 회원 목록</title>
+<title>승인 대기 회원 목록</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="resources/admin/userList.css" rel="stylesheet" />
 <link rel="stylesheet"
@@ -16,11 +16,6 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<c:if test="${message ne null }">
-		<c:out value="<script>alert('${message}');</script>" escapeXml="false"/>
-		<c:out value="<script>location.href='userListView.do'</script>" escapeXml="false"/>
-	</c:if>
-	
 	<c:if test="${userType ne '관리자' }">
 		<section>
 			<article class="mainContent" id="beforeLogin">
@@ -48,25 +43,9 @@
 			</div>
 			<div class="Membership_MainContent">
 				<p class="mainTitle">회원 관리</p>
-				<div class="userSearchBar">
-					<form action="userSearch.do" method="get">
-						<select name="searchCondition">
-							<option value="all"
-								<c:if test="${search.searchCondition == 'all' }">selected</c:if>>전체</option>
-							<option value="userName"
-								<c:if test="${search.searchCondition == 'userName' }">selected</c:if>>이름</option>
-							<option value="userNo"
-								<c:if test="${search.searchCondition == 'userNo' }">selected</c:if>>회원번호</option>
-							<option value="userType"
-								<c:if test="${search.searchCondition == 'userType' }">selected</c:if>>회원분류</option>
-						</select> <input type="text" name="searchValue"
-							value="${search.searchValue }"> <input type="submit"
-							value="검색">
-					</form>
-				</div>
 				<span class="waitingSort"> <i class="fas fa-sort-alpha-down"></i>
 				</span>
-				<table class="table table-striped">
+				<table class="table table-striped" style="margin-top: 75px;">
 					<thead>
 						<tr>
 							<td></td>
@@ -154,8 +133,6 @@
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 <script>
-
-
 	$('.deleteCheck').on('click', function() {
 		$('.alert_div').css('display', 'block');
 	});
@@ -185,7 +162,7 @@
 		});
 	});
 	$('.waitingSort').on('click', function() {
-		location.href = "waitingSort.do";
+		location.href = "userListView.do";
 	});
 </script>
 </html>

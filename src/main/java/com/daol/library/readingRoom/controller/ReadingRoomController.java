@@ -38,7 +38,6 @@ public class ReadingRoomController {
 		List<ReadingRoom> result = service.printAllReadingRoom(strNowDate);
 		Gson gson = new Gson();
 		String rsvList = gson.toJson(result);
-		System.out.println(rsvList); // 예약 목록
 		return rsvList;
 	}
 	
@@ -50,7 +49,6 @@ public class ReadingRoomController {
 		List<ReadingRoom> result = service.selectSeatStatus(seatNo);
 		Gson gson = new Gson();
 		String rsvList = gson.toJson(result);
-		System.out.println(rsvList); // 예약 목록
 		return rsvList;
 	}
 	

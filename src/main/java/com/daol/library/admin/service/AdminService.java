@@ -32,12 +32,19 @@ public interface AdminService {
 	public int userPassIssued(Member member);
 	// 이용 기간 설정
 	public int userEndDateUpdate(Member member);
+	// 이용증 발급 회원 이메일
+	public Member getUserEmail(Member member);
 	// 이용 승인 정렬
 	public List<Member> waitingSort(Member member);
+	// 이용 승인 대기 유저 카운트
+	public int getWaitUserListCount();
+	// 이용 승인 회원 목록
+	public List<Member> printWaitMember(PageInfo pi);
 	// 대출 이력 조회
 	List<LendingBook> printAllLendingBook(PageInfo pi, String userId);
 	// 대출 이력 카운트
 	public int getLendingBookListCount(String userId);
+	
 	// 장서 카운트
 	public int getListCount();
 	// 장서 리스트

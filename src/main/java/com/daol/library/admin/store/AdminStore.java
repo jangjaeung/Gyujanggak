@@ -32,12 +32,20 @@ public interface AdminStore {
 	public int userPassIssued(Member member);
 	// 이용 기간 설정
 	public int userEndDateUpdate(Member member);
+	// 이용증 발급 회원 이메일
+	public Member getUserEmail(Member member);
 	// 이용 승인 정렬
 	public List<Member> waitingSort(Member member);
+	// 이용 승인 대기 유저 카운트 
+	public int selectWaitUserListCount();
+	// 이용 승인 회원 목록
+	public List<Member> selectWaitMember(PageInfo pi);
 	// 대출이력 조회
 	public List<LendingBook> selectAllLendingBook(PageInfo pi, String userId);
 	// 대출 카운트
 	public int selectLendingBookListCount(String userId);
+	
+	
 	// 장서 카운트
 	public int selectListCount();
 	// 장서 리스트
@@ -100,4 +108,5 @@ public interface AdminStore {
 	public Book selectBookInfo(String bookNo);
 	// 대출 통계
 	public List<Statistics> selectAllstatis();
+
 }
