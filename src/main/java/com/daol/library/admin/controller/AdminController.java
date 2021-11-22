@@ -352,34 +352,6 @@ public class AdminController {
 		}
 		return mv;
 	}
-
-	// 희망 도서 등록 페이지
-	@RequestMapping(value = "wishbookEnroll.do", method = RequestMethod.GET)
-	public ModelAndView wishbookEnrollView(ModelAndView mv, @RequestParam(value = "bookName") String bookName,
-			@RequestParam(value = "bookWriter") String bookWriter, @RequestParam(value = "publisher") String publisher,
-			@RequestParam(value = "applyNo") int applyNo, HttpServletRequest request) {
-		mv.addObject("bookName", bookName);
-		mv.addObject("bookWriter", bookWriter);
-		mv.addObject("publisher", publisher);
-		mv.addObject("applyNo", applyNo);
-		mv.setViewName("adminbook/wishbookEnroll");
-
-		return mv;
-	}
-
-	// 희망 도서 등록
-	@RequestMapping(value = "wishbookEnr.do", method = RequestMethod.POST)
-	public String wishbookEnroll(@ModelAttribute Book book, @RequestParam(value = "applyNum") int applyNo,
-			@RequestParam(value = "bookCoverFile", required = false) MultipartFile bookCover,
-			HttpServletRequest request, Model model) {
-		if (!bookCover.getOriginalFilename().equals("")) {
-			// uploadFile이 비어있지 않으면
-			String filePath = saveFile(bookCover, request);
-			if (filePath != null) {
-				book.setBookCover(bookCover.getOriginalFilename());
-			}
-			return mv;
-	 }
 	 
 	 // 희망 도서 등록 페이지
 	 @RequestMapping(value="wishbookEnroll.do", method=RequestMethod.GET)
