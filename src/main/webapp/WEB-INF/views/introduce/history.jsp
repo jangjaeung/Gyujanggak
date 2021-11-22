@@ -54,7 +54,7 @@
               <li>
                 <dl>
                   <dt>2019.02</dt>
-                  <dd>다올학술정보관 성균인의 서재 오픈, Learning Commons 설치</dd>
+                  <dd>다올학술정보관 다올인의 서재 오픈, Learning Commons 설치</dd>
                 </dl>
                 <dl>
                   <dt>2019.02</dt>
