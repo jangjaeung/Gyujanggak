@@ -96,4 +96,6 @@ public interface AdminStore {
 	public Book selectBookInfo(String bookNo);
 	// 대출 통계
 	public List<Statistics> selectAllstatis();
+	// 회원 이메일 조회
+	public String selectUserE(String usersId);
 }

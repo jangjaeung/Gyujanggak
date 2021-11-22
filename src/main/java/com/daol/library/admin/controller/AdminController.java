@@ -335,11 +335,13 @@ public class AdminController {
 	 // 희망 도서 등록 페이지
 	 @RequestMapping(value="wishbookEnroll.do", method=RequestMethod.GET)
 	 public ModelAndView wishbookEnrollView(ModelAndView mv, @RequestParam(value="bookName")String bookName
-			 , @RequestParam(value="bookWriter")String bookWriter, @RequestParam(value="publisher")String publisher,@RequestParam(value="applyNo")int applyNo,HttpServletRequest request) {
+			 , @RequestParam(value="bookWriter")String bookWriter, @RequestParam(value="publisher")String publisher
+			 ,@RequestParam(value="applyNo")int applyNo,@RequestParam(value="userId") String userId, HttpServletRequest request) {
 				mv.addObject("bookName", bookName);
 				mv.addObject("bookWriter",bookWriter);
 				mv.addObject("publisher",publisher);
 				mv.addObject("applyNo",applyNo);
+				mv.addObject("userId", userId);
 				mv.setViewName("adminbook/wishbookEnroll");
 			
 				return mv;
@@ -347,7 +349,8 @@ public class AdminController {
 	 // 희망 도서 등록
 	 @RequestMapping(value="wishbookEnr.do", method=RequestMethod.POST)
 	 public String wishbookEnroll(@ModelAttribute Book book,@RequestParam(value="applyNum")int applyNo
-			 , @RequestParam(value="bookCoverFile", required=false)MultipartFile bookCover, HttpServletRequest request,Model model) {
+			 , @RequestParam(value="bookCoverFile", required=false)MultipartFile bookCover
+			 , @RequestParam(value="userId") String usersId, HttpServletRequest request,Model model) {
 		 	if (!bookCover.getOriginalFilename().equals("")) {
 				// uploadFile이 비어있지 않으면
 				String filePath = saveFile(bookCover, request);
@@ -355,10 +358,13 @@ public class AdminController {
 					book.setBookCover(bookCover.getOriginalFilename());
 				}
 			}
+		 String userEmail = service.selectEmail(usersId);
 		 int result = service.enrollBook(book);
 		 if(result > 0) {
 			 service.updateWishBook(applyNo);
-			 return "redirect:wishbookList.do";
+			 service.mailSend(userEmail);
+			 model.addAttribute("msg","메일 발송이 완료되었습니다!");
+			 return "adminbook/mailSend";
 		 }else {
 			 model.addAttribute("msg","희망 도서 등록 실패");
 			 return "common/errorPage";

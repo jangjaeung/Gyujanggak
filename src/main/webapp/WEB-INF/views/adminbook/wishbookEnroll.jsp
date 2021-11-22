@@ -60,6 +60,7 @@
 		<form action="wishbookEnr.do" method="post"
 			enctype="multipart/form-data">
 			<input type="hidden" value="${applyNo }" name="applyNum">
+			<input type="hidden" value="${userId }" name="userId">
 			<table class="table table-striped"
 				style="width: 50%; position: relative; left: 61px; margin-top: 10%">
 				<thead>

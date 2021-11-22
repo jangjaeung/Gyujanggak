@@ -135,7 +135,7 @@
 							<td>${wishbook.applyDate }</td>
 							<td>${wishbook.applyStatus }</td>
 							<td><a
-								href="wishbookEnroll.do?bookName=${wishbook.bookName}&bookWriter=${wishbook.bookWriter}&publisher=${wishbook.publisher}&applyNo=${wishbook.applyNo}">등록</a>
+								href="wishbookEnroll.do?bookName=${wishbook.bookName}&bookWriter=${wishbook.bookWriter}&publisher=${wishbook.publisher}&applyNo=${wishbook.applyNo}&userId=${wishbook.userId}">등록</a>
 							</td>
 						</tr>
 

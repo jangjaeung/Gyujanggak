@@ -224,6 +224,10 @@
 		SELECT COUNT(*) FROM
 		WISH_BOOK
 	</select>
+	<!-- 희망도서 유저 이메일 -->
+	<select id="selectEmail" resultType="string">
+		SELECT USER_EMAIL FROM USERS WHERE USER_ID = #{usersId}
+	</select>
 	<!-- 대출 현황 count -->
 	<select id="selectStatusListCount" resultType="_int">
 		SELECT COUNT(*)

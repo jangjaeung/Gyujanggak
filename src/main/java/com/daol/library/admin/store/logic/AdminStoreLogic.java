@@ -299,4 +299,10 @@ public class AdminStoreLogic implements AdminStore{
 		return sList;
 	}
 
+	@Override
+	public String selectUserE(String usersId) {
+		String userEmail = sqlSession.selectOne("adminMapper.selectEmail", usersId);
+		return userEmail;
+	}
+
 }
