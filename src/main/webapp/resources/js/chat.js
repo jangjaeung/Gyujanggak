@@ -2,7 +2,6 @@
 //chat bot
 $(function() {
 	  var INDEX = 0;
-	  var clickIndex = 0;
 	  $("#chat-submit").click(function(e) {
 	    e.preventDefault();
 	    var msg = $("#chat-input").val(); 
@@ -10,16 +9,6 @@ $(function() {
 	      return false;
 	    }
 	    generate_message(msg, 'self');
-	    var buttons = [
-	        {
-	          name: 'Existing User',
-	          value: 'existing'
-	        },
-	        {
-	          name: 'New User',
-	          value: 'new'
-	        }
-	      ];
 	  })
 	 
 	  function generate_message(msg, type) {
@@ -37,7 +26,7 @@ $(function() {
 	      htr += "          <div class=\"cm-msg-text\">";
 	      htr += "<span class=\"main-msg\">안녕하세요 규장각 입니다</span><br>"
     	  htr += "<span class=\"main-msg\">버튼을 클릭 하시거나 키워드를 입력해 주세요!</span>"
-    	  htr += "<ul><li class=\"site-info\">사이트 이용안내</li><li class=\"site-info-resend\">대출 * 반납</li><li class=\"site-ifno-room\">이용시설 안내</li><li class=\"quest\">문의하기</li></ul>"
+    	  htr += "<ul><li class=\"site\">사이트 이용안내</li><li class=\"site\">대출 * 반납</li><li class=\"site\">이용시설 안내</li><li class=\"site\">문의하기</li></ul>"
 	      htr += "          <\/div>";
 	    }else if(msg == '대출' || msg == '반납' || msg == '대출 * 반납'){
 		  htr += "          <div class=\"cm-msg-text\">";
@@ -109,26 +98,11 @@ $(function() {
 });
 ///////////////////////////////////////////////////////
 
-$(document).on("click", ".site-info",function(e){
-//	document.getElementById("chat-input").value = this.innerHTML;
+$(document).on("click", ".site",function(e){
 	$("#chat-input").val(this.innerHTML);
 	  $("#chat-submit").click();
 });
-$(document).on("click", ".site-info-resend",function(e){
-//	document.getElementById("chat-input").value = this.innerHTML;
-	$("#chat-input").val(this.innerHTML);
-	$("#chat-submit").click();
-});
-$(document).on("click", ".site-ifno-room",function(e){
-//	document.getElementById("chat-input").value = this.innerHTML;
-	$("#chat-input").val(this.innerHTML);
-	$("#chat-submit").click();
-});
-$(document).on("click", ".quest",function(e){
-//	document.getElementById("chat-input").value = this.innerHTML;
-	$("#chat-input").val(this.innerHTML);
-	$("#chat-submit").click();
-});
+
 	
 /////////////////////////////////////////////
   
