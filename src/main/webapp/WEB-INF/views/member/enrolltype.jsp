@@ -1,22 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>회원 구분</title>
-    <link rel="stylesheet" href="style.css">
-   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/loginPage/css/login.css"/>
-  </head>
-  <body>
-    <div class="bg-img">
-     <div class="content">
-        <a href="enrollView.do" style="color: blanchedalmond;margin-right: 11%;">일반 회원</a>
-        <a href="studentView.do" style="color: paleturquoise;">학생 회원</a>
-      </div>
-    </div>
-    <script>
+<head>
+<meta charset="utf-8">
+<title>회원 구분</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/loginPage/css/login.css" />
+</head>
+<body>
+	<div class="bg-img">
+		<div class="content">
+			<a href="enrollView.do"
+				style="color: blanchedalmond; margin-right: 11%;">일반 회원</a> <a
+				href="studentView.do" style="color: paleturquoise;">학생 회원</a>
+		</div>
+	</div>
+	<script>
       const pass_field = document.querySelector('.pass-key');
       const showBtn = document.querySelector('.show');
       showBtn.addEventListener('click', function(){
@@ -31,5 +33,5 @@
        }
       });
     </script>
-  </body>
+</body>
 </html>

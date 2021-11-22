@@ -25,4 +25,6 @@ public interface MemberStore {
 
 	public int selectIdCheck(String userId);
 
+	public int insertStudent(Member member);
+
 }

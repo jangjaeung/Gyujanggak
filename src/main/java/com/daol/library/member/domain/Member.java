@@ -26,7 +26,7 @@ public class Member {
 	private String surveyCheck;
 	private int lendingCopy;
 	private ReservationBook reservationBook;
-	
+
 	public Member() {
 		super();
 	}
