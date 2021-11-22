@@ -130,7 +130,6 @@
 			</select>
 		</div>
 		<div>
-			<%-- <c:if test="${loginUser.userId eq null }"> --%>
 			<c:if test="${userId eq null }">
 				<button onclick="showLoginPage();" class="rsv_btn">로그인</button>
 			</c:if>

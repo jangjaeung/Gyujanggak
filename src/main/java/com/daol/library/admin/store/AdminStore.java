@@ -21,7 +21,9 @@ public interface AdminStore {
 	// 회원 카운트
 	public int selectUserListCount();
 	// 회원 검색
-	public List<Member> selectSearchUser(Search search);
+	public List<Member> selectSearchUser(Search search, PageInfo pi);
+	// 회원 검색 페이징
+	public int selectSearchUserCount(Search search);
 	// 선택한 회원 삭제
 	public int deleteUser(int[] nums);
 	// 회원 상세 보기
@@ -31,7 +33,7 @@ public interface AdminStore {
 	// 이용 기간 설정
 	public int userEndDateUpdate(Member member);
 	// 이용 승인 정렬
-	public int waitingSort(Member member);
+	public List<Member> waitingSort(Member member);
 	// 대출이력 조회
 	public List<LendingBook> selectAllLendingBook(PageInfo pi, String userId);
 	// 대출 카운트

@@ -45,10 +45,20 @@ public class AdminStoreLogic implements AdminStore{
 	
 	// 회원 검색
 	@Override
-	public List<Member> selectSearchUser(Search search) {
-		List<Member> searchList = sqlSession.selectList("adminMapper.selectSearchUser", search);
+	public List<Member> selectSearchUser(Search search, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Member> searchList = sqlSession.selectList("adminMapper.selectSearchUser", search, rowBounds);
 		return searchList;
 	}
+	
+	// 회원 검색 카운트
+	@Override
+	public int selectSearchUserCount(Search search) {
+		int count = sqlSession.selectOne("adminMapper.selectSearchUserCount", search);
+		return count;
+	}
+	
 
 	// 선택한 회원 삭제
 	@Override
@@ -80,8 +90,8 @@ public class AdminStoreLogic implements AdminStore{
 	
 	// 이용 승인 정렬
 	@Override
-	public int waitingSort(Member member) {
-		int result = sqlSession.update("adminMapper.waitingSort",member);
+	public List<Member> waitingSort(Member member) {
+		List<Member> result = sqlSession.selectList("adminMapper.waitingSort",member);
 		return result;
 	}
 

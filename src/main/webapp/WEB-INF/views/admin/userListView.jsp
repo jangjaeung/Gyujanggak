@@ -170,7 +170,6 @@
 					"userNo" : checkArr,
 				},
 				success : function(data){
-// 						console.log(data);
 					if(data == "success"){
 						location.href = "userListView.do";
 					}else{
@@ -179,28 +178,8 @@
 				}
 			});
 		});
-/* 		var userNo = '${member.userNo}'
-		var payDate = '${member.payDate}';
-		var passCheck= '${member.passCheck}'; */
 		$('.waitingSort').on('click', function(){
-			$.ajax({
-				url : 'waitingSort.do',
-				type : 'post',
-				data : {
-					"ulist" : ulist
-				},
-				dataType : 'json',
-				contentType : 'application/json',
-				
-				success : function(data){
-					console.log(data);
-					if(data == "success"){
-						location.href = "userListView.do";
-					}else{
-						alert("조회 실패");
-					}
-				}
-			});
+			location.href="waitingSort.do";
 		});
 	</script>
 </html>

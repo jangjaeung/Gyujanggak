@@ -42,10 +42,17 @@ public class AdminServiceImpl implements AdminService {
 	
 	// 회원 검색
 	@Override
-	public List<Member> printSearchAllUser(Search search) {
-		List<Member> searchList = store.selectSearchUser(search);
+	public List<Member> printSearchAllUser(Search search, PageInfo pi) {
+		List<Member> searchList = store.selectSearchUser(search, pi);
 		return searchList;
 	}
+	
+	@Override
+	public int getSearchUserListCount(Search search) {
+		int totalCount = store.selectSearchUserCount(search);
+		return totalCount;
+	}
+
 	
 	// 선택한 회원 삭제
 	@Override
@@ -77,8 +84,8 @@ public class AdminServiceImpl implements AdminService {
 	
 	// 이용 승인 정렬
 	@Override
-	public int waitingSort(Member member) {
-		int result = store.waitingSort(member);
+	public List<Member> waitingSort(Member member) {
+		List<Member> result = store.waitingSort(member);
 		return result;
 	}
 
