@@ -222,24 +222,19 @@ $(".sideMenu").css("height", asideH);
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<script>
 	$("#userPwd").on("blur", function(){
-		//이벤트가 감지되었을 때 동작할 내용을 펑션 안에 쓴다
 		var userId = $("#userId").val();
-		var userPwd = $("#userPwd").val(); //입력한 값을 변수 pwd에 넣음
-		//이 값을 디비에 보냄
-		$.ajax({ //제이쿼리를 이용한 에이젝스 사용
-			url : "checkDupPwd.do",//어느 url로 보낼지 결정
-			data : {"userId" : userId, "userPwd" : userPwd},//어떤 데이터를 보낼지 결정
+		var userPwd = $("#userPwd").val(); 
+		$.ajax({ 
+			url : "checkDupPwd.do",
+			data : {"userId" : userId, "userPwd" : userPwd},
 			success : function(result){
-				//성공했을 때 실행코드
-				//console.log(result); //성공했으면 1, 실패했으면 0
-				console.log(result);
 				if(result != 0){
 					$(".guide.ok").show();
 					$(".guide.error").hide();
 					
 				}else{
 					$(".guide.ok").hide();
-					$(".guide.error").show(); //prop, css(display,none)
+					$(".guide.error").show(); 
 				}
 			},
 			error : function(){
@@ -276,7 +271,6 @@ $(".sideMenu").css("height", asideH);
 			if(pwd1 == pwd2){
 		        var $href = $(this).attr("href");
 		        layer_popup($href);
-		/* 		$("#form").submit(); */
 			}else{
 				alert("비밀번호가 일치하지 않습니다.");
 				return false;
@@ -290,8 +284,8 @@ $(".sideMenu").css("height", asideH);
 	
     function layer_popup(el){
 
-        var $el = $(el);    //레이어의 id를 $el 변수에 저장
-        var isDim = $el.prev().hasClass("dimBg"); //dimmed 레이어를 감지하기 위한 boolean 변수
+        var $el = $(el);    
+        var isDim = $el.prev().hasClass("dimBg"); 
 
         isDim ? $(".dim-layer").fadeIn() : $el.fadeIn();
 
@@ -300,7 +294,6 @@ $(".sideMenu").css("height", asideH);
             docWidth = $(document).width(),
             docHeight = $(document).height();
 
-        // 화면의 중앙에 레이어를 띄운다.
         if ($elHeight < docHeight || $elWidth < docWidth) {
             $el.css({
                 marginTop: -$elHeight /2,
@@ -311,7 +304,7 @@ $(".sideMenu").css("height", asideH);
         }
 
         $el.find("a.btn-layerClose").click(function(){
-            isDim ? $(".dim-layer").fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            isDim ? $(".dim-layer").fadeOut() : $el.fadeOut(); 
             return false;
         });
 

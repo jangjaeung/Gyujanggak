@@ -19,7 +19,7 @@ public interface MypageService {
 	//회원정보 관리
 	public Member printOneInfo(Member member);
 	
-	public Member printOneInfo(String userId); //아이디로만 조회
+	public Member printOneInfo(String userId); 
 		
 	public int modifyMember(Member member);
 	
@@ -51,23 +51,24 @@ public interface MypageService {
 	/** 희망 도서 내역 */
 	public List<WishBook> printWishBook(PageInfo pi, String userId);
 	public int getWishListCount(String userId);
-	//희망도서  신청 db 저장
+	/** 희망 도서 신청 */
 	public int registerWishBook(WishBook wishbook);
-	//관심도서 목록 출력
+	
+	/** 관심 도서 내역 */
 	public List<Book> printLikeList(PageInfo pi, String userId);
 	public int getlikeListCount(String userId);
 	
 	
+	
 	//시설 이용
-	/** 열람실 내역 전체 갯수 */
+	/** 열람실 내역 */
 	public int getrListCount(String userId);
+	public List<ReadingRoom> printAllrList(String userId);
 	/** 스터디룸 내역 전체 갯수 */
 	public int getsListCount(String userId);
-	public List<ReadingRoom> printAllrList(String userId);
 	public List<StudyRoom> printAllsList(String userId);
 	/** 예약 취소 */
 	public int cancelReadingRoom(int rReservationNo);
-	/** 예약 취소 */
 	public int cancelStudyRoom(int sReservationNo);
 
 	

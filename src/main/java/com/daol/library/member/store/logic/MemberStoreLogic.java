@@ -71,4 +71,10 @@ public class MemberStoreLogic implements MemberStore{
 		int result = sqlSession.selectOne("membermapper.selectkakaoId", userId);
 		return result;
 	}
+
+	@Override
+	public int insertStudent(Member member) {
+		int result = sqlSession.insert("membermapper.insertStudent",member);
+		return result;
+	}
 }

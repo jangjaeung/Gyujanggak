@@ -278,12 +278,12 @@ $(".sideMenu").css("height", asideH);
 
 
 <script>
-	var IMP = window.IMP; // 생략 가능
-	IMP.init("imp25073131"); // 예: imp00000000
+	var IMP = window.IMP; 
+	IMP.init("imp25073131"); 
 	
 	$("#pay-btn").click(function(e){
 		IMP.request_pay({
-		    pg : 'inicis', // version 1.1.0부터 지원.
+		    pg : 'inicis', 
 		    pay_method : 'card',
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '연회비 결제',

@@ -23,8 +23,8 @@ import com.daol.library.member.service.MemberService;
 import com.daol.library.member.store.MemberStore;
 
 @Service
-public class MemberServiceImpl implements MemberService{
-	
+public class MemberServiceImpl implements MemberService {
+
 	@Autowired
 	private MemberStore store;
 
@@ -64,31 +64,29 @@ public class MemberServiceImpl implements MemberService{
 		final String username = "daolLibrary1@gmail.com";//
 		final String password = "daol1234";
 
-		try{
-		    Session session = Session.getDefaultInstance(props, new Authenticator() {
-			    protected PasswordAuthentication getPasswordAuthentication() {
-			    return new PasswordAuthentication(username, password);
-		    }});
+		try {
+			Session session = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
 
-			//메세지 설정
+			// 메세지 설정
 			Message msg = new MimeMessage(session);
-	
-			//보내는사람 받는사람 설정
+
+			// 보내는사람 받는사람 설정
 			msg.setFrom(new InternetAddress("seokin6961@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, 
-								InternetAddress.parse(vo.getUserEmail(),false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(vo.getUserEmail(), false));
 			msg.setSubject("규장각 임시 비밀번호입니다!");
 			msg.setText("\n임시 비밀번호 : " + vo.getUserPwd() + "입니다");
 			msg.setSentDate(new Date());
 			Transport.send(msg);
 			System.out.println("발신성공!");
 
-		}catch (MessagingException error){ 
+		} catch (MessagingException error) {
 			System.out.println("에러가 발생했습니다: " + error);
 		}
 	}
-		
-	
 
 	@Override
 	public void findPw(HttpServletResponse resp, Member vo) throws Exception {
@@ -96,15 +94,15 @@ public class MemberServiceImpl implements MemberService{
 		Member ck = store.readMember(vo.getUserId());
 		PrintWriter out = resp.getWriter();
 		// 가입된 아이디가 없으면
-		if(store.idCheck(vo.getUserId()) == null) {
+		if (store.idCheck(vo.getUserId()) == null) {
 			out.print("등록되지 않은 아이디입니다.");
 			out.close();
 		}
 		// 가입된 이메일이 아니면
-		else if(!vo.getUserEmail().equals(ck.getUserEmail())) {
+		else if (!vo.getUserEmail().equals(ck.getUserEmail())) {
 			out.print("등록되지 않은 이메일입니다.");
 			out.close();
-		}else {
+		} else {
 			// 임시 비밀번호 생성
 			String pw = "";
 			for (int i = 0; i < 12; i++) {
@@ -119,7 +117,7 @@ public class MemberServiceImpl implements MemberService{
 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
 			out.close();
 		}
-		
+
 	}
 
 	@Override
@@ -130,9 +128,9 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void mailSend(HttpSession session, String userEmail) {
-		int result = (int)(Math.random() * (99999 - 10000 + 1)) + 10000;
-		session.setAttribute(userEmail,result);
-		
+		int result = (int) (Math.random() * (99999 - 10000 + 1)) + 10000;
+		session.setAttribute(userEmail, result);
+
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		// 이메일 객체생성하기
 		Properties props = System.getProperties();
@@ -149,43 +147,43 @@ public class MemberServiceImpl implements MemberService{
 		final String username = "daolLibrary1@gmail.com";//
 		final String password = "daol1234";
 
-		try{
-		    Session sessions = Session.getDefaultInstance(props, new Authenticator() {
-			    protected PasswordAuthentication getPasswordAuthentication() {
-			    return new PasswordAuthentication(username, password);
-		    }});
+		try {
+			Session sessions = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
 
-			//메세지 설정
+			// 메세지 설정
 			Message msg = new MimeMessage(sessions);
-	
-			//보내는사람 받는사람 설정
+
+			// 보내는사람 받는사람 설정
 			msg.setFrom(new InternetAddress("seokin6961@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, 
-								InternetAddress.parse(userEmail,false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail, false));
 			msg.setSubject("규장각 인증번호입니다!");
 			msg.setText("\n인증번호 : " + result + "입니다");
 			msg.setSentDate(new Date());
 			Transport.send(msg);
 			System.out.println("발신성공!");
 
-		}catch (MessagingException error){ 
+		} catch (MessagingException error) {
 			System.out.println("에러가 발생했습니다: " + error);
-		}		
+		}
 	}
 
 	@Override
 	public boolean emailCertification(HttpSession session, String userEmail, int parseInt) {
-		
+
 		try {
 			int generationCode = (Integer) session.getAttribute(userEmail);
-			
-			if(generationCode == parseInt) {
+
+			if (generationCode == parseInt) {
 				return true;
-			}else {
+			} else {
 				return false;
 			}
-		}catch(Exception e) {
-		
+		} catch (Exception e) {
+
 		}
 		return true;
 	}
@@ -194,7 +192,8 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int modifyOne(String userId) throws Exception {
 		int result = store.updateOne(userId);
-		if(result == 0) throw new Exception();
+		if (result == 0)
+			throw new Exception();
 		return result;
 	}
 
@@ -207,6 +206,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int idCheck(String userId) {
 		int result = store.selectIdCheck(userId);
+		return result;
+	}
+
+	@Override
+	public int registerStudent(Member member) {
+		int result = store.insertStudent(member);
 		return result;
 	}
 }

@@ -71,7 +71,6 @@ public class MypageServiceImpl implements MypageService{
 		return result;
 	}
 
-	/** 전체 게시물 갯수 */
 	@Override
 	public int getListCount(String userId) {
 		int totalCount = store.selectListCount(userId);
@@ -90,7 +89,6 @@ public class MypageServiceImpl implements MypageService{
 		return result;
 	}
 	
-	/** 마이페이지 서평 조회 */
 	@Override
 	public List<Review> printOneReview(Review review) {
 		List<Review> rList = store.selectOneReview(review);
@@ -116,17 +114,12 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 
-	
-
-
-	//희망도서 신청 메일, 디비저장
 	@Override
 	public int registerWishBook(WishBook wishbook) {
 		int result = store.insertWishBook(wishbook);
 		return result;
 	}
 
-	//희망도서 내역조회
 	@Override
 	public int getWishListCount(String userId) {
 		int totalCount = store.selectWishListCount(userId);
@@ -140,7 +133,6 @@ public class MypageServiceImpl implements MypageService{
 		return wList;
 	}
 
-	/**관심도서 게시물 갯수*/
 	@Override
 	public int getlikeListCount(String userId) {
 		int totalCount = store.selectLikeListCount(userId);

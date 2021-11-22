@@ -101,4 +101,8 @@ public interface AdminService {
 	public Book bookinfoUpdate(String bookNo);
 	// 통계리스트
 	public List<Statistics> statisAll();
+	// 회원 이메일 조회
+	public String selectEmail(String usersId);
+	// 메일 보내기
+	public void mailSend(String userEmail);
 }

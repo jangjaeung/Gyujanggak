@@ -368,32 +368,62 @@ public class AdminController {
 			if (filePath != null) {
 				book.setBookCover(bookCover.getOriginalFilename());
 			}
-		}
-		int result = service.enrollBook(book);
-		if (result > 0) {
-			service.updateWishBook(applyNo);
-			return "redirect:wishbookList.do";
-		} else {
-			model.addAttribute("msg", "희망 도서 등록 실패");
-			return "common/errorPage";
-		}
-
-	}
-
-	// 대출 현황 리스트
-	@RequestMapping(value = "statusList.do", method = RequestMethod.GET)
-	public ModelAndView StatusBook(ModelAndView mv, @ModelAttribute Status status,
-			@RequestParam(value = "page", required = false) Integer page, HttpServletRequest request) {
-
-		int currentPage = (page != null) ? page : 1;
-		int totalCount = service.getStatusListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<Status> bList = service.statusAll(pi);
-
-		if (!bList.isEmpty()) {
-			mv.addObject("bList", bList);
-			mv.addObject("pi", pi);
-			mv.setViewName("adminbook/bookStatus");
+			return mv;
+	 }
+	 
+	 // 희망 도서 등록 페이지
+	 @RequestMapping(value="wishbookEnroll.do", method=RequestMethod.GET)
+	 public ModelAndView wishbookEnrollView(ModelAndView mv, @RequestParam(value="bookName")String bookName
+			 , @RequestParam(value="bookWriter")String bookWriter, @RequestParam(value="publisher")String publisher
+			 ,@RequestParam(value="applyNo")int applyNo,@RequestParam(value="userId") String userId, HttpServletRequest request) {
+				mv.addObject("bookName", bookName);
+				mv.addObject("bookWriter",bookWriter);
+				mv.addObject("publisher",publisher);
+				mv.addObject("applyNo",applyNo);
+				mv.addObject("userId", userId);
+				mv.setViewName("adminbook/wishbookEnroll");
+			
+				return mv;
+	 }
+	 // 희망 도서 등록
+	 @RequestMapping(value="wishbookEnr.do", method=RequestMethod.POST)
+	 public String wishbookEnroll(@ModelAttribute Book book,@RequestParam(value="applyNum")int applyNo
+			 , @RequestParam(value="bookCoverFile", required=false)MultipartFile bookCover
+			 , @RequestParam(value="userId") String usersId, HttpServletRequest request,Model model) {
+		 	if (!bookCover.getOriginalFilename().equals("")) {
+				// uploadFile이 비어있지 않으면
+				String filePath = saveFile(bookCover, request);
+				if (filePath != null) {
+					book.setBookCover(bookCover.getOriginalFilename());
+				}
+			}
+		 String userEmail = service.selectEmail(usersId);
+		 int result = service.enrollBook(book);
+		 if(result > 0) {
+			 service.updateWishBook(applyNo);
+			 service.mailSend(userEmail);
+			 model.addAttribute("msg","메일 발송이 완료되었습니다!");
+			 return "adminbook/mailSend";
+		 }else {
+			 model.addAttribute("msg","희망 도서 등록 실패");
+			 return "common/errorPage";
+		 }
+		 
+		
+	 }
+	 // 대출 현황 리스트 
+	 @RequestMapping(value="statusList.do", method=RequestMethod.GET)
+	 public ModelAndView StatusBook(ModelAndView mv, @ModelAttribute Status status,@RequestParam(value="page", required=false)Integer page ,HttpServletRequest request) {
+		 
+		 int currentPage = (page != null) ? page : 1;
+			int totalCount = service.getStatusListCount();
+			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+			List<Status> bList = service.statusAll(pi);
+		
+			if(!bList.isEmpty()) {
+				mv.addObject("bList", bList);
+				mv.addObject("pi",pi);
+				mv.setViewName("adminbook/bookStatus");
 //				return "board/boardListView";
 		} else {
 			mv.addObject("msg", "게시글 전체조회 실패");
