@@ -71,20 +71,27 @@ public class AdminController {
 			mv.addObject("msg", "회원 정보 전체조회 실패");
 			mv.setViewName("common/errorPage");
 		}
-		// int result = service.waitingSort(member);
 		return mv;
 	}
 
 	// 회원 검색
 	@RequestMapping(value = "userSearch.do", method = RequestMethod.GET)
-	public String searchUserList(@ModelAttribute Search search, Model model) {
-		List<Member> searchList = service.printSearchAllUser(search);
-		if (!searchList.isEmpty()) {
-			model.addAttribute("uList", searchList);
+	public String searchUserList(@ModelAttribute Search search, Model model,
+			@RequestParam(value = "page", required = false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getSearchUserListCount(search);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<Member> uList = service.printSearchAllUser(search, pi);
+		int pn = 0;
+		if (!uList.isEmpty()) {
+			model.addAttribute("uList", uList);
 			model.addAttribute("search", search);
+			model.addAttribute("pi", pi);
+			model.addAttribute("pn", pn);
 			return "admin/userListView";
 		} else {
-			model.addAttribute("msg", "회원 검색 실패");
+			model.addAttribute("uList", uList);
+			model.addAttribute("search", search);
 			return "common/errorPage";
 		}
 	}
@@ -169,15 +176,18 @@ public class AdminController {
 	}
 
 	// 이용 승인 정렬
-	@ResponseBody
-	@RequestMapping(value = "waitingSort.do", method = RequestMethod.POST)
-	public String waitingSort(@ModelAttribute Member member, HttpSession session) {
-		int result = service.waitingSort(member);
-		if (result > 0) {
-			return "success";
+	@RequestMapping(value = "waitingSort.do", method = RequestMethod.GET)
+	public ModelAndView waitingSort(ModelAndView mv, @ModelAttribute Member member, HttpSession session) {
+		List<Member> uList = service.waitingSort(member);
+
+		if (!uList.isEmpty()) {
+			mv.addObject("uList", uList);
+			mv.setViewName("admin/userListView");
 		} else {
-			return "fail";
+			mv.addObject("msg", "회원 정보 전체조회 실패");
+			mv.setViewName("common/errorPage");
 		}
+		return mv;
 	}
 
 	// 장서 목록 리스트
