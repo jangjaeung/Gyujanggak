@@ -89,8 +89,8 @@ public class AdminStoreLogic implements AdminStore{
 	
 	// 대출 카운트
 	@Override
-	public int selectLendingBookListCount() {
-		int count = sqlSession.selectOne("adminMapper.selectLendingBookListCount");
+	public int selectLendingBookListCount(String userId) {
+		int count = sqlSession.selectOne("adminMapper.selectLendingBookListCount", userId);
 		return count;
 	}
 

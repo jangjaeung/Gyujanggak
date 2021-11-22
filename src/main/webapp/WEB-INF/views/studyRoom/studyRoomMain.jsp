@@ -64,7 +64,7 @@
 	             	<div class="alert_div_con">
 						<p>예약이 완료되었습니다.</p>
 						<p>예약을 확인하시겠습니까?</p>
-	                  <input type="button" onclick="location.href='studyroomHistory.do?userId=${loginUser.userId }';" value="확인" />
+	                  <input type="button" onclick="location.href='studyroomHistory.do?userId=${userId }';" value="확인" />
 	                  <input type="button" onclick="location.reload();" value="취소" />
 	                </div>
 	            </div>
@@ -153,6 +153,7 @@
 				dataType : 'json',
 				success : function(data) {
 					if(selectedDate == dateString) { 
+						console.log(1231231,hr)
 						if(hr < 9) { // 모두 가능 
 							$("#reservationTime option[value*='A']").prop('disabled',false);
 							$("#reservationTime option[value*='B']").prop('disabled',false);
@@ -174,24 +175,31 @@
 							$("#reservationTime option[value*='C']").prop('disabled',true);
 							$("#reservationTime option[value*='D']").prop('disabled',false);
 						} else {
+							console.log("all true")
 							$("#reservationTime option[value*='A']").prop('disabled',true);
 							$("#reservationTime option[value*='B']").prop('disabled',true);
 							$("#reservationTime option[value*='C']").prop('disabled',true);
 							$("#reservationTime option[value*='D']").prop('disabled',true);
 						}
+					}else{
+						if(data.length > 0){
+							$("#reservationTime option[value*='A']").prop('disabled',false);
+							$("#reservationTime option[value*='B']").prop('disabled',false);
+							$("#reservationTime option[value*='C']").prop('disabled',false);
+							$("#reservationTime option[value*='D']").prop('disabled',false);
+							for(let i in data){
+								console.log(data[i].sReservationTime)
+								$("#reservationTime option[value*='"+data[i].sReservationTime+"']").prop('disabled',true);
+							}
+						}else {
+							$("#reservationTime option[value*='A']").prop('disabled',false);
+							$("#reservationTime option[value*='B']").prop('disabled',false);
+							$("#reservationTime option[value*='C']").prop('disabled',false);
+							$("#reservationTime option[value*='D']").prop('disabled',false);
+						}
 					}
 						
-					if(data.length > 0){
-						for(let i in data){
-							console.log(data[i].sReservationTime)
-							$("#reservationTime option[value*='"+data[i].sReservationTime+"']").prop('disabled',true);
-						}
-					}else {
-						$("#reservationTime option[value*='A']").prop('disabled',false);
-						$("#reservationTime option[value*='B']").prop('disabled',false);
-						$("#reservationTime option[value*='C']").prop('disabled',false);
-						$("#reservationTime option[value*='D']").prop('disabled',false);
-					}
+					
 				},
 				error : function() {
 					alert('AJAX 통신오류.. 관리자에게 문의하세요');

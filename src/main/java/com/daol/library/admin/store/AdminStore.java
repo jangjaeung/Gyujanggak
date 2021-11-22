@@ -33,7 +33,7 @@ public interface AdminStore {
 	// 대출이력 조회
 	public List<LendingBook> selectAllLendingBook(PageInfo pi, String userId);
 	// 대출 카운트
-	public int selectLendingBookListCount();
+	public int selectLendingBookListCount(String userId);
 	// 장서 카운트
 	public int selectListCount();
 	// 장서 리스트

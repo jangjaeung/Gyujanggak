@@ -13,18 +13,12 @@ import com.daol.library.readingRoom.domain.ReadingRoom;
 import com.daol.library.studyRoom.domain.StudyRoom;
 
 public interface MypageStore {
-	//회원정보 관리
+		//회원정보 관리
 		public Member selectOneInfo(Member member);
-		
 		public Member selectOneInfo(String userId);
-		
-		/** 연회비 결제 */
-		public int updatePayment(Member member);
-		
+		public int updatePayment(Member member); //연회비결제
 		public int updateMember(Member member);
-		
 		public int deleteMember(Member member);
-		
 		public int checkPwdDup(Member member);
 		
 		//도서
@@ -49,7 +43,6 @@ public interface MypageStore {
 		public int selectWishListCount(String userId);
 		/** 희망 도서 신청 */ 
 		public int insertWishBook(WishBook wishBook);
-		
 		/** 관심 도서 전체갯수 */
 		public int selectLikeListCount(String userId);
 		/** 관심 도서 내역 */
@@ -58,15 +51,14 @@ public interface MypageStore {
 		
 		
 		//시설 이용
-		/** 열람실 내역 전체 갯수 */
+		/** 열람실 내역 */
 		public int selectrListCount(String userId);
-		/** 스터디룸 내역 전체 갯수 */
-		public int selectsListCount(String userId);
 		public List<ReadingRoom> selectAllrList(String userId);
+		/** 스터디룸 내역  */
+		public int selectsListCount(String userId);
 		public List<StudyRoom> selectAllsList(String userId);
 		/** 예약 취소 */
 		public int deleteReadingRoom(int rReservationNo);
-		/** 예약 취소 */
 		public int deleteStudyRoom(int sReservationNo);
 
 		

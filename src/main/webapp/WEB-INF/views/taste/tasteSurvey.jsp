@@ -221,8 +221,7 @@ $(document).ready(function(){
 		 $(this).parent().children('span').removeClass('on');
 		 $(this).addClass('on').prevAll('span').addClass('on');
 		 var rating = $(this).data("value");
-		 $(this).siblings("input[type=hidden]").val(rating); //히든 인풋에 값 저장
-		 console.log(rating);
+		 $(this).siblings("input[type=hidden]").val(rating); 
 		 return false;
 	});
 });
@@ -233,7 +232,6 @@ function checkRating(obj){
 	var bookRating = $(obj).parent().siblings(".starRev").children().last().val();
 	var bookSubject = $(obj).prev().prev().val();
 	var theme = $(obj).prev().val();
-	console.log(bookNo, bookName, bookRating, bookSubject, theme);
 	
 	$.ajax({
 		url : "insertRating.do",
@@ -255,7 +253,6 @@ function checkRating(obj){
 			}
 		},
 		error : function(request,status,error){
-			/* alert("AJAX 통신 오류"); */
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	})

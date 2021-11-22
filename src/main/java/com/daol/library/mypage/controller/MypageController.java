@@ -60,7 +60,6 @@ public class MypageController {
 	@RequestMapping(value = "mypageInfo.do", method = RequestMethod.GET)
 	public String mypageInfoView(@ModelAttribute Member member, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		// 택배 주소 추가하기!!!!
 		try {
 			Member memberOne = service.printOneInfo(member);
 			session.setAttribute("loginUser", memberOne);
@@ -350,7 +349,7 @@ public class MypageController {
 							+ wishbook.getBookName() + "\n 출판사 : " + wishbook.getPublisher() + "\n 저자명 : "
 							+ wishbook.getBookWriter() + "\n ==================================");
 					Transport.send(msg);
-					System.out.println("발신성공!");
+//					System.out.println("발신성공!");
 
 					return "redirect: wishList.do?userId=" + wishbook.getUserId();
 
