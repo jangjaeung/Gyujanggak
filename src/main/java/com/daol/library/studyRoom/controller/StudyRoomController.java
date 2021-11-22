@@ -24,7 +24,7 @@ public class StudyRoomController {
 	// 스터디룸 메인 화면
 	@RequestMapping(value = "studyRoom.do", method = RequestMethod.GET)
 	public String readingRoomView() {
-		return "studyRoom/studyRoomMain";
+		return "studyroom/studyRoomMain";
 	}
 
 	// 스터디룸 예약
