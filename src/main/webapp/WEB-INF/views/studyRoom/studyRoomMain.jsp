@@ -56,7 +56,7 @@
 	                    <p>사용 목적</p>
 	       	            	<input type="text" id="purpose" placeholder="ex) 토익스터디" />
 	                    <p>사용 인원</p>
-	                    	<input type="text" id="personnel" placeholder="ex) 최대 8인까지 예약 가능합니다." onkeypress="inNumber();" />
+	                    	<input type="text" id="personnel" placeholder="최소 3인 최대 8인까지 예약 가능합니다." onkeypress="inNumber();" />
 	                 </div>
 	                 <button class="rsv_btn">예약</button>
 	             </div>

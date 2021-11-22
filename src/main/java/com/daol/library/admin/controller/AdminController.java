@@ -2,6 +2,7 @@ package com.daol.library.admin.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
 
@@ -75,8 +76,8 @@ public class AdminController {
 	}
 
 	// 회원 검색
-	@RequestMapping(value = "userSearch.do", method = RequestMethod.GET)
-	public String searchUserList(@ModelAttribute Search search, Model model,
+	@RequestMapping(value = "userSearch.do", method = { RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView searchUserList(ModelAndView mv, @ModelAttribute Search search,
 			@RequestParam(value = "page", required = false) Integer page) {
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getSearchUserListCount(search);
@@ -84,16 +85,16 @@ public class AdminController {
 		List<Member> uList = service.printSearchAllUser(search, pi);
 		int pn = 0;
 		if (!uList.isEmpty()) {
-			model.addAttribute("uList", uList);
-			model.addAttribute("search", search);
-			model.addAttribute("pi", pi);
-			model.addAttribute("pn", pn);
-			return "admin/userListView";
+			mv.addObject("uList", uList);
+			mv.addObject("search", search);
+			mv.addObject("pi", pi);
+			mv.addObject("pn", pn);
+			mv.setViewName("admin/userListView");
 		} else {
-			model.addAttribute("uList", uList);
-			model.addAttribute("search", search);
-			return "common/errorPage";
+			mv.addObject("message", "검색 결과가 없습니다.");
+			mv.setViewName("admin/userListView");
 		}
+		return mv;
 	}
 
 	// 선택한 회원 삭제
@@ -134,11 +135,9 @@ public class AdminController {
 
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getLendingBookListCount(member.getUserId());
-		System.out.println(totalCount);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<LendingBook> lList = service.printAllLendingBook(pi, member.getUserId());
 
-		System.out.println(pi.toString());
 		if (!lList.isEmpty()) {
 			mv.addObject("lList", lList);
 			mv.addObject("pi", pi);
@@ -163,11 +162,46 @@ public class AdminController {
 		}
 	}
 
-	// 이용 기간 설정
+	// 이용 기간 설정, 이메일 전송
 	@ResponseBody
 	@RequestMapping(value = "userEndDateUpdate.do", method = RequestMethod.POST)
-	public String userEndDateUpdate(@ModelAttribute Member member, HttpSession session) {
+	public String userEndDateUpdate(@ModelAttribute Member member) {
 		int result = service.userEndDateUpdate(member);
+		Member userEmail = service.getUserEmail(member);
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory"; // 이메일 객체 생성
+		Properties props = System.getProperties();
+		props.put("mail.smtp.user", "daolLibrary1@gmail.com");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.starttls", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		final String username = "daolLibrary1@gmail.com"; // 발신자 이메일
+		final String password = "daol1234"; // 발신자 비밀번호
+		
+		try {
+			Session session = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); //원하는 데이터 포맷 지정
+			String endDate = simpleDateFormat.format(userEmail.getEndDate()); //지정한 포맷으로 변환 
+
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress("daolLibrary1@gmail.com"));
+			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(userEmail.getUserEmail()));
+			msg.setSubject("[다올대학교 도서관 규장각] 예약 도서 대출 가능 알림");
+			msg.setText("안녕하십니까, 다올대학교 도서관 규장각입니다.\n\n이용증 발급이 완료되었습니다. \n\n 이용 기간은 " + endDate+"까지 입니다. \n도서관 이용에 참고바랍니다.\n\n감사합니다.");
+			Transport.send(msg);
+		} catch (Exception e) {
+			System.out.println("전송 실패");
+		}
 		if (result > 0) {
 			return "success";
 		} else {
@@ -177,17 +211,23 @@ public class AdminController {
 
 	// 이용 승인 정렬
 	@RequestMapping(value = "waitingSort.do", method = RequestMethod.GET)
-	public ModelAndView waitingSort(ModelAndView mv, @ModelAttribute Member member, HttpSession session) {
-		List<Member> uList = service.waitingSort(member);
+	public ModelAndView waitingSort(ModelAndView mv, @ModelAttribute Member member, HttpSession session,
+			@RequestParam(value = "page", required = false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getWaitUserListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<Member> uList = service.printWaitMember(pi);
 
 		if (!uList.isEmpty()) {
 			mv.addObject("uList", uList);
-			mv.setViewName("admin/userListView");
+			mv.addObject("pi", pi);
+			mv.setViewName("admin/userListSortView");
 		} else {
 			mv.addObject("msg", "회원 정보 전체조회 실패");
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
+
 	}
 
 	// 장서 목록 리스트

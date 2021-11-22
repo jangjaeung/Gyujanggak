@@ -26,16 +26,21 @@ main {
     top: 192px;
 }
 
-.userDetailDiv{
+/* .userDetailDiv{
 	margin-right: -110px;
-}
+} */
 
 .profile {
 	border: 1px solid #bbb;
 	width: 145px;
     height: 179px;
     position: absolute;
-    right: 704px;
+    left: -150px;
+}
+
+.lendingBookListPaging {
+	position: absolute;
+    left: 303px;
 }
 
 .side {

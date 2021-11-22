@@ -43,56 +43,77 @@ public class AdminServiceImpl implements AdminService {
 		List<Member> uList = store.selectAllMember(pi);
 		return uList;
 	}
-	
+
+	// 대기 회원관리 전체 조회
+	@Override
+	public List<Member> printWaitMember(PageInfo pi) {
+		List<Member> uList = store.selectWaitMember(pi);
+		return uList;
+	}
+
 	// 회원 카운트
 	@Override
 	public int getUserListCount() {
 		int totalCount = store.selectUserListCount();
 		return totalCount;
 	}
-	
+
+	// 이용 승인 대기 유저 카운트
+	@Override
+	public int getWaitUserListCount() {
+		int totalCount = store.selectWaitUserListCount();
+		return totalCount;
+	}
+
 	// 회원 검색
 	@Override
 	public List<Member> printSearchAllUser(Search search, PageInfo pi) {
 		List<Member> searchList = store.selectSearchUser(search, pi);
 		return searchList;
 	}
-	
+
+	// 회원 검색 카운트
 	@Override
 	public int getSearchUserListCount(Search search) {
 		int totalCount = store.selectSearchUserCount(search);
 		return totalCount;
 	}
 
-	
 	// 선택한 회원 삭제
 	@Override
 	public int deleteUser(int[] nums) {
 		int result = store.deleteUser(nums);
 		return result;
 	}
-	
+
 	// 회원 상세보기
 	@Override
 	public Member printUser(int userNo) {
 		Member member = store.printUser(userNo);
 		return member;
 	}
-	
+
 	// 이용증 발급
 	@Override
 	public int userPassIssued(Member member) {
 		int result = store.userPassIssued(member);
 		return result;
 	}
-	
+
 	// 이용 기간 설정
 	@Override
 	public int userEndDateUpdate(Member member) {
 		int result = store.userEndDateUpdate(member);
 		return result;
 	}
-	
+
+	// 이용증 발급 회원 이메일
+	@Override
+	public Member getUserEmail(Member member) {
+		Member userEmail = store.getUserEmail(member);
+		return userEmail;
+	}
+
 	// 이용 승인 정렬
 	@Override
 	public List<Member> waitingSort(Member member) {
@@ -113,7 +134,7 @@ public class AdminServiceImpl implements AdminService {
 		int totalCount = store.selectLendingBookListCount(userId);
 		return totalCount;
 	}
-	
+
 	@Override
 	// 장서 카운트
 	public int getListCount() {
@@ -127,25 +148,27 @@ public class AdminServiceImpl implements AdminService {
 		List<Book> bList = store.selectAll(pi);
 		return bList;
 	}
+
 	// 장서 서치
 	@Override
 	public List<Book> printSearchAll(Search search) {
 		List<Book> searchList = store.selectSearchAll(search);
 		return searchList;
 	}
-	
-	//유저타입 끌어오기용
+
+	// 유저타입 끌어오기용
 	@Override
 	public Member memberCk(String login) {
 		return store.selectMemberCk(login);
 	}
-	
-	//관리자-문의리스트 끌어오기
+
+	// 관리자-문의리스트 끌어오기
 	@Override
 	public List<Qna> printAllQna(PageInfo pi) {
 		return store.selectAllQna(pi);
 	}
-	//페이지네이션용
+
+	// 페이지네이션용
 	@Override
 	public int getQnaListCount() {
 		return store.selectQnaListCount();
@@ -164,34 +187,39 @@ public class AdminServiceImpl implements AdminService {
 		int result = store.deleteAll(nums);
 		return result;
 	}
-	//관리자게시판 문의검색
+
+	// 관리자게시판 문의검색
 	@Override
-	public List<Qna> printSearchAll(Search search,PageInfo pi) {
-		return store.selectSearchAll(search,pi);
+	public List<Qna> printSearchAll(Search search, PageInfo pi) {
+		return store.selectSearchAll(search, pi);
 	}
-	//검색페이지네이션용
+
+	// 검색페이지네이션용
 	@Override
 	public int getSearchQnaListCount(Search search) {
 		return store.selectSearchQnaListCount(search);
 	}
-	//문의상세
+
+	// 문의상세
 	@Override
 	public Qna printOneQna(int qnaNo) {
 		return store.selectOneQna(qnaNo);
 	}
-	//답변등록
+
+	// 답변등록
 	@Override
 	public int modifyAnswer(Qna qna) {
 		return store.updateAnswer(qna);
 	}
 
-	//희망도서 리스트
+	// 희망도서 리스트
 	@Override
 	public List<WishBook> wishAll(PageInfo pi) {
 		List<WishBook> bList = store.selectAllWish(pi);
 		return bList;
 	}
-	//희망도서 페이징
+
+	// 희망도서 페이징
 	@Override
 	public int getWishListCount() {
 		int totalCount = store.selectWishListCount();
@@ -204,6 +232,7 @@ public class AdminServiceImpl implements AdminService {
 		int totalCount = store.selectStatusListCount();
 		return totalCount;
 	}
+
 	// status 리스트
 	@Override
 	public List<Status> statusAll(PageInfo pi) {
@@ -211,22 +240,25 @@ public class AdminServiceImpl implements AdminService {
 		return bList;
 	}
 
-	//신고게시물
+	// 신고게시물
 	@Override
 	public List<Post> printAllReportPost(PageInfo pi) {
 		return store.selectAllReportPost(pi);
 	}
-	//신고게시물 카운트
+
+	// 신고게시물 카운트
 	@Override
 	public int getPostReportCount() {
 		return store.selectPostReportCount();
 	}
-	//신고된 댓글 카운트
+
+	// 신고된 댓글 카운트
 	@Override
 	public int getReplyReportCount() {
 		return store.selectReplyReportCount();
 	}
-	//신고된 댓글 리스트
+
+	// 신고된 댓글 리스트
 	@Override
 	public List<Reply> printAllReportReply(PageInfo rpi) {
 		return store.selectAllReportReply(rpi);
@@ -236,13 +268,14 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void bookState(int bookNo) {
 		store.updateBookState(bookNo);
-		
+
 	}
+
 	// 반납 후 권수변경
 	@Override
 	public void lendingCopy(String userId) {
 		store.updateLending(userId);
-		
+
 	}
 
 	// 반납일변경
@@ -264,6 +297,7 @@ public class AdminServiceImpl implements AdminService {
 		int totalCount = store.selectParcelListCount();
 		return totalCount;
 	}
+
 	// 택배리스트
 	@Override
 	public List<BookParcel> parcelAll(PageInfo pi) {
@@ -284,6 +318,7 @@ public class AdminServiceImpl implements AdminService {
 		Book books = store.selectBookInfo(bookNo);
 		return books;
 	}
+
 	// 대출 통계
 	@Override
 	public List<Statistics> statisAll() {
