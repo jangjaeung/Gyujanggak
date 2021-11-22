@@ -116,7 +116,6 @@
 	var month = now.getMonth()+1; // 월
 	var date = now.getDate(); // 날짜
 	var dateString = year + '/' + month + '/' + date;
-//	console.log(dateString);
 	var hr = now.getHours(); // 현재 시간
 	if (hr < 12){
 		var time = 'A, 09:00~12:00'
@@ -198,8 +197,6 @@
 							$("#reservationTime option[value*='D']").prop('disabled',false);
 						}
 					}
-						
-					
 				},
 				error : function() {
 					alert('AJAX 통신오류.. 관리자에게 문의하세요');
@@ -228,9 +225,7 @@
 	            },
 	            success: function (data) {
 	                if (data === 'success') {
-	                    // alert('예약이 완료되었습니다.');
 	                    $('.alert_div').css('display', 'block');
-	                    // location.reload();
 	                } else {
 	                    alert('예약실패');
 	                }
@@ -242,10 +237,10 @@
 	    }
 	});
 	
-	// 인원수 제한 1~8인
+	// 인원수 제한 3~8인
 	function inNumber() {
 	    if ($('#personnel').val().length < 1) {
-	        if (event.keyCode < 49 || event.keyCode > 56) {
+	        if (event.keyCode < 51 || event.keyCode > 56) {
 	            event.returnValue = false;
 	        }
 	    } else {
@@ -258,5 +253,6 @@
 		alert('로그인페이지로 이동합니다.');
 		location.href="loginView.do";
 	} 
+	
 </script>
 </html>

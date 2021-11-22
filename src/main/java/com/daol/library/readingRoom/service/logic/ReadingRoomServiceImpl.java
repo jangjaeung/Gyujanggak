@@ -39,6 +39,4 @@ public class ReadingRoomServiceImpl implements ReadingRoomService {
 		return result;
 	}
 
-
-
 }

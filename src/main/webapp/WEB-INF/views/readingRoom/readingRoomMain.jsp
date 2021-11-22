@@ -146,7 +146,6 @@
 <script>
 	// 현재 시간(시, 분)
 	var now = new Date();
-	/* console.log(now.toLocaleTimeString()); */
 	// 현재 시간만
 	var hr = now.getHours();
 	console.log("현재시간", hr);
@@ -159,7 +158,6 @@
 		alert("예약 가능한 시간이 아닙니다.");
 		window.history.back();
 	}
-	console.log("오전오후", time);
 	
 	// 좌석 현황
 	$.ajax({
@@ -189,10 +187,7 @@
 
 				$('.seatGreen').not($(this)).css('background-color', '#FFF');
 				$('.seatGreen').not($(this)).removeClass('select');
-
-				//console.log($('.select').text());
 				$('#selectedSeat').val($('.select').text());
-				//console.log($('#selectedSeat'));
 				
 				// 좌석  별 예약 상태
 				$.ajax({
@@ -202,7 +197,6 @@
 						seatNo : $('#selectedSeat').val()
 					},
 					success : function(data) {
-						//console.log(123,JSON.parse(data))
 						$("#reservationTime option[value*='AM']").prop('disabled',false);
 						$("#reservationTime option[value*='PM']").prop('disabled',false);
 						console.log(1231232,hr)
@@ -216,7 +210,6 @@
 							$("#reservationTime option[value*='PM']").prop('disabled',false);
 						} 
 						
-					
 						data = JSON.parse(data);
  						if(data.length > 0){ //데이터가 1개 이상일때  reservationTime value 값이 AM이면  AM을 disabled PM이면 PM을 disabled
 							for(let i in data){
@@ -225,10 +218,7 @@
 							} 
 						}
 						$("#reservationTime option[value*='default']").prop('selected',true);
-						
-/* 						if ($("#reservationTime option[value*='AM']").prop('disabled') && $("#reservationTime option[value*='PM']").prop('disabled')) {
-							$('#' + ele.seatNo + '').addClass('seatRed');
-						}  */
+
 						var rsvComplete = $('#reservationTime option:disabled').length;
 						console.log(rsvComplete);
 					},
@@ -250,8 +240,6 @@
 			$('.hidden').removeClass('hidden')
 		} else {
 			if ($('#selectedSeat').val() !== '' && $('#reservationTime').val() !== null) {
-				//console.log($('#selectedSeat').val());
-				//console.log($('#reservationTime').val());
 				$.ajax({
 					url : 'reservationReadingRoom.do',
 					type : 'post',
@@ -286,5 +274,6 @@
 		alert('로그인페이지로 이동합니다.');
 		location.href="loginView.do";
 	} 
+	
 </script>
 </html>

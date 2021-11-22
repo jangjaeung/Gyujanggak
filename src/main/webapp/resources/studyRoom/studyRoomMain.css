@@ -61,6 +61,7 @@ main{
 	margin : 40px;
 	margin-left : 60px;
 }
+
 .rsv_form_con > input{
 	width : 260px;
 	height: 20px;
@@ -127,6 +128,7 @@ option:disabled {
      text-align: center;
      display: none;
 }
+
 .alert_div_con {
 	padding-top: 30px;
 }

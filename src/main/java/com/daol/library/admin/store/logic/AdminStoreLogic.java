@@ -77,6 +77,13 @@ public class AdminStoreLogic implements AdminStore{
 		int result = sqlSession.update("adminMapper.userEndDateUpdate",member);
 		return result;
 	}
+	
+	// 이용 승인 정렬
+	@Override
+	public int waitingSort(Member member) {
+		int result = sqlSession.update("adminMapper.waitingSort",member);
+		return result;
+	}
 
 	// 대출 이력 조회
 	@Override
@@ -93,7 +100,6 @@ public class AdminStoreLogic implements AdminStore{
 		int count = sqlSession.selectOne("adminMapper.selectLendingBookListCount", userId);
 		return count;
 	}
-
 	
 	//유저타입 끌어오기용
 	@Override
@@ -113,7 +119,6 @@ public class AdminStoreLogic implements AdminStore{
 	public int selectQnaListCount() {
 		return sqlSession.selectOne("adminMapper.selectQnaListCount");
 	}
-	
 	
 	// 장서리스트 카운트
 	@Override

@@ -45,6 +45,16 @@ main {
 	margin-top: 25px;
 }
 
+.fas {
+	position: absolute;
+    left: 1391px;
+    top: 323px;
+}
+
+.waitingSort{
+	cursor: pointer;
+}
+
 .deleteCheck {
 	position: relative;
     background-color: #7cace2;

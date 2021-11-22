@@ -38,6 +38,4 @@ public class ReadingRoomStoreLogic implements ReadingRoomStore {
 		return result;
 	}
 
-
-
 }

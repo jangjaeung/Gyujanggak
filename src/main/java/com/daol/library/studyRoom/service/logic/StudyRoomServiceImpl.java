@@ -33,5 +33,4 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		return result;
 	}
 	
-	
 }

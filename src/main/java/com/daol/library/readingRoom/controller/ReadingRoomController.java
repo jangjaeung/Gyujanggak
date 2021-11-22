@@ -35,11 +35,7 @@ public class ReadingRoomController {
 		Date nowDate = new Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd");
 		String strNowDate = simpleDateFormat.format(nowDate);
-
-		System.out.println("오늘 날짜 : " + strNowDate);
-		// 날짜 쿼리문에 넣었기때문에 다 수정해야함**
 		List<ReadingRoom> result = service.printAllReadingRoom(strNowDate);
-		
 		Gson gson = new Gson();
 		String rsvList = gson.toJson(result);
 		System.out.println(rsvList); // 예약 목록
@@ -50,9 +46,7 @@ public class ReadingRoomController {
 	@ResponseBody
 	@RequestMapping(value = "selectSeatStatus.do", method = RequestMethod.POST)
 	public String selectSeatStatus(@ModelAttribute ReadingRoom readingRoom ) {
-		System.out.println("좌석번호 : " + readingRoom.getSeatNo());
 		int seatNo =Integer.parseInt(readingRoom.getSeatNo());
-		 
 		List<ReadingRoom> result = service.selectSeatStatus(seatNo);
 		Gson gson = new Gson();
 		String rsvList = gson.toJson(result);
@@ -85,7 +79,4 @@ public class ReadingRoomController {
 			return "fail";
 		}
 	}
-
-	
-	
 }

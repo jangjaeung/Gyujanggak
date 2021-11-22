@@ -91,7 +91,7 @@
 		<result property="receive" column="RECEIVE" />
 		<result property="userId" column="USER_ID" />
 		<result property="bookNo" column="BOOK_NO" />
-		<result property="returnState" column="RETURN_STATE"/>
+		<result property="returnState" column="RETURN_STATE" />
 		<collection property="book" resultMap="bookResultMap" />
 	</resultMap>
 	<!-- 유저리스트 페이징 -->
@@ -119,8 +119,10 @@
 			WHERE USER_TYPE LIKE '%' || #{searchValue} || '%'
 		</if>
 		<if test="searchCondition.toString() == 'all'">
-			WHERE USER_NAME LIKE '%' || #{searchValue} || '%' OR USER_NO LIKE '%' ||
-			#{searchValue} || '%' OR USER_TYPE LIKE'%' || #{searchValue} || '%'
+			WHERE USER_NAME LIKE '%' || #{searchValue} || '%' OR
+			USER_NO LIKE '%' ||
+			#{searchValue} || '%' OR USER_TYPE LIKE'%' ||
+			#{searchValue} || '%'
 		</if>
 		ORDER BY ENROLL_DATE DESC
 	</select>
@@ -144,7 +146,8 @@
 	<!-- 이용증 발급 -->
 	<update id="userPassIssued">
 		UPDATE USERS SET PASS_CHECK = 'Y'
-		WHERE USER_ID = #{userId}
+		WHERE USER_ID =
+		#{userId}
 	</update>
 
 	<!-- 이용 기간 설정 -->
@@ -155,17 +158,28 @@
 		USER_ID = #{userId}
 	</update>
 
+	<!-- 이용 승인 정렬 -->
+	<select id="waitingSort" resultMap="memberResultMap">
+		SELECT * FROM USERS
+		ORDER BY ANNUAL_FEE ASC, PASS_CHECK ASC
+	</select>
+
 	<!-- 대출 이력 조회 -->
 	<select id="selectAllLendingBook"
 		resultMap="lendingBookResultMap">
-	    SELECT  L.LENDING_NO, B.BOOK_NAME , L.LENDING_DATE, L.RETURN_DATE, L.RETURN_STATE, B.BOOK_STATE, B.BOOK_NAME 
-		FROM BOOK_LENDING L
+		SELECT L.LENDING_NO, B.BOOK_NAME , L.LENDING_DATE,
+		L.RETURN_DATE,
+		L.RETURN_STATE, B.BOOK_STATE, B.BOOK_NAME
+		FROM
+		BOOK_LENDING L
 		INNER JOIN BOOK B
 		ON L.BOOK_NO = B.BOOK_NO
-		INNER JOIN USERS U
+		INNER JOIN
+		USERS U
 		ON L.USER_ID = U.USER_ID
 		WHERE U.USER_ID = #{userId}
-		ORDER BY L.LENDING_DATE DESC
+		ORDER BY
+		L.LENDING_DATE DESC
 	</select>
 
 	<!-- 대출 리스트 카운트 -->
@@ -248,8 +262,10 @@
 		</if>
 		<if test="searchCondition.toString() == 'all'">
 			WHERE BOOK_NAME LIKE '%' || #{searchValue} || '%'
-			OR BOOK_WRITER LIKE '%' || #{searchValue} || '%'
-			OR PUBLISHER LIKE '%' || #{searchValue} || '%'
+			OR
+			BOOK_WRITER LIKE '%' || #{searchValue} || '%'
+			OR PUBLISHER LIKE '%' ||
+			#{searchValue} || '%'
 		</if>
 		ORDER BY BOOK_NO ASC
 	</select>
@@ -260,9 +276,12 @@
 	</select>
 	<!-- 대출 통계 리스트 -->
 	<select id="statisList" resultMap="StatisResultMap">
-		select d.BOOK_SUBJECT,SUM(d.LENDING_COUNT)"LENDING_COUNT"
-		FROM BOOK d, BOOK_LENDING c
-		WHERE c.BOOK_NO = d.BOOK_NO GROUP BY d.BOOK_SUBJECT order by book_subject
+		select
+		d.BOOK_SUBJECT,SUM(d.LENDING_COUNT)"LENDING_COUNT"
+		FROM BOOK d,
+		BOOK_LENDING c
+		WHERE c.BOOK_NO = d.BOOK_NO GROUP BY d.BOOK_SUBJECT
+		order by book_subject
 	</select>
 
 	<!-- 장서 등록 -->
@@ -282,16 +301,21 @@
 	<!-- 대출 상태 업데이트 -->
 	<update id="bookStateUpdate">
 		UPDATE BOOK SET BOOK_STATE = '대출가능'
-		WHERE BOOK_NO = #{bookNo}
+		WHERE BOOK_NO =
+		#{bookNo}
 	</update>
 	<!-- 대출 가능권수 업데이트 -->
 	<update id="lendingUpdate">
 		UPDATE USERS SET LENDING_COPY =
-		LENDING_COPY + 1 WHERE USER_ID = #{userId}
+		LENDING_COPY + 1 WHERE
+		USER_ID = #{userId}
 	</update>
-	<!-- 반납일, 반납여부 업데이트 -->	
-	<update id="returndateUpdate" >
-		UPDATE BOOK_LENDING SET RETURN_DATE = SYSDATE, RETURN_STATE = 'Y' WHERE LENDING_NO = #{lendingNo}
+	<!-- 반납일, 반납여부 업데이트 -->
+	<update id="returndateUpdate">
+		UPDATE BOOK_LENDING SET
+		RETURN_DATE = SYSDATE,
+		RETURN_STATE = 'Y' WHERE LENDING_NO =
+		#{lendingNo}
 	</update>
 	<!-- 희망도서 업데이트 -->
 	<update id="wishbookUpdate">

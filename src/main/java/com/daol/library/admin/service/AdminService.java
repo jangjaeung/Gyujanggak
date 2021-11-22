@@ -30,6 +30,8 @@ public interface AdminService {
 	public int userPassIssued(Member member);
 	// 이용 기간 설정
 	public int userEndDateUpdate(Member member);
+	// 이용 승인 정렬
+	public int waitingSort(Member member);
 	// 대출 이력 조회
 	List<LendingBook> printAllLendingBook(PageInfo pi, String userId);
 	// 대출 이력 카운트

@@ -9,6 +9,7 @@
 <title>전체 회원 목록</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="resources/admin/userList.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 </head>
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
@@ -53,6 +54,9 @@
 				<input type="submit"value="검색">
 			</form>
 		</div>
+		<span class="waitingSort">
+			<i class="fas fa-sort-alpha-down"></i>		
+		</span>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -166,11 +170,34 @@
 					"userNo" : checkArr,
 				},
 				success : function(data){
- 						console.log(data);
+// 						console.log(data);
 					if(data == "success"){
 						location.href = "userListView.do";
 					}else{
 						alert("삭제 실패");
+					}
+				}
+			});
+		});
+/* 		var userNo = '${member.userNo}'
+		var payDate = '${member.payDate}';
+		var passCheck= '${member.passCheck}'; */
+		$('.waitingSort').on('click', function(){
+			$.ajax({
+				url : 'waitingSort.do',
+				type : 'post',
+				data : {
+					"ulist" : ulist
+				},
+				dataType : 'json',
+				contentType : 'application/json',
+				
+				success : function(data){
+					console.log(data);
+					if(data == "success"){
+						location.href = "userListView.do";
+					}else{
+						alert("조회 실패");
 					}
 				}
 			});

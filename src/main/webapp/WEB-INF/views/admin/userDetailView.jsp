@@ -263,33 +263,6 @@
 			},
 		});
 	});
-	
-/*  	var now = new Date(); // 오늘
-	var late = new Date(now.setDate(now.getDate() +14)); // 14일 뒤
-	console.log("반납일 : ", late); 
-	// 대출 이력
-	var lendingNo = '${lendingBook.lendingNo}';
-	var lendingDate = '${lendingBook.lendingDate}';
-	var returnDate = '${lendingBook.returnDate}';
- 	$.ajax({
-		url : 'printUserLendingBook.do',
-		type : 'post',
-		data : {
-			"lendingNo" : lendingNo,
-			"lendingDate" : lendingDate,
-			"returnDate" : returnDate
-		},
-		success : function(data) {
-			if (data === 'success') {
-				printUserLendingBook();
-			} else {
-				alrt("목록 불러오기 실패");
-			}
-		},
-		error : function() {
-			alert('AJAX 통신오류.. 관리자에게 문의하세요');
-		},
-	}); */
-	
+
 </script>
 </html>

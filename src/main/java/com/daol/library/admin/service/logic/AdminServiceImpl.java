@@ -75,6 +75,13 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 	
+	// 이용 승인 정렬
+	@Override
+	public int waitingSort(Member member) {
+		int result = store.waitingSort(member);
+		return result;
+	}
+
 	// 대출 이력 조회
 	@Override
 	public List<LendingBook> printAllLendingBook(PageInfo pi, String userId) {

@@ -33,5 +33,4 @@ public class StudyRoomStoreLogic implements StudyRoomStore {
 		return result;
 	}
 
-
 }

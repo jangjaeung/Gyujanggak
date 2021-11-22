@@ -45,7 +45,6 @@ public class StudyRoomController {
 	@ResponseBody
 	@RequestMapping(value = "selectTimeStatus.do", method = RequestMethod.POST)
 	public String selectTimeStatus(@ModelAttribute StudyRoom studyRoom ) {
-	System.out.println("예약일 : " + studyRoom.getsReservationDate()); 
 	String rsvDate = studyRoom.getsReservationDate();
 	List<StudyRoom> result = service.selectTimeStatus(rsvDate); 
 	Gson gson = new Gson(); 
@@ -53,7 +52,6 @@ public class StudyRoomController {
 	return rsvList; 
 	}
 	 
-
 	// 예약 취소
 	@ResponseBody
 	@RequestMapping(value = "cancleStudyRoom.", method = RequestMethod.GET)
