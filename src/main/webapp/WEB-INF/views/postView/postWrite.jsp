@@ -8,7 +8,6 @@
 <style>
 	*{margin:0;padding:0}
 	header{top:0}
-	footer{bottom:0}
 	#wrap{width:1400px;height:800px;margin:0 auto;margin-top:200px}
 	input{outline:none;border:none;border-bottom:1px solid rgb(220,220,220); padding:10px; width:100%}
 	textarea{outline:none;resize:none;width:100%;height:100%; padding:10px; border:none;}

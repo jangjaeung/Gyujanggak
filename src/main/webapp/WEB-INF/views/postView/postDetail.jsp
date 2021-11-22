@@ -96,7 +96,7 @@ a:visited { color: black; }
 		</form>
 		<div id="ft" style="margin-top : 10px;">
 			<a href="postList.do"><button type="button" class="wer">목록으로</button></a>
-			<c:if test="${userId ne null }">
+			<c:if test="${userId ne null}">
 				<button type="button" class="qwe">게시물 신고</button>
 			</c:if>
 			<c:if test="${type eq '관리자' }">
