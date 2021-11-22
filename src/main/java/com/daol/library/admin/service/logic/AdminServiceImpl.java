@@ -1,6 +1,17 @@
 package com.daol.library.admin.service.logic;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -265,5 +276,55 @@ public class AdminServiceImpl implements AdminService {
 		List<Statistics> sList = store.selectAllstatis();
 		return sList;
 	}
+
+	@Override
+	public String selectEmail(String usersId) {
+		String userEmail = store.selectUserE(usersId);
+		return userEmail;
+	}
+
+	@Override
+	public void mailSend(String userEmail) {
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		// 이메일 객체생성하기
+		Properties props = System.getProperties();
+		props.put("mail.smtp.user", "daolLibrary1@gmail.com");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.starttls", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		final String username = "daolLibrary1@gmail.com";//
+		final String password = "daol1234";
+
+		try {
+			Session session = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+
+			// 메세지 설정
+			Message msg = new MimeMessage(session);
+
+			// 보내는사람 받는사람 설정
+			msg.setFrom(new InternetAddress("seokin6961@gmail.com"));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail, false));
+			msg.setSubject("규장각 희망장서 신청안내");
+			msg.setText("희망하신 장서가 등록처리 되었습니다!");
+			msg.setSentDate(new Date());
+			Transport.send(msg);
+			System.out.println("발신성공!");
+
+		} catch (MessagingException error) {
+			System.out.println("에러가 발생했습니다: " + error);
+		}
+	}
+
+		
 
 }
