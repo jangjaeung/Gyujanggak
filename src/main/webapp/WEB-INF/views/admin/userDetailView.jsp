@@ -252,7 +252,7 @@
 			},
 			success : function(data) {
 				if (data === 'success') {
-					alert("이용기간이 설정 되었습니다.")
+					alert("안내 메일이 발송되었습니다.")
 					location.reload();
 				} else {
 					alert('설정실패');

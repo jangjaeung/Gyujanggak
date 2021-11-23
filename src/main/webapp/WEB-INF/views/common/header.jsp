@@ -28,7 +28,7 @@
 		</div>
 		<div class="nav" id="nav">
 			<ul class="menu" id="menu">
-				<li><a href="#">도서관 소개</a>
+				<li><a href="greetingView.do">도서관 소개</a>
 					<ul>
 						<li><a href="greetingView.do">규장각 인사말</a></li>
 						<li><a href="historyView.do">규장각 연혁</a></li>
@@ -36,7 +36,7 @@
 						<li><a href="informationView.do">규장각 시설 이용 안내</a></li>
 					</ul>
 				</li>
-				<li><a href="#">도서관이용</a>
+				<li><a href="noticeList.do">도서관이용</a>
 					<ul>
 						<li><a href="noticeList.do">공지사항</a></li>
 						<li><a href="postList.do">자유게시판</a></li>

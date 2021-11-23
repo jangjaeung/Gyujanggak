@@ -197,7 +197,7 @@ public class AdminController {
 			msg.setFrom(new InternetAddress("daolLibrary1@gmail.com"));
 			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(userEmail.getUserEmail()));
 			msg.setSubject("[다올대학교 도서관 규장각] 예약 도서 대출 가능 알림");
-			msg.setText("안녕하십니까, 다올대학교 도서관 규장각입니다.\n\n이용증 발급이 완료되었습니다. \n\n 이용 기간은 " + endDate+"까지 입니다. \n도서관 이용에 참고바랍니다.\n\n감사합니다.");
+			msg.setText("안녕하십니까, 다올대학교 도서관 규장각입니다.\n\n이용증 발급이 완료되었습니다. \n이용 기간은 " + endDate+"까지 입니다. \n도서관 이용에 참고바랍니다.\n\n감사합니다.");
 			Transport.send(msg);
 		} catch (Exception e) {
 			System.out.println("전송 실패");
