@@ -90,14 +90,14 @@
 				</table>
 				<table class="userListPaging">
 					<tr>
-						<td><c:url var="before" value="userListView.do">
+						<td><c:url var="before" value="waitingSort.do">
 								<c:param name="page" value="${pi.currentPage -1 }"></c:param>
 							</c:url> <c:if test="${pi.currentPage <= 1 }">
 						[이전]
 					</c:if> <c:if test="${pi.currentPage > 1 }">
 								<a href="${before }">[이전]</a>
 							</c:if> <c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
-								<c:url var="pagination" value="userListView.do">
+								<c:url var="pagination" value="waitingSort.do">
 									<c:param name="page" value="${p }"></c:param>
 								</c:url>
 								<c:if test="${p eq pi.currentPage }">
@@ -106,7 +106,7 @@
 								<c:if test="${p ne pi.currentPage }">
 									<a href="${pagination }">${p }</a>&nbsp;
 						</c:if>
-							</c:forEach> <c:url var="after" value="userListView.do">
+							</c:forEach> <c:url var="after" value="waitingSort.do">
 								<c:param name="page" value="${pi.currentPage +1 }"></c:param>
 							</c:url> <c:if test="${pi.currentPage >= pi.maxPage }">
 						[다음]
