@@ -1,4 +1,4 @@
-# Gyujanggak
+# kujangkak
 kh정보교육원 final 프로젝트
 # 설계 및 구현기간
 + 21/10/13 ~ 21/11/24
