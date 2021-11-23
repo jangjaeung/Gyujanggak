@@ -60,6 +60,7 @@ public class MypageController {
 	@RequestMapping(value = "mypageInfo.do", method = RequestMethod.GET)
 	public String mypageInfoView(@ModelAttribute Member member, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
 		try {
 			Member memberOne = service.printOneInfo(member);
 			session.setAttribute("loginUser", memberOne);
@@ -107,6 +108,7 @@ public class MypageController {
 			HttpServletRequest request, Model model,
 			@RequestParam(value = "reloadFile", required = false) MultipartFile reloadFile) {
 		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
 		member.setEnrollDate(Date.valueOf(enrollDate2));
 		if (reloadFile != null) {
 			// 기존 파일 삭제
@@ -123,7 +125,7 @@ public class MypageController {
 		try {
 			if (result > 0) {
 				session.setAttribute("loginUser", member);
-				return "mypage/mypageInfo";
+				return "redirect:mypageInfo.do?userId=" + userId;
 			} else {
 				model.addAttribute("msg", "회원 정보 수정 실패");
 				return "common/errorPage";

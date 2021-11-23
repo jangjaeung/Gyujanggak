@@ -273,9 +273,9 @@ public class AdminController {
 		return "adminbook/bookEnroll";
 	}
 
-	// 장서 등록
+	// 장서 수정
 	@RequestMapping(value = "booksEnroll.do", method = RequestMethod.POST)
-	public String bookEnroll(@ModelAttribute Book book,
+	public String booksupdate(@ModelAttribute Book book,
 			@RequestParam(value = "bookCoverFile", required = false) MultipartFile bookCover, Model model,
 			HttpServletRequest request) {
 
@@ -295,6 +295,27 @@ public class AdminController {
 		}
 	}
 
+	// 장서 등록
+		@RequestMapping(value = "bookEnroll.do", method = RequestMethod.POST)
+		public String bookEnroll(@ModelAttribute Book book,
+				@RequestParam(value = "bookCoverFile", required = false) MultipartFile bookCover, Model model,
+				HttpServletRequest request) {
+
+			if (!bookCover.getOriginalFilename().equals("")) {
+				// uploadFile이 비어있지 않으면
+				String filePath = saveFile(bookCover, request);
+				if (filePath != null) {
+					book.setBookCover(bookCover.getOriginalFilename());
+				}
+			}
+			int result = service.enrollBooks(book);
+			if (result > 0) {
+				return "redirect:bookListView.do";
+			} else {
+				model.addAttribute("msg", "책 등록 실패");
+				return "common/errorPage";
+			}
+		}
 	// 대출 통계
 	@RequestMapping(value = "statisticsView.do", method = RequestMethod.GET)
 	public ModelAndView statisticsView(ModelAndView mv, @ModelAttribute Statistics statistics) {

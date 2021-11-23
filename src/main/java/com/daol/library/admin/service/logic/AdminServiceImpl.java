@@ -374,6 +374,12 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 
+	@Override
+	public int enrollBooks(Book book) {
+		int result = store.insertbooks(book);
+		return result;
+	}
+
 		
 
 }
