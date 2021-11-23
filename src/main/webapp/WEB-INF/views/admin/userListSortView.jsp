@@ -42,7 +42,7 @@
 				</ul>
 			</div>
 			<div class="Membership_MainContent">
-				<p class="mainTitle">회원 관리</p>
+				<p class="mainTitle">승인 대기 회원</p>
 				<span class="waitingSort"> <i class="fas fa-sort-alpha-down"></i>
 				</span>
 				<table class="table table-striped" style="margin-top: 75px;">
